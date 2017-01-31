@@ -1,4 +1,27 @@
+const webpack = require('webpack')
+const copy = require('copy-webpack-plugin')
+var path = require("path");
+var dir = (str) => {
+  return path.resolve(__dirname, str);
+};
+
 module.exports = {
+  build: {
+    vendor:[
+      'axios',
+    ],
+    extend (config, { isDev, isClient }) {
+      if (isClient) {
+        config.devtool = 'source-map'
+        console.log(config);
+      }
+    },
+    plugins: [
+      new copy([
+        { from: dir("../../web_work/images/portrate"), to: "static/images/portrate" }
+      ])
+    ]
+  },
   /*
   ** Headers of the page
   */

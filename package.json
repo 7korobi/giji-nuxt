@@ -12,5 +12,16 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "axios": "^0.15.3",
+    "copy-webpack-plugin": "^4.0.1",
+    "mongoose": "^4.8.1",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-mixi": "^0.0.2",
+    "passport-slack": "^0.0.7",
+    "passport-twitter": "^1.0.4",
+    "webpack-bundle-analyzer": "^2.2.1"
   }
 }
