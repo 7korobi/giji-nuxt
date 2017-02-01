@@ -1,0 +1,19 @@
+@import "~styl/_theme"
+
+palette(links, black, gold)
+palette(btns,  black, gold)
+for say in says
+  palette(say, white, black)
+for stat in stats
+  palette(stat, light, dark)
+for lost in losts
+  palette(lost, light, white)
+
+.chat
+  .name
+    border-bottom: 1px solid rgba(0,0,0,0.2)
+    box-shadow: rgba(255,255,255,0.3) 0 1px 0
+
+.talk .chat
+  border-top:    2px solid
+  border-bottom: 2px solid

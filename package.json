@@ -5,7 +5,7 @@
   "author": "7korobi@gmail.com",
   "private": true,
   "dependencies": {
-    "nuxt": "latest"
+    "nuxt": "^0.9.7"
   },
   "scripts": {
     "dev": "nuxt",
@@ -13,8 +13,10 @@
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
-  "devDependencies": {
+  "dependencies": {
     "axios": "^0.15.3",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.12.3",
     "copy-webpack-plugin": "^4.0.1",
     "mongoose": "^4.8.1",
     "passport-facebook": "^2.1.1",
@@ -22,6 +24,10 @@
     "passport-mixi": "^0.0.2",
     "passport-slack": "^0.0.7",
     "passport-twitter": "^1.0.4",
+    "pug": "^2.0.0-beta10",
+    "pug-loader": "^2.3.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.4.0",
     "webpack-bundle-analyzer": "^2.2.1"
   }
 }

@@ -7,6 +7,7 @@
     <h2 class="info" v-if="name === 'client'">
       Please refresh the page
     </h2>
+    <timeago :since="at"></timeago>
     <nuxt-link class="button" to="/">
       Home page
     </nuxt-link>
@@ -16,13 +17,17 @@
 export default {
   data ({ req }) {
     return {
-      name: req ? 'server' : 'client'
+      name: req ? 'server' : 'client',
+      at: new Date()
     }
   },
   head () {
     return {
       title: `About Page (${this.name}-side)`
     }
+  },
+  components: {
+    timeago: require("~components/timeago.coffee")
   }
 }
 </script>

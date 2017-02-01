@@ -1,0 +1,15 @@
+@import "~styl/_theme"
+
+palette(links, black, gold)
+palette(btns,  black, gold)
+for say in says
+  palette(say,  glass, gold)
+for stat in stats
+  palette(stat, light, dark)
+for lost in losts
+  palette(lost, light, white)
+
+.chat
+  .name
+    border-bottom: 1px dashed
+

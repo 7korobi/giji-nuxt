@@ -1,0 +1,129 @@
+o = {}
+o.SSAY = o.NONE = o.live = o.mob = #cb8
+o.TSAY = o.HUMAN = o.DISH = #a97
+o.GSAY = o.executed = #bbd
+o.WSAY = o.WOLF = o.suicide = o.victim = o.cursed = o.feared = o.droop = #a55
+o.XSAY = o.EVIL = #9a7
+o.SPSAY = o.AIM = o.LOVER = #dcb
+o.AIM =   #dcb
+
+o.LONEWOLF = o.PIXI = o.GURU = #a9d
+o.HATER = #aaa
+
+o.caution = o.suddendead = o.leave = #666
+
+o.btns = #4d4e46
+o.links = #000
+
+
+dark  = #000
+black = #222
+white = #ccc
+gold  = #ffc960
+
+says  = SSAY TSAY GSAY WSAY XSAY SPSAY AIM
+losts = suddendead leave
+stats = HUMAN EVIL WOLF LOVER HATER GURU PIXI LONEWOLF DISH HUMAN executed live mob suicide victim cursed feared droop
+
+palette($bgTheme, $backTheme, $pen)
+  $border = #333
+  if glass == $backTheme
+    $border = o[$bgTheme]
+    $emboss = alpha($border, 0.7)
+    $bg = alpha(complement($border), 0.2)
+    if SSAY == $bgTheme
+      $border = #ccc
+    $pen = mix($border, $pen, 40%)
+
+  if light == $backTheme
+    $bg = o[$bgTheme]
+    $pen = mix($bg, $pen, 40%)
+    $emboss = darken($bg, 40%)
+
+  if white == $backTheme
+    $bg = o[$bgTheme]
+    $emboss = darken($bg, 40%)
+
+  if black == $backTheme
+    $bg = o[$bgTheme]
+    $emboss = darken($bg, 40%)
+
+  .{$bgTheme}
+    theme-block($pen, $bg, $emboss, $border)
+    theme-mark($pen, $bg, $emboss, $border)
+
+
+
+theme-block($pen, $bg, $emboss, $border)
+  color:           $pen
+  background-color: $bg
+  border-color: $border
+
+  textarea
+    background-color: $bg
+    border-color: $border
+
+  .name, .date, strong
+    color:        $emboss
+    border-color: $border
+
+  sup, sub
+    color:                $bg
+    border-color:     $border
+    background-color: $emboss
+
+
+theme-mark($pen, $bg, $emboss, $border)
+  $mark = lighten($bg, 20%)
+  $bold = lighten($pen, 30%)
+  $spot = lighten($bg, 50%)
+
+  $on  = mix($mark, green, 90%)
+  $off = mix($mark, blue,  90%)
+
+  b
+    color: $bold
+
+  a, button,
+  [title], [data-tooltip],
+  input[type=checkbox],
+  input[type=radio],
+  input[type=color],
+  input[type=image],
+  input[type=button],
+  input[type=submit],
+  input[type=reset]
+    color: $pen
+
+  a, b, button,
+  [title], [data-tooltip],
+  input[type=checkbox],
+  input[type=radio],
+  input[type=color],
+  input[type=image],
+  input[type=button],
+  input[type=submit],
+  input[type=reset]
+    background: $mark
+    &:hover, &:focus
+      background: $bg
+      box-shadow:
+        0 0 20px 3px $spot inset
+    &:active
+      background: $bg
+      box-shadow:
+        0 0 20px 3px $emboss inset
+
+  input[type=checkbox],
+  input[type=radio]
+    &:checked
+      background: $on
+
+  a[href]
+    &:link
+      color: $pen
+      background: $off
+    &:visited
+      color: $pen
+      background: $on
+
