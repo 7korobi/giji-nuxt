@@ -25,9 +25,6 @@ export default {
     return {
       title: `About Page (${this.name}-side)`
     }
-  },
-  components: {
-    timeago: require("~components/timeago.coffee")
   }
 }
 </script>

@@ -9,6 +9,7 @@ module.exports = {
   build: {
     vendor:[
       'axios',
+      '~components/_base.coffee'
     ],
     extend (config, { isDev, isClient }) {
       if (isClient) {

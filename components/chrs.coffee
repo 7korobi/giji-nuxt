@@ -1,3 +1,4 @@
+require "~components/models/chr.coffee"
 { Query } = require "memory-record"
 
 

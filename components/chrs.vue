@@ -1,4 +1,4 @@
-<script lang="coffee" src="~vue/_chrs.coffee"></script>
+<script lang="coffee" src="~components/chrs.coffee"></script>
 <style lang="stylus" scoped>
 
 hr

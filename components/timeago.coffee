@@ -49,7 +49,7 @@ format =
 module.exports =
   data: ->
     now: Date.now()
-    period: 1
+    period: Infinity
     interval: null
 
   props:
@@ -88,10 +88,11 @@ module.exports =
       if @period != @baseTime
         if @interval
           clearInterval @interval
-        @interval = setInterval =>
-          @now = Date.now()
-          @tick
-        , @period = @baseTime
+        if Infinity > @baseTime
+          @interval = setInterval =>
+            @now = Date.now()
+            @tick
+          , @period = @baseTime
       @period
 
   render: (m)->

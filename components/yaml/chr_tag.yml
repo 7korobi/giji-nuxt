@@ -1,0 +1,209 @@
+all:
+  label: すべて
+  long: 「人狼議事 ちゃんぷる」のキャラクター
+  chr_set_ids:
+    - all
+
+giji:
+  label: 人狼議事
+  long: 「人狼議事」のキャラクター
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+shoji:
+  label: てやんでえ
+  long: 「和の国てやんでえ」のキャラクター
+  chr_set_ids:
+    - all
+    - wa
+
+travel:
+  label: 帰還者議事
+  long: 「帰還者議事」のキャラクター
+  chr_set_ids:
+    - all
+    - time
+
+stratos:
+  label: 明後日への道標
+  long: 「明後日への道標」のキャラクター
+  chr_set_ids:
+    - all
+    - SF
+
+myth:
+  label: はおうのひろば
+  long: 「はおうのひろば」のキャラクター
+  chr_set_ids:
+    - all
+    - changed
+
+asia:
+  label: 大陸議事
+  long: 「大陸議事」のキャラクター
+  chr_set_ids:
+    - all
+    - ger
+
+marchen:
+  label: 狂騒議事
+  long: 「狂騒議事」のキャラクター
+  chr_set_ids:
+    - all
+    - mad
+
+kid:
+  label: (児童)
+  long: 児童のキャラクター
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+young:
+  label: (若者)
+  long: 若者のキャラクター
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+middle:
+  label: (中年)
+  long: 中年のキャラクター
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+elder:
+  label: (老人)
+  long: 老人のキャラクター
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+
+river:
+  label: -運河-
+  long: 往く人来る人休む人
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+road:
+  label: -往来-
+  long: 往く人来る人休む人
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+immoral:
+  label: -裏道-
+  long: 街灯の裏の背徳達
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+
+guild:
+  label: -商工会-
+  long: 商人と職人の集うギルド
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+elegant:
+  label: -舞踏会-
+  long: 瀟洒な館の舞踏会
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+ecclesia:
+  label: -公教会-
+  long: 信仰と道徳と学識の源泉
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+
+medical:
+  label: -施療院-
+  long: 病苦毒霊と戦う砦
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+market:
+  label: -歌劇酒場-
+  long: 芸の極みに華が咲く
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+apartment:
+  label: -自室の窓-
+  long: 窓から外を眺めると
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+servant:
+  label: -使用人-
+  long: 良家を支えるスタッフ
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+farm:
+  label: -森の農場-
+  long: 森に接する田畑
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+government:
+  label: -統治公共-
+  long: 所領を治める権能者
+  chr_set_ids:
+    - all
+    - animal
+    - school
+    - ririnra
+
+god:
+  label: -かみさま-
+  long: かみさま
+  chr_set_ids:
+    - all
