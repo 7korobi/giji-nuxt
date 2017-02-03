@@ -64,7 +64,7 @@ format =
 
 module.exports =
   data: ->
-    now: Date.now()
+    now: null
     tick: Infinity
     interval: null
 
@@ -82,6 +82,7 @@ module.exports =
     sinceTime: ->
       new Date(@since).getTime()
     msec: ->
+      @now = Date.now()
       @now - @sinceTime
     time: ->
       for [limit], idx in times when @msec < limit
@@ -94,8 +95,11 @@ module.exports =
         return format.date.format(@sinceTime) + "頃"
 
       [_, base, text] = @time
-      text.replace '%s', Math.floor Math.abs @msec / base
+      count = Math.floor Math.abs @msec / base
+      @tickTime
+      text.replace '%s', count
     tickTime: ->
+      return Infinity if @lock
       [_, base] = @time
       tick = base
       if Infinity == @tick
@@ -116,10 +120,6 @@ module.exports =
       attrs:
         datetime: new Date @since
     , @timeago
-
-  mounted: ->
-    return if @lock
-    @tickTime
 
   beforeDestroy: ->
     return if @lock

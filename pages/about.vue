@@ -7,8 +7,10 @@
     <h2 class="info" v-if="name === 'client'">
       Please refresh the page
     </h2>
-    <span v-for="at in times">
-      <timeago :key="at" :since="at"></timeago>
+    <span v-for="(time, idx) in times">
+      <a @click="reset(idx)">
+      <timeago :key="idx" :since="time.at"></timeago>
+      </a>
     </span>
     <br>
     <nuxt-link class="button" to="/">
@@ -22,11 +24,16 @@ module.exports =
   default:
     data: (req)->
       now = new Date() - 0
-      now: now
+      clicks: 0
       name: if req then 'server' else 'client'
-      times: [[-3610..-3590]...,Infinity,[-70..-50]...,Infinity,[50..70]...,Infinity,[3590..3610]...].map (t)-> now - t * 1000
+      times: [[-3610..-3590]...,Infinity,[-70..-50]...,Infinity,[50..70]...,Infinity,[3590..3610]...].map (t)->
+        at: now - t * 1000
     head: ->
       title: "About Page (#{this.name}-side)"
+    methods:
+      reset: (idx)->
+        @clicks++
+        @times[idx].at = new Date() - -30000
 </script>
 
 <style scoped>
