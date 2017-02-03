@@ -9,7 +9,7 @@ module.exports = {
   build: {
     vendor:[
       'axios',
-      'memory-record'
+      '~components/models/memory-record'
     ],
     extend (config, { isDev, isClient }) {
       config.resolve.extensions.push(".coffee");

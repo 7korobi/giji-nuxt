@@ -7,7 +7,10 @@
     <h2 class="info" v-if="name === 'client'">
       Please refresh the page
     </h2>
-    <timeago :since="at"></timeago>
+    <span v-for="at in times">
+      <timeago :key="at" :since="at"></timeago>
+    </span>
+    <br>
     <nuxt-link class="button" to="/">
       Home page
     </nuxt-link>
@@ -18,8 +21,10 @@
 module.exports =
   default:
     data: (req)->
+      now = new Date() - 0
+      now: now
       name: if req then 'server' else 'client'
-      at: new Date()
+      times: [0..120].map (t)-> now - t * 1000
     head: ->
       title: "About Page (#{this.name}-side)"
 </script>

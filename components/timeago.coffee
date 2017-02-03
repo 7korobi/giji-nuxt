@@ -7,25 +7,25 @@ MONTH = DAY * 30
 YEAR = DAY * 365
 
 times = [
-  [   25000, Infinity]
-  [  MINUTE,   SECOND]
-  [    HOUR,   MINUTE]
-  [     DAY,     HOUR]
-  [    WEEK,      DAY]
-  [   MONTH,     WEEK]
-  [    YEAR,    MONTH]
-  [Infinity,     YEAR]
+  [   25000, Infinity,      25000]
+  [  MINUTE,   SECOND, 2 * SECOND]
+  [    HOUR,   MINUTE, 2 * MINUTE]
+  [     DAY,     HOUR, 2 *   HOUR]
+  [    WEEK,      DAY, 2 *    DAY]
+  [   MONTH,     WEEK, 2 *   WEEK]
+  [    YEAR,    MONTH, 2 *  MONTH]
+  [Infinity,     YEAR, 2 *   YEAR]
 ]
 
 locales = [
     "たった今"
-    "%s 秒前"
-    "%s 分前"
-    "%s 時間前"
-    "%s 日前"
-    "%s 週間前"
-    "%s ヶ月前"
-    "%s 年前"
+    " %s 秒前"
+    " %s 分前"
+    " %s 時間前"
+    " %s 日前"
+    " %s 週間前"
+    " %s ヶ月前"
+    " %s 年前"
   ]
 
 format =
@@ -65,25 +65,25 @@ module.exports =
   computed:
     sinceTime: ->
       new Date(@since).getTime()
-    msecs: ->
+    msec: ->
       @now - @sinceTime
     baseTime: ->
-      [limit ,msec] = times[@idx]
-      if Infinity == msec
-        limit - @msecs
+      [limit ,msec, first] = times[@idx]
+      if Infinity == @period
+        first - @msec
       else
         msec
     idx: ->
-      for [limit, base], idx in times when @msecs < limit
+      for [limit, base], idx in times when @msec < limit
         return idx
       return times.length - 1
     timeago: ->
-      if @maxTime && @msecs > @maxTime
+      if @maxTime && @msec > @maxTime
         clearInterval @interval
         @interval = null
         return format.date.format(@sinceTime) + "頃"
 
-      locales[@idx].replace '%s', Math.round @msecs / @baseTime
+      locales[@idx].replace '%s', Math.floor @msec / @baseTime
     tick: ->
       if @period != @baseTime
         if @interval
