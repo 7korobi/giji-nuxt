@@ -1,21 +1,33 @@
-<template>
-  <div>
-    <nuxt/>
-    <my-footer/>
-  </div>
+<template lang="pug">
+div
+  nuxt
+  my-footer
 </template>
 
-<script>
-import MyFooter from '~components/Footer.vue'
+<script lang="coffee">
+Vue = require "vue"
+[ "timeago"
+  "chat"
+].map (name)->
+  Vue.component name, require "~components/#{name}.coffee"
 
-export default {
-  components: {
-    MyFooter
-  }
-}
+[ "report"
+  "post"
+  "talk"
+  "chrs"
+].map (name)->
+  Vue.component name, require "~components/#{name}.vue"
+
+module.exports =
+  default:
+    components:
+      MyFooter: require '~components/Footer.vue'
+      # vSelect:  require 'vue-select'
+
 </script>
 
-<style>
+<style lang="stylus" src="~assets/styl/_base.styl"></style>
+<style lang="stylus">
 .container
 {
   margin: 0;

@@ -1,5 +1,5 @@
 
-{ Query } = require "memory-record"
+{ Query } = require "./models/memory-record"
 module.exports =
   functional: true
   props:

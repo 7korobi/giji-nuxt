@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "memory-record"
+{ Collection, Model, Query, Rule } = require "./memory-record"
 
 new Rule("part").schema ->
   @order "write_at"

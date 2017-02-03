@@ -13,20 +13,15 @@
     </nuxt-link>
   </section>
 </template>
-<script>
-export default {
-  data ({ req }) {
-    return {
-      name: req ? 'server' : 'client',
+
+<script lang="coffee">
+module.exports =
+  default:
+    data: (req)->
+      name: if req then 'server' else 'client'
       at: new Date()
-    }
-  },
-  head () {
-    return {
-      title: `About Page (${this.name}-side)`
-    }
-  }
-}
+    head: ->
+      title: "About Page (#{this.name}-side)"
 </script>
 
 <style scoped>

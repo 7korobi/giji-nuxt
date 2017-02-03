@@ -1,8 +1,8 @@
-{ Collection, Model, Query, Rule } = require "memory-record"
+{ Collection, Model, Query, Rule } = require "./memory-record"
 
-require '~components/models/phase'
-require '~components/models/potof'
-require '~components/models/chat'
+require './phase'
+require './potof'
+require './chat'
 
 
 new Rule("folder").schema ->

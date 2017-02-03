@@ -9,9 +9,10 @@ module.exports = {
   build: {
     vendor:[
       'axios',
-      '~components/_base.coffee'
+      'memory-record'
     ],
     extend (config, { isDev, isClient }) {
+      config.resolve.extensions.push(".coffee");
       if (isClient) {
         config.devtool = 'source-map'
       }
