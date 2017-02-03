@@ -14,7 +14,7 @@ locales = [
   " %s 時間前"
   " %s 分前"
   " %s 秒前"
-  "たった今"
+  "今"
   " %s 秒後"
   " %s 分後"
   " %s 時間後"
@@ -95,7 +95,7 @@ module.exports =
         return format.date.format(@sinceTime) + "頃"
 
       [_, base, text] = @time
-      count = Math.floor Math.abs @msec / base
+      count = Math.floor Math.abs (@msec + 100) / base # 八捨九入
       @tickTime
       text.replace '%s', count
     tickTime: ->
