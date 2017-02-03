@@ -24,7 +24,7 @@ module.exports =
       now = new Date() - 0
       now: now
       name: if req then 'server' else 'client'
-      times: [0..120].map (t)-> now - t * 1000
+      times: [[-3610..-3590]...,Infinity,[-70..-50]...,Infinity,[50..70]...,Infinity,[3590..3610]...].map (t)-> now - t * 1000
     head: ->
       title: "About Page (#{this.name}-side)"
 </script>

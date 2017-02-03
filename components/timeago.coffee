@@ -6,27 +6,43 @@ WEEK = DAY * 7
 MONTH = DAY * 30
 YEAR = DAY * 365
 
-times = [
-  [   25000, Infinity,      25000]
-  [  MINUTE,   SECOND, 2 * SECOND]
-  [    HOUR,   MINUTE, 2 * MINUTE]
-  [     DAY,     HOUR, 2 *   HOUR]
-  [    WEEK,      DAY, 2 *    DAY]
-  [   MONTH,     WEEK, 2 *   WEEK]
-  [    YEAR,    MONTH, 2 *  MONTH]
-  [Infinity,     YEAR, 2 *   YEAR]
+locales = [
+  " %s 年前"
+  " %s ヶ月前"
+  " %s 週間前"
+  " %s 日前"
+  " %s 時間前"
+  " %s 分前"
+  " %s 秒前"
+  "たった今"
+  " %s 秒後"
+  " %s 分後"
+  " %s 時間後"
+  " %s 日後"
+  " %s 週間後"
+  " %s ヶ月後"
+  " %s 年後"
 ]
 
-locales = [
-    "たった今"
-    " %s 秒前"
-    " %s 分前"
-    " %s 時間前"
-    " %s 日前"
-    " %s 週間前"
-    " %s ヶ月前"
-    " %s 年前"
-  ]
+times = [
+  [    -YEAR,   YEAR]
+  [   -MONTH,  MONTH]
+  [    -WEEK,   WEEK]
+  [     -DAY,    DAY]
+  [    -HOUR,   HOUR]
+  [  -MINUTE, MINUTE]
+  [   -25000, SECOND]
+  [    25000,  25000]
+  [   MINUTE, SECOND]
+  [     HOUR, MINUTE]
+  [      DAY,   HOUR]
+  [     WEEK,    DAY]
+  [    MONTH,   WEEK]
+  [     YEAR,  MONTH]
+  [ Infinity,   YEAR]
+]
+for time, idx in times
+  time[2] = locales[idx]
 
 format =
   date: new Intl.DateTimeFormat 'ja-JP',
@@ -49,7 +65,7 @@ format =
 module.exports =
   data: ->
     now: Date.now()
-    period: Infinity
+    tick: Infinity
     interval: null
 
   props:
@@ -67,33 +83,33 @@ module.exports =
       new Date(@since).getTime()
     msec: ->
       @now - @sinceTime
-    baseTime: ->
-      [limit ,msec, first] = times[@idx]
-      if Infinity == @period
-        first - @msec
-      else
-        msec
-    idx: ->
-      for [limit, base], idx in times when @msec < limit
-        return idx
-      return times.length - 1
+    time: ->
+      for [limit], idx in times when @msec < limit
+        return times[idx]
+      return times[-1...][0]
     timeago: ->
       if @maxTime && @msec > @maxTime
         clearInterval @interval
         @interval = null
         return format.date.format(@sinceTime) + "頃"
 
-      locales[@idx].replace '%s', Math.floor @msec / @baseTime
-    tick: ->
-      if @period != @baseTime
+      [_, base, text] = @time
+      text.replace '%s', Math.floor Math.abs @msec / base
+    tickTime: ->
+      [_, base] = @time
+      tick = base
+      if Infinity == @tick
+        tick = -@msec % base
+        if tick < 0
+          tick += base
+      if @tick != tick
         if @interval
           clearInterval @interval
-        if Infinity > @baseTime
-          @interval = setInterval =>
-            @now = Date.now()
-            @tick
-          , @period = @baseTime
-      @period
+        @interval = setInterval =>
+          @now = Date.now()
+          @tickTime
+        , @tick = tick
+      @tick
 
   render: (m)->
     m 'time',
@@ -103,7 +119,7 @@ module.exports =
 
   mounted: ->
     return if @lock
-    @tick
+    @tickTime
 
   beforeDestroy: ->
     return if @lock
