@@ -1,0 +1,4 @@
+@import "./_font.styl"
+
+font(10px, 12px, sans-serif)
+

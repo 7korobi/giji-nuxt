@@ -1,4 +1,4 @@
-@import "~styl/_theme"
+@import "./_theme.styl"
 
 palette(links, black, gold)
 palette(btns,  black, gold)

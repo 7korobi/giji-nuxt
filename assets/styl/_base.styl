@@ -1,3 +1,17 @@
+@import "./tooltip.styl"
+
+.page-enter-active, .page-leave-active
+  transition: opacity .5s
+
+.page-enter, .page-leave-active
+  opacity: 0
+
+html,
+body,
+p
+  margin: 0
+
+
 b
   font-weight: bold
 
@@ -45,8 +59,7 @@ h6
   font-weight: bold
   display: block
   margin: 0
-  padding: 0.10em 0.25em
-  line-height: 1em
+  padding: 0.10rem 0.25rem
   border-bottom: 1px solid #e5e5e5
   background-color: rgba(255, 255, 255, 0.25)
 
@@ -57,10 +70,6 @@ sub
   vertical-align:  -10px
 
 sup, sub
-  border-radius:     7px
-  font-size:        12px
-  line-height:      14px
-  height:           14px
   margin-right:      0px
   padding: 2px 6px 0 6px
   display: inline-block
@@ -70,12 +79,9 @@ sup, sub
 .chat
   padding: 0 4px
   .name
-    color: $emboss
     font-weight: bold
-    line-height: 1.3em
 
   .text
-    line-height: 1.2em
     overflow:   visible
     word-wrap:  break-word
     word-break: break-strict
@@ -88,13 +94,9 @@ sup, sub
       text-overflow: ellipsis
 
   .date
-    color: $emboss
     text-align: right
-    font-size: 10.5px
-    line-height: 1.1em
 
 .btns
-  line-height: 30px
   span
     margin: 0 6px
 

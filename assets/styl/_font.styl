@@ -1,109 +1,75 @@
-font($small, $size-base, $family) {
-  $line-base: $size-base * 1.40;
-
-  html &,
-  body,
+inline($base, $inline, $family)
+  dfn,
+  abbr,
   input,
   select,
   button,
   textarea,
-  .btn {
-    font-family: $family;
-    font-size:   $size-base;
-    line-height: $line-base;
-  }
+  a,
+  b
+    font-family: $family
+    font-size:   $base
+    line-height: $inline
 
-  .fine {
-    font-size:   $small;
-    line-height: $size-base * 0.8;
-    kbd {
-      line-height: $small;
-    }
-  }
+font($small, $base, $family)
+  $middle = ($small + $base)/2
+  $pad    = $base / 3
+  $block  = $base * 1.40
+  $inline = $base * 1.30
 
-  label.control-label,
+  body,
+  .btns
+    font-family: $family
+    font-size:   $base
+    line-height: $block
+  inline($base, $inline, $family)
+
+  h6,
+  .fine
+    font-size:   $small
+    line-height: $base
+    inline($small, $base, $family)
+
+  label,
   rt,
   sup,
   sub,
   kbd,
-  code,
-  .mes_date,
-  .small,
-  .badge,
-  .note,
-  .mark {
-    font-size:   $small;
-    line-height: $size-base;
-  }
+  code
+    font-size:   $small
+    line-height: $base
+    font-family: $family
+    padding: $pad 4px
 
-  span.help-block,
+  label,
   abbr,
-  .emboss {
-    padding: 2px $size-base * 0.4 0 $size-base * 0.4;
-    font-size: $small;
-    line-height: $size-base * 0.8;
-  }
+  sup,
+  sub
+    border-radius: $base
 
-  .menuicon {
-    font-size:   $size-base * 2.0;
-    line-height: $size-base * 2.3;
-    width:       $size-base * 2.8;
-  }
-
-  kbd img {
-    margin: 0 0 (- $size-base * 0.30) 0;
-  }
-
-  label.control-label,
+  label,
+  rt,
   kbd,
   code,
   input,
   select,
   button,
   textarea,
-  .btn.edge,
-  .mark,
-  .badge,
-  .menuicon {
-    padding: $size-base * 0.15 $size-base * 0.4;
-  }
+    padding: $pad 4px
 
-  label.control-label,
-  span.help-block,
-  abbr,
-  .btn.glass,
-  .mark,
-  .badge,
-  .emboss {
-    border-radius: $size-base;
-  }
-}
+  .menuicon
+    font-size:   $base * 2.0
+    line-height: $base * 2.3
+    width:       $base * 2.8
 
-.large-font {
-  font(15px, 21px, serif);
-  #head_navi #headline {
-    width: 420px;
-  }
-}
+  .chat
+    .name
+      line-height: $block
 
-.novel-font {
-  font(10.5px, 15px, serif);
-  #head_navi #headline {
-      width: 320px;
-  }
-}
+    .text
+      line-height: $inline
 
-.std-font {
-  font(10.5px, 15px, sans-serif);
-  #head_navi #headline {
-    width: 320px;
-  }
-}
-
-.small-font {
-  font(10px, 12px, sans-serif);
-  #head_navi #headline {
-    width: 260px;
-  }
-}
+    .date
+      font-size:   $small
+      line-height: $base
 
