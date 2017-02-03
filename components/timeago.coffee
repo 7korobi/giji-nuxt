@@ -82,6 +82,7 @@ module.exports =
     sinceTime: ->
       new Date(@since).getTime()
     msec: ->
+      @tick = Infinity
       @now = Date.now()
       @now - @sinceTime
     time: ->
@@ -95,7 +96,8 @@ module.exports =
         return format.date.format(@sinceTime) + "頃"
 
       [_, base, text] = @time
-      count = Math.floor Math.abs (@msec + 100) / base # 八捨九入
+      msec = Math.abs 100 + @msec
+      count = Math.floor msec / base # 八捨九入
       @tickTime
       text.replace '%s', count
     tickTime: ->

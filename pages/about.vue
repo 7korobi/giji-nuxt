@@ -33,7 +33,7 @@ module.exports =
     methods:
       reset: (idx)->
         @clicks++
-        @times[idx].at = new Date() - -30000
+        @times[idx].at = new Date() - -62000
 </script>
 
 <style scoped>
