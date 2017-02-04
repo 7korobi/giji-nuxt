@@ -6,11 +6,18 @@
 .page-enter, .page-leave-active
   opacity: 0
 
+
+*
+  -webkit-overflow-scrolling: touch
+  -webkit-tap-highlight-color: transparent
+  -webkit-text-size-adjust: none
+  -webkit-touch-callout: none
+  -webkit-font-smoothing: antialiased
+
 html,
 body,
 p
   margin: 0
-
 
 b
   font-weight: bold
@@ -31,7 +38,7 @@ a, b, kbd, code, input, select, button, textarea,
   vertical-align: baseline
   text-align: center
   text-decoration: none
-  margin:    4px 2px
+  margin:    0   2px
   padding:   2px
   border-radius: 3px
   border-width:  0
@@ -46,11 +53,50 @@ a, b, kbd, code, input, select, button, textarea,
   text-shadow:    none
   text-indent: 0px
 
+.table-swipe
+  table
+    border-collapse: collapse
+  td,
+  th
+    margin:  0
+    padding: 0
+    white-space: nowrap
+    vertical-align: center
+
+.summary,
 .contentframe,
 .outframe,
 .inframe
   box-sizing: content-box
+  transition: left 250ms ease
 
+.outframe
+  width:  60%
+  margin: 0 auto
+
+.summary,
+.sideframe
+  position: fixed
+  overflow-y: auto
+  z-index: 1
+  width: 20%
+  pointer-events: none
+
+.summary
+  top:    0
+  left:   0
+  border-right: 1px solid
+
+.sideframe
+  right:  0
+  bottom: 0
+  border-left: 1px solid
+
+.inframe
+  pointer-events: auto
+
+.pull-right
+  float: right
 
 h1, h2, h3, h4, h5, h6, .chat
   box-sizing: border-box
@@ -78,13 +124,16 @@ sup, sub
 
 .chat
   padding: 0 4px
+  .name,
+  .text,
+  .date
+    word-break: break-word
+
   .name
     font-weight: bold
 
   .text
     overflow:   visible
-    word-wrap:  break-word
-    word-break: break-strict
     &.head:first-line
       font-weight: bold
     &.mono
@@ -97,10 +146,37 @@ sup, sub
     text-align: right
 
 .btns
+  text-align: center
   span
     margin: 0 6px
 
 
+.icons
+  margin 0 0 0 auto
+  width: 5em
+  display: flex
+  flex-direction: column-reverse
+  flex-wrap:     nowrap
+  align-items:     center
+  align-content:   space-around
+  justify-content: space-around
+
+  .fa
+    flex-basis: auto
+
+.icons-move
+  transition: transform 0.3s
+
+.icons-enter-to
+  transition: all 0.2s ease 0.1s
+
+.icons-leave-to
+  position: absolute
+
+.icons-enter,
+.icons-leave-to
+  opacity: 0
+  transform: translateX(60px)
 
 
 

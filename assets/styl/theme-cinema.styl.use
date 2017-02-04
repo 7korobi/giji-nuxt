@@ -1,5 +1,6 @@
 @import "./_theme.styl"
 
+
 palette(links, black, white)
 palette(btns,  black, white)
 for say in says
@@ -16,3 +17,24 @@ for lost in losts
   .name
     border-bottom: 1px solid rgba(0,0,0,0.2)
     box-shadow: rgba(255,255,255,0.3) 0 1px 0
+
+.report
+  border-top:    2px dashed #863
+  border-bottom: 2px dashed #863
+
+
+.outframe
+  background-repeat: repeat
+  background-position: right
+  background-attachment: fixed
+  background-image: url("~assets/images/bg/renga.png")
+
+.contentframe
+  background-repeat: repeat-y
+  background-position: left
+  background-attachment: local
+  background-image: url("~assets/images/bg/film-L.png")
+
+body
+  background: #764
+  border-color: #663
