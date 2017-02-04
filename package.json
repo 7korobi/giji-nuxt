@@ -28,6 +28,7 @@
     "yaml-loader": "^0.4.0"
   },
   "scripts": {
+    "webpack": "webpack --color --config config/webpack/dev.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",

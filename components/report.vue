@@ -20,8 +20,10 @@ module.exports = require("~components/chat.coffee").component_class()
   p.name(v-if="head")
     | {{ head }}
     sup.pull-right(v-if="sign") {{ sign }}
-  p.text(:class="style", v-html="log_html")
+  p.text(v-if="log_html")
+    span(v-html="log_html")
+  p.text
+    slot
   p.date
+    abbr {{ id }}
     timeago(:since="write_at")
-
-</template>

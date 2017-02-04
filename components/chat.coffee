@@ -16,30 +16,21 @@ module.exports =
       style:    chat.style
       log:      chat.log
 
-    if chat.potof
+    if o = chat.potof
+      head = "#{o.job} #{o.name}" if o.name || o.job
       Object.assign attrs,
-        face: chat.potof.face._id
-        job:  chat.potof.job
-        name: chat.potof.name
-        sign: chat.potof.sign
-    if chat.phase
+        face: o.face._id
+        sign: o.sign
+        head: head
+    if o = chat.phase
       Object.assign attrs,
-        handle: chat.phase.handle
+        handle: o.handle
 
     m chat.show, { attrs }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "style", "log", "face", "job", "name", "sign"]
+    props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
     data: -> {}
     computed:
-      face_url: -> Query.faces.hash[@face].path
-
-      head: ->
-        if @name || @job
-          "#{@job} #{@name}"
-        else
-          null
-
-      log_html: ->
-        @log
-        .replace /\n/, "<br>"
+      face_url: -> Query.faces.hash[@face]?.path
+      log_html: -> @log?.replace /\n/, "<br>"

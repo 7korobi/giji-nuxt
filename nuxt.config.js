@@ -42,7 +42,20 @@ module.exports = {
   /*
   ** Headers of the page
   */
-  head: {},
+  head: {
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', content: "Nuxt.js project" },
+      { href: "mailto:7korobi@gmail.com" }
+    ],
+    link: [
+      { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" },
+      { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' },
+      { href: "mailto:7korobi@gmail.com" }
+    ],
+    title: '人狼議事'
+  },
   /*
   ** Global CSS
   */

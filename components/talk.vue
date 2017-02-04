@@ -25,6 +25,7 @@ module.exports = require("~components/chat.coffee").component_class()
   th
     vertical-align: top
   td
+    width: 100%
     vertical-align: middle
   .chat
     margin:  0  7px 6px  0
@@ -47,12 +48,15 @@ table.talk(:key="id")
       th
         img(:src="face_url" width="90" height="130")
       td
-        .chat(:class="handle")
+        .chat(:key="id", :class="handle")
           p.name(v-if="head")
             | {{ head }}
             sup.pull-right(v-if="sign") {{ sign }}
-          p.text(:class="style", v-html="log_html")
+          p.text(v-if="log_html")
+            span(v-html="log_html")
+          p.text
+            slot
           p.date
+            abbr {{ id }}
             timeago(:since="write_at")
-
 </template>

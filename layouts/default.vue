@@ -48,13 +48,13 @@ h2
 .moon-theme,
 .wa-theme
   .filmline
-    background-image: url(../assets/img/bg/film-wa-border.png)
+    background-image: url(../assets/images/bg/film-wa-border.png)
 
 .filmline
   margin: 0
   height: 11px
   background-repeat: repeat-x
-  background-image: url(../assets/img/bg/film-border.png)
+  background-image: url(../assets/images/bg/film-border.png)
   .contentframe
     background-image: none
 
@@ -67,7 +67,7 @@ h2
 
 #welcome
   background-size:  cover
-  background-image: url(../assets/img/bg/fhd-giji.png)
+  background-image: url(../assets/images/bg/fhd-giji.png)
   .btns
     background-color: rgba(77, 78, 70, 0.9)
 </style>
@@ -75,23 +75,7 @@ h2
 <script lang="coffee">
 require "~components/models/sow"
 { Query } = require "~components/models/memory-record"
-Vue = require "vue"
-
-if process.BROWSER_BUILD
-  Vue.use require "vue-cookie"
-
-[ "timeago"
-  "chat"
-].map (name)->
-  Vue.component name, require "~components/#{name}.coffee"
-
-[ "report"
-  "post"
-  "talk"
-  "chrs"
-  "btn"
-].map (name)->
-  Vue.component name, require "~components/#{name}.vue"
+require "~components/vue.coffee"
 
 file = (path)->
   "http://s3-ap-northeast-1.amazonaws.com/giji-assets" + path
@@ -99,25 +83,8 @@ file = (path)->
 bg = (name)->
   file "/images/bg/#{name}"
 
-style_names = ///
-  \s*\S+-(theme|width|layout|font)\s*
-///g
-
 module.exports =
   default:
-    head:
-      meta: [
-        { charset: 'utf-8' }
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-        { href: "mailto:7korobi@gmail.com" }
-        { hid: 'description', content: "Nuxt.js project" }
-      ]
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }
-        { href: "mailto:7korobi@gmail.com" }
-      ]
-      title: '人狼議事'
-
     data: ->
       css = @$cookie?.get("css") ? "cinema~wide~center~std"
       [theme, width, layout, font] = css.split("~")

@@ -35,11 +35,16 @@ module.exports = require("~components/chat.coffee").component_class()
 </style>
 
 <template lang="pug">
-.chat.post(:class="handle")
-  p.text
-    strong(v-if="name") {{ name }}
+.chat.post(:key="id", :class="handle")
+  p.name(v-if="head")
+    | {{ head }}
+    sup.pull-right(v-if="sign") {{ sign }}
+  p.text(v-if="log_html")
     span(v-html="log_html")
+  p.text
+    slot
   p.date
+    abbr {{ id }}
     timeago(:since="write_at")
 
 </template>
