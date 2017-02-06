@@ -1,0 +1,12 @@
+@import "./_width.styl"
+
+.writeframe .contentframe,
+.outframe
+  margin: 0 5%
+
+.summary
+  side(5%, 120px)
+
+.sideframe
+  side(5%,  80px)
+

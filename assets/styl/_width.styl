@@ -1,0 +1,7 @@
+side($size, $min)
+  $edge = $min * 100 / $size
+  @media screen and (min-width: $edge)
+    width: $size
+  @media screen and (max-width: $edge)
+    width: $min
+  

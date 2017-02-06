@@ -13,5 +13,8 @@ if process.BROWSER_BUILD
   "talk"
   "chrs"
   "btn"
+  "portrate"
+  "potofs"
+  "potof"
 ].map (name)->
   Vue.component name, require "~components/#{name}.vue"

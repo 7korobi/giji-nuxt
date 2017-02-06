@@ -13,6 +13,11 @@ for lost in losts
 .talk .chat
   border-radius: 0.5rem
 
+.post
+  border-style: dashed none dashed solid
+  border-width: 2px  0   2px  18px
+  border-color: #663
+
 .chat
   .name
     border-bottom: 1px solid rgba(0,0,0,0.2)
@@ -23,17 +28,17 @@ for lost in losts
   border-bottom: 2px dashed #863
 
 
-.outframe
+.contentframe
   background-repeat: repeat
   background-position: right
   background-attachment: fixed
   background-image: url("~assets/images/bg/renga.png")
 
-.contentframe
-  background-repeat: repeat-y
-  background-position: left
-  background-attachment: local
-  background-image: url("~assets/images/bg/film-L.png")
+  .inframe
+    background-repeat: repeat-y
+    background-position: left
+    background-attachment: local
+    background-image: url("~assets/images/bg/film-L.png")
 
 body
   background: #764

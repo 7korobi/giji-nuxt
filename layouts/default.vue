@@ -108,6 +108,9 @@ module.exports =
         { theme, width, layout, font } = @style
         str = [theme, width, layout, font].join("~")
         if process.BROWSER_BUILD
+          @use.width?.unuse()
+          @use.width = require "~assets/styl/width-#{width}.styl.use"
+          @use.width.use()
           @use.font?.unuse()
           @use.font = require "~assets/styl/font-#{font}.styl.use"
           @use.font.use()
@@ -223,11 +226,6 @@ div(:class="body_class")
         btn(v-model="style.font" as="std") ゴシック
         btn(v-model="style.font" as="small") 繊細
 
-      span.layout
-        btn(v-model="style.layout" as="left")   左詰
-        btn(v-model="style.layout" as="center") 中央
-        btn(v-model="style.layout" as="right")  右詰
-
       span.width
         btn(v-model="style.width" as="full") 最大
         btn(v-model="style.width" as="wide") 広域
@@ -241,8 +239,16 @@ div(:class="body_class")
         btn(v-model="style.theme" as="wa")   和の国
     .filmline
 
+  .writeframe
+    .contentframe
+      .inframe
+        talk(sign="ななころび" handle="SSAY" face="c71")
+          textarea.
+            ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+
   .outframe
     .contentframe
       img.filmend(:src="filmend_url")
   nuxt
+
 </template>

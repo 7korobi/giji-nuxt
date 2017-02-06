@@ -17,3 +17,33 @@ for lost in losts
 .talk .chat
   border-top:    2px solid
   border-bottom: 2px solid
+
+.post
+  border-style: solid none solid solid
+  border-width: 2px  0   2px  18px
+  border-color: #222
+
+.chat
+  .name
+    border-bottom: 1px solid rgba(0,0,0,0.2)
+    box-shadow: rgba(255,255,255,0.3) 0 1px 0
+
+.report
+  border-top:    2px dashed #863
+  border-bottom: 2px dashed #863
+
+.contentframe
+  background-repeat: repeat
+  background-position: right
+  background-attachment: fixed
+  background-image: url("~assets/images/bg/karakusa.png")
+
+  .inframe
+    background-repeat: repeat-y
+    background-position: left
+    background-attachment: local
+    background-image: url("~assets/images/bg/film-wa-L.png")
+
+body
+  background: url("~assets/images/bg/nagatanienn.png")
+  border-color: #663

@@ -37,38 +37,8 @@ hr
   opacity: 0
   transform: translateY(30px)
 
-.item
+.portrate
   flex-basis: auto
-  max-width: 90px
-  width:     90px
-  IMG
-    max-height: 130px
-    height:     130px
-    max-width: 90px
-    width:     90px
-
-IMG + .chrblank
-    margin: -4px 1px 3px 1px
-    padding: 0
-
-.chrblank
-  background: #444844
-  color:      #CCF
-
-  max-width:    88px
-  width:        88px
-  border-radius: 9px
-
-  margin: 0 auto
-  p
-    height:       15px
-    font-size:    11px
-    text-align:  center
-    white-space: nowrap
-
-  .line2
-    min-height: 34.5px
-    height:     34.5px
 
 </style>
 
@@ -117,7 +87,7 @@ IMG + .chrblank
     h6
       | {{ chrs.length }}人の{{ set.long }}を表示しています。
   transition-group.list(name="list" tag="div")
-    .item(:id="chr._id", :key="chr._id", v-for="chr in chrs")
+    .portrate(:id="chr._id", :key="chr._id", v-for="chr in chrs")
       img(:src="chr.path")
       .chrblank.line2
         p {{ job(chr._id) }}

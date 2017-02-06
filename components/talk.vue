@@ -3,41 +3,26 @@ module.exports = require("~components/chat.coffee").component_class()
 </script>
 <style lang="stylus" scoped>
 
-.w458
-  .talk
-    th img
-      margin:  0 14px 6px  9px
-
-.std-width
-  .talk
-    th img
-      margin:  0 14px 6px  7px
-
 .talk
   width: 100%
-  tbody, th, td
+  table-layout: fixed
+  border-collapse: collapse
+  border-spacing:  0
+  margin: 0 0 6px 0
+  thead, tfoot, tbody, th, td
     border:  0
     padding: 0
     background: transparent
-    text-align: left
-  th img
-    margin:  0 15px 6px 16px
-  th
-    vertical-align: top
   td
-    width: 100%
     vertical-align: middle
-  .chat
-    margin:  0  7px 6px  0
+  th
+    width: 125px
+    vertical-align: top
+    .portrate
+      margin:  0 19px 0 16px
 
-.night-theme,
-.moon-theme,
-.star-theme
-  .talk
-    .chat
-      border-style: none none solid solid
-      border-width: 0 0 1px 3px
-      margin:  0  7px 6px  -3px
+  .chat
+    margin:  0 7px 0 0
 
 </style>
 
@@ -46,7 +31,7 @@ table.talk(:key="id")
   tbody
     tr
       th
-        img(:src="face_url" width="90" height="130")
+        portrate(:face="face")
       td
         .chat(:key="id", :class="handle")
           p.name(v-if="head")
@@ -56,7 +41,7 @@ table.talk(:key="id")
             span(v-html="log_html")
           p.text
             slot
-          p.date
+          p.date(v-if="write_at")
             abbr {{ id }}
             timeago(:since="write_at")
 </template>
