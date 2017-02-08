@@ -1,82 +1,82 @@
 inline($base, $inline, $family)
-  dfn,
-  abbr,
-  input,
-  select,
-  button,
-  textarea,
-  a,
-  b
-    font-family: $family
-    font-size:   $base
-    line-height: $inline
+  font-family: $family
+  font-size:   $base
+  line-height: $inline
 
 font($small, $base, $family)
-  $middle = ($small + $base)/2
+  $middle = ($small + $base) / 2
   $pad    = $base / 3
   $block  = $base * 1.40
   $inline = $base * 1.30
 
-  body,
-  .btns
-    font-family: $family
-    font-size:   $base
-    line-height: $block
-  inline($base, $inline, $family)
+  sup
+    vertical-align: $small *  0.5
+    font-size:      $small
+    line-height:    $small + 2px
 
-  .table-swipe
-    table
-      td,
-      th
-        font-size:   $small
-        line-height: $middle
+  sub
+    vertical-align: $small * -0.5
+    font-size:      $small
+    line-height:    $small + 2px
+
+  .icons
+    font-size:  $base * 3.0
+
+  body,
+  .btns,
+  .links,
+  .chat .name
+    inline($base,  $block,  $family)
+    dfn,
+    abbr,
+    input,
+    select,
+    button,
+    textarea,
+    time,
+    a,
+    b,
+    p
+      inline($base,  $block,  $family)
+
+  .chat .text
+    inline($base,  $inline, $family)
+    dfn,
+    abbr,
+    input,
+    select,
+    button,
+    textarea,
+    time,
+    a,
+    b,
+    p
+      inline($base,  $inline, $family)
+
+  h6
+    padding: $pad
 
   h6,
-  .fine
-    font-size:   $small
-    line-height: $base
-    inline($small, $base, $family)
+  .fine,
+  .chat .date
+    inline($small, $middle, $family)
+    dfn,
+    abbr,
+    input,
+    select,
+    button,
+    textarea,
+    time,
+    a,
+    b,
+    p
+      inline($small, $middle, $family)
 
-  label,
-  rt,
-  sup,
-  sub,
-  kbd,
-  code
-    font-size:   $small
-    line-height: $base
-    font-family: $family
-    padding: 0 4px
+  .swipe
+    table
+      tbody
+        td,
+        th
+          inline($small, $middle, $family)
 
-  label,
-  abbr,
-  sup,
-  sub
-    border-radius: $base
-
-  label,
-  rt,
-  kbd,
-  code,
-  input,
-  select,
-  button,
-  textarea,
-    padding: $pad 4px
-
-  .menuicon
-    font-size:   $base * 2.0
-    line-height: $base * 2.3
-    width:       $base * 2.8
-
-  .chat
-    .name
-      line-height: $block
-
-    .text
-      line-height: $inline
-
-    .date
-      font-size:   $small
-      line-height: $base
 

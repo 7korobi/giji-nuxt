@@ -16,3 +16,9 @@ new Rule("potof").schema ->
       @_id = @id
       @part_id  = [book_id, part_idx].join('-')
 
+      switch @live
+        when "suddendead", "leave"
+          @win = ""
+        else
+          @win = "参加"
+

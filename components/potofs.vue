@@ -1,34 +1,88 @@
 <template lang="pug">
-.table-swipe
+.swipe
   table
     tfoot
       tr.btns
         th(colspan="2")
           sup (スクロールします)
         th
-          a 日程
+          btn(v-model="sort" as="date", @toggle="reverse") 日程
         th
-          a 状態
+          btn(v-model="sort" as="live", @toggle="reverse") 状態
         th
-          a 発言
+          btn(v-model="sort" as="said", @toggle="reverse") 発言
         th
-          a 残り
+          btn(v-model="sort" as="pt", @toggle="reverse") 残り
         th
-          a 促
+          btn(v-model="sort" as="give", @toggle="reverse") 促
         th
           i.fa.fa-user
         th
-          a 希望
+          btn(v-model="sort" as="req", @toggle="reverse") 希望
         th
-          a 発言
+          btn(v-model="sort" as="win", @toggle="reverse") 勝敗
         th
-          a 勝敗
+          btn(v-model="sort" as="side", @toggle="reverse") 陣営
         th
-          a 陣営
+          btn(v-model="sort" as="role", @toggle="reverse") 役割
         th
-          a 役割
-        th
-          a 補足
+          btn(v-model="sort" as="text", @toggle="reverse") 補足
     tbody
-      slot
+      tr(v-for="o in potofs", :key="o._id", :json=" JSON.stringify(o) ")
+        th.r(:class="o.live") {{ o.job }}
+        th.l(:class="o.live") {{ o.face.name }}
+        td.r(:class="o.live") {{ count("日", o.date) }}
+        td.c(:class="o.live") {{ o.live }}
+        td.r(:class="o.live") {{ count("回", o.said) }}
+        td.r(:class="o.live") {{ count("回", o.pt) || "∞" }}
+        td.r(:class="o.live") {{ count("回", o.give) }}
+        td.c(:class="o.live")
+          kbd {{ o.user }}
+        td.c(:class="o.live")
+          kbd {{ o.req }}
+        td.c(:class="o.side") {{ o.win }}
+        td.c(:class="o.side") {{ o.side }}
+        td.c(:class="o.side") {{ o.role }}
+        td.l(:class="o.side") {{ o.text }}
 </template>
+
+
+<script lang="coffee">
+require "./models/part"
+require "./models/phase"
+require "./models/potof"
+require "./models/chat"
+{ Query } = require "./models/memory-record"
+
+module.exports =
+  data: ->
+    sort: "live"
+    order: "asc"
+  computed:
+    potofs: ->
+      Query.potofs.where(part_id: "demo-0").sort(@sort, @order).list
+
+  methods:
+    reverse: ->
+      switch @order
+        when "asc"
+          @order = "desc"
+        when "desc"
+          @order = "asc"
+    count: (unit, n)->
+      switch n
+        when 0, Infinity
+          ""
+        else
+          "#{n}#{unit}"
+
+</script>
+<style lang="stylus" scoped>
+.r
+  text-align: right
+.l
+  text-align: left
+.c
+  text-align: center
+</style>
+

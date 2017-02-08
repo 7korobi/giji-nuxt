@@ -4,14 +4,10 @@ module.exports = require("~components/chat.coffee").component_class()
 <style lang="stylus" scoped>
 
 .report
-  border-style: dashed none dashed none;
-  border-width: 3px 0 3px 0
-
-.wa-theme
-  .report
-    border-style: double none double none;
-    border-width: 3px 0 3px 0
-    border-color: #720
+  border-style: double
+  border-width: 4px
+  margin: 0 -8px 6px -8px
+  padding: 1px 16px
 
 </style>
 
@@ -24,6 +20,7 @@ module.exports = require("~components/chat.coffee").component_class()
     span(v-html="log_html")
   p.text
     slot
-  p.date
+  p.date(v-if="write_at")
     abbr {{ id }}
     timeago(:since="write_at")
+</template>

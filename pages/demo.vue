@@ -1,118 +1,9 @@
+
 <template lang="pug">
 .outframe
   aside.summary
     section.inframe
-      .table-swipe
-        table
-          tfoot
-            tr.btns
-              th(colspan="2")
-                sup (スクロールします)
-              th
-                a 日程
-              th
-                a 状態
-              th
-                a 発言
-              th
-                a 残り
-              th
-                a 促
-              th
-                i.fa.fa-user
-              th
-                a 希望
-              th
-                a 発言
-              th
-                a 勝敗
-              th
-                a 陣営
-              th
-                a 役割
-              th
-                a 補足
-          tbody
-            tr
-              th.victim 記者
-              th.victim イアン
-              td.victim 6日
-              td.victim 襲撃
-              td.victim 97回
-              td.victim ∞
-              td.victim
-              td.victim
-                kbd うに
-              td.victim
-                kbd 村人
-              td.HUMAN 敗北
-              td.HUMAN 村人陣営
-              td.HUMAN 村人
-              td.HUMAN
-            tr
-              th.live 粉ひき
-              th.live ケヴィン
-              td.live
-              td.live 生存者
-              td.live 54回
-              td.live ∞
-              td.live
-              td.live
-                kbd 魚屋
-              td.live
-                kbd 村人
-              td.WOLF 勝利
-              td.WOLF 人狼陣営
-              td.WOLF 人狼
-              td.WOLF
-            tr
-              th.executed 教え子
-              th.executed シメオン
-              td.executed 4日
-              td.executed 処刑
-              td.executed 54回
-              td.executed ∞
-              td.executed
-              td.executed
-                kbd namba
-              td.executed
-                kbd
-              td.EVIL 敗北
-              td.EVIL 村人陣営
-              td.EVIL 占い師
-              td.EVIL
-            tr
-              th.suddendead 教え子
-              th.suddendead シメオン
-              td.suddendead 4日
-              td.suddendead 突然死
-              td.suddendead 54回
-              td.suddendead ∞
-              td.suddendead
-              td.suddendead
-                kbd ななころ
-              td.suddendead
-                kbd
-              td.EVIL 敗北
-              td.EVIL 村人陣営
-              td.EVIL 占い師
-              td.EVIL
-            tr
-              th.mob 教え子
-              th.mob シメオン
-              td.mob
-              td.mob 見物人
-              td.mob 54回
-              td.mob ∞
-              td.mob
-              td.mob
-                kbd ななころ
-              td.mob
-                kbd
-              td.NONE 敗北
-              td.NONE 見物人
-              td.NONE 見物人
-              td.NONE
+      potofs
     section.inframe
       h6
         | 参照されている
@@ -124,10 +15,10 @@
   .sideframe
     .inframe
       .icons
-        i.fa.fa-3x.fa-cog.fa-spin
-        i.fa.fa-3x.fa-spinner.fa-spin
-        i.fa.fa-3x.fa-user
-        i.fa.fa-3x.fa-sitemap
+        i.fa.fa-cog.fa-spin
+        i.fa.fa-spinner.fa-spin
+        i.fa.fa-user
+        i.fa.fa-sitemap
 
   .contentframe
     .inframe
@@ -139,8 +30,7 @@
         nuxt-link.button(to="/about") About page
       talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" face="c31")
         img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
-      report(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY")
-        img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
+      report(handle="WSAY") 一日目
       post(:write_at="1494567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY")
         nuxt-link.button(to="/about") About page
       talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32")
@@ -159,3 +49,18 @@
         | ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
 
 </template>
+
+<script lang="coffee">
+{ Collection, Model, Query, Rule } = require "~components/models/memory-record"
+
+require '~components/models/sow'
+
+Collection.potof.merge [
+  { _id: "demo-0-5", face_id: "c29", live: "victim", side: "HUMAN", job: "記者", user: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+  { _id: "demo-0-4", face_id: "c90", live: "live", side: "WOLF", job: "粉ひき", user: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+  { _id: "demo-0-3", face_id: "c70", live: "executed", side: "EVIL", job: "腐女子", user: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
+  { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", user: "ななころ", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
+  { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", user: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
+]
+
+</script>

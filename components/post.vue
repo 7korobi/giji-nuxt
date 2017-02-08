@@ -4,8 +4,8 @@ module.exports = require("~components/chat.coffee").component_class()
 <style lang="stylus" scoped>
 
 .post
-  padding:    2px 12px 2px   4px
-  margin:   0    0   6px 107px
+  padding-right: 12px
+  margin 0 0 6px 107px
 
 </style>
 

@@ -1,13 +1,15 @@
 @import "./_theme.styl"
 
-palette(links, black, white)
-palette(btns,  black, white)
+$border = #333
+
+palette(links, black, white, $border)
+palette(btns,  black, white, $border)
 for say in says
-  palette(say, glass, white)
+  palette(say, glass, white, $border)
 for stat in stats
-  palette(stat, light, dark)
+  palette(stat, light, dark, $border)
 for lost in losts
-  palette(lost, light, white)
+  palette(lost, light, white, $border)
 
 .chat
   .name

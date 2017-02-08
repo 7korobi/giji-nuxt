@@ -15,6 +15,5 @@ if process.BROWSER_BUILD
   "btn"
   "portrate"
   "potofs"
-  "potof"
 ].map (name)->
   Vue.component name, require "~components/#{name}.vue"

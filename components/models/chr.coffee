@@ -94,14 +94,6 @@ new Rule("chr_job").schema ->
       @chr_set_idx = order.indexOf @chr_set_id
 
 
-switch (require "~components/yaml/chr_tag.yml")?.constructor
-  when Array
-    console.log "Array"
-  when Object
-    console.log "Object"
-  else
-    console.log "else"
-
 Collection.tag.set  require "~components/yaml/chr_tag.yml"
 Collection.face.set require "~components/yaml/chr_face.yml"
 for key in order

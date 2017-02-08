@@ -26,8 +26,7 @@ says  = VSAY MSAY SSAY TSAY GSAY WSAY XSAY SPSAY AIM
 losts = suddendead leave
 stats = HUMAN EVIL WOLF LOVER HATER GURU PIXI LONEWOLF DISH NONE executed live mob suicide victim cursed feared droop
 
-palette($bgTheme, $backTheme, $pen)
-  $border = #333
+palette($bgTheme, $backTheme, $pen, $border)
   if glass == $backTheme
     $border = o[$bgTheme]
     $emboss = alpha($border, 0.7)

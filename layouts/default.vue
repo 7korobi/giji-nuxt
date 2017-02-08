@@ -91,7 +91,7 @@ module.exports =
 
       style: { theme, width, layout, font }
       use: {}
-      mode: if @$route.name == "index" then "full" else null
+      mode: if @$route.name == "demo" then "full" else null
       export_to: "progress"
       active: true
       y: 0
@@ -176,7 +176,10 @@ module.exports =
 
           m "p", [
             vils
-            m "a",{ attrs: { href }}, children
+            if href
+              m "a",{ attrs: { href }}, children
+            else
+              children
           ]
 
 </script>
