@@ -1,4 +1,4 @@
-
+<script lang="coffee">
 { Query } = require "./models/memory-record"
 module.exports =
   functional: true
@@ -34,3 +34,4 @@ module.exports =
     computed:
       face_url: -> Query.faces.hash[@face]?.path
       log_html: -> @log?.replace /\n/, "<br>"
+</script>

@@ -1,3 +1,4 @@
+<script lang="coffee">
 SECOND = 1000
 MINUTE = SECOND * 60
 HOUR = MINUTE * 60
@@ -127,3 +128,4 @@ module.exports =
     return if @lock
     clearInterval @interval
     @interval = null
+</script>
