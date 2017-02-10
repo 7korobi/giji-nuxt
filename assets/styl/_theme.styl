@@ -95,6 +95,10 @@ theme-mark($pen, $bg, $emboss, $border)
   input[type=reset]
     color: $pen
 
+  input,
+  textarea
+    background: $mark
+
   a, b, button,
   [title], [data-tooltip],
   input[type=checkbox],
@@ -117,6 +121,7 @@ theme-mark($pen, $bg, $emboss, $border)
 
   input[type=checkbox],
   input[type=radio]
+    background: $off
     &:checked
       background: $on
 

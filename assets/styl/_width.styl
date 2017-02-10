@@ -5,3 +5,17 @@ side($size, $min)
   @media screen and (max-width: $edge)
     width: $min
 
+width($side)
+  .writeframe,
+  .outframe
+  	.contentframe
+      margin: 0 $side
+
+  .summary
+    side($side, 120px)
+    &:hover
+        side(100% - $side, 120px)
+
+
+  .sideframe
+    side($side,  80px)

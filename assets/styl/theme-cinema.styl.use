@@ -35,6 +35,9 @@ for lost in losts
     background-attachment: scroll
     background-image: url("~assets/images/bg/film-L.png")
 
+.filmline
+  background-image: url("~assets/images/bg/film-border.png")
+
 body
   background: #764
 

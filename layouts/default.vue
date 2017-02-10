@@ -45,16 +45,10 @@ h2
       box-shadow:
         0 0 20px 3px lighten(rgba(2,92,32,0.5), 50%) inset
 
-.moon-theme,
-.wa-theme
-  .filmline
-    background-image: url(../assets/images/bg/film-wa-border.png)
-
 .filmline
   margin: 0
   height: 11px
   background-repeat: repeat-x
-  background-image: url(../assets/images/bg/film-border.png)
   .contentframe
     background-image: none
 
@@ -82,6 +76,9 @@ file = (path)->
 
 bg = (name)->
   file "/images/bg/#{name}"
+
+if document?
+  document.ontouchstart = ->
 
 module.exports =
   default:
@@ -242,13 +239,7 @@ div(:class="body_class")
         btn(v-model="style.theme" as="wa")   和の国
     .filmline
 
-  .writeframe
-    .contentframe
-      .inframe
-        talk(sign="ななころび" handle="SSAY" face="c71")
-          textarea.
-            ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
-
+  writeframe(:top="y", :show="true")
   .outframe
     .contentframe
       img.filmend(:src="filmend_url")

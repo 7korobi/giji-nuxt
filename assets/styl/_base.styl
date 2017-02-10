@@ -6,7 +6,6 @@
 .page-enter, .page-leave-active
   opacity: 0
 
-
 *
   -webkit-overflow-scrolling: touch
   -webkit-tap-highlight-color: transparent
@@ -26,6 +25,10 @@ body
 b
   font-weight: bold
 
+.btns
+  span
+    display: inline-block
+
 input[type=color],
 input[type=checkbox],
 input[type=radio],
@@ -40,7 +43,6 @@ a, b, kbd, code, input, select, button, textarea,
   user-select: none
   box-sizing: border-box
   vertical-align: baseline
-  text-align: center
   text-decoration: none
   margin:    0   2px
   padding:   2px
@@ -72,13 +74,12 @@ a, b, kbd, code, input, select, button, textarea,
     white-space: nowrap
     vertical-align: center
 
-.writeframe,
 .outframe,
 .summary,
 .contentframe,
 .inframe
   box-sizing: content-box
-  transition: left 250ms ease
+  transition: all 250ms ease
 
 .writeframe,
 .outframe
@@ -89,29 +90,32 @@ a, b, kbd, code, input, select, button, textarea,
 .sideframe
   position: fixed
   overflow-y: auto
-  z-index: 1
   pointer-events: none
+  z-index: 1
+  &:hover
+    z-index: 3
 
 .writeframe
-  bottom: 0
-  .contentframe
-    border-top: 1px solid
+  top: 0
 
 .summary
-  top:    0
   left:   0
-  border-right: 1px solid
+  bottom: 0
 
 .sideframe
   right:  0
   bottom: 0
-  border-left: 1px solid
 
 .inframe
   pointer-events: auto
 
 .pull-right
   float: right
+
+.slider
+  height: 25px
+  border-width: 0
+  background-color: rgba(0,0,0,0.5)
 
 kbd
   background-color: black
@@ -180,6 +184,11 @@ sup, sub
 
   .date
     text-align: right
+  
+  textarea
+    width: 98%
+    min-width: 98%
+    max-width: 98%
 
 .btns
   text-align: center
@@ -195,6 +204,9 @@ sup, sub
   border-radius: 9px
 
 .icons
+  width: 40px
+  font-size: 35px
+  margin: 0 0 0 auto
   overflow: hidden
   display: flex
   flex-direction: column-reverse

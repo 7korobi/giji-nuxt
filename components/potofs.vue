@@ -28,7 +28,7 @@
         th
           btn(v-model="sort" as="text", @toggle="reverse") 補足
     tbody
-      tr(v-for="o in potofs", :key="o._id", :json=" JSON.stringify(o) ")
+      tr(v-for="o in potofs", :key="o._id")
         th.r(:class="o.live") {{ o.job }}
         th.l(:class="o.live") {{ o.face.name }}
         td.r(:class="o.live") {{ count("日", o.date) }}

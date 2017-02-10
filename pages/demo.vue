@@ -1,10 +1,8 @@
 
 <template lang="pug">
 .outframe
-  aside.summary
-    section.inframe
-      potofs
-    section.inframe
+  .summary
+    .inframe
       h6
         | 参照されている
         i.fa.fa-pin
@@ -12,6 +10,9 @@
       h6
         | よく見ていた
         i.fa.fa-pin
+      h6 一日目の参加者
+    .inframe.hover
+      potofs
   .sideframe
     .inframe
       .icons

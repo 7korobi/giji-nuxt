@@ -38,5 +38,9 @@ for lost in losts
     background-attachment: local
     background-image: url("~assets/images/bg/film-wa-L.png")
 
+.filmline
+  background-image: url("~assets/images/bg/film-wa-border.png")
+
 body
   background: url("~assets/images/bg/nagatanienn.png")
+

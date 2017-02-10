@@ -26,4 +26,6 @@ for lost in losts
   border-width: 0 0 1px 18px
 
 
+.filmline
+  background-image: url("~assets/images/bg/film-border.png")
 
