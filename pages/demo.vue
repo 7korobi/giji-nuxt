@@ -13,9 +13,6 @@
       h6 一日目の参加者
     .inframe.hover
       potofs
-  .sideframe
-    .inframe
-      icons
 
   .contentframe
     .inframe

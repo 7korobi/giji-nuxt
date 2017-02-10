@@ -11,7 +11,8 @@ module.exports =
   default:
     props: ["top", "show"]
     data: ->
-      focus: false
+      @$store.commit "menu",
+        name: "comment"
       text: ""
 
     computed:
@@ -38,7 +39,7 @@ module.exports =
 </script>
 
 <template lang="pug">
-.writeframe(v-if="show", :style="frame_style")
+.writeframe(v-if=" $store.state.target == 'comment' ", :style="frame_style")
   .contentframe
     .inframe
       talk(sign="ななころび" handle="SSAY" face="c71")

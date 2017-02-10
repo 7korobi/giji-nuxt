@@ -82,7 +82,18 @@ if document?
 
 module.exports =
   default:
+    fetch: ({ store, params })->
+
     data: ->
+      @$store.commit "menus", [
+        { name: "cog",     ext: "spin" }
+        { name: "circle-o-notch",     ext: "spin" }
+        { name: "refresh", ext: "spin" }
+        { name: "spinner", ext: "pulse" }
+        { name: "user"    }
+        { name: "sitemap" }
+      ]
+
       css = @$cookie?.get("css") ? "cinema~wide~center~std"
       [theme, width, layout, font] = css.split("~")
 
@@ -240,6 +251,9 @@ div(:class="body_class")
     .filmline
 
   writeframe(:top="y", :show="true")
+  .sideframe
+    .inframe
+      icons(:list="$store.state.menus")
   .outframe
     .contentframe
       img.filmend(:src="filmend_url")
