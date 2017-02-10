@@ -6,22 +6,20 @@
 .page-enter, .page-leave-active
   opacity: 0
 
-*
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-  -webkit-overflow-scrolling: touch
-  -webkit-text-size-adjust: none
-  -webkit-font-smoothing: antialiased
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-
 html,
 body,
 p
   margin: 0
 
 body
-  word-wrap:  break-word
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  -webkit-overflow-scrolling: touch
+  -webkit-touch-callout: none
+  text-size-adjust: 100%
+  font-smooth: antialiased
+  user-select: none
   overflow-wrap: break-word
+  word-wrap:     break-word
 
 b
   font-weight: bold
@@ -129,7 +127,7 @@ input,
 select,
 button,
 textarea
-  -webkit-user-select: auto
+  user-select: auto
   padding: 4px
 
 label,
