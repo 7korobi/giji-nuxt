@@ -137,7 +137,7 @@ module.exports =
 
       filmend_url: ->
         switch @style.theme
-          when "wa"
+          when "wa", "moon"
             bg "film-wa-end.png"
           else
             bg "film-end.png"

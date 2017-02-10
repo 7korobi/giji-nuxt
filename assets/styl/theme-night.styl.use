@@ -19,7 +19,7 @@ for lost in losts
   .chat
     border-style: none none solid solid
     border-width: 0 0 1px 3px
-    margin:  0  7px 6px  -3px
+    margin:  0 7px 0 -3px
 
 .post
   border-style: none none solid solid
@@ -27,3 +27,20 @@ for lost in losts
 
 .filmline
   background-image: url("~assets/images/bg/film-border.png")
+
+.contentframe
+  background-position-x: right
+  background-position-y: top
+  background-attachment: fixed
+  background-repeat: no-repeat
+  background-image: url("~assets/images/bg/moon-red.png")
+  background-color: #220005
+
+  .inframe
+    background-repeat: repeat-y
+    background-position: left
+    background-attachment: scroll
+    background-image: url("~assets/images/bg/film-L.png")
+
+body
+  background-color: #201828

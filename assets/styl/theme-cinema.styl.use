@@ -11,8 +11,13 @@ for stat in stats
 for lost in losts
   palette(lost, light, white, $border)
 
-.talk .chat
-  border-radius: 0.5rem
+.talk
+  .chat
+    border-radius: 0.5rem
+    border-style: none
+    border-width: 0
+    margin:  0 7px 0 0
+
 
 .post
   border-style: dashed none dashed solid

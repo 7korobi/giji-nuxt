@@ -21,9 +21,6 @@ module.exports = require("~components/chat.vue").component_class()
     .portrate
       margin:  0 19px 0 16px
 
-  .chat
-    margin:  0 7px 0 0
-
 </style>
 
 <template lang="pug">
