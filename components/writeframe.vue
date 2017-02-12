@@ -9,7 +9,7 @@
 
 module.exports =
   default:
-    props: ["top", "show"]
+    props: ["top"]
     data: ->
       @$store.commit "menu",
         name: "comment"
@@ -23,14 +23,16 @@ module.exports =
         else
           3
 
-      frame_style: ->
+      show: ->
+        @$store.state.target == 'comment'
+      style: ->
         position: "absolute"
         transform: "translateY(#{@top}px)"
 
 </script>
 
 <template lang="pug">
-.writeframe(v-if=" $store.state.target == 'comment' ", :style="frame_style")
+.writeframe(v-if="show", :style="style")
   .contentframe
     .inframe
       talk(sign="ななころび" handle="SSAY" face="c71")

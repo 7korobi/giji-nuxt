@@ -1,7 +1,7 @@
 
 <template lang="pug">
 .outframe
-  .summary
+  .summary(v-if="menu_show")
     .inframe
       h6
         | 参照されている
@@ -56,5 +56,11 @@ Collection.potof.merge [
   { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", user: "ななころ", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
   { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", user: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "赤の聖痕者", text: "" }
 ]
+
+module.exports =
+  default:
+    computed:
+      menu_show: ->
+        'sitemap' == @$store.state.target
 
 </script>
