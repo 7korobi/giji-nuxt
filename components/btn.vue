@@ -4,9 +4,9 @@ module.exports =
   methods:
     tap: ->
       if @as == @value
-        @$emit('toggle', @as)
+        @$emit 'toggle', @as
       else
-        @$emit('input', @as)
+        @$emit 'input',  @as
 
 
   computed:

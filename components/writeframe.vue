@@ -24,17 +24,8 @@ module.exports =
           3
 
       frame_style: ->
-        if @show
-          position: "absolute"
-          transform: "translateY(#{@top}px)"
-        else
-          position: "fixed"
-          transform: ""
-      show_class: ->
-        { @show }
-    methods:
-      toggle_show: ->
-        @show = ! @show
+        position: "absolute"
+        transform: "translateY(#{@top}px)"
 
 </script>
 
