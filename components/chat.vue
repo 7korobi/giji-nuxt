@@ -29,9 +29,18 @@ module.exports =
     m chat.show, { attrs }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
-    data: -> {}
+    props: ["id", "write_at", "handle", "style", "log", "face", "head", "to", "sign"]
     computed:
       face_url: -> Query.faces.hash[@face]?.path
       log_html: -> @log?.replace /\n/, "<br>"
+      classname: ->
+        if process.BROWSER_BUILD
+          top = @$el.offsetTop
+          btm = @$el.clientHeight + top + 6
+          center = @$store.state.center
+          if btm < center
+            return [@handle, "readed"]
+          if top < center < btm
+            return [@handle, "center"]
+        [@handle]
 </script>

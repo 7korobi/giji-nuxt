@@ -27,7 +27,12 @@
       report(handle="WSAY") 一日目
       post(:write_at="1494567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY")
         nuxt-link.button(to="/about") About page
-      talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32")
+      post(:write_at="1494567890123", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
+        nuxt-link.button(to="/about") About page
+      talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32" log="ねろねろねろねろ")
+      post(:write_at="1434567890123", head="ねるねる" sign="ななころび" handle="SPSAY")
+        | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+      report(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="MASTER")
         img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
       talk(:write_at="1434567890123", sign="ななころび" handle="XSAY" face="c91")
         | 123456789012345678901234567890123456789012345678901234567890

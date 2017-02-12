@@ -3,6 +3,7 @@
 
 $border = #333
 
+palette(MASTER, black, white, $border)
 palette(links, black, white, $border)
 palette(btns,  black, white, $border)
 for say in says

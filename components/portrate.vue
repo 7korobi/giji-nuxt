@@ -8,12 +8,15 @@ module.exports =
   data: -> {}
   computed:
     has_html: ->
-      Object.keys(@$slots).length
+      !! @$slots.default
     face_url: ->
       Query.faces.hash[@face]?.path
 
 </script>
 <style lang="stylus" scoped>
+
+IMG
+  display: block
 
 .contentframe
   .portrate
@@ -28,14 +31,12 @@ module.exports =
       width:     90px
 
     IMG + .chrblank
-      margin: -4px 1px 3px 1px
+      margin: 0 1px 3px 1px
       padding: 0
 
     .chrblank
       margin: 0 auto
       p
-        height:       15px
-        font-size:    11px
         text-align:  center
         white-space: nowrap
 

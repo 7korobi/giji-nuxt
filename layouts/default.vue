@@ -32,6 +32,7 @@ module.exports =
       css = @$cookie?.get("css") ? "cinema~wide~std"
       [theme, width, font] = css.split("~")
       top: 0
+      center: 0
       use: {}
       style: { theme, width, font }
       welcome: @$route.name == 'demo'
@@ -62,6 +63,8 @@ module.exports =
 
     methods:
       poll: ->
+        if @top == scrollY
+          @$store.commit "center", scrollY + innerHeight / 2
         @top = scrollY
         requestAnimationFrame @poll
 

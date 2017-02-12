@@ -30,14 +30,17 @@ table.talk(:key="id")
       th
         portrate(:face="face")
       td
-        .chat(:key="id", :class="handle")
-          p.name(v-if="head")
-            | {{ head }}
+        .chat(:key="id", :class="classname")
+          p.name.center(v-if="head && (!! to)")
+            span.pull-right {{ to }}
+            | ▷
+            span.pull-left {{ head }}
+          p.name(v-if="head && (! to)")
             sup.pull-right(v-if="sign") {{ sign }}
-          p.text(v-if="log_html")
-            span(v-html="log_html")
+            | {{ head }}
           p.text
             slot
+              span(v-html="log")
           p.date(v-if="write_at")
             abbr {{ id }}
             timeago(:since="write_at")

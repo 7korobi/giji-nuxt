@@ -108,6 +108,22 @@ module.exports =
     vertical-align: top
     padding: 0 3px
 
+#welcome
+  background-size:  cover
+  background-image: url(../assets/images/bg/fhd-giji.png)
+  .btns
+    background-color: rgba(77, 78, 70, 0.9)
+
+.filmline
+  margin: 0
+  height: 11px
+  background-repeat: repeat-x
+  .contentframe
+    background-image: none
+
+.links
+  white-space: pre
+
 h2
   height: 100px
   margin:   0
@@ -130,16 +146,4 @@ h2
       box-shadow:
         0 0 20px 3px lighten(rgba(2,92,32,0.5), 50%) inset
 
-.filmline
-  margin: 0
-  height: 11px
-  background-repeat: repeat-x
-  .contentframe
-    background-image: none
-
-#welcome
-  background-size:  cover
-  background-image: url(../assets/images/bg/fhd-giji.png)
-  .btns
-    background-color: rgba(77, 78, 70, 0.9)
 </style>

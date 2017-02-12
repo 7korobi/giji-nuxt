@@ -14,7 +14,7 @@ o.HATER = #aaa
 o.caution = o.suddendead = o.leave = #666
 
 o.btns = #4d4e46
-o.links = #000
+o.links = o.MASTER = #022
 
 
 dark  = #000
@@ -44,7 +44,7 @@ palette($bgTheme, $backTheme, $pen, $border)
 
   if black == $backTheme
     $bg = o[$bgTheme]
-    $emboss = darken($bg, 40%)
+    $emboss = lighten($bg, 20%)
 
   .{$bgTheme}
     theme-block($pen, $bg, $emboss, $border)

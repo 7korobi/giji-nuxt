@@ -8,18 +8,23 @@ module.exports = require("~components/chat.vue").component_class()
   border-width: 4px
   margin: 0 -8px 6px -8px
   padding: 1px 16px
+  .name
+    margin-left: 117px
 
 </style>
 
 <template lang="pug">
-.chat.report(:key="id", :class="handle")
-  p.name(v-if="head")
-    | {{ head }}
+.chat.report(:key="id", :class="classname")
+  p.name.center(v-if="head && (!! to)")
+    span.pull-right {{ to }}
+    | ▷
+    span.pull-left {{ head }}
+  p.name(v-if="head && (! to)")
     sup.pull-right(v-if="sign") {{ sign }}
-  p.text(v-if="log_html")
-    span(v-html="log_html")
+    | {{ head }}
   p.text
     slot
+      span(v-html="log_html")
   p.date(v-if="write_at")
     abbr {{ id }}
     timeago(:since="write_at")

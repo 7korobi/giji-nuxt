@@ -8,7 +8,7 @@ body
 *
   border-color: $border
 
-
+palette(MASTER, black, white, $border)
 palette(links, black, white, $border)
 palette(btns,  black, white, $border)
 for say in says

@@ -3,10 +3,14 @@ import { Collection, Model, Query, Rule } from "~components/models/memory-record
 export const state = {
   menus: [],
   menu:  {},
-  target: null
+  target: null,
+  center: 0
 };
 
 export const mutations = {
+  center (state, y) {
+    state.center = y;
+  },
   menus (state, menus) {
   	menus.map((menu)=> {
   		state.menu[menu.name] = menu;
