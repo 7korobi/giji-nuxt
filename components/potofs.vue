@@ -27,6 +27,8 @@
           btn(v-model="sort" as="role", @toggle="reverse") 役割
         th
           btn(v-model="sort" as="text", @toggle="reverse") 補足
+        th
+
     tbody
       tr(v-for="o in potofs", :key="o._id")
         th.r(:class="o.live") {{ o.job }}
@@ -44,6 +46,7 @@
         td.c(:class="o.side") {{ o.side }}
         td.c(:class="o.side") {{ o.role }}
         td.l(:class="o.side") {{ o.text }}
+        td.last
 </template>
 
 
@@ -84,5 +87,7 @@ module.exports =
   text-align: left
 .c
   text-align: center
+.last
+  min-width: 1000px
 </style>
 

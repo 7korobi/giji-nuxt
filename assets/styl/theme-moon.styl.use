@@ -1,11 +1,12 @@
 @import "./_theme.styl"
+@import "./_theme_wood.styl"
 
 $border = #333
 
 palette(links, black, gold, $border)
 palette(btns,  black, gold, $border)
 for say in says
-  palette(say,  glass, gold, $border)
+  palette(say,  glass, white, $border)
 for stat in stats
   palette(stat, light, dark, $border)
 for lost in losts
@@ -25,22 +26,13 @@ for lost in losts
   border-style: none none solid solid
   border-width: 0 0 1px 18px
 
-.filmline
-  background-image: url("~assets/images/bg/film-wa-border.png")
-
 .contentframe
   background-position-x: right
   background-position-y: top
   background-attachment: fixed
   background-repeat: no-repeat
   background-image: url("~assets/images/bg/moon-red.png")
-  background-color: #201828
-
-  .inframe
-    background-repeat: repeat-y
-    background-position: left
-    background-attachment: scroll
-    background-image: url("~assets/images/bg/film-wa-L.png")
+  background-color: #223
 
 body
-  background-color: #220005
+  background-color: #301

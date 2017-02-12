@@ -35,7 +35,7 @@
         | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
       talk(:write_at="1434567890123", sign="ななころび" handle="GSAY" face="c111")
         | あいうえおかきくけこさしすせそたちつてとなにぬねのやゆよ
-      talk(:write_at="1434567890123", sign="ななころび" handle="VSAY" face="c121")
+      talk(:write_at="1434567890123", sign="ななころび" handle="VSAY" face="w30")
         | アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
       talk(:write_at="1434567890123", sign="ななころび" handle="SSAY" face="w11")
         | 霜草蒼蒼蟲切切村南村北行人絶獨出門前望野田月出蕎麥花如雪

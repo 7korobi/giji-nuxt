@@ -7,7 +7,10 @@ module.exports =
       required: true
   data: -> {}
   computed:
-    face_url: -> Query.faces.hash[@face]?.path
+    has_html: ->
+      Object.keys(@$slots).length
+    face_url: ->
+      Query.faces.hash[@face]?.path
 
 </script>
 <style lang="stylus" scoped>
@@ -36,15 +39,11 @@ module.exports =
         text-align:  center
         white-space: nowrap
 
-      .line2
-        min-height: 34.5px
-        height:     34.5px
-
 </style>
 
 <template lang="pug">
 .portrate
   img(:src="face_url" width="90" height="130")
-  .chrblank(v-if="$slots")
+  .chrblank(v-if="has_html")
     slot
 </template>

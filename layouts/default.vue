@@ -15,14 +15,6 @@
     vertical-align: top
     padding: 0 3px
 
-.right-layout
-  #export
-    margin: 0 0 0 auto
-
-.left-layout
-  #export
-    margin: 0 auto 0 0
-
 h2
   height: 100px
   margin:   0
@@ -67,8 +59,8 @@ h2
 </style>
 
 <script lang="coffee">
-require "~components/models/sow"
 { Query } = require "~components/models/memory-record"
+require "~components/models/sow"
 require "~components/vue.coffee"
 
 file = (path)->
@@ -77,8 +69,12 @@ file = (path)->
 bg = (name)->
   file "/images/bg/#{name}"
 
-if document?
-  document.ontouchstart = ->
+style_use = (key)-> ->
+  val = @style[key]
+  @use[key]?.unuse()
+  @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
+  @use[key].use()
+  val
 
 module.exports =
   default:
@@ -94,37 +90,28 @@ module.exports =
         { name: "sitemap" }
       ]
 
-      css = @$cookie?.get("css") ? "cinema~wide~center~std"
-      [theme, width, layout, font] = css.split("~")
+      css = @$cookie?.get("css") ? "cinema~wide~std"
+      [theme, width, font] = css.split("~")
 
-      style: { theme, width, layout, font }
+      y: 0
       use: {}
       mode: if @$route.name == "demo" then "full" else null
+      style: { theme, width, font }
       export_to: "progress"
-      active: true
-      y: 0
 
     created: ->
       return unless process.BROWSER_BUILD
-      @poll()
-
-    destroyed: ->
-      @active = false
+      document.ontouchstart = ->
+      @poll()    
 
     computed:
+      theme: style_use "theme"
+      width: style_use "width"
+      font:  style_use "font"
       body_class: ->
-        { theme, width, layout, font } = @style
-        str = [theme, width, layout, font].join("~")
+        { theme, width, font } = @
+        str = [theme, width, font].join("~")
         if process.BROWSER_BUILD
-          @use.width?.unuse()
-          @use.width = require "~assets/styl/width-#{width}.styl.use"
-          @use.width.use()
-          @use.font?.unuse()
-          @use.font = require "~assets/styl/font-#{font}.styl.use"
-          @use.font.use()
-          @use.theme?.unuse()
-          @use.theme = require "~assets/styl/theme-#{theme}.styl.use"
-          @use.theme.use()
           @$cookie.set "css", str,
             path: '/'
             expires: '7D'
@@ -143,16 +130,15 @@ module.exports =
             bg "film-end.png"
 
     methods:
+      poll: ->
+        @y = scrollY
+        requestAnimationFrame @poll
+
       btn: (val, chk)->
         if val == chk
           ["active"]
         else
           []
-      poll: ->
-        return unless process.BROWSER_BUILD
-        return unless @active
-        @y = scrollY
-        requestAnimationFrame? @poll
 
       slide: (to)->
         @export_to = to

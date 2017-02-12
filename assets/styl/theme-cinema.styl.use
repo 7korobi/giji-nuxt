@@ -1,6 +1,13 @@
 @import "./_theme.styl"
+@import "./_theme_film.styl"
 
 $border = #663
+body
+  background: #764
+
+*
+  border-color: $border
+
 
 palette(links, black, white, $border)
 palette(btns,  black, white, $border)
@@ -34,17 +41,3 @@ for lost in losts
   background-attachment: fixed
   background-image: url("~assets/images/bg/renga.png")
 
-  .inframe
-    background-repeat: repeat-y
-    background-position: left
-    background-attachment: scroll
-    background-image: url("~assets/images/bg/film-L.png")
-
-.filmline
-  background-image: url("~assets/images/bg/film-border.png")
-
-body
-  background: #764
-
-*
-  border-color: $border

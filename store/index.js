@@ -1,4 +1,4 @@
-import { Collection, Model, Query, Rule } from "~components/models/memory-record"
+import { Collection, Model, Query, Rule } from "~components/models/memory-record";
 
 export const state = {
   menus: [],
@@ -22,3 +22,4 @@ export const mutations = {
     state.target = name;
   }
 };
+

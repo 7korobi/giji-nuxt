@@ -1,4 +1,5 @@
 @import "./_theme.styl"
+@import "./_theme_film.styl"
 
 $border = #333
 
@@ -25,9 +26,6 @@ for lost in losts
   border-style: none none solid solid
   border-width: 0 0 1px 18px
 
-.filmline
-  background-image: url("~assets/images/bg/film-border.png")
-
 .contentframe
   background-position-x: right
   background-position-y: top
@@ -35,12 +33,6 @@ for lost in losts
   background-repeat: no-repeat
   background-image: url("~assets/images/bg/moon-red.png")
   background-color: #220005
-
-  .inframe
-    background-repeat: repeat-y
-    background-position: left
-    background-attachment: scroll
-    background-image: url("~assets/images/bg/film-L.png")
 
 body
   background-color: #201828

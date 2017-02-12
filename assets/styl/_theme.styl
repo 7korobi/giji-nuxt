@@ -29,11 +29,9 @@ stats = HUMAN EVIL WOLF LOVER HATER GURU PIXI LONEWOLF DISH NONE executed live m
 palette($bgTheme, $backTheme, $pen, $border)
   if glass == $backTheme
     $border = o[$bgTheme]
-    $emboss = alpha($border, 0.7)
-    $bg = alpha(complement($border), 0.2)
-    if SSAY == $bgTheme
-      $border = #ccc
-    $pen = mix($border, $pen, 40%)
+    $emboss = alpha($border, 1)
+    $bg = alpha(complement($border), 0.4)
+    $pen = mix($border, $pen, 20%)
 
   if light == $backTheme
     $bg = o[$bgTheme]
