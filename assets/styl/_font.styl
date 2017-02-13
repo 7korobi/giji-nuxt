@@ -1,3 +1,5 @@
+@import "./_width.styl"
+
 inline($base, $inline, $family)
   font-family: $family
   font-size:   $base
@@ -8,6 +10,8 @@ font($small, $base, $family)
   $pad    = $base / 3
   $block  = $base * 1.40
   $inline = $base * 1.30
+
+  width($base, 30 * $base + 120)
 
   sup
     vertical-align: $small *  0.5

@@ -29,12 +29,12 @@ module.exports =
         { name: "sitemap" }
       ]
 
-      css = @$cookie?.get("css") ? "cinema~wide~std"
-      [theme, width, font] = css.split("~")
+      css = @$cookie?.get("css") ? "cinema~std"
+      [theme, font] = css.split("~")
       top: 0
       center: 0
       use: {}
-      style: { theme, width, font }
+      style: { theme, font }
       welcome: @$route.name == 'demo'
 
     created: ->
@@ -44,10 +44,9 @@ module.exports =
 
     computed:
       theme: style_use "theme"
-      width: style_use "width"
       font:  style_use "font"
       body_class: ->
-        str = [@theme, @width, @font].join("~")
+        str = [@theme, @font].join("~")
         if process.BROWSER_BUILD
           @$cookie.set "css", str,
             path: '/'
@@ -78,11 +77,6 @@ div(:class="body_class")
         btn(v-model="style.font" as="novel") 明朝
         btn(v-model="style.font" as="std") ゴシック
         btn(v-model="style.font" as="small") 繊細
-
-      span.width
-        btn(v-model="style.width" as="full") 最大
-        btn(v-model="style.width" as="wide") 広域
-        btn(v-model="style.width" as="std")  狭域
 
       span.theme
         btn(v-model="style.theme" as="cinema") 煉瓦

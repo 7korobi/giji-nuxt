@@ -29,9 +29,9 @@
   },
   "scripts": {
     "webpack": "webpack --color --config config/webpack/dev.js",
-    "dev": "HOST=0.0.0.0 PORT=3000 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "HOST=0.0.0.0 PORT=3000 nuxt start",
+    "start": "nuxt start",
     "generate": "nuxt generate"
   }
 }

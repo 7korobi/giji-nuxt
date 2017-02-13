@@ -1,3 +1,0 @@
-@import "./_width.styl"
-
-width( 15% )
