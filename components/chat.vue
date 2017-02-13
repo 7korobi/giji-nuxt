@@ -13,7 +13,7 @@ module.exports =
     attrs =
       id: id
       write_at: chat.write_at
-      style:    chat.style
+      deco:     chat.deco
       log:      chat.log
 
     if o = chat.potof
@@ -29,7 +29,7 @@ module.exports =
     m chat.show, { attrs }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "style", "log", "face", "head", "to", "sign"]
+    props: ["id", "write_at", "handle", "deco", "log", "face", "head", "to", "sign"]
     computed:
       face_url: -> Query.faces.hash[@face]?.path
       log_html: -> @log?.replace /\n/, "<br>"
@@ -39,8 +39,10 @@ module.exports =
           btm = @$el.clientHeight + top + 6
           center = @$store.state.center
           if btm < center
-            return [@handle, "readed"]
+            return [@handle, "old"]
           if top < center < btm
-            return [@handle, "center"]
+            return [@handle, "focus"]
+          if btm < center
+            return [@handle, "future"]
         [@handle]
 </script>

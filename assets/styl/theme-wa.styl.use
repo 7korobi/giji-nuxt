@@ -8,7 +8,8 @@ body
 *
   border-color: $border
 
-palette(MASTER, black, white, $border)
+palette(MAKER, glass, white, $border)
+palette(ADMIN, glass, white, $border)
 palette(links, black, gold, $border)
 palette(btns,  black, gold, $border)
 for say in says

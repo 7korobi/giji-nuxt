@@ -38,7 +38,7 @@ table.talk(:key="id")
           p.name(v-if="head && (! to)")
             sup.pull-right(v-if="sign") {{ sign }}
             | {{ head }}
-          p.text
+          p.text(:class="deco")
             slot
               span(v-html="log")
           p.date(v-if="write_at")

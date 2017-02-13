@@ -3,7 +3,8 @@
 
 $border = #333
 
-palette(MASTER, black, white, $border)
+palette(MAKER, glass, white, $border)
+palette(ADMIN, glass, white, $border)
 palette(links, black, white, $border)
 palette(btns,  black, white, $border)
 for say in says
@@ -28,6 +29,9 @@ for lost in losts
   border-width: 0 0 1px 18px
 
 .contentframe
+  background-color: #301
+
+body
   background-position-x: right
   background-position-y: top
   background-attachment: fixed
@@ -35,5 +39,3 @@ for lost in losts
   background-image: url("~assets/images/bg/moon-red.png")
   background-color: #220005
 
-body
-  background-color: #201828

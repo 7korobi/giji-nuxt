@@ -18,33 +18,35 @@
     .inframe
       br
       br
-      report(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY")
+      report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" deco="mono")
         img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
-      post(:write_at="1494567890123", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY")
+      post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY")
         nuxt-link.button(to="/about") About page
-      talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" face="c31")
+      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" face="c31")
         img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
-      report(handle="WSAY") 一日目
-      post(:write_at="1494567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY")
+      report(handle="WSAY" deco="center") 一日目
+      post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" deco="mono")
         nuxt-link.button(to="/about") About page
-      post(:write_at="1494567890123", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
+      post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
         nuxt-link.button(to="/about") About page
-      talk(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32" log="ねろねろねろねろ")
-      post(:write_at="1434567890123", head="ねるねる" sign="ななころび" handle="SPSAY")
+      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32" log="ねろねろねろねろ")
+      post(:write_at="now - 24 * 3600000", head="ねるねる" sign="ななころび" handle="SPSAY" deco="head")
         | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      report(:write_at="1504567890123", head="ねるねるねるね ねる" sign="ななころび" handle="MASTER")
-        img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
-      talk(:write_at="1434567890123", sign="ななころび" handle="XSAY" face="c91")
+      report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="MAKER")
+        | 貴様、栃木か、栃木の工作員か！
+      report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="ADMIN")
+        | 貴様、栃木か、栃木の工作員か！
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" face="c91")
         | 123456789012345678901234567890123456789012345678901234567890
-      talk(:write_at="1434567890123", sign="ななころび" handle="SPSAY" face="c101")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face="c101")
         | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      talk(:write_at="1434567890123", sign="ななころび" handle="GSAY" face="c111")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="GSAY" face="c111")
         | あいうえおかきくけこさしすせそたちつてとなにぬねのやゆよ
-      talk(:write_at="1434567890123", sign="ななころび" handle="VSAY" face="w30")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="VSAY" face="w30")
         | アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
-      talk(:write_at="1434567890123", sign="ななころび" handle="SSAY" face="w11")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face="w11")
         | 霜草蒼蒼蟲切切村南村北行人絶獨出門前望野田月出蕎麥花如雪
-      talk(:write_at="1434567890123", sign="ななころび" handle="SSAY" face="c71")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face="c71")
         | ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
 
 </template>
@@ -65,6 +67,8 @@ Collection.potof.merge [
 module.exports =
   default:
     computed:
+      now: ->
+        Date.now()
       menu_show: ->
         'sitemap' == @$store.state.target
 

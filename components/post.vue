@@ -18,7 +18,7 @@ module.exports = require("~components/chat.vue").component_class()
   p.name(v-if="head && (! to)")
     sup.pull-right(v-if="sign") {{ sign }}
     | {{ head }}
-  p.text
+  p.text(:class="deco")
     slot
       span(v-html="log_html")
   p.date

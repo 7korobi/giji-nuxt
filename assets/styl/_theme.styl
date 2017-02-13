@@ -5,7 +5,7 @@ o.TSAY = o.HUMAN = o.DISH = #a97
 o.GSAY = o.executed = #bbd
 o.WSAY = o.WOLF = o.suicide = o.victim = o.cursed = o.feared = o.droop = #a55
 o.XSAY = o.EVIL = #9a7
-o.SPSAY = o.AIM = o.LOVER = #dcb
+o.SPSAY = o.AIM = o.LOVER = #cba
 o.AIM =   #dcb
 
 o.LONEWOLF = o.PIXI = o.GURU = #a9d
@@ -14,8 +14,9 @@ o.HATER = #aaa
 o.caution = o.suddendead = o.leave = #666
 
 o.btns = #4d4e46
-o.links = o.MASTER = #022
-
+o.links = #000
+o.MAKER = #CCF
+o.ADMIN = #C99
 
 dark  = #000
 black = #222
@@ -28,10 +29,10 @@ stats = HUMAN EVIL WOLF LOVER HATER GURU PIXI LONEWOLF DISH NONE executed live m
 
 palette($bgTheme, $backTheme, $pen, $border)
   if glass == $backTheme
-    $border = o[$bgTheme]
-    $emboss = alpha($border, 1)
-    $bg = alpha(complement($border), 0.4)
-    $pen = mix($border, $pen, 20%)
+    $pen    = saturate(  o[$bgTheme], 30%)
+    $emboss = desaturate(o[$bgTheme], 30%)
+    $border = $pen
+    $bg = mix(complement($pen), #000, 30%)
 
   if light == $backTheme
     $bg = o[$bgTheme]
