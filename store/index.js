@@ -4,10 +4,16 @@ export const state = {
   menus: [],
   menu:  {},
   target: null,
-  center: 0
+  center: 0,
+  focus: {
+    chat: {}
+  }
 };
 
 export const mutations = {
+  chat (state, id) {
+    state.focus.chat = Query.chats.hash[id] || {};
+  },
   center (state, y) {
     state.center = y;
   },

@@ -42,6 +42,6 @@ table.talk(:key="id")
             slot
               span(v-html="log")
           p.date(v-if="write_at")
-            abbr {{ id }}
+            abbr {{ anker }}
             timeago(:since="write_at")
 </template>

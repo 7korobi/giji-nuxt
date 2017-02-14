@@ -88,6 +88,7 @@ div(:class="body_class")
   writeframe(:top="top")
   .sideframe
     .inframe
+      post(:id="$store.state.focus.chat.id" log="")
       icons(:list="$store.state.menus")
   .outframe
     .contentframe

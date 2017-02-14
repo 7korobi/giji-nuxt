@@ -23,7 +23,7 @@ new Rule("chat").schema ->
       @id ?= @_id
       [book_id, part_idx, phase_idx, @idx] = @id.split('-')
       if @section_id
-        [                ..., section_idx] = @section_id.split('-')
+        [..., section_idx] = @section_id.split('-')
       @_id      = @id
       @part_id  = [book_id, part_idx].join('-')
       @phase_id = [book_id, part_idx, phase_idx].join('-')

@@ -26,6 +26,6 @@ module.exports = require("~components/chat.vue").component_class()
     slot
       span(v-html="log_html")
   p.date(v-if="write_at")
-    abbr {{ id }}
+    abbr {{ anker }}
     timeago(:since="write_at")
 </template>

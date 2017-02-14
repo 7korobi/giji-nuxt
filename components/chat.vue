@@ -1,5 +1,5 @@
 <script lang="coffee">
-{ Query } = require "./models/memory-record"
+{ Query, Collection } = require "./models/memory-record"
 module.exports =
   functional: true
   props:
@@ -19,7 +19,7 @@ module.exports =
     if o = chat.potof
       head = "#{o.job} #{o.name}" if o.name || o.job
       Object.assign attrs,
-        face: o.face._id
+        face: o.face_id
         sign: o.sign
         head: head
     if o = chat.phase
@@ -30,9 +30,21 @@ module.exports =
 
   component_class: ->
     props: ["id", "write_at", "handle", "deco", "log", "face", "head", "to", "sign"]
+
     computed:
+      chat: -> Query.chats.hash[id] ? {}
       face_url: -> Query.faces.hash[@face]?.path
-      log_html: -> @log?.replace /\n/, "<br>"
+      anker: ->
+        if @id
+          [@book_id, part_idx, phase_idx, chat_idx] = @id.split("-")
+          @part_id = "#{@book_id}-#{part_idx}"
+          @phase_id = "#{@part_id}-#{phase_idx}"
+          "SS#{chat_idx}"
+
+      log_html: ->
+        return "" unless @log
+        @log
+        .replace /\n/, "<br>"
       classname: ->
         if process.BROWSER_BUILD && @$el?
           top = @$el.offsetTop
@@ -41,6 +53,7 @@ module.exports =
           if btm < center
             return [@handle, "old"]
           if top < center < btm
+            @$store.commit "chat", @id
             return [@handle, "focus"]
           if btm < center
             return [@handle, "future"]

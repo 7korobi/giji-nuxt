@@ -3,12 +3,12 @@ module.exports =
   props: ["list"]
   methods:
     menu_class: ({name, ext})->
-      active =
-        if @$store.state.target == name
-          "active"
-        else
-          ""
-      ["fa-#{name}", "fa-#{ext}", active]
+      ary = ["fa-#{name}"]
+      if ext
+        ary.push "fa-#{ext}"
+      if @$store.state.target == name
+        ary.push "active"
+      ary
     menu_tap: ({name})->
       @$store.commit "menu_toggle", name
 </script>
