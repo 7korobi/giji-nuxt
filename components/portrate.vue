@@ -2,7 +2,7 @@
 { Query } = require "./models/memory-record"
 module.exports =
   props:
-    face:
+    face_id:
       type: String
       required: true
   data: -> {}
@@ -10,7 +10,7 @@ module.exports =
     has_html: ->
       !! @$slots.default
     face_url: ->
-      Query.faces.hash[@face]?.path
+      Query.faces.hash[@face_id]?.path
 
 </script>
 <style lang="stylus" scoped>

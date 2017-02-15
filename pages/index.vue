@@ -5,14 +5,13 @@
       br
       br
       post(:write_at="Date.now()", handle="SSAY")
-        nuxt-link.button(to="/about") About page
+        nuxt-link.button(to="/timeago") 時計 page
       post(:write_at="Date.now()", handle="SSAY")
         nuxt-link.button(to="/demo") Demo page
 </template>
 <script lang="coffee">
 module.exports =
 	fetch: ({ store, params })->
-		console.log { store, params }
 	data: ({ store, req, res })->
     a: 1
 </script>

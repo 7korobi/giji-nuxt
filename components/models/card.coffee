@@ -14,3 +14,29 @@ new Rule("card").schema ->
     @map_reduce: (o, emit)->
     constructor: ->
 
+
+new Rule("role").schema ->
+  class @model extends @model
+    @map_reduce: (o, emit)->
+    constructor: ->
+
+new Rule("trap").schema ->
+  @order "write_at"
+  @belongs_to "book"
+  @belongs_to "potof"
+
+  class @model extends @model
+    @map_reduce: (o, emit)->
+    constructor: ->
+
+new Rule("able").schema ->
+  @scope (all)->
+
+  class @model extends @model
+    @map_reduce: (o, emit)->
+    constructor: ->
+
+
+Collection.role.set require '~components/yaml/set_roles.yml'
+Collection.trap.set require '~components/yaml/set_traps.yml'
+Collection.able.set require '~components/yaml/set_ables.yml'

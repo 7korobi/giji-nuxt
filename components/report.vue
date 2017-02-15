@@ -22,9 +22,9 @@ module.exports = require("~components/chat.vue").component_class()
   p.name(v-if="head && (! to)")
     sup.pull-right(v-if="sign") {{ sign }}
     | {{ head }}
-  p.text(:class="deco")
+  p.text(:class="deco" v-if="$slots.default")
     slot
-      span(v-html="log_html")
+  p.text(:class="deco" v-html="log_html" v-else)
   p.date(v-if="write_at")
     abbr {{ anker }}
     timeago(:since="write_at")

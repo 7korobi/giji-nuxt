@@ -119,10 +119,7 @@ module.exports =
       @tick
 
   render: (m)->
-    m 'time',
-      attrs:
-        datetime: new Date @since
-    , @timeago
+    m 'time', @timeago
 
   beforeDestroy: ->
     return if @lock

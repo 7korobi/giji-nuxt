@@ -17,10 +17,8 @@ style_use = (key)-> ->
 
 module.exports =
   default:
-    fetch: ({ store, params })->
-
     data: ->
-      @$store.commit "menus", [
+      @$store.commit "menu/set", [
         { name: "cog",     ext: "spin" }
         { name: "circle-o-notch",     ext: "spin" }
         { name: "refresh", ext: "spin" }
@@ -32,7 +30,8 @@ module.exports =
       css = @$cookie?.get("css") ? "cinema~std"
       [theme, font] = css.split("~")
       top: 0
-      center: 0
+      height: 0
+      width:  0
       use: {}
       style: { theme, font }
       welcome: @$route.name == 'demo'
@@ -59,12 +58,16 @@ module.exports =
             bg "film-wa-end.png"
           else
             bg "film-end.png"
+      center: ->
+        @$store.commit "menu/center", @top + @height / 2
 
     methods:
       poll: ->
         if @top == scrollY
-          @$store.commit "center", scrollY + innerHeight / 2
+          @center
         @top = scrollY
+        @width = innerWidth
+        @height = innerHeight
         requestAnimationFrame @poll
 
 </script>
@@ -88,8 +91,8 @@ div(:class="body_class")
   writeframe(:top="top")
   .sideframe
     .inframe
-      post(:id="$store.state.focus.chat.id" log="")
-      icons(:list="$store.state.menus")
+      post(:id="$store.state.book.chat._id" log="")
+      icons(:list="$store.state.menu.list")
   .outframe
     .contentframe
       img.filmend(:src="filmend_url")

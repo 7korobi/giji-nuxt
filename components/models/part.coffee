@@ -9,6 +9,6 @@ new Rule("part").schema ->
 
   class @model extends @model
     constructor: ->
-      [book_id, @idx] = @id.split('-')
+      @id ?= @_id
       @_id = @id
-      console.warn @
+      [@book_id, @idx] = @id.split('-')

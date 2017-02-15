@@ -1,17 +1,10 @@
-<style lang="stylus" scoped>
-.writeframe
-  box-sizing: content-box
-  .contentframe
-    background-attachment: scroll
-</style>
-
 <script lang="coffee">
 
 module.exports =
   default:
     props: ["top"]
     data: ->
-      @$store.commit "menu",
+      @$store.commit "menu/add",
         name: "comment"
       text: ""
 
@@ -24,7 +17,7 @@ module.exports =
           3
 
       show: ->
-        @$store.state.target == 'comment'
+        @$store.state.menu.target == 'comment'
       style: ->
         position: "absolute"
         transform: "translateY(#{@top}px)"
@@ -35,7 +28,7 @@ module.exports =
 .writeframe(v-if="show", :style="style")
   .contentframe
     .inframe
-      talk(sign="ななころび" handle="SSAY" face="c71")
+      talk(sign="ななころび" handle="SSAY" face_id="c71")
         textarea(v-model="text", :rows="text_rows")
       br
 </template>

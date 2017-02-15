@@ -5,6 +5,7 @@ new Rule("chat").schema ->
   @belongs_to "book"
   @belongs_to "part"
   @belongs_to "phase"
+  @belongs_to "section"
   @belongs_to "potof"
 
   # props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
@@ -21,10 +22,7 @@ new Rule("chat").schema ->
 
     constructor: ->
       @id ?= @_id
-      [book_id, part_idx, phase_idx, @idx] = @id.split('-')
-      if @section_id
-        [..., section_idx] = @section_id.split('-')
-      @_id      = @id
-      @part_id  = [book_id, part_idx].join('-')
-      @phase_id = [book_id, part_idx, phase_idx].join('-')
-
+      @_id = @id
+      [@book_id, part_idx, phase_idx, @idx] = @id.split('-')
+      @part_id  = [@book_id, part_idx].join('-')
+      @phase_id = [@book_id, part_idx, phase_idx].join('-')

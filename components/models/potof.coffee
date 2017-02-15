@@ -12,13 +12,20 @@ new Rule("potof").schema ->
   class @model extends @model
     constructor: ->
       @id ?= @_id
-      [book_id, part_idx] = @id.split('-')
       @_id = @id
-      @part_id  = [book_id, part_idx].join('-')
+      [@book_id, part_idx, @idx] = @id.split('-')
+      @part_id  = [@book_id, part_idx].join('-')
+
+      if @face?
+        { job, name } = @face
+
+      @head = [
+        @job  || job
+        @name || name
+      ].join(" ")
 
       switch @live
         when "suddendead", "leave"
           @win = ""
         else
           @win = "参加"
-

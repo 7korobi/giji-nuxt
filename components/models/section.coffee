@@ -1,6 +1,6 @@
 { Collection, Model, Query, Rule } = require "./memory-record"
 
-new Rule("phase").schema ->
+new Rule("section").schema ->
   @order "write_at"
   @belongs_to "book"
   @belongs_to "part"
@@ -14,3 +14,4 @@ new Rule("phase").schema ->
       @_id = @id
       [@book_id, part_idx, @idx] = @id.split('-')
       @part_id = [@book_id, part_idx].join('-')
+      @label ?= @idx

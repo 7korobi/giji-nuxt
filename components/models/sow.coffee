@@ -55,9 +55,9 @@ welcome = (h)->
   祝！人狼議事１０周年！
 """
 
-  Collection.phase.set phases
-  Collection.potof.set potofs
-  Collection.chat.set  chats
+  Collection.phase.merge phases
+  Collection.potof.merge potofs
+  Collection.chat.merge  chats
 
 welcome
   "LOBBY-top-0":   "c20"

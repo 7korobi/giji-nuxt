@@ -10,6 +10,7 @@ module.exports =
   render: (m, ctx)->
     { id } = ctx.props
     chat = Query.chats.hash[id]
+    throw new Error "invalid id = #{id}" unless chat
     attrs =
       id: id
       write_at: chat.write_at
@@ -17,11 +18,11 @@ module.exports =
       log:      chat.log
 
     if o = chat.potof
-      head = "#{o.job} #{o.name}" if o.name || o.job
       Object.assign attrs,
-        face: o.face_id
+        face_id: o.face_id
         sign: o.sign
-        head: head
+        head: o.head
+
     if o = chat.phase
       Object.assign attrs,
         handle: o.handle
@@ -29,31 +30,31 @@ module.exports =
     m chat.show, { attrs }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "deco", "log", "face", "head", "to", "sign"]
+    props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     computed:
-      chat: -> Query.chats.hash[id] ? {}
-      face_url: -> Query.faces.hash[@face]?.path
+      chat: -> Query.chats.hash[@id]
+      face_url: -> Query.faces.hash[@face_id]?.path
       anker: ->
         if @id
           [@book_id, part_idx, phase_idx, chat_idx] = @id.split("-")
-          @part_id = "#{@book_id}-#{part_idx}"
+          @part_id  = "#{@book_id}-#{ part_idx}"
           @phase_id = "#{@part_id}-#{phase_idx}"
           "SS#{chat_idx}"
 
       log_html: ->
         return "" unless @log
         @log
-        .replace /\n/, "<br>"
+        .replace /\n/g, "<br>"
       classname: ->
-        if process.BROWSER_BUILD && @$el?
+        if process.BROWSER_BUILD &&  @$el?
           top = @$el.offsetTop
           btm = @$el.clientHeight + top + 6
-          center = @$store.state.center
+          center = @$store.state.menu.center
           if btm < center
             return [@handle, "old"]
           if top < center < btm
-            @$store.commit "chat", @id
+            @$store.commit "book/see", @id
             return [@handle, "focus"]
           if btm < center
             return [@handle, "future"]

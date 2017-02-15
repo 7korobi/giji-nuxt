@@ -28,7 +28,7 @@ table.talk(:key="id")
   tbody
     tr
       th
-        portrate(:face="face")
+        portrate(:face_id="face_id")
       td
         .chat(:key="id", :class="classname")
           p.name.center(v-if="head && (!! to)")
@@ -38,9 +38,9 @@ table.talk(:key="id")
           p.name(v-if="head && (! to)")
             sup.pull-right(v-if="sign") {{ sign }}
             | {{ head }}
-          p.text(:class="deco")
+          p.text(:class="deco" v-if="$slots.default")
             slot
-              span(v-html="log")
+          p.text(:class="deco" v-html="log_html" v-else)
           p.date(v-if="write_at")
             abbr {{ anker }}
             timeago(:since="write_at")

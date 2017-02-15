@@ -21,84 +21,83 @@
       chat(id="demo-0-1-24")
       chat(id="demo-0-1-25")
       report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" deco="mono")
-        img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY")
-        nuxt-link.button(to="/about") About page
-      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" face="c31")
+        nuxt-link.button(to="/timeago") About page
+      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="SSAY" face_id="c31")
         img.logo(src="../assets/images/logo.png" alt="Nuxt.js Logo")
-      report(handle="WSAY" deco="center") 一日目
+      report(handle="GSAY" deco="center") 一日目
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" deco="mono")
-        nuxt-link.button(to="/about") About page
+        nuxt-link.button(to="/timeago") About page
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
-        nuxt-link.button(to="/about") About page
-      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face="c32" log="ねろねろねろねろ")
+        nuxt-link.button(to="/timeago") About page
+      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face_id="c32" log="ねろねろねろねろ")
       post(:write_at="now - 24 * 3600000", head="ねるねる" sign="ななころび" handle="SPSAY" deco="head")
         | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
       report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="MAKER")
         | 貴様、栃木か、栃木の工作員か！
       report(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="ADMIN")
         | 貴様、栃木か、栃木の工作員か！
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" face="c91")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" face_id="c91")
         | 123456789012345678901234567890123456789012345678901234567890
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face="c101")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face_id="c101")
         | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="GSAY" face="c111")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="GSAY" face_id="c111")
         | あいうえおかきくけこさしすせそたちつてとなにぬねのやゆよ
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="VSAY" face="w30")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="VSAY" face_id="w30")
         | アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face="w11")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face_id="w11")
         | 霜草蒼蒼蟲切切村南村北行人絶獨出門前望野田月出蕎麥花如雪
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face="c71")
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SSAY" face_id="c71")
         | ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
 
 </template>
 
 <script lang="coffee">
-{ Collection, Model, Query, Rule } = require "~components/models/memory-record"
-
-require '~components/models/sow'
-
-Collection.potof.set [
-  { _id: "demo-0-6", face_id: "t05", live: "executed", side: "HUMAN", job: "開放的市民", user: "noko", date: 6, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
-  { _id: "demo-0-5", face_id: "c29", live: "victim", side: "HUMAN", job: "記者", user: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-  { _id: "demo-0-4", face_id: "c90", live: "live", side: "WOLF", job: "粉ひき", user: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-  { _id: "demo-0-3", face_id: "c70", live: "executed", side: "EVIL", job: "腐女子", user: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
-  { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", user: "ななころ", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
-  { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", user: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "赤の聖痕者", text: "" }
-]
-
-Collection.phase.set [
-  { _id: "demo-0-1", handle: "SSAY", label: "通常発言"}
-]
-
-Collection.chat.set
-  "demo-0-1-24":
-    potof_id: "demo-0-6"
-    write_at: Date.now()
-    show: "talk"
-    deco: null
-    log: """
-      ねっ、ねっ、これって降るかな？
-      やっぱ、降っちゃうやつかな、これ？
-      やった～、今度こそ３段いこうよ、３段！
-      まっててね～わたしのオ○フ～
-
-      [仰ぐように空に手をかざすと、雪が待ちきれないと言った表情で、少し前の流行歌を口ずさみはじめた]
-
-      すこ～しもさむくないわぁ～♪
-    """
-  "demo-0-1-25":
-    potof_id: "demo-0-6"
-    write_at: Date.now()
-    show: "talk"
-    deco: "head"
-    log: """
-      さむいにきまってんだろ！！
-    """
-
-
 module.exports =
   default:
+    fetch: ({ store, params })->
+      store.commit "book/spot",
+        book: { _id: "demo", label: "デモページ" }
+        part: { _id: "demo-0", label: "プロローグ" }
+        section: { _id: "demo-0-1" }
+
+      store.commit "book/phases", [
+        { _id: "demo-0-1", handle: "SSAY", label: "通常発言", idx: 26 }
+      ]
+      store.commit "book/potofs", [
+        { _id: "demo-0-6", face_id: "t05", live: "executed", side: "HUMAN", job: "開放的市民", user: "noko", date: 6, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
+        { _id: "demo-0-5", face_id: "c29", live: "victim", side: "HUMAN", job: "記者", user: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+        { _id: "demo-0-4", face_id: "c90", live: "live", side: "WOLF", job: "粉ひき", user: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+        { _id: "demo-0-3", face_id: "c70", live: "executed", side: "EVIL", job: "腐女子", user: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
+        { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", user: "ななころ", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
+        { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", user: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "赤の聖痕者", text: "" }
+      ]
+      store.commit "book/chats",
+        "demo-0-1-24":
+          potof_id: "demo-0-6"
+          write_at: Date.now()
+          show: "talk"
+          deco: null
+          log: """
+            ねっ、ねっ、これって降るかな？
+            やっぱ、降っちゃうやつかな、これ？
+            やった～、今度こそ３段いこうよ、３段！
+            まっててね～わたしのオ○フ～
+
+            [仰ぐように空に手をかざすと、雪が待ちきれないと言った表情で、少し前の流行歌を口ずさみはじめた]
+
+            すこ～しもさむくないわぁ～♪
+          """
+        "demo-0-1-25":
+          potof_id: "demo-0-6"
+          write_at: Date.now()
+          show: "talk"
+          deco: "head"
+          log: """
+            さむいにきまってんだろ！！
+          """
+      console.log "fetch book."
+
     computed:
       now: ->
         Date.now()
