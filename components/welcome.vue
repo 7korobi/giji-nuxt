@@ -1,16 +1,17 @@
 <script lang="coffee">
+env =
+  file: "http://s3-ap-northeast-1.amazonaws.com/giji-assets"
+
 
 { Query } = require "~components/models/memory-record"
 require "~components/models/sow"
-
-file = (path)->
-  "http://s3-ap-northeast-1.amazonaws.com/giji-assets" + path
 
 module.exports =
   default:
     props: ["top", "show"]
 
     data: ->
+      env: env
       export_to: "progress"
 
     computed:
@@ -30,7 +31,7 @@ module.exports =
           when "progress"
             Query.folders.hash[id].href
           when "finish"
-            file "/stories/all?folder=#{id}"
+            "#{env.file}/stories/all?folder=#{id}"
 
     components:
       sow:

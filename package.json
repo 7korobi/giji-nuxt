@@ -6,9 +6,11 @@
   "private": true,
   "dependencies": {
     "axios": "^0.15.3",
+    "body-parser": "^1.16.1",
     "coffee-loader": "^0.7",
     "coffee-script": "^1.12.3",
     "copy-webpack-plugin": "^4",
+    "express-session": "^1.15.1",
     "memory-record": "^0",
     "mongoose": "^4.8.1",
     "nuxt": "^0.9.8",
@@ -29,7 +31,7 @@
   },
   "scripts": {
     "webpack": "webpack --color --config config/webpack/dev.js",
-    "dev": "nuxt",
+    "dev": "coffee server.coffee",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
