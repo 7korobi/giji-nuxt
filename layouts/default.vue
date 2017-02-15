@@ -1,12 +1,6 @@
 <script lang="coffee">
 require "~components/vue.coffee"
 
-file = (path)->
-  "http://s3-ap-northeast-1.amazonaws.com/giji-assets" + path
-
-bg = (name)->
-  file "/images/bg/#{name}"
-
 style_use = (key)-> ->
   val = @style[key]
   return val unless process.BROWSER_BUILD
@@ -20,18 +14,18 @@ module.exports =
     data: ->
       @$store.commit "menu/set", [
         { name: "cog",     ext: "spin" }
-        { name: "circle-o-notch",     ext: "spin" }
+        { name: "circle-o-notch", ext: "spin" }
         { name: "refresh", ext: "spin" }
         { name: "spinner", ext: "pulse" }
         { name: "user"    }
         { name: "sitemap" }
       ]
 
-      css = @$cookie?.get("css") ? "cinema~std"
-      [theme, font] = css.split("~")
-      top: 0
-      height: 0
+      theme = "cinema"
+      font  = "std"
+      top:    0
       width:  0
+      height: 0
       use: {}
       style: { theme, font }
       welcome: @$route.name == 'demo'
@@ -39,11 +33,16 @@ module.exports =
     created: ->
       return unless process.BROWSER_BUILD
       document.ontouchstart = ->
+      if css = @$cookie.get "css"
+        [theme, font] = css.split "~"
+        @style = { theme, font }
       @poll()
 
     computed:
       theme: style_use "theme"
       font:  style_use "font"
+      center: ->
+        @$store.commit "menu/center", @top + @height / 2
       body_class: ->
         str = [@theme, @font].join("~")
         if process.BROWSER_BUILD
@@ -51,15 +50,6 @@ module.exports =
             path: '/'
             expires: '7D'
         str
-
-      filmend_url: ->
-        switch @theme
-          when "wa", "moon"
-            bg "film-wa-end.png"
-          else
-            bg "film-end.png"
-      center: ->
-        @$store.commit "menu/center", @top + @height / 2
 
     methods:
       poll: ->
@@ -91,11 +81,11 @@ div(:class="body_class")
   writeframe(:top="top")
   .sideframe
     .inframe
-      post(:id="$store.state.book.chat._id" log="")
+      post(:id="$store.state.book.chat_id" log="")
       icons(:list="$store.state.menu.list")
   .outframe
     .contentframe
-      img.filmend(:src="filmend_url")
+      .filmend
   nuxt
 
 </template>
@@ -107,4 +97,8 @@ div(:class="body_class")
 
 .filmend
   margin: -11px 0 0 -2px
+  height:  36px
+  width:  126px
+  display: inline-block
+
 </style>

@@ -42,3 +42,5 @@ for lost in losts
   background-attachment: fixed
   background-image: url("~assets/images/bg/renga.png")
 
+.filmend
+  background-image: url("~assets/images/bg/film-end.png")

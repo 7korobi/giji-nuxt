@@ -10,7 +10,8 @@ module.exports =
   render: (m, ctx)->
     { id } = ctx.props
     chat = Query.chats.hash[id]
-    throw new Error "invalid id = #{id}" unless chat
+
+    return [] unless chat
     attrs =
       id: id
       write_at: chat.write_at
@@ -33,14 +34,11 @@ module.exports =
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     computed:
-      chat: -> Query.chats.hash[@id]
       face_url: -> Query.faces.hash[@face_id]?.path
       anker: ->
         if @id
-          [@book_id, part_idx, phase_idx, chat_idx] = @id.split("-")
-          @part_id  = "#{@book_id}-#{ part_idx}"
-          @phase_id = "#{@part_id}-#{phase_idx}"
-          "SS#{chat_idx}"
+          chat = Query.chats.hash[@id]
+          "SS#{chat.idx}"
 
       log_html: ->
         return "" unless @log

@@ -6,9 +6,8 @@ require "./card"
 
 require "./part"
 require "./phase"
+require "./section"
 require "./chat"
-
-
 
 new Rule("book").schema ->
   @order "write_at"

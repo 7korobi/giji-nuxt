@@ -39,3 +39,5 @@ body
   background-image: url("~assets/images/bg/moon-red.png")
   background-color: #220005
 
+.filmend
+  background-image: url("~assets/images/bg/film-end.png")

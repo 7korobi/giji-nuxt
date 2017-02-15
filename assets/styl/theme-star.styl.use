@@ -38,3 +38,6 @@ body
   background-repeat: no-repeat
   background-image: url("~assets/images/bg/jupiter.png")
   background-color: #1A1A60
+
+.filmend
+  background-image: url("~assets/images/bg/film-end.png")

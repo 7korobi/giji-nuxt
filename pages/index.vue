@@ -11,7 +11,6 @@
 </template>
 <script lang="coffee">
 module.exports =
-	fetch: ({ store, params })->
-	data: ({ store, req, res })->
+  data: ({ store, req, res })->
     a: 1
 </script>

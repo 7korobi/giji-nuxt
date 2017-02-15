@@ -38,3 +38,6 @@ body
   background-repeat: no-repeat
   background-image: url("~assets/images/bg/moon-red.png")
   background-color: #301
+
+.filmend
+  background-image: url("~assets/images/bg/film-wa-end.png")

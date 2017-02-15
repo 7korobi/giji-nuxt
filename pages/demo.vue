@@ -53,55 +53,20 @@
 </template>
 
 <script lang="coffee">
+
 module.exports =
   default:
-    fetch: ({ store, params })->
-      store.commit "book/spot",
-        book: { _id: "demo", label: "デモページ" }
-        part: { _id: "demo-0", label: "プロローグ" }
-        section: { _id: "demo-0-1" }
+    created: ->
+      @$store.dispatch "book/server", "demo"
+      @$store.commit "book/client"
+      console.log "created"
 
-      store.commit "book/phases", [
-        { _id: "demo-0-1", handle: "SSAY", label: "通常発言", idx: 26 }
-      ]
-      store.commit "book/potofs", [
-        { _id: "demo-0-6", face_id: "t05", live: "executed", side: "HUMAN", job: "開放的市民", user: "noko", date: 6, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
-        { _id: "demo-0-5", face_id: "c29", live: "victim", side: "HUMAN", job: "記者", user: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-        { _id: "demo-0-4", face_id: "c90", live: "live", side: "WOLF", job: "粉ひき", user: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-        { _id: "demo-0-3", face_id: "c70", live: "executed", side: "EVIL", job: "腐女子", user: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
-        { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", user: "ななころ", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
-        { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", user: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "赤の聖痕者", text: "" }
-      ]
-      store.commit "book/chats",
-        "demo-0-1-24":
-          potof_id: "demo-0-6"
-          write_at: Date.now()
-          show: "talk"
-          deco: null
-          log: """
-            ねっ、ねっ、これって降るかな？
-            やっぱ、降っちゃうやつかな、これ？
-            やった～、今度こそ３段いこうよ、３段！
-            まっててね～わたしのオ○フ～
-
-            [仰ぐように空に手をかざすと、雪が待ちきれないと言った表情で、少し前の流行歌を口ずさみはじめた]
-
-            すこ～しもさむくないわぁ～♪
-          """
-        "demo-0-1-25":
-          potof_id: "demo-0-6"
-          write_at: Date.now()
-          show: "talk"
-          deco: "head"
-          log: """
-            さむいにきまってんだろ！！
-          """
-      console.log "fetch book."
+    mounted: ->
 
     computed:
       now: ->
         Date.now()
       menu_show: ->
-        'sitemap' == @$store.state.target
+        'sitemap' == @$store.state.menu.target
 
 </script>
