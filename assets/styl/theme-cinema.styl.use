@@ -3,7 +3,7 @@
 
 $border = #663
 body
-  background: #764
+  background-color: mix(spin(#ff0000,  2 * 18deg + 0deg), #777, 20%)
 
 *
   border-color: $border
