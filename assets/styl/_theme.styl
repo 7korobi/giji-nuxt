@@ -36,7 +36,7 @@ themes = {
     GRAY:  '.suddendead, .leave'
   }
   blacks: {
-    DARK: '.dark, .links'
+    DARK: '.TITLE, .dark, .links'
     WEAK: '.btns'
   }
   pens: {
@@ -84,24 +84,24 @@ palette($themes, $backT, $penT, $border)
     $comp = spin($base, 180deg)
     if glass == $backT
       $bg =     mix($comp,  dark, 10%)
-      $pen =    mix($base, $penT, 75%)
-      $emboss = mix($base, $penT, 50%)
-      $bold =   mix($base, $penT, 50%)
+      $pen =    mix($base, $penT, 50%)
+      $emboss = mix($base, black, 40%)
+      $bold =   mix($base, black, 70%)
       $button = dark
-      $border = $pen
+      $border = mix($base,  dark, 80%)
 
     if light == $backT
       $bg =     mix($base, silver, 25%)
       $pen =    mix($base,  $penT, 35%)
-      $emboss = mix($base,  $penT, 40%)
-      $bold =   mix($base,  $penT, 40%)
+      $emboss = mix($base,  $penT, 70%)
+      $bold =   mix($base,  $penT, 30%)
       $button = mix($base, silver, 33%)
 
     if silver == $backT
       $bg =     mix($base, silver, 25%)
       $pen =    mix($comp,  $penT, 15%)
-      $emboss = mix($base,  $penT, 40%)
-      $bold =   mix($base,  $penT, 40%)
+      $emboss = mix($base,   gray, 40%)
+      $bold =   mix($base,  $penT, 30%)
       $button = mix($base, silver, 33%)
 
 
@@ -113,12 +113,12 @@ palette($themes, $backT, $penT, $border)
       $button = mix($base, silver, 80%)
 
     {$bgTheme}
-      theme-block($pen, $bg, $emboss, $border)
+      theme-block($pen, $bg, $emboss, $bold, $button, $border)
       theme-mark($pen, $bg, $emboss, $bold, $button, $border)
 
 
 
-theme-block($pen, $bg, $emboss, $border)
+theme-block($pen, $bg, $emboss, $bold, $button, $border)
   color:           $pen
   background-color: $bg
   border-color: $border
@@ -128,13 +128,15 @@ theme-block($pen, $bg, $emboss, $border)
     border-color: $border
 
   .name, .date, strong
-    color:        $emboss
+    color:        $bold
     border-color: $border
 
   em
-    color: $emboss
+    color: $bold
 
-  sup, sub
+  abbr,
+  sup,
+  sub
     color:                $bg
     border-color:     $border
     background-color: $emboss

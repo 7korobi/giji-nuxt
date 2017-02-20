@@ -65,7 +65,7 @@
         アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM").
         ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
-      report(handle="dark" deco="center") 二日目
+      report(handle="TITLE" deco="center") 二日目
       report(handle="MAKER" deco="center") 二日目
       report(handle="ADMIN" deco="center") 二日目
       report(handle="TSAY" deco="center") 二日目

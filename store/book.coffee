@@ -44,12 +44,13 @@ module.exports =
         ]
         sections: [{ _id: "demo-0-1" }]
         phases: [
-          { _id: "demo-0-0", handle: "TITLE",  label: "タイトル", idx:  2 }
-          { _id: "demo-0-1", handle: "SSAY",   label: "通常発言", idx: 26 }
-          { _id: "demo-0-2", handle: "TSAY",   label: "独り言",   idx:  2 }
-          { _id: "demo-0-3", handle: "MAKER",  label: "村建て",   idx:  2 }
-          { _id: "demo-0-4", handle: "ADMIN",  label: "管理人",   idx:  2 }
-          { _id: "demo-0-5", handle: "VSAY",   label: "独り言",   idx:  3 }
+          { _id: "demo-0-0", handle: "TITLE", idx:  2 }
+          { _id: "demo-0-1", handle: "SSAY",  idx: 26 }
+          { _id: "demo-0-2", handle: "TSAY",  idx:  2 }
+          { _id: "demo-0-3", handle: "MAKER", idx:  2 }
+          { _id: "demo-0-4", handle: "ADMIN", idx:  2 }
+          { _id: "demo-0-5", handle: "VSAY",  idx:  3 }
+          { _id: "demo-0-6", handle: "WSAY",  idx:  3 }
         ]
         potofs: [
           { _id: "demo-0-10", face_id: "c30", live: "executed", side: "HATER", job: "R-", sign: "ななころ", date: 2, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人", text: "仇" }

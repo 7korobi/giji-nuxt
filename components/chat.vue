@@ -37,7 +37,8 @@ module.exports =
       anker: ->
         if @id
           chat = Query.chats.hash[@id]
-          "SS#{chat.idx}"
+          if chat && chat.phase
+            "#{chat.phase.mark}#{chat.idx}"
 
       log_html: ->
         return "" unless @log
