@@ -3,16 +3,10 @@
 
 $border = #333
 
-palette(MAKER, glass, white, $border)
-palette(ADMIN, glass, white, $border)
-palette(links, black, gold, $border)
-palette(btns,  black, gold, $border)
-for say in says
-  palette(say,  glass, white, $border)
-for stat in stats
-  palette(stat, light, dark, $border)
-for lost in losts
-  palette(lost, light, white, $border)
+palette(pens,   glass, light, $border)
+palette(blacks, black,  gold, $border)
+palette(stats,  light,  dark, $border)
+palette(says,   glass, light, $border)
 
 .chat
   .name

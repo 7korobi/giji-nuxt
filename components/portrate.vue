@@ -10,7 +10,7 @@ module.exports =
     has_html: ->
       !! @$slots.default
     face_url: ->
-      Query.faces.hash[@face_id]?.path
+      Query.faces.hash[@face_id ? "all"]?.path
 
 </script>
 <style lang="stylus" scoped>

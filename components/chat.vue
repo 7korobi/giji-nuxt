@@ -34,7 +34,6 @@ module.exports =
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     computed:
-      face_url: -> Query.faces.hash[@face_id]?.path
       anker: ->
         if @id
           chat = Query.chats.hash[@id]
@@ -43,7 +42,9 @@ module.exports =
       log_html: ->
         return "" unless @log
         @log
-        .replace /\n/g, "<br>"
+        .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
+        .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
+        .replace ///\n///g, "<br>"
       classname: ->
         if process.BROWSER_BUILD &&  @$el?
           top = @$el.offsetTop

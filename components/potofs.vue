@@ -39,7 +39,7 @@
         td.r(:class="o.live") {{ count("回", o.pt) || "∞" }}
         td.r(:class="o.live") {{ count("回", o.give) }}
         td.c(:class="o.live")
-          kbd {{ o.user }}
+          kbd {{ o.sign }}
         td.c(:class="o.live")
           kbd {{ o.req }}
         td.c(:class="o.side") {{ o.win }}

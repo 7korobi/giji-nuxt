@@ -4,10 +4,10 @@ module.exports = require("~components/chat.vue").component_class()
 <style lang="stylus" scoped>
 
 .report
-  border-style: double
-  border-width: 4px
+  border-style: double dotted
+  border-width: 4px 1px
   margin: 0 -8px 6px -8px
-  padding: 1px 16px
+  padding: 1px 18px
   .name
     margin-left: 117px
 

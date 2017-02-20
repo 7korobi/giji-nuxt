@@ -1,55 +1,120 @@
-o = {}
-o.VSAY = o.NONE = o.mob  = #CA6
-o.SSAY = o.MSAY = o.live = #cb8
-o.TSAY = o.HUMAN = o.DISH = #a97
-o.GSAY = o.executed = #bbd
-o.WSAY = o.WOLF = o.suicide = o.victim = o.cursed = o.feared = o.droop = #a55
-o.XSAY = o.EVIL = #9a7
-o.SPSAY = o.AIM = o.LOVER = #cba
-o.AIM =   #dcb
+themes = {
+  says: {
+    SPORT:  '.SPORT'
+    P09:    '.P09'
+    ELSE:   '.P08'
+    P07:    '.P07'
+    ALIEN:  '.XSAY, .BSAY'
+    P05:    '.P05'
+    P04:    '.P04'
+    BROAD:  '.SSAY, .MSAY'
+    VBROAD: '.VSSAY, .VSAY'
+    P01:    '.P01'
+    WOLF:   '.WSAY'
+    N01:    '.N01'
+    LOVE:   '.SPSAY'
+    VLOVE:  '.AIM'
+    N04:    '.N04'
+    N05:    '.N05'
+    N06:    '.N06'
+    GRAVE:  '.GSAY'
+    VGRAVE: '.VGSAY'
+    N09:    '.N09'
 
-o.LONEWOLF = o.PIXI = o.GURU = #a9d
-o.HATER = #aaa
+    BRASS:  '.TSAY'
+  }
+  stats: {
+    SPORT:  '.HATER, .LONEWOLF'
+    ELSE:   '.PIXI, .GURU'
+    ALIEN:  '.EVIL'
+    BROAD:  '.HUMAN, .DISH, .live'
+    WOLF:   '.WOLF, .suicide, .victim, .cursed, .feared, .droop'
+    LOVE:   '.LOVER'
+    VBROAD: '.NONE, .mob'
+    GRAVE: '.executed'
 
-o.caution = o.suddendead = o.leave = #666
+    GRAY:  '.suddendead, .leave'
+  }
+  blacks: {
+    DARK: '.dark, .links'
+    WEAK: '.btns'
+  }
+  pens: {
+    SILVER: '.MAKER'
+    GOLD:   '.ADMIN'
+  }
+}
 
-o.btns = #4d4e46
-o.links = #000
-o.MAKER = #CCF
-o.ADMIN = #C99
+colors = {
+  SPORT:  spin(#ff0000, 10 * 18deg + 0deg)
+  P09:    spin(#ff0000,  9 * 18deg + 0deg)
+  ELSE:   spin(#ff0000,  8 * 18deg + 0deg)
+  P07:    spin(#ff0000,  7 * 18deg + 0deg)
+  ALIEN:  spin(#ff0000,  6 * 18deg + 0deg)
+  P05:    spin(#ff0000,  5 * 18deg + 0deg)
+  P04:    spin(#ff0000,  4 * 18deg + 0deg)
+  BROAD:  spin(#ff0000,  3 * 18deg - 5deg)
+  VBROAD: spin(#ff0000,  2 * 18deg + 5deg)
+  P01:    spin(#ff0000,  1 * 18deg + 0deg)
+  WOLF:   spin(#ff0000,  0 * 18deg + 0deg)
+  N01:    spin(#ff0000, -1 * 18deg + 0deg)
+  LOVE:   spin(#ff0000, -2 * 18deg - 5deg)
+  VLOVE:  spin(#ff0000, -3 * 18deg + 5deg)
+  N04:    spin(#ff0000, -4 * 18deg + 0deg)
+  N05:    spin(#ff0000, -5 * 18deg + 0deg)
+  N06:    spin(#ff0000, -6 * 18deg + 0deg)
+  GRAVE:  spin(#ff0000, -7 * 18deg - 5deg)
+  VGRAVE: spin(#ff0000, -8 * 18deg + 5deg)
+  N09:    spin(#ff0000, -9 * 18deg + 0deg)
 
-dark  = #000
-black = #222
-white = #ccc
-gold  = #ffc960
+  DARK:   dark   = #000000
+  BLACK:  black  = #222222
+  WEAK:   weak   = #4d4e46
+  BRASS:  brass  = #b5a64d
+  GRAY:   gray   = #999a8b
+  SILVER: silver = #c0c0c0
+  GOLD:   gold   = #ffd700
+  LIGHT:  light  = #ffffff
+}
 
-says  = VSAY MSAY SSAY TSAY GSAY WSAY XSAY SPSAY AIM
-losts = suddendead leave
-stats = HUMAN EVIL WOLF LOVER HATER GURU PIXI LONEWOLF DISH NONE executed live mob suicide victim cursed feared droop
 
-palette($bgTheme, $backTheme, $pen, $border)
-  if glass == $backTheme
-    $pen    = saturate(  o[$bgTheme], 30%)
-    $emboss = desaturate(o[$bgTheme], 30%)
-    $border = $pen
-    $bg = mix(complement($pen), #000, 30%)
+palette($themes, $backT, $penT, $border)
+  for key, $bgTheme in themes[$themes]
+    $base = colors[key]
+    $comp = spin($base, 180deg)
+    if glass == $backT
+      $bg =     mix($comp,  dark, 10%)
+      $pen =    mix($base, $penT, 75%)
+      $emboss = mix($base, $penT, 50%)
+      $bold =   mix($base, $penT, 50%)
+      $button = dark
+      $border = $pen
 
-  if light == $backTheme
-    $bg = o[$bgTheme]
-    $pen = mix($bg, $pen, 40%)
-    $emboss = darken($bg, 40%)
+    if light == $backT
+      $bg =     mix($base, silver, 25%)
+      $pen =    mix($base,  $penT, 35%)
+      $emboss = mix($base,  $penT, 40%)
+      $bold =   mix($base,  $penT, 40%)
+      $button = mix($base, silver, 33%)
 
-  if white == $backTheme
-    $bg = o[$bgTheme]
-    $emboss = darken($bg, 40%)
+    if silver == $backT
+      $bg =     mix($base, silver, 25%)
+      $pen =    mix($comp,  $penT, 15%)
+      $emboss = mix($base,  $penT, 40%)
+      $bold =   mix($base,  $penT, 40%)
+      $button = mix($base, silver, 33%)
 
-  if black == $backTheme
-    $bg = o[$bgTheme]
-    $emboss = lighten($bg, 20%)
 
-  .{$bgTheme}
-    theme-block($pen, $bg, $emboss, $border)
-    theme-mark($pen, $bg, $emboss, $border)
+    if black == $backT
+      $bg = $base
+      $pen = $penT
+      $emboss = mix($base,  light, 80%)
+      $bold =   mix($base,  light, 80%)
+      $button = mix($base, silver, 80%)
+
+    {$bgTheme}
+      theme-block($pen, $bg, $emboss, $border)
+      theme-mark($pen, $bg, $emboss, $bold, $button, $border)
 
 
 
@@ -66,19 +131,18 @@ theme-block($pen, $bg, $emboss, $border)
     color:        $emboss
     border-color: $border
 
+  em
+    color: $emboss
+
   sup, sub
     color:                $bg
     border-color:     $border
     background-color: $emboss
 
 
-theme-mark($pen, $bg, $emboss, $border)
-  $mark = lighten($bg, 20%)
-  $bold = lighten($pen, 30%)
-  $spot = lighten($bg, 50%)
-
-  $on  = mix($mark, green, 90%)
-  $off = mix($mark, blue,  90%)
+theme-mark($pen, $bg, $emboss, $bold, $button, $border)
+  $on   = mix($bg, green, 80%)
+  $off  = mix($bg, blue,  80%)
 
   b
     color: $bold
@@ -96,7 +160,7 @@ theme-mark($pen, $bg, $emboss, $border)
 
   input,
   textarea
-    background: $mark
+    background: $button
 
   a, b, button,
   [title], [data-tooltip],
@@ -107,11 +171,11 @@ theme-mark($pen, $bg, $emboss, $border)
   input[type=button],
   input[type=submit],
   input[type=reset]
-    background: $mark
+    background: $button
     &:hover, &:focus
       background: $bg
       box-shadow:
-        0 0 20px 3px $spot inset
+        0 0 20px 3px $bold inset
     &.active,
     &:active
       background: $bg

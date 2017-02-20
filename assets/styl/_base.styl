@@ -1,9 +1,11 @@
 @import "./tooltip.styl"
 
-.page-enter-active, .page-leave-active
+.page-enter-active,
+.page-leave-active
   transition: opacity .5s
 
-.page-enter, .page-leave-active
+.page-enter,
+.page-leave-active
   opacity: 0
 
 html,
@@ -58,9 +60,8 @@ a, b, kbd, code, input, select, button, textarea,
   text-indent: 0px
 
 .swipe
-  overflow-x: scroll
   overflow-y: hidden
-  -ms-overflow-style: -ms-autohiding-scrollbar
+  overflow-x: scroll
 
   table
     border-collapse: collapse
@@ -105,6 +106,7 @@ a, b, kbd, code, input, select, button, textarea,
 .sideframe
   right:  0
   bottom: 0
+  overflow-x: hidden
 
 .inframe
   pointer-events: auto
@@ -118,6 +120,9 @@ a, b, kbd, code, input, select, button, textarea,
   height: 25px
   border-width: 0
   background-color: rgba(0,0,0,0.5)
+
+em
+  font-style: normal
 
 kbd
   background-color: black
@@ -179,13 +184,15 @@ sup, sub
       margin-right: -3px
 
   .text
+    user-select: auto
     overflow: hidden
     &.head:first-line
       font-weight: bold
     &.mono
+      white-space: pre
       font-family: monospace
-      overflow: hidden
-      white-space: nowrap
+      overflow-y: hidden
+      overflow-x: auto
       text-overflow: ellipsis
       background: url("~assets/images/bg/grid.gif")
     &.center

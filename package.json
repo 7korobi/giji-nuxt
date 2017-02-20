@@ -12,7 +12,7 @@
     "copy-webpack-plugin": "^4",
     "express-session": "^1.15.1",
     "memory-record": "^0",
-    "mongoose": "^4.8.1",
+    "mongoose": "^4.8.4",
     "nuxt": "^0.9.8",
     "passport-facebook": "^2",
     "passport-google-oauth": "^1",

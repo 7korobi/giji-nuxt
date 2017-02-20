@@ -8,16 +8,10 @@ body
 *
   border-color: $border
 
-palette(MAKER, glass, white, $border)
-palette(ADMIN, glass, white, $border)
-palette(links, black, gold, $border)
-palette(btns,  black, gold, $border)
-for say in says
-  palette(say, white, black, $border)
-for stat in stats
-  palette(stat, light, dark, $border)
-for lost in losts
-  palette(lost, light, white, $border)
+palette(pens,   glass, silver, $border)
+palette(blacks, black,   gold, $border)
+palette(stats,  light,   dark, $border)
+palette(says,  silver,   dark, $border)
 
 .chat
   .name
@@ -27,7 +21,7 @@ for lost in losts
 .talk
   .chat
     margin:  0 7px 0 0
-  
+
 .talk .chat
   border-style: solid
   border-width: 2px 0 2px 0

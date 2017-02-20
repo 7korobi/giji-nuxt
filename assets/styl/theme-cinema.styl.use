@@ -8,16 +8,10 @@ body
 *
   border-color: $border
 
-palette(MAKER, glass, white, $border)
-palette(ADMIN, glass, white, $border)
-palette(links, black, white, $border)
-palette(btns,  black, white, $border)
-for say in says
-  palette(say, white, black, $border)
-for stat in stats
-  palette(stat, light, dark, $border)
-for lost in losts
-  palette(lost, light, white, $border)
+palette(pens,   glass, silver, $border)
+palette(blacks, black, silver, $border)
+palette(stats,  light,   dark, $border)
+palette(says,  silver,   dark, $border)
 
 .talk
   .chat
@@ -25,7 +19,6 @@ for lost in losts
     border-style: none
     border-width: 0
     margin:  0 7px 0 0
-
 
 .post
   border-style: dashed none dashed solid
