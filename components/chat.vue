@@ -15,10 +15,13 @@ module.exports =
     attrs =
       id: id
       write_at: chat.write_at
+      show:     chat.show
       deco:     chat.deco
       log:      chat.log
 
     if o = chat.potof
+      if o.hide
+        attrs.show = "hide"
       Object.assign attrs,
         face_id: o.face_id
         sign: o.sign
@@ -28,7 +31,7 @@ module.exports =
       Object.assign attrs,
         handle: o.handle
 
-    m chat.show, { attrs }
+    m attrs.show, { attrs }
 
   component_class: ->
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]

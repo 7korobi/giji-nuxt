@@ -1,7 +1,7 @@
 
 <template lang="pug">
 .outframe
-  .summary(v-if="menu_show")
+  .summary(v-if="show_sitemap")
     .inframe
       h6
         | 参照されている
@@ -312,24 +312,65 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
+      div(v-if="! show_write")
+        report(deco="center", :handle="phase.handle")
+          span
+            btn(v-for="o in parts" v-model="part", :as="o") {{ o.label }}
+          span
+            btn(v-for="o in phases" v-model="phase", :as="o") {{ o.label }}
+          span
+            btn(v-for="o in phases" v-model="phase", :as="o") {{ o.label }}
 
+        talk(sign="ななころび" face_id="c71" head="発言投稿", :deco="deco", :handle="phase.handle" )
+          text-editor(v-model="text", :max-row="10", :max-size="2000")
+        post(sign="ななころび" face_id="c71" head="act投稿", :deco="deco", :handle="phase.handle" )
+          text-editor(v-model="text", :max-size="120")
+        report(sign="ななころび" face_id="c71" head="レポート投稿", :deco="deco", :handle="phase.handle" )
+          text-editor(v-model="text", :max-size="120")
 </template>
+
+<style lang="stylus" scoped>
+.per
+  vertical-align: -0.2em
+  font-size:       0.7em
+  margin:  0 0 0  -0.2em
+  padding: 0
+  display: inline
+
+.fa-check
+  color: #060
+.fa-warning
+  color: #660
+.fa-ban
+  color: #600
+
+</style>
 
 <script lang="coffee">
 
 module.exports =
   default:
+    data: ->
+      text: ""
+      show: "talk"
+      deco: ""
+      part:  {}
+      phase: { handle: "SSAY" }
     created: ->
       @$store.dispatch "book/server", "demo"
       @$store.commit "book/client"
-      console.log "created"
-
     mounted: ->
 
     computed:
+      parts: ->
+        @$store.state.book.data.parts
+      phases: ->
+        @$store.state.book.data.phases
       now: ->
         Date.now()
-      menu_show: ->
+      show_sitemap: ->
         'sitemap' == @$store.state.menu.target
+      show_write: ->
+        @$store.state.menu.target == 'comment'
 
 </script>

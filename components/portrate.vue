@@ -5,18 +5,61 @@ module.exports =
     face_id:
       type: String
       required: true
+    hide:
+      type: Boolean
   data: -> {}
   computed:
+    image_class: ->
+      if @hide
+        ["hide"]
+      else
+        []
     has_html: ->
       !! @$slots.default
     face_url: ->
       Query.faces.hash[@face_id ? "all"]?.path
+  methods:
+    tap: ->
+      @$emit 'click', @face_id
+
 
 </script>
 <style lang="stylus" scoped>
 
 IMG
   display: block
+
+IMG.hide
+  filter: sepia(60%) hue-rotate(180deg);
+
+.chrblank
+  background: #444844
+  color:      #CCF
+  margin: 0 auto
+  p
+    text-align:  center
+    white-space: nowrap
+
+.swipe
+  .portrate
+    max-width: 45px
+    width:     45px
+    background-color: black
+
+    IMG
+      max-height: 65px
+      height:     65px
+      max-width: 45px
+      width:     45px
+    IMG + .chrblank
+      margin: 0 1px 3px 1px
+      padding: 0
+
+    .chrblank
+      max-width:    44px
+      width:        44px
+      border-radius: 4px
+
 
 .contentframe
   .portrate
@@ -35,16 +78,16 @@ IMG
       padding: 0
 
     .chrblank
-      margin: 0 auto
-      p
-        text-align:  center
-        white-space: nowrap
+      max-width:    88px
+      width:        88px
+      border-radius: 9px
+
 
 </style>
 
 <template lang="pug">
-.portrate
-  img(:src="face_url" width="90" height="130")
+.portrate(@click="tap")
+  img(:src="face_url", :class="image_class")
   .chrblank(v-if="has_html")
     slot
 </template>

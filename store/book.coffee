@@ -4,7 +4,7 @@ require '~components/models/book'
 if process.BROWSER_BUILD
   window.Query = Query
   window.Collection = Collection
-  
+
 module.exports =
   namespaced: true
   state:
@@ -36,7 +36,7 @@ module.exports =
   actions:
     server: ({commit}, id)->
       commit "server",
-        books: [{ _id: "demo", label: "デモページ" }]
+        books: [{ _id: "demo", label: "デモページ", winner: "WOLF" }]
         parts: [
           { _id: "demo-0", label: "プロローグ" }
           { _id: "demo-1", label: "一日目" }
@@ -53,16 +53,16 @@ module.exports =
           { _id: "demo-0-6", handle: "WSAY",  idx:  3 }
         ]
         potofs: [
-          { _id: "demo-0-10", face_id: "c30", live: "executed", side: "HATER", job: "R-", sign: "ななころ", date: 2, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人", text: "仇" }
-          { _id: "demo-0-9", face_id: "c40", live: "live", side: "GURU", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "教祖", text: "" }
-          { _id: "demo-0-8", face_id: "c50", live: "live", side: "LOVER", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人、悪鬼", text: "恋" }
-          { _id: "demo-0-7", face_id: "c87", live: "live", side: "HUMAN", job: "病人", sign: "ななころ", date: Infinity, said: 2, pt: 2000, give: 1, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-6", face_id: "t05", live: "executed", side: "HUMAN", job: "開放的市民", sign: "noko", date: 5, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
-          { _id: "demo-0-5", face_id: "c29", live: "victim", side: "HUMAN", job: "記者", sign: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-4", face_id: "c90", live: "live", side: "WOLF", job: "粉ひき", sign: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-3", face_id: "c70", live: "executed", side: "EVIL", job: "腐女子", sign: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
-          { _id: "demo-0-2", face_id: "c80", live: "suddendead", side: "HUMAN", job: "少年", sign: "ななころ", date: 3, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
-          { _id: "demo-0-1", face_id: "c60", live: "mob", side: "NONE", job: "両家の末娘", sign: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "見物人", text: "" }
+          { _id: "demo-0-10", face_id: "c30", hide: false, live: "executed", side: "HATER", job: "R-", sign: "ななころ", date: 2, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人", text: "仇" }
+          { _id: "demo-0-9", face_id: "c40", hide: false, live: "live", side: "GURU", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "教祖", text: "" }
+          { _id: "demo-0-8", face_id: "c50", hide: false, live: "live", side: "LOVER", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人、悪鬼", text: "恋" }
+          { _id: "demo-0-7", face_id: "c87", hide: false, live: "live", side: "HUMAN", job: "病人", sign: "ななころ", date: Infinity, said: 2, pt: 2000, give: 1, req: "村人", role: "村人", text: "" }
+          { _id: "demo-0-6", face_id: "t05", hide: false, live: "executed", side: "HUMAN", job: "開放的市民", sign: "noko", date: 5, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
+          { _id: "demo-0-5", face_id: "c29", hide: false, live: "victim", side: "HUMAN", job: "記者", sign: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+          { _id: "demo-0-4", face_id: "c90", hide: false, live: "live", side: "WOLF", job: "粉ひき", sign: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
+          { _id: "demo-0-3", face_id: "c70", hide: false, live: "executed", side: "EVIL", job: "腐女子", sign: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
+          { _id: "demo-0-2", face_id: "c80", hide: true, live: "suddendead", side: "HUMAN", job: "少年", sign: "ななころ", date: 3, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
+          { _id: "demo-0-1", face_id: "c60", hide: false, live: "mob", side: "NONE", job: "両家の末娘", sign: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "見物人", text: "" }
         ]
         chats:
           "demo-0-0-0":
@@ -81,7 +81,7 @@ module.exports =
             log: """
               【業務連絡】【RP】
               今後、村建てからのお知らせや、PL向けの情報は【業務連絡】と書きます。
-              またPC向けの情報は【RP】とつけます。よろしくお願いいたします。
+              また/*PC向けの情報は【RP】とつけます。*/よろしくお願いいたします。
 
               ただいま、入村準備中のため、いましばらくお待ちください。
             """
@@ -90,7 +90,7 @@ module.exports =
             log: """
               【業務連絡】【RP】
               今後、村建てからのお知らせや、PL向けの情報は【業務連絡】と書きます。
-              またPC向けの情報は【RP】とつけます。よろしくお願いいたします。
+              また/*PC向けの情報は【RP】とつけます。*/よろしくお願いいたします。
 
               ただいま、入村準備中のため、いましばらくお待ちください。
             """

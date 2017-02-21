@@ -16,8 +16,10 @@ module.exports =
         else
           3
 
-      show: ->
+      show_write: ->
         @$store.state.menu.target == 'comment'
+      show: ->
+        @show_write
       style: ->
         position: "absolute"
         transform: "translateY(#{@top}px)"
@@ -26,9 +28,9 @@ module.exports =
 
 <template lang="pug">
 .writeframe(v-if="show", :style="style")
-  .contentframe
+  .contentframe(v-if="show_write")
     .inframe
       talk(sign="ななころび" handle="SSAY" face_id="c71")
-        textarea(v-model="text", :rows="text_rows")
+        text-editor(v-model="text")
       br
 </template>

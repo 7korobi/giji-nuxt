@@ -28,4 +28,10 @@ new Rule("potof").schema ->
         when "suddendead", "leave"
           @win = ""
         else
-          @win = "参加"
+          if @book?.winner?
+            if @book.winner == @side
+              @win = "勝利"
+            else
+              @win = "敗北"
+          else
+            @win = "参加"
