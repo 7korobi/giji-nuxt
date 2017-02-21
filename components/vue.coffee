@@ -2,6 +2,7 @@ Vue = require "vue"
 
 if process.BROWSER_BUILD
   Vue.use require "vue-cookie"
+  Vue.use require "~plugins/vue-local-storage"
 
 ctx = require.context "~components", true, ///(.+)\.vue$///
 for fname in ctx.keys()

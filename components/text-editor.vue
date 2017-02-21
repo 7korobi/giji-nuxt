@@ -16,13 +16,6 @@
   margin:  0 0 0  -0.2em
   padding: 0
   display: inline
-
-.fa-check
-  color: #060
-.fa-warning
-  color: #660
-.fa-ban
-  color: #600
 </style>
 
 <script lang="coffee">

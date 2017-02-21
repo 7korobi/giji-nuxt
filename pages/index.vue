@@ -11,6 +11,11 @@
 </template>
 <script lang="coffee">
 module.exports =
-  data: ({ store, req, res })->
+  localStorage:
+    aaa:
+      default: "bbb"
+  data: ->
     a: 1
+  mounted: ->
+    console.log @$storage.aaa = Date.now()
 </script>
