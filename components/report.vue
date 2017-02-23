@@ -22,7 +22,8 @@ module.exports = require("~components/chat.vue").component_class()
       top: -8px
       content: ""
       position: absolute
-      border: 1px #666 solid
+      border-style: solid
+      border-width: 1px
       border-top-color: transparent
 
     &::before

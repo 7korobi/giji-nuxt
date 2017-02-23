@@ -1,9 +1,4 @@
 <style lang="stylus" scoped>
-
-hr
-  border-color: transparent
-  margin: 2px
-
 .expand-transition
   transition: all .3s ease
 
@@ -22,7 +17,6 @@ hr
   align-content:   space-around
   justify-content: space-around
 
-
 .list-move
   transition: transform 0.3s
 
@@ -39,9 +33,7 @@ hr
 
 .portrate
   flex-basis: auto
-
 </style>
-
 <template lang="pug">
 .top
   .btns
@@ -87,11 +79,9 @@ hr
     h6
       | {{ chrs.length }}人の{{ set.long }}を表示しています。
   transition-group.list(name="list" tag="div")
-    .portrate(:id="chr._id", :key="chr._id", v-for="chr in chrs")
-      img(:src="chr.path")
-      .chrblank.line2
-        p {{ job(chr._id) }}
-        p {{ chr.name }}
+    portrate(v-for="chr in chrs", :face_id="chr._id", :key="chr._id")
+      p {{ job(chr._id) }}
+      p {{ chr.name }}
 </template>
 <script lang="coffee">
 require "./models/chr.coffee"

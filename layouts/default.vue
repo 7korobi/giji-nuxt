@@ -28,7 +28,7 @@ module.exports =
       height: 0
       use: {}
       style: { theme, font }
-      welcome: @$route.name == 'demo'
+      welcome: true # @$route.name == 'demo'
 
     created: ->
       return unless process.BROWSER_BUILD
@@ -83,15 +83,46 @@ div(:class="body_class")
     .inframe
       post(:id="$store.state.book.chat_id" log="")
       icons(:list="$store.state.menu.list")
-  .outframe
+  .outframe.filmend-frame
     .contentframe
       .filmend
   nuxt
 
+  .outframe
+    .contentframe
+      .inframe(style="text-align:right")
+        report(handle="MAKER")
+          br
+          | 人狼議事キャラセット by りりんら
+          br
+          | 管理
+          a sol・la
+          a(href="mailto:7korobi@gmail.com") ななころび
+          br
+          code.pre.
+            下記の場所以外では、人狼議事内キャラチップ
+            の利用を許諾しておりません。ご了承ください。
+          br
+          code.pre(style="text-align:left").
+            議事総合トップ
+            人狼議事lobby
+            人狼議事morphe
+            人狼議事cafe
+            人狼議事perjury
+            人狼議事xebec
+            人狼議事crazy
+            人狼議事ciel
+
+            SoyBean
+            Sangria
+            @7korobi
+
 </template>
 <style lang="stylus" scoped>
-.outframe
+.filmend-frame
   height: 0
+
+.outframe
   .contentframe
     text-align: left
 

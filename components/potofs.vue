@@ -30,7 +30,7 @@ div
             btn(v-model="sort" as="text", @toggle="reverse") 補足
           th
 
-      tbody
+      transition-group.tlist(name="list" tag="tbody")
         tr(v-for="o in potofs", :key="o._id" v-if="! o.hide")
           th.r(:class="o.live") {{ o.job }}
           th.l(:class="o.live") {{ o.face.name }}
@@ -48,8 +48,8 @@ div
           td.c(:class="o.side") {{ o.role }}
           td.l(:class="o.side") {{ o.text }}
           td.last
-  .swipe.list(name="list" tag="div")
-    portrate(v-for="o in potofs", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
+  transition-group.swipe.list(name="list" tag="div")
+    portrate(v-for="o in potofs", :key="o.face_id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
       .bar(:class="o.live")
 </template>
 

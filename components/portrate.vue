@@ -19,12 +19,20 @@ module.exports =
     face_url: ->
       Query.faces.hash[@face_id ? "all"]?.path
   methods:
-    tap: ->
+    click: ->
       @$emit 'click', @face_id
 
 
 </script>
-<style lang="stylus" scoped>
+
+<template lang="pug">
+.portrate(@click="click")
+  img(:src="face_url", :class="image_class")
+  .chrblank(v-if="has_html")
+    slot
+</template>
+
+<style lang="stylus">
 
 IMG
   display: block
@@ -85,9 +93,3 @@ IMG.hide
 
 </style>
 
-<template lang="pug">
-.portrate(@click="tap")
-  img(:src="face_url", :class="image_class")
-  .chrblank(v-if="has_html")
-    slot
-</template>

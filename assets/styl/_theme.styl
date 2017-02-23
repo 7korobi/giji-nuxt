@@ -40,35 +40,35 @@ themes = {
     WEAK: '.btns'
   }
   pens: {
-    ALIEN:  '.fa-check'
-    P01:    '.fa-warning'
-    WOLF:   '.fa-ban'
     SILVER: '.MAKER'
     GOLD:   '.ADMIN'
   }
 }
 
+REDC = #CC0000
+REDB = #990000
+
 colors = {
-  SPORT:  spin(#ff0000, 10 * 18deg - 0deg)
-  P09:    spin(#ff0000,  9 * 18deg - 0deg)
-  ELSE:   spin(#ff0000,  8 * 18deg - 0deg)
-  P07:    spin(#ff0000,  7 * 18deg - 0deg)
-  ALIEN:  spin(#ff0000,  6 * 18deg - 0deg)
-  P05:    spin(#ff0000,  5 * 18deg - 0deg)
-  P04:    spin(#ff0000,  4 * 18deg - 0deg)
-  BROAD:  spin(#ff0000,  3 * 18deg - 8deg)
-  VBROAD: spin(#ff0000,  2 * 18deg - 0deg)
-  P01:    spin(#ff0000,  1 * 18deg - 0deg)
-  WOLF:   spin(#ff0000,  0)
-  N01:    spin(#ff0000, -1 * 18deg + 0deg)
-  LOVE:   spin(#ff0000, -2 * 18deg + 5deg)
-  VLOVE:  spin(#ff0000, -3 * 18deg + 5deg)
-  N04:    spin(#ff0000, -4 * 18deg + 0deg)
-  N05:    spin(#ff0000, -5 * 18deg + 0deg)
-  N06:    spin(#ff0000, -6 * 18deg + 0deg)
-  GRAVE:  spin(#ff0000, -7 * 18deg + 0deg)
-  VGRAVE: spin(#ff0000, -8 * 18deg + 0deg)
-  N09:    spin(#ff0000, -9 * 18deg + 0deg)
+  SPORT:  spin(REDC, 10 * 18deg - 0deg)
+  P09:    spin(REDC,  9 * 18deg - 0deg)
+  ELSE:   spin(REDC,  8 * 18deg - 0deg)
+  P07:    spin(REDC,  7 * 18deg - 0deg)
+  ALIEN:  spin(REDC,  6 * 18deg - 0deg)
+  P05:    spin(REDC,  5 * 18deg - 0deg)
+  P04:    spin(REDC,  4 * 18deg - 0deg)
+  BROAD:  spin(REDC,  3 * 18deg - 8deg)
+  VBROAD: spin(REDC,  2 * 18deg - 0deg)
+  P01:    spin(REDC,  1 * 18deg - 0deg)
+  WOLF:   REDC
+  N01:    spin(REDC, -1 * 18deg + 0deg)
+  LOVE:   spin(REDC, -2 * 18deg + 5deg)
+  VLOVE:  spin(REDC, -3 * 18deg + 5deg)
+  N04:    spin(REDC, -4 * 18deg + 0deg)
+  N05:    spin(REDC, -5 * 18deg + 0deg)
+  N06:    spin(REDC, -6 * 18deg + 0deg)
+  GRAVE:  spin(REDC, -7 * 18deg + 0deg)
+  VGRAVE: spin(REDC, -8 * 18deg + 0deg)
+  N09:    spin(REDC, -9 * 18deg + 0deg)
 
   DARK:   dark   = #000000
   BLACK:  black  = #222222
@@ -85,120 +85,99 @@ palette($themes, $backT, $penT, $border)
   for key, $bgTheme in themes[$themes]
     $base = colors[key]
     $comp = spin($base, 180deg)
-    if glass == $backT
-      $bg =     mix($comp,  dark, 10%)
-      $pen =    mix($base, $penT, 50%)
-      $emboss = mix($base, black, 40%)
-      $bold =   mix($base, black, 70%)
-      $button = mix($base,  dark, 40%)
-      $border = mix($base,  dark, 80%)
-
-    if light == $backT
-      $bg =     mix($base, silver, 28%)
-      $pen =    mix($base,  $penT, 35%)
-      $emboss = mix($base,  $penT, 70%)
-      $bold =   mix($base,  $penT, 30%)
-      $button = mix($base,   gray, 40%)
-
-    if silver == $backT
-      $bg =     mix($base, silver, 28%)
-      $pen =    mix($comp,  $penT, 15%)
-      $emboss = mix($base,   gray, 40%)
-      $bold =   mix($base,  $penT, 30%)
-      $button = mix($base,   gray, 40%)
 
     if black == $backT
       $bg = $base
       $pen = $penT
-      $emboss = mix($base,  light, 80%)
-      $bold =   mix($base,  light, 80%)
-      $button = mix($base, silver, 80%)
+      $emboss = mix($base,  light, 77%)
+      $bold =   mix($base,  light, 77%)
+      $button = mix($base, silver, 88%)
+      $active = mix($base, silver, 66%)
+      $focus  = mix($base, silver, 55%)
+
+    if glass == $backT
+      $border = $base
+      $bg =     mix($comp,  dark, 11%)
+      $pen =    mix($base, $penT, 55%)
+      $emboss = mix($base,  dark, 66%)
+      $bold =   mix($base,  dark, 55%)
+      $button = mix($base,  dark, 66%)
+      $active = mix($base,  dark, 66%)
+      $focus  = mix($base,  dark, 77%)
+
+    if light == $backT
+      $bg =     mix($base, silver, 44%)
+      $pen =    mix($base,  $penT, 33%)
+
+    if silver == $backT
+      $bg =     mix($base, silver, 44%)
+      $pen =    $penT
+
+    if light == $backT || silver == $backT
+      $emboss = mix($base,   gray, 66%)
+      $bold =   mix($base,  $penT, 33%)
+      $button = mix($base,   gray, 77%)
+      $active = mix($base,  black, 66%)
+      $focus  = mix($base,  black, 55%)
+
+    $on  = mix($bg, colors.ALIEN, 88%)
+    $off = mix($bg, colors.N06,   88%)
 
     {$bgTheme}
-      theme-block($pen, $bg, $emboss, $bold, $button, $border)
-      theme-mark($pen, $bg, $emboss, $bold, $button, $border)
-      span
-        display: inline-block
+      &,
+      textarea
+        color:           $pen
+        background-color: $bg
+        border-color: $border
 
+      a
+        color: $pen
+        &:visited
+          background-color: $on
+        &:link
+          background-color: $off
 
+      .active
+        background-color: $active
 
-theme-block($pen, $bg, $emboss, $bold, $button, $border)
-  color:           $pen
-  background-color: $bg
-  border-color: $border
+      b,
+      em,
+      strong,
+      .name,
+      .date
+        color: $bold
 
-  textarea
-    background-color: $bg
-    border-color: $button
+      abbr,
+      sup,
+      sub
+        background-color: $emboss
+        color: $bg
 
-  .name, .date, strong
-    color:        $bold
-    border-color: $border
+      .fa-check
+        color: mix($pen, colors.ALIEN, 33%)
+      .fa-warning
+        color: mix($pen, colors.P01,   33%)
+      .fa-ban
+        color: mix($pen, colors.WOLF,  33%)
 
-  em
-    color: $bold
+      a,
+      sup,
+      sub,
+      abbr,
+      input,
+      button,
+      [title],
+      [data-tooltip]
+        background-color: $button
+        &:hover,
+        &:focus
+          background-color: $focus
+        &:active
+          background-color: $active
 
-  abbr,
-  sup,
-  sub
-    color:            $bg
-    border-color:     $border
-    background-color: $emboss
-
-
-theme-mark($pen, $bg, $emboss, $bold, $button, $border)
-  $on   = mix($bg, green, 80%)
-  $off  = mix($bg, blue,  80%)
-
-  b
-    color: $bold
-
-  a, button,
-  [title], [data-tooltip],
-  input[type=checkbox],
-  input[type=radio],
-  input[type=color],
-  input[type=image],
-  input[type=button],
-  input[type=submit],
-  input[type=reset]
-    color: $pen
-
-  input
-    color: $pen
-    background-color: $button
-
-  a, b, button,
-  [title], [data-tooltip],
-  input[type=checkbox],
-  input[type=radio],
-  input[type=color],
-  input[type=image],
-  input[type=button],
-  input[type=submit],
-  input[type=reset]
-    background: $button
-    &:hover, &:focus
-      background: $bg
-      box-shadow:
-        0 0 20px 3px $bold inset
-    &.active,
-    &:active
-      background: $bg
-      box-shadow:
-        0 0 20px 3px $emboss inset
-
-  input[type=checkbox],
-  input[type=radio]
-    background: $off
-    &:checked
-      background: $on
-
-  a[href]
-    &:link
-      color: $pen
-      background: $off
-    &:visited
-      color: $pen
-      background: $on
+      input[type=checkbox],
+      input[type=radio]
+        background-color: $off
+        &:checked
+          background-color: $on
 

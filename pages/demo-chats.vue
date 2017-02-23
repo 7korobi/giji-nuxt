@@ -327,6 +327,8 @@
           text-editor(v-model="text", :max-size="120")
         report(sign="ななころび" face_id="c71" head="レポート投稿", :deco="deco", :handle="phase.handle" )
           text-editor(v-model="text", :max-size="120")
+      br
+      br
 </template>
 
 <style lang="stylus" scoped>
