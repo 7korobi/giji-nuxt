@@ -12,13 +12,13 @@ themes = {
     P01:    '.P01'
     WOLF:   '.WSAY'
     N01:    '.N01'
-    LOVE:   '.SPSAY'
+    N02:    '.N02'
     VLOVE:  '.AIM'
-    N04:    '.N04'
+    LOVE:   '.SPSAY'
     N05:    '.N05'
     N06:    '.N06'
-    GRAVE:  '.GSAY'
     VGRAVE: '.VGSAY'
+    GRAVE:  '.GSAY'
     N09:    '.N09'
 
     BRASS:  '.TSAY'
@@ -37,7 +37,7 @@ themes = {
   }
   blacks: {
     DARK: '.TITLE, .dark, .links'
-    WEAK: '.btns'
+    WEAK: '.btns, .footer, .header'
   }
   pens: {
     SILVER: '.MAKER'
@@ -45,9 +45,9 @@ themes = {
   }
 }
 
-REDC = #CC0000
-REDB = #EE1111
-REDA = #FF2222
+REDC = #CC2222
+REDB = #EE4444
+REDA = #FF6666
 
 colors = {
   SPORT:  spin(REDC, 10 * 18deg - 0deg)
@@ -62,13 +62,13 @@ colors = {
   P01:    spin(REDC,  1 * 18deg - 0deg)
   WOLF:   REDC
   N01:    spin(REDC, -1 * 18deg + 0deg)
-  LOVE:   spin(REDC, -2 * 18deg + 5deg)
-  VLOVE:  spin(REDC, -3 * 18deg + 5deg)
-  N04:    spin(REDB, -4 * 18deg + 0deg)
+  N02:    spin(REDC, -2 * 18deg + 5deg)
+  VLOVE:  spin(REDB, -3 * 18deg + 0deg)
+  LOVE:   spin(REDB, -4 * 18deg + 0deg)
   N05:    spin(REDA, -5 * 18deg + 0deg)
   N06:    spin(REDA, -6 * 18deg + 0deg)
-  GRAVE:  spin(REDA, -7 * 18deg + 0deg)
-  VGRAVE: spin(REDA, -8 * 18deg + 0deg)
+  VGRAVE: spin(REDA, -7 * 18deg + 0deg)
+  GRAVE:  spin(REDB, -8 * 18deg + 0deg)
   N09:    spin(REDB, -9 * 18deg + 0deg)
 
   DARK:   dark   = #000000
@@ -90,11 +90,11 @@ palette($themes, $backT, $penT, $border)
     if black == $backT
       $bg = $base
       $pen = $penT
-      $emboss = mix($base,  light, 77%)
-      $bold =   mix($base,  light, 77%)
-      $button = mix($base, silver, 88%)
-      $active = mix($base, silver, 66%)
-      $focus  = mix($base, silver, 55%)
+      $emboss = mix($base,  light, 66%)
+      $bold =   mix($base,  light, 66%)
+      $button = mix($base, silver, 77%)
+      $focus  = mix($base, silver, 66%)
+      $active = mix($base, silver, 55%)
 
     if glass == $backT
       $border = $base
@@ -103,8 +103,15 @@ palette($themes, $backT, $penT, $border)
       $emboss = mix($base,  dark, 66%)
       $bold =   mix($base,  dark, 55%)
       $button = mix($base,  dark, 66%)
-      $active = mix($base,  dark, 66%)
       $focus  = mix($base,  dark, 77%)
+      $active = mix($base,  dark, 88%)
+
+    if light == $backT || silver == $backT
+      $emboss = mix($base,   gray, 66%)
+      $bold =   mix($base,  $penT, 33%)
+      $button = mix($base,   gray, 77%)
+      $focus  = mix($base,  black, 66%)
+      $active = mix($base,  black, 55%)
 
     if light == $backT
       $bg =     mix($base, silver, 44%)
@@ -113,13 +120,6 @@ palette($themes, $backT, $penT, $border)
     if silver == $backT
       $bg =     mix($base, silver, 44%)
       $pen =    $penT
-
-    if light == $backT || silver == $backT
-      $emboss = mix($base,   gray, 66%)
-      $bold =   mix($base,  $penT, 33%)
-      $button = mix($base,   gray, 77%)
-      $active = mix($base,  black, 66%)
-      $focus  = mix($base,  black, 55%)
 
     $on  = mix($bg, colors.ALIEN, 88%)
     $off = mix($bg, colors.N06,   88%)
@@ -131,14 +131,22 @@ palette($themes, $backT, $penT, $border)
         background-color: $bg
         border-color: $border
 
-      a
+      [title]:before,
+      [title]:after,
+      [data-tooltip]:before,
+      [data-tooltip]:after
+        color:           $pen
+        background-color: $bg
+
+      a:not([name])
         color: $pen
         &:visited
           background-color: $on
         &:link
           background-color: $off
 
-      .active
+      .active,
+      a:not([name]).active
         background-color: $active
 
       b,
@@ -161,12 +169,9 @@ palette($themes, $backT, $penT, $border)
       .fa-ban
         color: mix($pen, colors.WOLF,  33%)
 
-      a,
-      sup,
-      sub,
-      abbr,
       input,
       button,
+      a:not([name]),
       [title],
       [data-tooltip]
         background-color: $button

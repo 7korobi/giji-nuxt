@@ -2,18 +2,9 @@
 .outframe
   .contentframe
     .inframe
-      br
-      br
       post()
       post(head="リアルクロックテスト" sign="ななころび" handle="SSAY")
         timeago(v-for="(time, idx) in times", :key="idx", :since="time.at")
-      report(handle="TSAY" deco="center")
-        nuxt-link.button(to="/") BACK
-      report(handle="TSAY" deco="center")
-        nuxt-link.button(to="/demo-chats") chats
-      br
-      br
-
 </template>
 
 <script lang="coffee">

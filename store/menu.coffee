@@ -8,7 +8,9 @@ new Rule("menu").schema ->
 module.exports =
   namespaced: true
   state:
+    top:    0
     center: 0
+    bottom: 0
     target: null
   mutations:
     set: (state, list)->
@@ -24,5 +26,7 @@ module.exports =
         state.target = null
       else
         state.target = name
-    center: (state, y)->
-      state.center = y
+    center: (state, top, height)->
+      state.top    = top
+      state.center = top + height / 2
+      state.bottom = top + height

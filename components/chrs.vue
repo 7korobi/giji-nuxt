@@ -35,7 +35,7 @@
   flex-basis: auto
 </style>
 <template lang="pug">
-.top
+.fullframe
   .btns
     span.tag
       tag#all
@@ -93,6 +93,10 @@ module.exports =
     title: @set.long
     titleTemplate: '%s - 人狼議事'
 
+  props:
+    faces:
+      require: true
+
   data: ->
     tag = @$route.query.tag ? "giji"
     { tag }
@@ -134,9 +138,9 @@ module.exports =
             click: ->
               ctx.parent.tag = id
           #staticClass: "btn"
-
-        m "a", attr, [
-          label
-          m "sup", size
-        ]
+        if size
+          m "a", attr, [
+            label
+            m "sup", size
+          ]
 </script>

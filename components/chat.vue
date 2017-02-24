@@ -48,7 +48,7 @@ module.exports =
         @log
         .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
-        .replace ///\n///g, "<br>"
+
       classname: ->
         if process.BROWSER_BUILD &&  @$el?
           top = @$el.offsetTop

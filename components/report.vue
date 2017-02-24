@@ -4,6 +4,7 @@ module.exports = require("~components/chat.vue").component_class()
 <style lang="stylus" scoped>
 
 .report
+  box-shadow: 0px -10px 20px -10px #000
   border-style: double dotted
   border-width: 4px 1px
   margin: 0 -8px 6px -8px
@@ -38,17 +39,17 @@ module.exports = require("~components/chat.vue").component_class()
 
 <template lang="pug">
 .chat.report(:key="id", :class="classname")
-  p.name.center(v-if="head && (!! to)")
+  .name.center(v-if="head && (!! to)")
     span.pull-right {{ to }}
     | ▷
     span.pull-left {{ head }}
-  p.name(v-if="head && (! to)")
+  .name(v-if="head && (! to)")
     sup.pull-right(v-if="sign") {{ sign }}
     | {{ head }}
-  p.text(:class="deco" v-if="$slots.default")
+  .text(:class="deco" v-if="$slots.default")
     slot
-  p.text(:class="deco" v-html="log_html" v-else)
-  p.date(v-if="write_at")
+  .text(:class="deco" v-html="log_html" v-else)
+  .date(v-if="write_at")
     abbr {{ anker }}
     timeago(:since="write_at")
 </template>

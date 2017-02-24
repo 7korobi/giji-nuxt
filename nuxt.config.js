@@ -6,6 +6,35 @@ var dir = (str) => {
 };
 
 module.exports = {
+  router: {
+    scrollBehavior (to, from, savedPosition) {
+      if (savedPosition) {
+        console.log("scroll to saved.");
+        return savedPosition
+      } else if (to.hash) {
+        console.log("scroll to hash : " + to.hash);
+        return { selector: to.hash };
+      } else {
+        let position = {}
+        if (to.matched.length < 1) {
+          console.log("no match routes");
+          return { x: 0, y: 0 };
+        } else {
+          return to.matched.some((r) => {
+            let self = r.instances.default;
+            let fook = r.components.default.options.scrollFook;
+            if (r.components.default.options.scrollToTop) {
+              console.log("scrollToTop");
+              return { x: 0, y: 0 };
+            }
+            if (fook) {
+              return fook.call(self);
+            }
+          });
+        }
+      }
+    }
+  },
   build: {
     vendor:[
       'axios',

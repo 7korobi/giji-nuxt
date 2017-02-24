@@ -73,10 +73,10 @@
       report(handle="SSAY" deco="center") 二日目
       report(handle="VSAY" deco="center") 二日目
       report(handle="WSAY" deco="center") 二日目
-      report(handle="SPSAY" deco="center") 二日目
       report(handle="AIM" deco="center") 二日目
-      report(handle="GSAY" deco="center") 二日目
+      report(handle="SPSAY" deco="center") 二日目
       report(handle="VGSAY" deco="center") 二日目
+      report(handle="GSAY" deco="center") 二日目
       report(handle="SPORT" deco="center") 二日目
       talk(face_id="t01", :write_at="now - 3600000", to="おきる" sign="ななころび" head="TSAY" handle="TSAY")
         a 霜草蒼蒼
@@ -96,7 +96,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t03", :write_at="now - 3600000", to="おきる" sign="ななころび" head="GSAY" handle="GSAY")
+      talk(face_id="t04", :write_at="now - 3600000", to="おきる" sign="ななころび" head="VGSAY" handle="VGSAY")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野
@@ -105,7 +105,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t04", :write_at="now - 3600000", to="おきる" sign="ななころび" head="VGSAY" handle="VGSAY")
+      talk(face_id="t03", :write_at="now - 3600000", to="おきる" sign="ななころび" head="GSAY" handle="GSAY")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野
@@ -231,7 +231,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t18", :write_at="now - 3600000", to="おきる" sign="ななころび" head="SPSAY" handle="SPSAY")
+      talk(face_id="t20", :write_at="now - 3600000", to="おきる" sign="ななころび" head="色ちぇっく" handle="N02")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野
@@ -249,7 +249,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t20", :write_at="now - 3600000", to="おきる" sign="ななころび" head="色ちぇっく" handle="N04")
+      talk(face_id="t18", :write_at="now - 3600000", to="おきる" sign="ななころび" head="SPSAY" handle="SPSAY")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野
@@ -276,7 +276,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t23", :write_at="now - 3600000", to="おきる" sign="ななころび" head="GSAY" handle="GSAY")
+      talk(face_id="t24", :write_at="now - 3600000", to="おきる" sign="ななころび" head="VGSAY" handle="VGSAY")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野
@@ -285,7 +285,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t24", :write_at="now - 3600000", to="おきる" sign="ななころび" head="VGSAY" handle="VGSAY")
+      talk(face_id="t23", :write_at="now - 3600000", to="おきる" sign="ななころび" head="GSAY" handle="GSAY")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野

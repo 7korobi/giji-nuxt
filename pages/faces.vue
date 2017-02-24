@@ -6,5 +6,12 @@
   chrs
 </template>
 <script lang="coffee">
-module.exports = {}
+module.exports =
+  default:
+    data: ->
+      a: 1
+    computed:
+      all: ->
+    methods:
+      faces: (tag_id)->
 </script>

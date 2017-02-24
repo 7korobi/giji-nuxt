@@ -86,9 +86,12 @@ module.exports =
         th.btns(colspan=4)
           btn(v-model="export_to" as="finish")   終了した村
           btn(v-model="export_to" as="progress") 進行中の村
+      tr
+        th.btns(colspan=4)
+          a(href="http://giji.check.jp") 総合トップ
 
   h2#title
-    a(href="http://giji.check.jp") 人狼議事
+    nuxt-link(to="/") 人狼議事
 
   slot
   .filmline

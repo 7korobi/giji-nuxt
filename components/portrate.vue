@@ -68,7 +68,7 @@ IMG.hide
       width:        44px
       border-radius: 4px
 
-
+.fullframe,
 .contentframe
   .portrate
     max-width: 90px

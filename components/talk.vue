@@ -31,17 +31,17 @@ table.talk(:key="id")
         portrate(:face_id="face_id")
       td
         .chat(:key="id", :class="classname")
-          p.name.center(v-if="head && (!! to)")
+          .name.center(v-if="head && (!! to)")
             span.pull-right {{ to }}
             | ▷
             span.pull-left {{ head }}
-          p.name(v-if="head && (! to)")
+          .name(v-if="head && (! to)")
             sup.pull-right(v-if="sign") {{ sign }}
             | {{ head }}
-          p.text(:class="deco" v-if="$slots.default")
+          .text(:class="deco" v-if="$slots.default")
             slot
-          p.text(:class="deco" v-html="log_html" v-else)
-          p.date(v-if="write_at")
+          .text(:class="deco" v-html="log_html" v-else)
+          .date(v-if="write_at")
             abbr {{ anker }}
             timeago(:since="write_at")
 </template>

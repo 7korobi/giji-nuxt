@@ -42,7 +42,7 @@ module.exports =
       theme: style_use "theme"
       font:  style_use "font"
       center: ->
-        @$store.commit "menu/center", @top + @height / 2
+        @$store.commit "menu/center", @top, @height
       body_class: ->
         str = [@theme, @font].join("~")
         if process.BROWSER_BUILD
@@ -90,8 +90,10 @@ div(:class="body_class")
 
   .outframe
     .contentframe
-      .inframe(style="text-align:right")
-        report(handle="MAKER")
+      .inframe
+        report(handle="footer" deco="center" v-if="$route.path !== '/'")
+          nuxt-link(to="/") 戻る
+        report(handle="footer" deco="right")
           br
           | 人狼議事キャラセット by りりんら
           br
@@ -121,6 +123,8 @@ div(:class="body_class")
 <style lang="stylus" scoped>
 .filmend-frame
   height: 0
+  .inframe
+    padding: 0
 
 .outframe
   .contentframe
