@@ -5,6 +5,7 @@ new Rule("potof").schema ->
   @belongs_to "book"
   @belongs_to "part"
   @belongs_to "face"
+  @has_many "cards"
 
   @scope (all)->
     {}
@@ -24,7 +25,23 @@ new Rule("potof").schema ->
         @name || name
       ].join(" ")
 
-      switch @live
+      key = { potof_id: @id }
+      Collection.card.add @live, key if @live
+      Collection.card.add @stat, key if @stat
+      Collection.card.add @role, key if @role
+      Collection.card.add @gift, key if @gift
+      @helps = []
+      @cards = [
+        @live
+        @stat
+        @role
+        @gift
+      ]
+      for card in @cards
+        for { help } in card.role.ables
+          @helps.push help if help
+
+      switch @live?._id
         when "suddendead", "leave"
           @win = ""
         else

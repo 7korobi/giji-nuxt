@@ -1,6 +1,7 @@
 Vue = require "vue"
 
 if process.BROWSER_BUILD
+  Vue = Vue.default
   Vue.use require "vue-cookie"
   Vue.use require "~plugins/vue-local-storage"
 

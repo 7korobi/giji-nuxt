@@ -5,6 +5,7 @@ new Rule("card").schema ->
   @belongs_to "book"
   @belongs_to "part"
   @belongs_to "potof"
+  @belongs_to "role"
 
   @scope (all)->
     for_part:  (part_id)->  all.where {  part_id }
@@ -13,9 +14,13 @@ new Rule("card").schema ->
   class @model extends @model
     @map_reduce: (o, emit)->
     constructor: ->
-
+      @id ?= @_id
+      @_id = @id
+      [@book_id, part_idx, @idx] = @id.split('-')
+      @part_id = [@book_id, part_idx].join('-')
 
 new Rule("role").schema ->
+  @has_many "ables", by: "ids"
   class @model extends @model
     @map_reduce: (o, emit)->
     constructor: ->

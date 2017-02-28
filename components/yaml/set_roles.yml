@@ -3,7 +3,7 @@ entry:
   label: エントリー
   win:
   group: TURN
-  ables:
+  able_ids:
     - ENTRY
   help: |-
 
@@ -11,21 +11,21 @@ start:
   label: 初日
   win:
   group: TURN
-  ables: []
+  able_ids: []
   help: |-
 
 main:
   label: 二日目以降
   win:
   group: TURN
-  ables: []
+  able_ids: []
   help: |-
 
 prologue:
   label: プロローグ
   win: NONE
   group: TURN
-  ables:
+  able_ids:
     - exit
   help: |-
 
@@ -33,15 +33,15 @@ epilogue:
   label: エピローグ
   win:
   group: TURN
-  ables: []
+  able_ids: []
   help: |-
 
 live:
   label: 生存者
   win:
   group: LIVE
-  ables:
-    - SAY
+  able_ids:
+    - SSAY
     - TSAY
     - AIM
     - commit
@@ -51,7 +51,7 @@ executed:
   label: 処刑
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -60,7 +60,7 @@ victim:
   label: 襲撃
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -69,7 +69,7 @@ cursed:
   label: 呪詛
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -78,7 +78,7 @@ droop:
   label: 衰退
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -87,7 +87,7 @@ suicide:
   label: 後追
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -96,7 +96,7 @@ feared:
   label: 恐怖
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -105,7 +105,7 @@ suddendead:
   label: 突然死
   win:
   group: LIVE
-  ables:
+  able_ids:
     - GSAY
     - TSAY
   help: |-
@@ -114,28 +114,28 @@ leave:
   label: ―
   win:
   group:
-  ables: []
+  able_ids: []
   help: |-
 
 none:
   label: ""
   win:
   group:
-  ables: []
+  able_ids: []
   help: |-
 
 bind:
   label: ―
   win:
   group:
-  ables: []
+  able_ids: []
   help: |-
 
 hide:
   label: ？？？
   win:
   group:
-  ables:
+  able_ids:
     - hike
     - vote
     - entrust
@@ -153,7 +153,7 @@ visiter:
   label: 客席
   win: MOB
   group: MOB
-  ables:
+  able_ids:
     - VSAY
     - TSAY
   help: |-
@@ -163,7 +163,7 @@ grave:
   label: 裏方
   win: MOB
   group: MOB
-  ables:
+  able_ids:
     - VSAY
     - TSAY
   help: |-
@@ -173,7 +173,7 @@ alive:
   label: 舞台
   win: MOB
   group: MOB
-  ables:
+  able_ids:
     - VSAY
     - TSAY
   help: |-
@@ -183,7 +183,7 @@ juror:
   label: 陪審
   win: HUMAN
   group: MOB
-  ables:
+  able_ids:
     - VSAY
     - TSAY
     - vote
@@ -195,7 +195,7 @@ gamemaster:
   label: 黒幕
   win: MOB
   group: MOB
-  ables:
+  able_ids:
     - gm_droop
     - gm_live
     - gm_disable_vote
@@ -209,7 +209,7 @@ master:
   label: 村立て人
   win:
   group: SPECIAL
-  ables:
+  able_ids:
     - maker
     - kick
     - muster
@@ -221,7 +221,7 @@ admin:
   label: 管理人
   win:
   group: SPECIAL
-  ables:
+  able_ids:
     - maker
     - kick
     - muster
@@ -234,7 +234,7 @@ lost:
   label: 喪失
   win:
   group: OTHER
-  ables: []
+  able_ids: []
   cmd: gift
   help: |-
     あなたは贈り物を<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_LOST" TARGET="_blank">喪失</A>しました。
@@ -246,7 +246,7 @@ shield:
   label: 光の輪
   win:
   group: OTHER
-  ables:
+  able_ids:
     - circular
     - guard
   cmd: gift
@@ -261,7 +261,7 @@ glass:
   label: 魔鏡
   win:
   group: OTHER
-  ables:
+  able_ids:
     - circular
     - see
   cmd: gift
@@ -275,7 +275,7 @@ ogre:
   label: 悪鬼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - wolf
     - hunt
     - friend
@@ -290,7 +290,7 @@ fairy:
   label: 妖精の子
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - pixi
   cmd: gift
   help: |-
@@ -303,7 +303,7 @@ fink:
   label: 半端者
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - evil
   cmd: gift
   help: |-
@@ -316,7 +316,7 @@ decide:
   win:
   group: OTHER
   able: 投票
-  ables:
+  able_ids:
     - vote_role
   cmd: gift
   help: |-
@@ -329,7 +329,7 @@ seeronce:
   win:
   group: OTHER
   able: 占う
-  ables:
+  able_ids:
     - once
     - see
     - spy_wolf
@@ -341,7 +341,7 @@ dipsy:
   label: 酔払い
   win:
   group: OTHER
-  ables:
+  able_ids:
   cmd: gift
   help: |-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_DIPSY" TARGET="_blank">酔払い</A>です。
@@ -356,7 +356,7 @@ lover:
   win:
   group: OTHER
   able: 入門
-  ables:
+  able_ids:
     - aura
     - bond
     - vote
@@ -371,7 +371,7 @@ robber:
   label: 盗賊
   win:
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - rob
     - vote
@@ -385,7 +385,7 @@ tangle:
   label: 怨念
   win:
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - revenge
     - tangle
@@ -399,7 +399,7 @@ villager:
   label: 村人
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - human
     - vote
     - entrust
@@ -413,7 +413,7 @@ stigma:
   label: 聖痕者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - stigma
     - human
@@ -427,7 +427,7 @@ fm:
   label: 結社員
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - fm
     - human
@@ -443,7 +443,7 @@ sympathy:
   label: 共鳴者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - fm
     - human
@@ -458,7 +458,7 @@ seer:
   label: 占い師
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - see
     - spy_wolf
@@ -473,7 +473,7 @@ seerwin:
   label: 信仰占師
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - see
     - spy_win
@@ -488,7 +488,7 @@ aura: &aura
   label: 気占師
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - see
     - spy_aura
@@ -504,7 +504,7 @@ seerrole:
   label: 賢者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - see
     - spy_role
@@ -519,7 +519,7 @@ guard:
   label: 守護者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - guard
     - human
@@ -533,7 +533,7 @@ medium:
   label: 霊能者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - medium
     - spy_wolf
@@ -548,7 +548,7 @@ mediumwin:
   label: 信仰霊能者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - medium
     - spy_win
@@ -563,7 +563,7 @@ mediumrole:
   label: 導師
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - medium
     - spy_role
@@ -578,7 +578,7 @@ necromancer:
   label: 降霊者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - chkGSAY
     - medium
@@ -594,7 +594,7 @@ follow:
   label: 追従者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - human
     - entrust
@@ -608,7 +608,7 @@ fan:
   label: 煽動者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - revenge
     - riot
@@ -623,7 +623,7 @@ hunter:
   label: 賞金稼
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - revenge
     - sneak
@@ -640,7 +640,7 @@ weredog:
   label: 人犬
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - tafness
     - human
@@ -654,7 +654,7 @@ prince:
   label: 王子様
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - august
     - human
@@ -668,7 +668,7 @@ rightwolf:
   label: 狼血族
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - blind
     - wolf
@@ -689,7 +689,7 @@ doctor:
   win: HUMAN
   group: HUMAN
   able: 診察
-  ables:
+  able_ids:
     - aura
     - cure
     - human
@@ -703,7 +703,7 @@ curse:
   label: 呪人
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - curse
     - human
@@ -717,7 +717,7 @@ dying:
   label: 預言者
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - droop
     - human
@@ -731,7 +731,7 @@ invalid:
   label: 病人
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - revenge
     - seal
@@ -748,7 +748,7 @@ alchemist:
   label: 錬金術師
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - once
     - revenge
@@ -765,7 +765,7 @@ witch:
   label: 魔女
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - analeptic
     - poison
@@ -782,7 +782,7 @@ girl:
   label: 少女
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - night
     - human
@@ -797,7 +797,7 @@ scapegoat:
   win: HUMAN
   group: HUMAN
   able: 疑う
-  ables:
+  able_ids:
     - aura
     - scapegoat
     - human
@@ -811,7 +811,7 @@ elder:
   label: 長老
   win: HUMAN
   group: HUMAN
-  ables:
+  able_ids:
     - aura
     - revenge
     - seal
@@ -830,7 +830,7 @@ jammer:
   win: EVIL
   group: EVIL
   able: 隠す
-  ables:
+  able_ids:
     - aura
     - jammer
     - human
@@ -846,7 +846,7 @@ snatch:
   label: 宿借之民
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - snatch
     - human
@@ -862,7 +862,7 @@ bat:
   label: 念波之民
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - human
     - evil
@@ -877,7 +877,7 @@ possess:
   label: 狂人
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - human
     - evil
@@ -891,7 +891,7 @@ fanatic:
   label: 狂信者
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - fanatic
     - human
@@ -906,7 +906,7 @@ muppeting:
   label: 人形使い
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - human
     - evil
@@ -921,7 +921,7 @@ wisper: &wisper
   label: 囁き狂人
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - human
     - evil
@@ -939,7 +939,7 @@ semiwolf:
   label: 半狼
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - wolfify
     - human
@@ -954,7 +954,7 @@ dyingpossess:
   label: ---
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - human
     - evil
@@ -967,7 +967,7 @@ oracle:
   label: 魔神官
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - medium
     - spy_role
@@ -983,7 +983,7 @@ sorcerer:
   label: 魔術師
   win: EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - see
     - spy_role
@@ -999,7 +999,7 @@ walpurgis:
   label: 魔法少年
   win:  EVIL
   group: EVIL
-  ables:
+  able_ids:
     - aura
     - grave
     - analeptic
@@ -1018,7 +1018,7 @@ headless:
   label: 首無騎士
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - hunt
@@ -1035,7 +1035,7 @@ wolf:
   label: 人狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - hunt
@@ -1051,7 +1051,7 @@ aurawolf:
   label: ---
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - hunt
@@ -1067,7 +1067,7 @@ intwolf:
   label: 智狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - hunt
@@ -1084,7 +1084,7 @@ cwolf:
   label: 呪狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - curse
@@ -1102,7 +1102,7 @@ cursewolf:
   label: 呪狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - curse
@@ -1121,7 +1121,7 @@ whitewolf:
   win: WOLF
   group: WOLF
   able: 襲う
-  ables:
+  able_ids:
     - hunt
     - friend
     - vote
@@ -1137,7 +1137,7 @@ childwolf:
   label: 仔狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - revenge
@@ -1155,7 +1155,7 @@ dyingwolf:
   label: 衰狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - droop
@@ -1171,7 +1171,7 @@ silentwolf:
   label: 黙狼
   win: WOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - hunt
@@ -1187,7 +1187,7 @@ hamster:
   label: 栗鼠妖精
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - aura
     - pixi
     - armor
@@ -1201,7 +1201,7 @@ werebat:
   label: 蝙蝠妖精
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - aura
     - pixi
     - armor
@@ -1219,7 +1219,7 @@ mimicry:
   label: 擬狼妖精
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - aura
     - pixi
     - armor
@@ -1234,7 +1234,7 @@ dyingpixi:
   label: 風花妖精
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - aura
     - pixi
     - armor
@@ -1249,7 +1249,7 @@ trickster:
   label: 悪戯妖精
   win: PIXI
   group: PIXI
-  ables:
+  able_ids:
     - aura
     - pixi
     - armor
@@ -1266,7 +1266,7 @@ hatedevil:
   label: 邪気悪魔
   win: HATER
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - bonds
     - hate
@@ -1283,7 +1283,7 @@ loveangel:
   label: 恋愛天使
   win: LOVER
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - bonds
     - love
@@ -1300,7 +1300,7 @@ passion:
   label: 片思い
   win: LOVER
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - bond
     - love
@@ -1317,7 +1317,7 @@ lonewolf:
   label: 一匹狼
   win: LONEWOLF
   group: WOLF
-  ables:
+  able_ids:
     - aura
     - wolf
     - armor
@@ -1334,7 +1334,7 @@ guru:
   label: 笛吹き
   win: GURU
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - human
     - guru
@@ -1348,7 +1348,7 @@ dish:
   label: 鱗魚人
   win: DISH
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - human
     - dish
@@ -1362,7 +1362,7 @@ bitch:
   label: 遊び人
   win: LOVER
   group: OTHER
-  ables:
+  able_ids:
     - aura
     - human
     - bitch

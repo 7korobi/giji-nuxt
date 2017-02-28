@@ -26,6 +26,7 @@ module.exports =
       state.section_id = o.sections[0]._id
 
     client: (state)->
+      return
       Collection.book.merge    state.data.books
       Collection.part.merge    state.data.parts
       Collection.section.merge state.data.sections
@@ -36,7 +37,7 @@ module.exports =
   actions:
     server: ({commit}, id)->
       commit "server",
-        books: [{ _id: "demo", label: "デモページ", winner: "WOLF" }]
+        books: [{ _id: "demo", label: "デモページ", winner: "WOLF", potof_size: 10 }]
         parts: [
           { _id: "demo-0", label: "プロローグ" }
           { _id: "demo-1", label: "一日目" }
@@ -52,17 +53,142 @@ module.exports =
           { _id: "demo-0-5", handle: "VSAY",  idx:  3 }
           { _id: "demo-0-6", handle: "WSAY",  idx:  3 }
         ]
+        cards: [
+          { _id: "demo-0-1-request",  role_id: "villager" }
+          { _id: "demo-0-2-request",  role_id: "villager" }
+          { _id: "demo-0-3-request",  role_id: "villager" }
+          { _id: "demo-0-4-request",  role_id: "villager" }
+          { _id: "demo-0-5-request",  role_id: "villager" }
+          { _id: "demo-0-6-request",  role_id: "headless" }
+          { _id: "demo-0-7-request",  role_id: "villager" }
+          { _id: "demo-0-8-request",  role_id: "villager" }
+          { _id: "demo-0-9-request",  role_id: "villager" }
+          { _id: "demo-0-10-request", role_id: "villager" }
+
+          { _id: "demo-0-1-live", role_id: "mob", date: Infinity }
+          { _id: "demo-0-1-role", role_id: "juror" }
+          { _id: "demo-0-2-live", role_id: "suddendead", date: 3 }
+          { _id: "demo-0-2-role", role_id: "stigma" }
+          { _id: "demo-0-3-live", role_id: "executed", date: 4 }
+          { _id: "demo-0-3-role", role_id: "possess" }
+          { _id: "demo-0-4-live", role_id: "live", date: Infinity }
+          { _id: "demo-0-4-role", role_id: "villager" }
+          { _id: "demo-0-5-live", role_id: "victim", date: 6 }
+          { _id: "demo-0-5-role", role_id: "villager" }
+          { _id: "demo-0-6-live", role_id: "executed", date: 5 }
+          { _id: "demo-0-6-role", role_id: "headless" }
+          { _id: "demo-0-7-live", role_id: "live", date: Infinity }
+          { _id: "demo-0-7-role", role_id: "villager" }
+          { _id: "demo-0-8-live", role_id: "live", date: Infinity }
+          { _id: "demo-0-8-role", role_id: "villager" }
+          { _id: "demo-0-8-gift", role_id: "ogre" }
+          { _id: "demo-0-8-bond", role_id: "hater" }
+          { _id: "demo-0-9-live", role_id: "live", date: Infinity }
+          { _id: "demo-0-9-role", role_id: "guru" }
+          { _id: "demo-0-10-live", role_id: "executed", date: 2 }
+          { _id: "demo-0-10-role", role_id: "villager" }
+          { _id: "demo-0-10-bond", role_id: "lover" }
+        ]
+        ables: [
+          { _id: "demo-0-1-give", give: 0 }
+          { _id: "demo-0-1-VSAY", pt: Infinity, said: 13 }
+          { _id: "demo-0-1-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-1-commit", sw: true }
+          { _id: "demo-0-1-vote", cmd: "vote", target: "demo-0-1" }
+          { _id: "demo-0-1-entrust", target: null }
+
+          { _id: "demo-0-2-give", give: 0 }
+          { _id: "demo-0-2-GSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-2-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-2-aura" }
+          { _id: "demo-0-2-stigma", code: "青" }
+          { _id: "demo-0-2-human" }
+          # { _id: "demo-0-2-commit", sw: true }
+
+          { _id: "demo-0-3-give", give: 0 }
+          { _id: "demo-0-3-GSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-3-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-3-aura" }
+          { _id: "demo-0-3-human" }
+          { _id: "demo-0-3-evil" }
+          # { _id: "demo-0-3-commit", sw: true }
+
+          { _id: "demo-0-4-give", give: 0 }
+          { _id: "demo-0-4-SSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-4-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-4-AIM",  pt: Infinity, said: 1 }
+          { _id: "demo-0-4-human" }
+          { _id: "demo-0-4-commit", sw: true }
+          { _id: "demo-0-4-vote", cmd: "vote", target: "demo-0-4" }
+          { _id: "demo-0-4-entrust", cmd: "entrust", target: null }
+
+          { _id: "demo-0-5-give", give: 0 }
+          { _id: "demo-0-5-GSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-5-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-5-human" }
+          # { _id: "demo-0-5-commit", sw: true }
+
+          { _id: "demo-0-6-give", give: 0 }
+          { _id: "demo-0-6-GSAY", pt: Infinity, said: 16 }
+          { _id: "demo-0-6-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-6-aura" }
+          { _id: "demo-0-6-wolf" }
+          { _id: "demo-0-6-hunt", cmd: "role", target: null }
+          # { _id: "demo-0-6-commit", sw: true }
+          # { _id: "demo-0-6-WSAY", pt: Infinity, said: 1 }
+
+          { _id: "demo-0-7-give", give: 0 }
+          { _id: "demo-0-7-SSAY", pt: 2000, said: 2 }
+          { _id: "demo-0-7-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-7-AIM",  pt: Infinity, said: 1 }
+          { _id: "demo-0-7-human" }
+          { _id: "demo-0-7-commit", sw: true }
+          { _id: "demo-0-7-vote", cmd: "vote", target: "demo-0-7" }
+          { _id: "demo-0-7-entrust", cmd: "entrust", target: null }
+
+          { _id: "demo-0-8-give", give: 0 }
+          { _id: "demo-0-8-SSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-8-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-8-AIM",  pt: Infinity, said: 1 }
+          { _id: "demo-0-8-human" }
+          { _id: "demo-0-8-commit", sw: true }
+          { _id: "demo-0-8-vote", cmd: "vote", target: "demo-0-8" }
+          { _id: "demo-0-8-entrust", cmd: "entrust", target: null }
+          { _id: "demo-0-8-hater", cmd: "bond", target: "demo-10" }
+          { _id: "demo-0-8-wolf" }
+          { _id: "demo-0-8-hunt", cmd: "role", target: null }
+          { _id: "demo-0-8-friend" }
+          { _id: "demo-0-8-WSAY", pt: Infinity, said: 1 }
+
+          { _id: "demo-0-9-give", give: 0 }
+          { _id: "demo-0-9-SSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-9-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-9-AIM",  pt: Infinity, said: 1 }
+          { _id: "demo-0-9-aura" }
+          { _id: "demo-0-9-human" }
+          { _id: "demo-0-9-guru" }
+          { _id: "demo-0-9-commit", sw: true }
+          { _id: "demo-0-9-vote", cmd: "vote", target: "demo-0-9" }
+          { _id: "demo-0-9-entrust", cmd: "entrust", target: null }
+
+          { _id: "demo-0-10-give", give: 0 }
+          { _id: "demo-0-10-GSAY", pt: Infinity, said: 33 }
+          { _id: "demo-0-10-TSAY", pt: Infinity, said: 1 }
+          { _id: "demo-0-10-human" }
+          # { _id: "demo-0-10-commit", sw: true }
+          { _id: "demo-0-10-lover", cmd: "bond", target: "demo-10" }
+        ]
         potofs: [
-          { _id: "demo-0-10", face_id: "c30", hide: false, live: "executed", side: "HATER", job: "R-", sign: "ななころ", date: 2, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人", text: "仇" }
-          { _id: "demo-0-9", face_id: "c40", hide: false, live: "live", side: "GURU", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "教祖", text: "" }
-          { _id: "demo-0-8", face_id: "c50", hide: false, live: "live", side: "LOVER", job: "R-", sign: "ななころ", date: Infinity, said: 33, pt: Infinity, give: 0, req: "村人", role: "村人、悪鬼", text: "恋" }
-          { _id: "demo-0-7", face_id: "c87", hide: false, live: "live", side: "HUMAN", job: "病人", sign: "ななころ", date: Infinity, said: 2, pt: 2000, give: 1, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-6", face_id: "t05", hide: false, live: "executed", side: "HUMAN", job: "開放的市民", sign: "noko", date: 5, said: 16, pt: Infinity, give: 0, req: "首なし騎士", role: "首なし騎士", text: "" }
-          { _id: "demo-0-5", face_id: "c29", hide: false, live: "victim", side: "HUMAN", job: "記者", sign: "うに", date: 6, said: 97, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-4", face_id: "c90", hide: false, live: "live", side: "WOLF", job: "粉ひき", sign: "魚屋", date: Infinity, said: 54, pt: Infinity, give: 0, req: "村人", role: "村人", text: "" }
-          { _id: "demo-0-3", face_id: "c70", hide: false, live: "executed", side: "EVIL", job: "腐女子", sign: "namba", date: 4, said: 33, pt: Infinity, give: 0, req: "村人", role: "狂人", text: "" }
-          { _id: "demo-0-2", face_id: "c80", hide: true, live: "suddendead", side: "HUMAN", job: "少年", sign: "ななころ", date: 3, said: 33, pt: Infinity, give: 0, req: "村人", role: "青の聖痕者", text: "" }
-          { _id: "demo-0-1", face_id: "c60", hide: false, live: "mob", side: "NONE", job: "両家の末娘", sign: "ななころ", date: Infinity, said: 13, pt: Infinity, give: 0, req: "村人", role: "見物人", text: "" }
+          { _id: "demo-0-10", face_id: "c30", hide: false, side: "HATER", job: "R-", sign: "ななころ" }
+          { _id: "demo-0-9",  face_id: "c40", hide: false, side: "GURU",  job: "R-", sign: "ななころ" }
+          { _id: "demo-0-8",  face_id: "c50", hide: false, side: "LOVER", job: "R-", sign: "ななころ" }
+          { _id: "demo-0-7",  face_id: "c87", hide: false, side: "HUMAN", job: "病人", sign: "ななころ" }
+          { _id: "demo-0-6",  face_id: "t05", hide: false, side: "HUMAN", job: "開放的市民", sign: "noko" }
+          { _id: "demo-0-5",  face_id: "c29", hide: false, side: "HUMAN", job: "記者", sign: "うに" }
+          { _id: "demo-0-4",  face_id: "c90", hide: false, side: "WOLF",  job: "粉ひき", sign: "魚屋" }
+          { _id: "demo-0-3",  face_id: "c70", hide: false, side: "EVIL",  job: "腐女子", sign: "namba" }
+          { _id: "demo-0-2",  face_id: "c80", hide: true,  side: "HUMAN", job: "少年", sign: "ななころ" }
+          { _id: "demo-0-1",  face_id: "c60", hide: false, side: "NONE",  job: "両家の末娘", sign: "ななころ" }
         ]
         chats:
           "demo-0-0-0":
