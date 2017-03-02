@@ -1,12 +1,13 @@
-app = require('express')()
-Nuxt = require 'nuxt'
-session = require 'express-session'
 bodyParser = require 'body-parser'
+express = require 'express'
+session = require 'express-session'
+Nuxt = require 'nuxt'
 
 host = process.env.HOST || '127.0.0.1'
 port = process.env.PORT || '3000'
 
 # Body parser, to access req.body
+app = express()
 app.use bodyParser.json()
 app.use session
   secret: 'super-secret-key'

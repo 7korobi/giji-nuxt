@@ -95,29 +95,30 @@ module.exports =
 
   props:
     faces:
-      require: true
+      default: -> (o)-> o
 
   data: ->
-    tag = @$route.query.tag ? "giji"
-    { tag }
+    tag_id = @$route.query.tag ? "giji"
+    { tag_id }
 
   computed:
     chrs: ->
-      @faces @tag
+      @face_list(@tag_id)
     set:  ->
       @$router.replace { @query }
-      @find_tag @tag
+      @find_tag @tag_id
     query: ->
       query = {}
       for key, val of @$route.query
         query[key] = val
-      query.tag = @tag
+      query.tag = @tag_id
       query
 
   methods:
     find_tag: (tag_id)-> Query.tags.find tag_id
-    faces: (tag_id)-> Query.faces.tag(tag_id).list
-
+    face_list: (tag_id)->
+      { list } = @faces Query.faces.tag tag_id
+      list
     job: (face_id)->
       job =  Query.chr_jobs.find("#{@set.chr_set_ids.last}_#{face_id}")
       job ?= Query.chr_jobs.find("all_#{face_id}")
@@ -127,19 +128,21 @@ module.exports =
     tag:
       functional: true
       props: ["id"]
+
       render: (m, ctx)->
         { id } = ctx.props
         { label = "- 全体 -" } = ctx.parent.find_tag id
-        size = ctx.parent.faces(id).length
-
+        size = ctx.parent.face_list(id).length
         attr =
           key: id
+          props:
+            as: id
+            value: ctx.parent.tag_id
           on:
-            click: ->
-              ctx.parent.tag = id
-          #staticClass: "btn"
+            input: (as)->
+              ctx.parent.tag_id = as
         if size
-          m "a", attr, [
+          m "btn", attr, [
             label
             m "sup", size
           ]
