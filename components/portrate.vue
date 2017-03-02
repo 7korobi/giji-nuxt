@@ -60,7 +60,7 @@ IMG.hide
       max-width: 45px
       width:     45px
     IMG + .chrblank
-      margin: 0 1px 3px 1px
+      margin: 1px 1px 3px 1px
       padding: 0
 
     .chrblank
