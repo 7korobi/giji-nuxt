@@ -10,17 +10,11 @@ port = process.env.PORT || '3000'
 app = express()
 app.use bodyParser.json()
 app.use session
-  secret: 'super-secret-key'
+  secret: process.env.SECRET_KEY_BASE
   resave: false
   saveUninitialized: false
   cookie: { maxAge: 60000 }
-
-app.get '/api/test', (req, res)->
-  res.json
-    a: 1
-  res.status(401).json
-    error: "bad credentials"
-
+require("./api/passport.coffee")(app)
 
 config = require('./nuxt.config.js')
 config.dev = process.env.NODE_ENV != 'production'
@@ -32,6 +26,14 @@ if config.dev
   .catch (err)->
     console.error err
     process.exit(1)
+
+
+
+app.get '/api/test', (req, res)->
+  res.json
+    a: 1
+  res.status(401).json
+    error: "bad credentials"
 
 app.listen port, host
 console.log("Server is listening on http://#{host}:#{port}")
