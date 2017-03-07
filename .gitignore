@@ -1,3 +1,8 @@
+dev.bat
+prod.bat
+dev
+prod
+
 # mac
 .DS_Store
 
