@@ -7,54 +7,52 @@ passport.deserializeUser (obj, done)->
 port = process.env.PORT || '3000'
 auth =
   slack:
-    name: "passport-slack"
+    module: require("passport-slack").Strategy
     attr:
       clientID: process.env.SLACK_CLIENT_ID
       clientSecret: process.env.SLACK_CLIENT_SECRET
+      callbackURL: "http://lvh.me:#{port}/auth/slack/callback",
   google:
-    name: "passport-google-oauth2"
+    module: require("passport-google-oauth2").Strategy
     attr:
       clientID:     process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://lvh.me:#{port}/auth/google/callback",
       passReqToCallback: true
   facebook:
-    name: "passport-facebook"
+    module: require("passport-facebook").Strategy
     attr:
       clientID:     process.env.FACEBOOK_APP_ID
       clientSecret: process.env.FACEBOOK_APP_SECRET
       callbackURL: "http://lvh.me:#{port}/auth/facebook/callback"
   github:
-    name: "passport-github2"
+    module: require("passport-github2").Strategy
     attr:
       clientID:     process.env.GITHUB_CLIENT_ID
       clientSecret: process.env.GITHUB_CLIENT_SECRET
       callbackURL: "http://localhost:#{port}/auth/github/callback"
   twitter:
-    name: "passport-twitter"
+    module: require("passport-twitter").Strategy
     attr:
       consumerKey:    process.env.TWITTER_CONSUMER_KEY
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
       callbackURL: "http://localhost:#{port}/auth/twitter/callback"
 
-for provider, o of auth
-  { attr, name } = o
-  { Strategy } = require name
-  strategy = new Strategy attr, (accessToken, refreshToken, profile, done)->
-    console.log attributes
-    passport.session.id = profile.id
-    passport.session.provider = provider
-    process.nextTick ->
-      done null, profile
 
 module.exports = (app)->
   app.use passport.initialize()
   app.use passport.session()
 
-  for provider of auth
+  for provider, { attr, module } of auth
+    passport.use new module attr, (accessToken, refreshToken, profile, done)->
+      passport.session.id = profile.id
+      passport.session.provider = provider
+      process.nextTick ->
+        done null, profile
+
     console.log "#{provider} authenticate set."
     app.get "/auth/#{provider}", passport.authenticate provider
-    app.get "/auth/#{provider}/callback", passport.authenticate provider, { failureRedirect: '/' }, (req, res)->
-      console.log "#{provider} auth success"
-      # success
-      res.redirect '/'
+    app.get "/auth/#{provider}/callback", passport.authenticate provider,
+      failureRedirect: '/'
+      successRedirect: '/'
+  return

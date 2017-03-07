@@ -2,10 +2,11 @@ const webpack = require('webpack')
 const copy = require('copy-webpack-plugin')
 var path = require("path");
 var dir = (str) => {
-  return path.resolve(__dirname, str);
+  return path.resolve(process.cwd(), str);
 };
 
 module.exports = {
+  dev: process.env.NODE_ENV != 'production'
   router: {
     scrollBehavior (to, from, savedPosition) {
       if (savedPosition) {

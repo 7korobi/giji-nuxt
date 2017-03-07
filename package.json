@@ -16,7 +16,7 @@
     "nuxt": "^0.9.9",
     "passport-facebook": "^2",
     "passport-github2": "^0.1.10",
-    "passport-google-oauth2": "^1",
+    "passport-google-oauth2": "^0.1",
     "passport-mixi": "^0.0",
     "passport-slack": "^0.0",
     "passport-twitter": "^1",
@@ -31,7 +31,6 @@
     "yaml-loader": "^0.4"
   },
   "scripts": {
-    "webpack": "webpack --color --config config/webpack/dev.js",
     "dev": "coffee server.coffee",
     "build": "nuxt build",
     "start": "nuxt start",
