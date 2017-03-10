@@ -15,11 +15,23 @@ module.exports = require("~components/chat.vue").component_class()
     background: transparent
   td
     vertical-align: middle
+    position: relative
   th
     width: 125px
     vertical-align: top
     .portrate
       margin:  0 19px 0 16px
+
+  .baloon
+    position: absolute
+    top:   7ex
+    left: -6px
+    content: ''
+    width:  0
+    height: 0
+    border-style: solid
+    border-radius: 6px
+    border-width:  6px
 
 </style>
 
@@ -30,6 +42,7 @@ table.talk(:key="id")
       th
         portrate(:face_id="face_id")
       td
+        .baloon(:class="classname")
         .chat(:key="id", :class="classname")
           .name.center(v-if="head && (!! to)")
             span.pull-right {{ to }}

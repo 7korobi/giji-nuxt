@@ -88,55 +88,67 @@ palette($themes, $backT, $penT, $border)
     $comp = spin($base, 180deg)
 
     if black == $backT
-      $bg = $base
-      $pen = $penT
+      $bg     = $base
+      $high   = mix($base,  light, 88%)
+      $pen    = $penT
       $emboss = mix($base,  light, 66%)
-      $bold =   mix($base,  light, 66%)
+      $bold   = mix($base,  light, 66%)
       $button = mix($base, silver, 77%)
       $focus  = mix($base, silver, 66%)
       $active = mix($base, silver, 55%)
 
     if glass == $backT
-      $border = $base
-      $bg =     mix($comp,  dark, 11%)
-      $pen =    mix($base, $penT, 55%)
+      $bg     = mix($comp,  dark, 11%)
+      $high   = mix($comp, black, 11%)
+      $pen    = mix($base, $penT, 55%)
       $emboss = mix($base,  dark, 66%)
-      $bold =   mix($base,  dark, 55%)
+      $bold   = mix($base,  dark, 55%)
       $button = mix($base,  dark, 66%)
       $focus  = mix($base,  dark, 77%)
       $active = mix($base,  dark, 88%)
+      $border = $base
 
     if light == $backT || silver == $backT
+      $bg     = mix($base, silver, 44%)
+      $high   = mix($base,  light, 66%)
       $emboss = mix($base,   gray, 66%)
-      $bold =   mix($base,  $penT, 33%)
+      $bold   = mix($base,  $penT, 33%)
       $button = mix($base,   gray, 77%)
       $focus  = mix($base,  black, 66%)
       $active = mix($base,  black, 55%)
 
     if light == $backT
-      $bg =     mix($base, silver, 44%)
-      $pen =    mix($base,  $penT, 33%)
+      $pen    = mix($base,  $penT, 33%)
 
     if silver == $backT
-      $bg =     mix($base, silver, 44%)
-      $pen =    $penT
+      $pen    = $penT
 
-    $on  = mix($bg, colors.ALIEN, 88%)
-    $off = mix($bg, colors.N06,   88%)
+    $on  = mix($high, colors.ALIEN, 88%)
+    $off = mix($high, colors.N06,   88%)
 
     {$bgTheme}
       &,
       textarea
-        color:           $pen
+        color:            $pen
         background-color: $bg
-        border-color: $border
+        border-color:     $border
+
+      &.baloon
+        border-color:     $bg
+
+      &.post
+        border-color:     $base
+
+      [title],
+      [data-tooltip]
+        background-color: $high
 
       [title]:before,
       [title]:after,
       [data-tooltip]:before,
       [data-tooltip]:after
-        color:           $pen
-        background-color: $bg
+        color:            $pen
+        background-color: $high
 
       a:not([name])
         color: $pen
@@ -172,8 +184,6 @@ palette($themes, $backT, $penT, $border)
       input,
       button,
       a:not([name]),
-      [title],
-      [data-tooltip]
         background-color: $button
         &:hover,
         &:focus
