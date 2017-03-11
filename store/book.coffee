@@ -31,8 +31,11 @@ module.exports =
       Collection.part.merge    state.data.parts
       Collection.section.merge state.data.sections
       Collection.phase.merge   state.data.phases
-      Collection.potof.merge   state.data.potofs
       Collection.chat.merge    state.data.chats
+
+      Collection.stat.merge    state.data.stats
+      Collection.card.merge    state.data.cards
+      Collection.potof.merge   state.data.potofs
 
   actions:
     server: ({commit}, id)->

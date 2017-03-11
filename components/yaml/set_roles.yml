@@ -146,6 +146,7 @@ mob:
   label: 見物人
   win: MOB
   group:
+  able_ids: []
   help: |-
     見物人全般のための仮想役職です。
 
@@ -1278,6 +1279,36 @@ hatedevil:
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HATEDEVIL" TARGET="_blank">邪気悪魔</A>です。
     <br>
     結びつけた二人のうち、どちらか片方だけが生き延びれば、あなたの勝利となります。あなたにその絆が結ばれていない限り、あなた自身の死は勝敗には直接関係しません。
+
+hate:
+  label: 宿敵
+  win: HATER
+  group: BIND
+  able_ids:
+    - aura
+    - bonds
+    - hate
+    - human
+    - vote
+    - entrust
+  cmd: role
+  help: |-
+    あなたには<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HATEDEVIL" TARGET="_blank">宿敵</A>がいます。
+
+love:
+  label: 恋人
+  win: LOVER
+  group: BIND
+  able_ids:
+    - aura
+    - bonds
+    - love
+    - human
+    - vote
+    - entrust
+  cmd: role
+  help: |-
+    あなたには<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_LOVEANGEL" TARGET="_blank">恋人</A>がいます。
 
 loveangel:
   label: 恋愛天使

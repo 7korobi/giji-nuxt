@@ -1,9 +1,11 @@
 <script lang="coffee">
+_ = require "lodash"
+
 module.exports =
   props: ["as", "value"]
   methods:
     tap: ->
-      if @as == @value
+      if _.isEqual @as, @value
         @$emit 'toggle', @as
       else
         @$emit 'input',  @as
@@ -11,7 +13,7 @@ module.exports =
 
   computed:
     btn: ->
-      if @as == @value
+      if _.isEqual @as, @value
         ["active"]
       else
         []

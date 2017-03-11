@@ -16,8 +16,23 @@ new Rule("card").schema ->
     constructor: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, part_idx, @idx] = @id.split('-')
-      @part_id = [@book_id, part_idx].join('-')
+      [@book_id, part_idx, potof_idx, @idx] = @id.split('-')
+      @part_id  = [@book_id, part_idx].join('-')
+      @potof_id = [@book_id, part_idx, potof_idx].join('-')
+
+new Rule("stat").schema ->
+  @belongs_to "potof"
+  @belongs_to "able"
+
+  class @model extends @model
+    @map_reduce: (o, emit)->
+    constructor: ->
+      @id ?= @_id
+      @_id = @id
+      [@book_id, part_idx, potof_idx, @able_id] = @id.split('-')
+      @part_id  = [@book_id, part_idx].join('-')
+      @potof_id = [@book_id, part_idx, potof_idx].join('-')
+      @
 
 new Rule("role").schema ->
   @has_many "ables", by: "ids"

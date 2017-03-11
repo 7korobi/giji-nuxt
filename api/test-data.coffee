@@ -27,7 +27,7 @@ data =
     { _id: "demo-0-9-request",  role_id: "villager" }
     { _id: "demo-0-10-request", role_id: "villager" }
 
-    { _id: "demo-0-1-live", role_id: "mob", date: Infinity }
+    { _id: "demo-0-1-live", role_id: "visiter", date: Infinity }
     { _id: "demo-0-1-role", role_id: "juror" }
     { _id: "demo-0-2-live", role_id: "suddendead", date: 3 }
     { _id: "demo-0-2-role", role_id: "stigma" }
@@ -44,31 +44,31 @@ data =
     { _id: "demo-0-8-live", role_id: "live", date: Infinity }
     { _id: "demo-0-8-role", role_id: "villager" }
     { _id: "demo-0-8-gift", role_id: "ogre" }
-    { _id: "demo-0-8-bond", role_id: "hater" }
+    { _id: "demo-0-8-bond", role_id: "hate" }
     { _id: "demo-0-9-live", role_id: "live", date: Infinity }
     { _id: "demo-0-9-role", role_id: "guru" }
     { _id: "demo-0-10-live", role_id: "executed", date: 2 }
     { _id: "demo-0-10-role", role_id: "villager" }
-    { _id: "demo-0-10-bond", role_id: "lover" }
+    { _id: "demo-0-10-bond", role_id: "love" }
   ]
-  ables: [
-    { _id: "demo-0-1-give", give: 0 }
+  stats: [
+    { _id: "demo-0-1-give", give: 1 }
     { _id: "demo-0-1-VSAY", pt: Infinity, said: 13 }
     { _id: "demo-0-1-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-1-commit", sw: true }
     { _id: "demo-0-1-vote", cmd: "vote", target: "demo-0-1" }
     { _id: "demo-0-1-entrust", target: null }
 
-    { _id: "demo-0-2-give", give: 0 }
-    { _id: "demo-0-2-GSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-2-give", give: 1 }
+    { _id: "demo-0-2-GSAY", pt: Infinity, said: 14 }
     { _id: "demo-0-2-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-2-aura" }
-    { _id: "demo-0-2-stigma", code: "青" }
+    { _id: "demo-0-2-stigma", label: "青い" }
     { _id: "demo-0-2-human" }
     # { _id: "demo-0-2-commit", sw: true }
 
-    { _id: "demo-0-3-give", give: 0 }
-    { _id: "demo-0-3-GSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-3-give", give: 1 }
+    { _id: "demo-0-3-GSAY", pt: Infinity, said: 15 }
     { _id: "demo-0-3-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-3-aura" }
     { _id: "demo-0-3-human" }
@@ -76,7 +76,7 @@ data =
     # { _id: "demo-0-3-commit", sw: true }
 
     { _id: "demo-0-4-give", give: 0 }
-    { _id: "demo-0-4-SSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-4-SSAY", pt: Infinity, said: 16 }
     { _id: "demo-0-4-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-4-AIM",  pt: Infinity, said: 1 }
     { _id: "demo-0-4-human" }
@@ -84,14 +84,14 @@ data =
     { _id: "demo-0-4-vote", cmd: "vote", target: "demo-0-4" }
     { _id: "demo-0-4-entrust", cmd: "entrust", target: null }
 
-    { _id: "demo-0-5-give", give: 0 }
-    { _id: "demo-0-5-GSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-5-give", give: 1 }
+    { _id: "demo-0-5-GSAY", pt: Infinity, said: 17 }
     { _id: "demo-0-5-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-5-human" }
     # { _id: "demo-0-5-commit", sw: true }
 
-    { _id: "demo-0-6-give", give: 0 }
-    { _id: "demo-0-6-GSAY", pt: Infinity, said: 16 }
+    { _id: "demo-0-6-give", give: 1 }
+    { _id: "demo-0-6-GSAY", pt: Infinity, said: 18 }
     { _id: "demo-0-6-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-6-aura" }
     { _id: "demo-0-6-wolf" }
@@ -100,7 +100,7 @@ data =
     # { _id: "demo-0-6-WSAY", pt: Infinity, said: 1 }
 
     { _id: "demo-0-7-give", give: 0 }
-    { _id: "demo-0-7-SSAY", pt: 2000, said: 2 }
+    { _id: "demo-0-7-SSAY", pt: 2000, said: 19 }
     { _id: "demo-0-7-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-7-AIM",  pt: Infinity, said: 1 }
     { _id: "demo-0-7-human" }
@@ -109,21 +109,21 @@ data =
     { _id: "demo-0-7-entrust", cmd: "entrust", target: null }
 
     { _id: "demo-0-8-give", give: 0 }
-    { _id: "demo-0-8-SSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-8-SSAY", pt: Infinity, said: 20 }
     { _id: "demo-0-8-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-8-AIM",  pt: Infinity, said: 1 }
     { _id: "demo-0-8-human" }
     { _id: "demo-0-8-commit", sw: true }
     { _id: "demo-0-8-vote", cmd: "vote", target: "demo-0-8" }
     { _id: "demo-0-8-entrust", cmd: "entrust", target: null }
-    { _id: "demo-0-8-hater", cmd: "bond", target: "demo-10" }
+    { _id: "demo-0-8-hate", cmd: "bond", target: "demo-10" }
     { _id: "demo-0-8-wolf" }
     { _id: "demo-0-8-hunt", cmd: "role", target: null }
     { _id: "demo-0-8-friend" }
     { _id: "demo-0-8-WSAY", pt: Infinity, said: 1 }
 
     { _id: "demo-0-9-give", give: 0 }
-    { _id: "demo-0-9-SSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-9-SSAY", pt: Infinity, said: 21 }
     { _id: "demo-0-9-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-9-AIM",  pt: Infinity, said: 1 }
     { _id: "demo-0-9-aura" }
@@ -133,24 +133,24 @@ data =
     { _id: "demo-0-9-vote", cmd: "vote", target: "demo-0-9" }
     { _id: "demo-0-9-entrust", cmd: "entrust", target: null }
 
-    { _id: "demo-0-10-give", give: 0 }
-    { _id: "demo-0-10-GSAY", pt: Infinity, said: 33 }
+    { _id: "demo-0-10-give", give: 1 }
+    { _id: "demo-0-10-GSAY", pt: Infinity, said: 22 }
     { _id: "demo-0-10-TSAY", pt: Infinity, said: 1 }
     { _id: "demo-0-10-human" }
     # { _id: "demo-0-10-commit", sw: true }
-    { _id: "demo-0-10-lover", cmd: "bond", target: "demo-10" }
+    { _id: "demo-0-10-love", cmd: "bond", target: "demo-10" }
   ]
   potofs: [
-    { _id: "demo-0-10", face_id: "c30", hide: false, side: "HATER", job: "R-", sign: "七転び" }
-    { _id: "demo-0-9",  face_id: "c40", hide: false, side: "GURU",  job: "R-", sign: "七転び" }
-    { _id: "demo-0-8",  face_id: "c50", hide: false, side: "LOVER", job: "R-", sign: "ななころ" }
-    { _id: "demo-0-7",  face_id: "c87", hide: false, side: "HUMAN", job: "病人", sign: "七転び" }
-    { _id: "demo-0-6",  face_id: "t05", hide: false, side: "HUMAN", job: "開放的市民", sign: "noko" }
-    { _id: "demo-0-5",  face_id: "c29", hide: false, side: "HUMAN", job: "記者", sign: "うに" }
-    { _id: "demo-0-4",  face_id: "c90", hide: false, side: "WOLF",  job: "粉ひき", sign: "魚屋" }
-    { _id: "demo-0-3",  face_id: "c70", hide: false, side: "EVIL",  job: "腐女子", sign: "namba" }
-    { _id: "demo-0-2",  face_id: "c80", hide: true,  side: "HUMAN", job: "少年", sign: "ななころ" }
-    { _id: "demo-0-1",  face_id: "c60", hide: false, side: "NONE",  job: "両家の末娘", sign: "ななころ" }
+    { _id: "demo-0-10", face_id: "c30", side: "HATER", job: "R-", sign: "七転び" }
+    { _id: "demo-0-9",  face_id: "c40", side: "GURU",  job: "R-", sign: "七転び" }
+    { _id: "demo-0-8",  face_id: "c50", side: "LOVER", job: "R-", sign: "ななころ" }
+    { _id: "demo-0-7",  face_id: "c87", side: "HUMAN", job: "病人", sign: "七転び" }
+    { _id: "demo-0-6",  face_id: "t05", side: "HUMAN", job: "開放的市民", sign: "noko" }
+    { _id: "demo-0-5",  face_id: "c29", side: "HUMAN", job: "記者", sign: "うに" }
+    { _id: "demo-0-4",  face_id: "c90", side: "WOLF",  job: "粉ひき", sign: "魚屋" }
+    { _id: "demo-0-3",  face_id: "c70", side: "EVIL",  job: "腐女子", sign: "namba" }
+    { _id: "demo-0-2",  face_id: "c80", side: "HUMAN", job: "少年", sign: "ななころ" }
+    { _id: "demo-0-1",  face_id: "c60", side: "NONE",  job: "両家の末娘", sign: "ななころ" }
   ]
   chats:
     "demo-0-0-0":

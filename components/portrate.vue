@@ -7,7 +7,6 @@ module.exports =
       required: true
     hide:
       type: Boolean
-  data: -> {}
   computed:
     image_class: ->
       if @hide
