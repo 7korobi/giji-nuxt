@@ -53,14 +53,14 @@ div
       tbody
         tr
           td
-            btn(v-model="hide_ids", :as="full_on")  全表示
-          td
-            btn(v-model="hide_ids", :as="full_off") クリア
-        tr
-          td
             btn(v-model="hide_ids", :as="live_on")  参加者
           td
             btn(v-model="hide_ids", :as="live_off") リタイア
+        tr
+          td
+            btn(v-model="hide_ids", :as="full_on")  全表示
+          td
+            btn(v-model="hide_ids", :as="full_off") クリア
 
     portrate(v-for="o in potofs", :key="o.face_id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
       .bar(:class="bgc(o)")
