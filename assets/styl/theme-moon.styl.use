@@ -24,6 +24,10 @@ palette(says,   glass, light, $border)
 
 .contentframe
   background-color: #113
+  .talk
+    .baloon
+      left:  -9px
+      border-right-width 1px
 
 body
   background-position-x: right

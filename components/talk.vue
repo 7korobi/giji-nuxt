@@ -24,14 +24,11 @@ module.exports = require("~components/chat.vue").component_class()
 
   .baloon
     position: absolute
-    top:   7ex
-    left: -6px
     content: ''
     width:  0
     height: 0
-    border-style: solid
-    border-radius: 6px
-    border-width:  6px
+    top:    7ex
+    left:  -6px
 
 </style>
 

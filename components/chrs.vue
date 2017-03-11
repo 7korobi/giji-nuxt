@@ -78,7 +78,7 @@
 
     h6
       | {{ chrs.length }}人の{{ set.long }}を表示しています。
-  transition-group.list(name="list" tag="div")
+  transition-group.list.chrs(name="list" tag="div")
     portrate(v-for="chr in chrs", :face_id="chr._id", :key="chr._id")
       p {{ job(chr._id) }}
       p {{ chr.name }}

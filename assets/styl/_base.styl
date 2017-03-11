@@ -89,9 +89,9 @@ a, b, kbd, code, input, select, button, textarea,
   position: fixed
   overflow-y: auto
   pointer-events: none
-  z-index: 1
+  z-index: 10
   &:hover
-    z-index: 3
+    z-index: 30
 
 .outframe
   .inframe
@@ -175,6 +175,13 @@ sup, sub
   display: inline-block
   font-weight: bold
   text-align: center
+
+.contentframe
+  .talk
+    .baloon
+      border-style: solid
+      border-width:  6px
+      border-radius: 6px 0 0 6px
 
 .chat
   padding: 0 4px

@@ -93,19 +93,21 @@ palette($themes, $backT, $penT, $border)
       $pen    = $penT
       $emboss = mix($base,  light, 66%)
       $bold   = mix($base,  light, 66%)
-      $button = mix($base, silver, 77%)
+      $button = mix($base,  light, 88%)
       $focus  = mix($base, silver, 66%)
       $active = mix($base, silver, 55%)
+      $baloon = $base
 
     if glass == $backT
       $bg     = mix($comp,  dark, 11%)
-      $high   = mix($comp, black, 11%)
+      $high   = mix($comp,  dark, 22%)
       $pen    = mix($base, $penT, 55%)
       $emboss = mix($base,  dark, 66%)
       $bold   = mix($base,  dark, 55%)
-      $button = mix($base,  dark, 66%)
+      $button = mix($comp,  dark, 66%)
       $focus  = mix($base,  dark, 77%)
       $active = mix($base,  dark, 88%)
+      $baloon = mix($base,  dark, 66%)
       $border = $base
 
     if light == $backT || silver == $backT
@@ -116,6 +118,7 @@ palette($themes, $backT, $penT, $border)
       $button = mix($base,   gray, 77%)
       $focus  = mix($base,  black, 66%)
       $active = mix($base,  black, 55%)
+      $baloon = mix($base, silver, 44%)
 
     if light == $backT
       $pen    = mix($base,  $penT, 33%)
@@ -131,13 +134,17 @@ palette($themes, $backT, $penT, $border)
       textarea
         color:            $pen
         background-color: $bg
-        border-color:     $border
+        border-color:     $emboss
 
       &.baloon
-        border-color:     $bg
+        border-color: $baloon
 
-      &.post
-        border-color:     $base
+      .fa-check
+        color: mix($pen, colors.ALIEN, 33%)
+      .fa-warning
+        color: mix($pen, colors.P01,   33%)
+      .fa-ban
+        color: mix($pen, colors.WOLF,  33%)
 
       [title],
       [data-tooltip]
@@ -161,6 +168,22 @@ palette($themes, $backT, $penT, $border)
       a:not([name]).active
         background-color: $active
 
+      input,
+      button,
+      a:not([name])
+        background-color: $button
+        &:hover,
+        &:focus
+          background-color: $focus
+        &:active
+          background-color: $active
+
+      input[type=checkbox],
+      input[type=radio]
+        background-color: $off
+        &:checked
+          background-color: $on
+
       b,
       em,
       strong,
@@ -174,26 +197,4 @@ palette($themes, $backT, $penT, $border)
         background-color: $emboss
         color: $bg
 
-      .fa-check
-        color: mix($pen, colors.ALIEN, 33%)
-      .fa-warning
-        color: mix($pen, colors.P01,   33%)
-      .fa-ban
-        color: mix($pen, colors.WOLF,  33%)
-
-      input,
-      button,
-      a:not([name]),
-        background-color: $button
-        &:hover,
-        &:focus
-          background-color: $focus
-        &:active
-          background-color: $active
-
-      input[type=checkbox],
-      input[type=radio]
-        background-color: $off
-        &:checked
-          background-color: $on
 

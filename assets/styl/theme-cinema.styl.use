@@ -34,6 +34,10 @@ palette(says,  silver,   dark, $border)
   background-position: right
   background-attachment: fixed
   background-image: url("~assets/images/bg/renga.png")
+  .talk
+    .baloon
+      left:  -6px
+      border-right-width 1px
 
 .filmend
   background-image: url("~assets/images/bg/film-end.png")

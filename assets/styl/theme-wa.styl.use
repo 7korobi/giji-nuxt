@@ -21,10 +21,8 @@ palette(says,  silver,   dark, $border)
 .talk
   .chat
     margin:  0 7px 0 0
-
-.talk .chat
-  border-style: solid
-  border-width: 2px 0 2px 0
+    border-style: solid
+    border-width: 2px 0 2px 0
 
 .post
   border-style: solid none solid solid
@@ -40,6 +38,10 @@ palette(says,  silver,   dark, $border)
   background-position: right
   background-attachment: fixed
   background-image: url("~assets/images/bg/karakusa.png")
+  .talk
+    .baloon
+      left:  -6px
+      border-right-width 1px
 
 .filmend
   background-image: url("~assets/images/bg/film-wa-end.png")
