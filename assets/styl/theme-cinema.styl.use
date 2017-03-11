@@ -21,8 +21,8 @@ palette(says,  silver,   dark, $border)
     margin:  0 7px 0 0
 
 .post
-  border-style: dashed none dashed solid
-  border-width: 0 0 0 18px
+  border-style: solid none solid solid
+  border-width: 2px 0 2px 18px
 
 .chat
   .name

@@ -12,8 +12,6 @@ module.exports = require("~components/chat.vue").component_class()
   .name
     margin-left: 117px
 
-
-
 .contentframe
   .report
     position: relative
