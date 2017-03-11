@@ -13,8 +13,6 @@ each = (from, process)->
       for id, item of from
         item._id = id
         process(item)
-    else
-      throw new Error "detect bad data: #{JSON.stringify from}"
   return
 
 validate = (item, chklist)->

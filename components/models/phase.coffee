@@ -2,11 +2,11 @@
 
 attrs =
   TITLE: { mark: 'T', label: '表題' }
-  SSAY:  { mark:  '', label: '発言' }
+  SSAY:  { mark:  '', label: '会話' }
   TSAY:  { mark: '-', label: '独言' }
   MAKER: { mark: '#', label: '村建' }
   ADMIN: { mark: '%', label: '管理' }
-  VSAY:  { mark: '@', label: '見物' }
+  VSSAY: { mark: '@', label: '見物' }
   WSAY:  { mark: '*', label: '人狼' }
   GSAY:  { mark: '+', label: '墓下' }
   SPSAY: { mark: '=', label: '共鳴' }

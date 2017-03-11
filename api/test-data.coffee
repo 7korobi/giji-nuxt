@@ -1,19 +1,34 @@
-data =
+folder =
+  books: [
+    { _id: "demo", label: "デモブック", winner: "WOLF", potof_size: 10 }
+    { _id: 1, label: "テストブック", winner: "WOLF", potof_size: 10 }
+    { _id: 2, label: "テストブック", winner: "WOLF", potof_size: 10 }
+    { _id: 3, label: "テストブック", winner: "WOLF", potof_size: 10 }
+    { _id: 4, label: "テストブック", winner: "WOLF", potof_size: 10 }
+  ]
+
+book =
   books: [{ _id: "demo", label: "デモページ", winner: "WOLF", potof_size: 10 }]
   parts: [
     { _id: "demo-0", label: "プロローグ" }
     { _id: "demo-1", label: "一日目" }
     { _id: "demo-2", label: "エピローグ" }
   ]
-  sections: [{ _id: "demo-0-1" }]
+  sections: [
+    { _id: "demo-0-1" }
+    { _id: "demo-0-2" }
+    { _id: "demo-1-1" }
+    { _id: "demo-2-1" }
+  ]
+part =
   phases: [
-    { _id: "demo-0-0", handle: "TITLE", idx:  2 }
-    { _id: "demo-0-1", handle: "SSAY",  idx: 26 }
-    { _id: "demo-0-2", handle: "TSAY",  idx:  2 }
-    { _id: "demo-0-3", handle: "MAKER", idx:  2 }
-    { _id: "demo-0-4", handle: "ADMIN", idx:  2 }
-    { _id: "demo-0-5", handle: "VSAY",  idx:  3 }
-    { _id: "demo-0-6", handle: "WSAY",  idx:  3 }
+    { _id: "demo-0-0", handle: "TITLE", idx:  2, update: true  }
+    { _id: "demo-0-1", handle: "SSAY",  idx: 26, update: false }
+    { _id: "demo-0-2", handle: "TSAY",  idx:  2, update: false }
+    { _id: "demo-0-3", handle: "MAKER", idx:  2, update: false }
+    { _id: "demo-0-4", handle: "ADMIN", idx:  2, update: false }
+    { _id: "demo-0-5", handle: "VSSAY", idx:  3, update: false }
+    { _id: "demo-0-6", handle: "WSAY",  idx:  3, update: false }
   ]
   cards: [
     { _id: "demo-0-1-request",  role_id: "villager" }
@@ -53,11 +68,11 @@ data =
   ]
   stats: [
     { _id: "demo-0-1-give", give: 1 }
-    { _id: "demo-0-1-VSAY", pt: Infinity, said: 13 }
+    { _id: "demo-0-1-VSSAY", pt: Infinity, said: 13 }
     { _id: "demo-0-1-TSAY", pt: Infinity, said: 1 }
-    { _id: "demo-0-1-commit", sw: true }
     { _id: "demo-0-1-vote", cmd: "vote", target: "demo-0-1" }
     { _id: "demo-0-1-entrust", target: null }
+    # { _id: "demo-0-1-commit", sw: true }
 
     { _id: "demo-0-2-give", give: 1 }
     { _id: "demo-0-2-GSAY", pt: Infinity, said: 14 }
@@ -152,12 +167,15 @@ data =
     { _id: "demo-0-2",  face_id: "c80", side: "HUMAN", job: "少年", sign: "ななころ" }
     { _id: "demo-0-1",  face_id: "c60", side: "NONE",  job: "両家の末娘", sign: "ななころ" }
   ]
+section =
   chats:
     "demo-0-0-0":
+      section_id: "demo-0-1"
       show: "report"
       deco: "center"
       log: """プロローグ"""
     "demo-0-0-1":
+      section_id: "demo-0-1"
       show: "report"
       deco: null
       log: """
@@ -165,6 +183,7 @@ data =
         ひそかに人間と入れ替わり、夜になると人間を襲うという魔物。不安に駆られた村人たちは、集会所へと集まるのだった……。
       """
     "demo-0-3-1":
+      section_id: "demo-0-1"
       show: "report"
       log: """
         【業務連絡】【RP】
@@ -174,6 +193,7 @@ data =
         ただいま、入村準備中のため、いましばらくお待ちください。
       """
     "demo-0-3-2":
+      section_id: "demo-0-1"
       show: "talk"
       log: """
         【業務連絡】【RP】
@@ -183,6 +203,7 @@ data =
         ただいま、入村準備中のため、いましばらくお待ちください。
       """
     "demo-0-4-1":
+      section_id: "demo-0-1"
       show: "report"
       log: """
         【業務連絡】【RP】*/
@@ -192,6 +213,7 @@ data =
         ただいま、入村準備中のため、いま/*しばらくお待ちください。
       """
     "demo-0-4-2":
+      section_id: "demo-0-1"
       show: "talk"
       log: """
         【業務連絡】【RP】
@@ -201,9 +223,12 @@ data =
         ただいま、入村準備中のため、いましばらくお待ちください。
       """
     "demo-0-2-2":
+      section_id: "demo-0-1"
+      potof_id: "demo-0-7"
       show: "report"
       log: """病人 エリアスが参加しました。"""
     "demo-0-1-1":
+      section_id: "demo-0-1"
       potof_id: "demo-0-7"
       show: "talk"
       deco: "repo"
@@ -220,6 +245,7 @@ data =
         向かうのはもちろん、2年3組の教室]
       """
     "demo-0-1-24":
+      section_id: "demo-0-1"
       potof_id: "demo-0-6"
       write_at: Date.now()
       show: "talk"
@@ -235,6 +261,7 @@ data =
         すこ～しもさむくないわぁ～♪
       """
     "demo-0-1-25":
+      section_id: "demo-0-1"
       potof_id: "demo-0-6"
       write_at: Date.now() - 80000
       show: "talk"
@@ -243,6 +270,7 @@ data =
         さむいにきまってんだろ！！
       """
     "demo-0-5-1":
+      section_id: "demo-0-1"
       potof_id: "demo-0-1"
       write_at: Date.now() - 60000
       show: "report"
@@ -260,6 +288,7 @@ data =
       """
 
     "demo-0-5-2":
+      section_id: "demo-0-1"
       potof_id: "demo-0-1"
       write_at: Date.now() - 40000
       show: "talk"
@@ -276,6 +305,7 @@ data =
         ⚡//////⚡⚡\\\\\\⚡
       """
     "demo-0-5-3":
+      section_id: "demo-0-1"
       potof_id: "demo-0-1"
       write_at: Date.now() - 20000
       show: "post"
@@ -292,5 +322,11 @@ data =
         ⚡//////⚡⚡\\\\\\⚡
       """
 module.exports = (app)->
-  app.get '/api/books/demo/0', (req, res)->
-    res.json data
+  app.get '/api/books', (req, res)->
+    res.json folder
+  app.get '/api/books/demo', (req, res)->
+    res.json book
+  app.get '/api/parts/demo-0', (req, res)->
+    res.json part
+  app.get '/api/sections/demo-0-1', (req, res)->
+    res.json section

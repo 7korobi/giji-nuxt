@@ -1,5 +1,7 @@
 <script lang="coffee">
 { Query } = require "./models/memory-record"
+require "./models/chr"
+
 module.exports =
   props:
     face_id:

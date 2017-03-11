@@ -646,7 +646,7 @@ TSAY:
   label: 独り言
   help:
 
-SAY:
+SSAY:
   cmd: write
   text:
     - talk

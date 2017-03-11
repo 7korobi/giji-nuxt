@@ -12,13 +12,13 @@
         i.fa.fa-pin
       h6 一日目の参加者
     .inframe.hover
-      potofs
+      potofs(:part_id="part_id")
 
   .contentframe
     .inframe
       br
       br
-      chat(v-for="(o, id) in $store.state.book.data.chats", :id="id")
+      chat(v-for="o in chats", :id="o._id", :key="o._id")
       talk(:write_at="now - 20000", face_id="t10" head="ねるねるねるね ねる" sign="ななころび" handle="VSAY" deco="").
         モブのセリフがちょっとなやむ。
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="VSAY")
@@ -300,65 +300,40 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      div(v-if="! show_write")
-        report(deco="center", :handle="phase.handle")
-          span
-            btn(v-for="o in parts" v-model="part", :as="o") {{ o.label }}
-          span
-            btn(v-for="o in phases" v-model="phase", :as="o") {{ o.label }}
-          span
-            btn(v-for="o in phases" v-model="phase", :as="o") {{ o.label }}
-
-        talk(sign="ななころび" face_id="c71" head="発言投稿", :deco="deco", :handle="phase.handle" )
-          text-editor(v-model="text", :max-row="10", :max-size="2000")
-        post(sign="ななころび" face_id="c71" head="act投稿", :deco="deco", :handle="phase.handle" )
-          text-editor(v-model="text", :max-size="120")
-        report(sign="ななころび" face_id="c71" head="レポート投稿", :deco="deco", :handle="phase.handle" )
-          text-editor(v-model="text", :max-size="120")
-      br
-      br
+      myself(v-if="! show_write", :self_id="self_id")
 </template>
 
 <style lang="stylus" scoped>
-.per
-  vertical-align: -0.2em
-  font-size:       0.7em
-  margin:  0 0 0  -0.2em
-  padding: 0
-  display: inline
-
-.fa-check
-  color: #060
-.fa-warning
-  color: #660
-.fa-ban
-  color: #600
-
 </style>
 
 <script lang="coffee">
+{ Query } = require "~components/models/memory-record"
+require '~components/models/chat'
 
 module.exports =
   default:
     data: ->
-      text: ""
-      show: "talk"
-      deco: ""
-      part:  {}
-      phase: { handle: "SSAY" }
+      part_id: ""
+      self_id: ""
     mounted: ->
-      @$store.dispatch "book/server", "demo"
+      @$store.dispatch "book/book", "demo"
+      .then =>
+        @$store.dispatch "book/part", "demo-0"
+      .then =>
+        @$store.dispatch "book/section", "demo-0-1"
+      .then =>
+        @self_id = "demo-0-8"
+        @part_id = @$store.state.book.part_id
 
     computed:
-      parts: ->
-        @$store.state.book.data.parts
-      phases: ->
-        @$store.state.book.data.phases
       now: ->
         Date.now()
       show_sitemap: ->
         'sitemap' == @$store.state.menu.target
       show_write: ->
         @$store.state.menu.target == 'comment'
+      chats: ->
+        @$store.state.book.read_at
+        @$store.state.book.chats
 
 </script>

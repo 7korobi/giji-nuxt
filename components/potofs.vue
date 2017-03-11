@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div(v-if="part_id")
   .swipe
     table
       tfoot
@@ -68,13 +68,11 @@ div
 
 
 <script lang="coffee">
-require "./models/part"
-require "./models/phase"
-require "./models/potof"
-require "./models/chat"
 { Query } = require "./models/memory-record"
+require './models/chat'
 
 module.exports =
+  props: ["part_id"]
   data: ->
     sort: "live"
     order: "asc"
@@ -87,6 +85,7 @@ module.exports =
         o.hide = false
       for id in @hide_ids
         Query.potofs.hash[id].hide = true
+      @$store.commit "book/data", {}
   computed:
     full_on:  ->  @potof_ids -> false
     full_off: ->  @potof_ids -> true
@@ -94,7 +93,8 @@ module.exports =
     live_off: ->  @potof_ids (o)-> o.commit
 
     potofs: ->
-      Query.potofs.where(part_id: "demo-0").sort(@sort, @order).list
+      @$store.state.book.read_at
+      Query.potofs.where({@part_id}).sort(@sort, @order).list
     bgc: ->
       switch @sort
         when "text", "role_labels", "side", "win"
@@ -152,10 +152,11 @@ module.exports =
   justify-content: flex-start
   min-width: 100%
   img
-    max-height: 65px
-    height: 65px
+    max-height:   65px
+    height:       65px
   .bar
-    height: 3px
+    height:        3px
+    border-radius: 3px
   .btns
     border-radius: 3px
     max-height:   68px

@@ -55,7 +55,7 @@ new Rule("potof").schema ->
 
       @commit = @stats.hash["#{@_id}-commit"]
       @give   = @stats.hash["#{@_id}-give"]
-      @say    = @find @stats, ["SSAY", "GSAY", "VSAY"]
+      @say    = @find @stats, ["SSAY", "GSAY", "VSSAY"]
       @side   = @find @cards, ["bond", "gift", "role"], (o)=> o.role.win
 
       if @live

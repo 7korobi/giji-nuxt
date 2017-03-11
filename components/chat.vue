@@ -1,5 +1,7 @@
 <script lang="coffee">
-{ Query, Collection } = require "./models/memory-record"
+{ Query } = require "./models/memory-record"
+require './models/chat'
+
 module.exports =
   functional: true
   props:
@@ -39,6 +41,7 @@ module.exports =
     computed:
       anker: ->
         if @id
+          @$store.state.book.read_at
           chat = Query.chats.hash[@id]
           if chat && chat.phase
             "#{chat.phase.mark}#{chat.idx}"
