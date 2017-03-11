@@ -16,6 +16,8 @@ module.exports = (app)->
     saveUninitialized: false
     cookie: { maxAge: 60000 }
 
+  require("./mongodb.coffee")(app)
+  require("./mongoose.coffee")(app)
   require("./passport.coffee")(app)
   require("./test-data.coffee")(app)
   return

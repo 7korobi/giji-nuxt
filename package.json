@@ -11,6 +11,7 @@
     "coffee-script": "^1",
     "copy-webpack-plugin": "latest",
     "express-session": "latest",
+    "mongodb-bluebird": "^0.1.1",
     "mongoose": "latest",
     "nuxt": "latest",
     "passport-facebook": "latest",
