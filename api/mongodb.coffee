@@ -12,11 +12,11 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
 module.exports = (app)->
   app.get '/api/aggregate/message/faces/:id', (req, res, next)->
-    aggregate_message.by_faces.find()
+    aggregate_message.by_faces.findOne()
     .then (@by_faces)=>
-      aggregate_message.by_face_by_stories.find()
+      aggregate_message.by_face_by_stories.findOne()
     .then (@by_face_by_stories)=>
-      res.json @
+      res.json {@by_faces, @by_face_by_stories}
       next()
   return
 
