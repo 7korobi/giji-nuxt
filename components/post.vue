@@ -5,10 +5,11 @@ module.exports = require("~components/chat.vue").component_class()
 
 .post
   padding-right: 12px
-  margin 0 0 6px 107px
+  margin 0 0 6px 7px
 
 .contentframe
   .post
+    margin 0 0 6px 107px
     box-shadow: inset -30px 0px 45px -35px #222
 
 </style>

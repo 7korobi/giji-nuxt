@@ -18,23 +18,11 @@
     .inframe
       br
       br
-      chat(id="demo-0-0-0")
-      chat(id="demo-0-0-1")
-      chat(id="demo-0-3-1")
-      chat(id="demo-0-3-2")
-      chat(id="demo-0-4-1")
-      chat(id="demo-0-4-2")
-      chat(id="demo-0-2-2")
-      chat(id="demo-0-1-1")
-      chat(id="demo-0-1-24")
-      chat(id="demo-0-1-25")
-      chat(id="demo-0-5-1")
-      chat(id="demo-0-5-2")
-      chat(id="demo-0-5-3")
+      chat(v-for="(o, id) in $store.state.book.data.chats", :id="id")
       talk(:write_at="now - 20000", face_id="t10" head="ねるねるねるね ねる" sign="ななころび" handle="VSAY" deco="").
         モブのセリフがちょっとなやむ。
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="VSAY")
-        nuxt-link.button(to="/timeago") About page
+        nuxt-link.button(to="/demo/timeago") About page
 
       talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="GSAY" face_id="c31").
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
@@ -358,10 +346,8 @@ module.exports =
       deco: ""
       part:  {}
       phase: { handle: "SSAY" }
-    created: ->
-      @$store.dispatch "book/server", "demo"
-      @$store.commit "book/client"
     mounted: ->
+      @$store.dispatch "book/server", "demo"
 
     computed:
       parts: ->

@@ -8,7 +8,7 @@ body
 *
   border-color: $border
 
-palette(pens,   glass, silver, $border)
+palette(pens,    pens, silver, $border)
 palette(blacks, black, silver, $border)
 palette(stats,  light,   dark, $border)
 palette(says,  silver,   dark, $border)

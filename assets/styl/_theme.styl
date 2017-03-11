@@ -98,7 +98,7 @@ palette($themes, $backT, $penT, $border)
       $active = mix($base, silver, 55%)
       $baloon = $base
 
-    if glass == $backT
+    if glass == $backT || pens == $backT
       $bg     = mix($comp,  dark, 11%)
       $high   = mix($comp,  dark, 22%)
       $pen    = mix($base, $penT, 55%)
@@ -107,7 +107,6 @@ palette($themes, $backT, $penT, $border)
       $button = mix($comp,  dark, 66%)
       $focus  = mix($base,  dark, 77%)
       $active = mix($base,  dark, 88%)
-      $baloon = mix($base,  dark, 66%)
       $border = $base
 
     if light == $backT || silver == $backT
@@ -119,6 +118,12 @@ palette($themes, $backT, $penT, $border)
       $focus  = mix($base,  black, 66%)
       $active = mix($base,  black, 55%)
       $baloon = mix($base, silver, 44%)
+
+    if glass == $backT
+      $baloon = mix($base,  dark, 66%)
+
+    if pens == $backT
+      $baloon = $bg
 
     if light == $backT
       $pen    = mix($base,  $penT, 33%)

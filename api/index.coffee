@@ -17,4 +17,5 @@ module.exports = (app)->
     cookie: { maxAge: 60000 }
 
   require("./passport.coffee")(app)
+  require("./test-data.coffee")(app)
   return
