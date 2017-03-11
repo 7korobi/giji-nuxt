@@ -45,11 +45,14 @@ new Rule("potof").schema ->
       role_id_set = {}
       able_id_set = {}
       for card in @cards.list when card.role
+        role_id_set[card.role_id] = true
         switch card.idx
           when "request"
             @[card.idx] = card
-          else
-            role_id_set[card.role_id] = true
+            role_id_set[card.role_id] = false
+          when "live"
+            @[card.idx] = card
+
         for { _id } in card.role.ables.list
           able_id_set[_id] = true
       @role_ids = Object.keys role_id_set
@@ -66,8 +69,6 @@ new Rule("potof").schema ->
 
       if @live
         @live.date ?= Infinity
-        @live.role._id
-        @live.role.label
         switch @live.role_id
           when "suddendead", "leave"
             @win = ""
@@ -80,9 +81,6 @@ new Rule("potof").schema ->
             else
               @win = "参加"
 
-      if @request
-        @request.role.label
       if @say
         @say.pt ?= Infinity
-        @say.said
 
