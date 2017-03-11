@@ -422,7 +422,7 @@ stigma:
     - entrust
   cmd: role
   help: |-
-    あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_STIGMA" TARGET="_blank">_ROLESUBID_聖痕者</A>です。
+    あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_STIGMA" TARGET="_blank">聖痕者</A>です。
 
 fm:
   label: 結社員

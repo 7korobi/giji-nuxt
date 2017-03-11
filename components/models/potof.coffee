@@ -7,6 +7,8 @@ new Rule("potof").schema ->
   @belongs_to "face"
   @has_many "cards"
   @has_many "stats"
+  @has_many "roles", by: "ids"
+  @has_many "ables", by: "ids"
 
   @scope (all)->
     {}
@@ -40,18 +42,22 @@ new Rule("potof").schema ->
       Collection.card.add @role, key if @role
       Collection.card.add @gift, key if @gift
 
-      @role_labels = []
-      @helps = []
+      role_id_set = {}
+      able_id_set = {}
       for card in @cards.list when card.role
         switch card.idx
-          when "live", "request"
+          when "request"
             @[card.idx] = card
           else
-            stat = @stats.hash["#{@_id}-#{card.role_id}"]
-            head = stat?.label ? ""
-            @role_labels.push "#{head}#{card.role.label}"
-        for { _id, help } in card.role.ables.list when help
-          @helps.push help
+            role_id_set[card.role_id] = true
+        for { _id } in card.role.ables.list
+          able_id_set[_id] = true
+      @role_ids = Object.keys role_id_set
+      @able_ids = Object.keys able_id_set
+      @role_labels = @roles.list.map (o)=>
+        stat = @stats.hash["#{@_id}-#{o._id}"]
+        head = stat?.label ? ""
+        "#{head}#{o.label}"
 
       @commit = @stats.hash["#{@_id}-commit"]
       @give   = @stats.hash["#{@_id}-give"]

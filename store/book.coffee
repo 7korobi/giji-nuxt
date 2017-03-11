@@ -33,7 +33,6 @@ module.exports =
 
       Collection.chat.merge    o.chats
       state.read_at = Date.now()
-      console.log state
 
     books: (state, folder)->
       state.books = Query.books.where {folder}

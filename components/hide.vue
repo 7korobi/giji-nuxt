@@ -5,7 +5,7 @@ module.exports = require("~components/chat.vue").component_class()
 
 .hide
   height: 2px
-  margin -3px 8px 2px 125px
+  margin -7px 8px 6px 125px
 
 </style>
 

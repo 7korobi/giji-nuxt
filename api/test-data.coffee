@@ -42,7 +42,7 @@ part =
     { _id: "demo-0-9-request",  role_id: "villager" }
     { _id: "demo-0-10-request", role_id: "villager" }
 
-    { _id: "demo-0-1-live", role_id: "visiter", date: Infinity }
+    { _id: "demo-0-1-live", role_id: "juror", date: Infinity }
     { _id: "demo-0-1-role", role_id: "juror" }
     { _id: "demo-0-2-live", role_id: "suddendead", date: 3 }
     { _id: "demo-0-2-role", role_id: "stigma" }
@@ -60,6 +60,7 @@ part =
     { _id: "demo-0-8-role", role_id: "villager" }
     { _id: "demo-0-8-gift", role_id: "ogre" }
     { _id: "demo-0-8-bond", role_id: "hate" }
+    { _id: "demo-0-8-book", role_id: "master" }
     { _id: "demo-0-9-live", role_id: "live", date: Infinity }
     { _id: "demo-0-9-role", role_id: "guru" }
     { _id: "demo-0-10-live", role_id: "executed", date: 2 }

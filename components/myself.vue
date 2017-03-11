@@ -3,18 +3,31 @@
 div(v-if="self")
   report(deco="center", :handle="phase.handle")
     span
-      btn(v-for="o in parts" v-model="part", :as="o") {{ o.label }}
+      btn(v-for="o in parts", :value="part_id", :as="o._id") {{ o.label }}
     span
-      btn(v-for="o in phases" v-if="can_phase(o)" v-model="phase", :as="o") {{ o.label }}
+      btn(v-model="handle" as="TITLE") 村の情報
+      btn(v-for="o in phases" v-if="can_phase(o.handle)" v-model="handle", :as="o.handle") {{ o.label }}
     span
-      btn(v-for="o in phases" v-model="phase", :as="o") {{ o.label }}
+      btn(v-for="o in phases" v-model="show[o.handle]" @toggle="show[o.handle] = ! show[o.handle]", :as="true") {{ o.label }}
 
-  talk(:sign="self.sign", :face_id="self.face_id" head="発言投稿", :deco="deco", :handle="phase.handle" )
-    text-editor(v-model="text", :max-row="10", :max-size="2000")
-  post(:sign="self.sign", :face_id="self.face_id" head="ト書き投稿", :deco="deco", :handle="phase.handle" )
-    text-editor(v-model="text", :max-size="120")
-  report(:sign="self.sign", :face_id="self.face_id" head="レポート投稿", :deco="deco", :handle="phase.handle" )
-    text-editor(v-model="text", :max-row="5", :max-size="2000")
+  div(v-if="sayable")
+    talk(:sign="self.sign", :face_id="self.face_id" head="発言投稿", :deco="deco", :handle="phase.handle" )
+      text-editor(v-model="text", :max-row="10", :max-size="2000")
+    post(:sign="self.sign", :face_id="self.face_id" head="ト書き投稿", :deco="deco", :handle="phase.handle" )
+      text-editor(v-model="text", :max-size="120")
+    report(:sign="self.sign", :face_id="self.face_id" head="レポート投稿", :deco="deco", :handle="phase.handle" )
+      text-editor(v-model="text", :max-row="5", :max-size="2000")
+  report(:handle="self.side", :head="self.role_labels.join('、')")
+    div(v-for="o in self.roles.list", v-if="o.help")
+      p(v-html="o.help")
+    div(v-for="o in self.ables.list", v-if="o.label")
+      p(v-if="o.help" v-html="o.help")
+    div(v-for="o in self.ables.list", v-if="o.target")
+      label {{ o.target }}
+      p(v-if="o.help" v-html="o.help")
+    div(v-for="o in self.ables.list", v-if="o.sw")
+      label {{ o.sw }}
+      p(v-if="o.help" v-html="o.help")
 </template>
 
 <style lang="stylus" scoped>
@@ -32,19 +45,29 @@ module.exports =
       show: "talk"
       deco: "head"
       part:  {}
-      phase: { handle: "SSAY" }
+      handle: "SSAY"
+      show: {}
 
     methods:
-      can_phase: (phase)->
-        Query.stats.find "#{@self_id}-#{phase.handle}"
+      can_phase: (handle)->
+        Query.stats.find "#{@self_id}-#{handle}"
 
     computed:
+      sayable: ->
+        @can_phase @handle
       self: ->
         @$store.state.book.read_at
         Query.potofs.hash[@self_id]
       parts: ->
         @$store.state.book.parts
+      part: ->
+        Query.parts.find @part_id
+      part_id: ->
+        @$store.state.book.part_id
       phases: ->
         @$store.state.book.phases
+      phase: ->
+        @show[@handle] = true
+        Query.phases.where({ @part_id, @handle }).list.first
 
 </script>
