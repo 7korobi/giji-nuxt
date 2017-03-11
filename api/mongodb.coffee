@@ -1,20 +1,24 @@
 mongo = require "mongodb-bluebird"
 ObjectId = false
 
-routes = (db)->
-  app.get '/api/aggregate/message/faces/:id', (req, res, next)->
-    { id } = req.params
-    db.collection('aggregate_message_by_faces', {ObjectId}).find()
-    .then (@by_faces)=>
-      db.collection('aggregate_message_by_face_by_stories', {ObjectId}).find()
-    .then (@by_face_by_stories)=>
-      res.json @
+aggregate_message = {}
+
+mongo.connect "mongodb://192.168.0.249/giji"
+.then (db)->
+  aggregate_message.by_faces = db.collection('aggregate_message_by_faces', {ObjectId})
+  aggregate_message.by_face_by_stories = db.collection('aggregate_message_by_face_by_stories', {ObjectId})
+.catch ->
+  console.log "!!! mongodb connect error !!!"
 
 module.exports = (app)->
-  mongo.connect "mongodb://192.168.0.249/giji"
-  .then routes
-  .catch ->
-
+  app.get '/api/aggregate/message/faces/:id', (req, res, next)->
+    aggregate_message.by_faces.find()
+    .then (@by_faces)=>
+      aggregate_message.by_face_by_stories.find()
+    .then (@by_face_by_stories)=>
+      res.json @
+      next()
+  return
 
 ###
 aggregate_message_by_face_by_stories
