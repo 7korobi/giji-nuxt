@@ -14,7 +14,7 @@ query_parser = (base, req, cb)->
 
   new Query base, ->
     @_filters = base._filters.concat()
-    switch req?.constructor
+    switch req && req.constructor
       when Object
         for key, val of req
           cb @, key, val, _.property key
@@ -43,7 +43,7 @@ module.exports = class Query
   in: (req)->
     query_parser @, req, (q, target, req, path)->
       add = (f)-> q._filters.push f
-      switch req?.constructor
+      switch req && req.constructor
         when Array
           set = set_for req
           add (o)->
@@ -65,7 +65,7 @@ module.exports = class Query
   where: (req)->
     query_parser @, req, (q, target, req, path)->
       add = (f)-> q._filters.push f
-      switch req?.constructor
+      switch req && req.constructor
         when Function
           add req
         when Array
