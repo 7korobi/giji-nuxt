@@ -1,10 +1,5 @@
 { Collection, Model, Query, Rule } = require "./memory-record"
 
-require './phase'
-require './potof'
-require './chat'
-
-
 new Rule("folder").schema ->
   @scope (all)->
     enable: all.where (o)-> ! o.disabled

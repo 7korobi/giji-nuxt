@@ -11,8 +11,10 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
   giji.aggregate = ->
     end = (err,o)->
-    cmd = (out, keys)->
+    cmd = (out, keys, ext...)->
       db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+        ext...
+      ,
         $group:
           _id: keys
           date_min:
@@ -40,33 +42,32 @@ mongo.connect "mongodb://192.168.0.249/giji"
       face_id: "$_id.face_id"
       mestype: "$_id.mestype"
 
-    db.collection("potofs",{ObjectId}).aggregate [
-      $unwind: "$role"
-    ,
-      $group:
-        _id:
-          role_id: "$role"
-          face_id: "$face_id"
-        role:
-          $sum: 1
-        story_ids:
-          $addToSet: "$story_id"
-    ,
-      $out: "potof_for_face_role"
-    ], end
 
-    db.collection("potofs",{ObjectId}).aggregate [
-      $group:
-        _id:
-          live_id: "$live"
-          face_id: "$face_id"
-        live:
-          $sum: 1
-        story_ids:
-          $addToSet: "$story_id"
+    cmd = (out, keys, ext...)->
+      db.collection("potofs",{ObjectId}).aggregate [
+        ext...
+      ,
+        $group:
+          _id: keys
+          story_ids:
+            $addToSet: "$story_id"
+      ,
+        $out: out
+      ], end
+
+    cmd "potof_for_face",
+      face_id: "$face_id"
+    cmd "potof_for_face_role",
+      face_id: "$face_id"
+      role_id: "$role"
     ,
-      $out: "potof_for_face_live"
-    ], end
+      $unwind: "$role"
+    cmd "potof_for_face_sow_auth",
+      face_id:     "$face_id"
+      sow_auth_id: "$sow_auth_id"
+    cmd "potof_for_face_live",
+      face_id: "$face_id"
+      live: "$live"
 
   giji.scan = ->
     giji.ignore (err, [o])->
@@ -159,6 +160,18 @@ module.exports = (app)->
     res.json
       started: true
     next()
+
+  app.get '/api/aggregate/faces', (req, res, next)->
+    q = {}
+    Promise.all [
+      giji.find "potof_for_face", q
+      giji.find "potof_for_face_sow_auth", q
+      giji.find "potof_for_face_role", q
+      giji.find "potof_for_face_live", q
+    ]
+    .then ([all, sow_auth, role, live])->
+      res.json { all, sow_auth, role, live }
+      next()
 
   app.get '/api/aggregate/faces/:id', (req, res, next)->
     { id } = req.params

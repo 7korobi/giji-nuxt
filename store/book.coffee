@@ -1,10 +1,5 @@
 { Collection, Model, Query, Rule } = require "~components/models/memory-record"
-require '~components/models/book'
 axios = require "axios"
-
-if process.BROWSER_BUILD
-  window.Query = Query
-  window.Collection = Collection
 
 module.exports =
   namespaced: true

@@ -2,9 +2,7 @@
 env =
   file: "http://s3-ap-northeast-1.amazonaws.com/giji-assets"
 
-
 { Query } = require "~components/models/memory-record"
-require "~components/models/sow"
 
 module.exports =
   default:

@@ -35,7 +35,6 @@ div(v-if="self")
 
 <script lang="coffee">
 { Query } = require "./models/memory-record"
-require './models/chat'
 
 module.exports =
   default:

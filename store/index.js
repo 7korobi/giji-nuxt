@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import "~components/models/index"
 
 const store = new Vuex.Store({
   actions: {
@@ -9,7 +10,8 @@ const store = new Vuex.Store({
   },
   modules: {
     menu: require("./menu.coffee"),
-    book: require("./book.coffee")
+    book: require("./book.coffee"),
+    aggregate: require("./aggregate.coffee")
   }
 });
 export default store

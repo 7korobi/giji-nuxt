@@ -308,7 +308,6 @@
 
 <script lang="coffee">
 { Query } = require "~components/models/memory-record"
-require '~components/models/chat'
 
 module.exports =
   default:

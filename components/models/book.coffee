@@ -1,14 +1,5 @@
 { Collection, Model, Query, Rule } = require "./memory-record"
 
-require "./chr"
-require "./potof"
-require "./card"
-
-require "./part"
-require "./phase"
-require "./section"
-require "./chat"
-
 new Rule("book").schema ->
   @order "write_at"
 
@@ -19,3 +10,4 @@ new Rule("book").schema ->
     constructor: ->
       @id ?= @_id
       @_id = @id
+

@@ -84,7 +84,6 @@
       p {{ chr.name }}
 </template>
 <script lang="coffee">
-require "./models/chr.coffee"
 { Query } = require "./models/memory-record"
 
 

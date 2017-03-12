@@ -1,5 +1,9 @@
 { Collection, Model, Query, Rule } = require "~components/models/memory-record"
 
+if process.BROWSER_BUILD
+  window.Query = Query
+  window.Collection = Collection
+
 new Rule("menu").schema ->
   class @model extends @model
     constructor: ->

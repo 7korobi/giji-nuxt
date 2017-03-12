@@ -69,7 +69,6 @@ div(v-if="part_id")
 
 <script lang="coffee">
 { Query } = require "./models/memory-record"
-require './models/chat'
 
 module.exports =
   props: ["part_id"]
