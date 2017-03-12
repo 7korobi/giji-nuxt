@@ -91,8 +91,7 @@ module.exports = (app)->
   app.get '/api/aggregate/message/faces/:id', (req, res, next)->
     { id } = req.params
     giji.base.find
-      _id:
-        face_id: id
+      "_id.face_id": id
     .then (data)->
       res.json data
       next()
