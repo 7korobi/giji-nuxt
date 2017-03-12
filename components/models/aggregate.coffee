@@ -2,14 +2,13 @@
 
 new Rule("aggregate").schema ->
   @order "story_ids.length", "desc"
+  @belongs_to "face",  dependent: true
 
   @scope (all)->
     {}
 
   class @model extends @model
     constructor: ->
-      @_id = JSON.stringify @group = @_id
-      @group.sow_auth_id ?= null
-      @group.mestype     ?= null
-      @group.role_id     ?= null
-      @group.live        ?= null
+      for key in ["face_id", "sow_auth_id", "mestype", "role_id", "live"]
+        @[key] = @_id[key] ? null
+      @_id = JSON.stringify @_id

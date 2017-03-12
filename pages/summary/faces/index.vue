@@ -1,14 +1,26 @@
 
 <template lang="pug">
 .outframe
-  .summary
+  .contentframe
     .inframe
-      br
-  chrs
-</template>
+      post(handle="SSAY")
+        | {{ chrs.length }}人を表示しています。
+        ul
+          li 人気度
+          li
+            a キャラクター名（詳細へリンク）
+          li ♥ いちばん沢山、そのキャラクターで遊んだプレイヤー
+  .fullframe
+    .btns
+    transition-group.list.chrs(name="list" tag="div")
+      portrate(v-for="chr in chrs", :face_id="chr.face_id", :key="chr.face_id")
+        p 登場{{chr.story_ids.length}}回
+        nuxt-link(:to="chr.face_id")
+          p {{ chr.face.chr_jobs.list[0].job }}
+          p {{ chr.face.name }}
+        p ♥{{ sow_auth_id(chr.face_id) }}
 
-<style lang="stylus" scoped>
-</style>
+</template>
 
 <script lang="coffee">
 { Query } = require "~components/models/memory-record"
@@ -21,9 +33,49 @@ module.exports =
     mounted: ->
       @$store.dispatch "aggregate/faces"
 
+    methods:
+      sow_auth_id: (face_id)->
+        Query.aggregates
+        .where (o)-> o.sow_auth_id && o.face_id == face_id
+        .list.first.sow_auth_id
     computed:
-      chats: ->
-        @$store.state.book.read_at
-        @$store.state.book.chats
+      chrs: ->
+        @$store.state.aggregate.read_at
+        @$store.state.aggregate.alls
 
 </script>
+
+<style lang="stylus" scoped>
+.list
+  background: #000
+  padding: 2px
+  display: flex
+  flex-direction:  row
+  flex-wrap:       wrap
+  align-items:     center
+  align-content:   space-around
+  justify-content: space-around
+
+.list-move
+  transition: transform 0.3s
+
+.list-enter-to
+  transition: all 0.2s ease 0.1s
+
+.list-leave-to
+  position: absolute
+
+.list-enter,
+.list-leave-to
+  opacity: 0
+  transform: translateY(30px)
+
+.portrate
+  flex-basis: auto
+
+.chrblank
+  a
+    display: block
+
+</style>
+

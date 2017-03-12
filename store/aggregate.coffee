@@ -17,7 +17,7 @@ module.exports =
 
   mutations:
     data: (state, o)->
-      Collection.aggregate.merge o.all
+      Collection.aggregate.merge o.all, { is_all: true }
       Collection.aggregate.merge o.mestype
       Collection.aggregate.merge o.sow_auth
       Collection.aggregate.merge o.role
@@ -26,20 +26,18 @@ module.exports =
 
     faces: (state)->
       q = Query.aggregates
-      role_id = sow_auth_id = mestype = live = null
-      state.alls = q.where({role_id, sow_auth_id, mestype, live}).list
-      state.sow_auths = q.where((o)-> o.group.sow_auth_id).list
-      state.roles = q.where((o)-> o.group.role_id).list
-      state.lives = q.where((o)-> o.group.live).list
+      state.alls = q.where({is_all: true}).list
+      state.sow_auths = q.where((o)-> o.sow_auth_id).list
+      state.roles = q.where((o)-> o.role_id).list
+      state.lives = q.where((o)-> o.live).list
 
     face: (state, face_id)->
       q = Query.aggregates.where({face_id})
-      role_id = sow_auth_id = mestype = live = null
-      state.all = q.where({role_id, sow_auth_id, mestype, live}).list.first
-      state.mestypes = q.where((o)-> o.group.mestype).list
-      state.sow_auths = q.where((o)-> o.group.sow_auth_id).list
-      state.roles = q.where((o)-> o.group.role_id).list
-      state.lives = q.where((o)-> o.group.live).list
+      state.all = q.where({is_all: true}).list.first
+      state.mestypes = q.where((o)-> o.mestype).list
+      state.sow_auths = q.where((o)-> o.sow_auth_id).list
+      state.roles = q.where((o)-> o.role_id).list
+      state.lives = q.where((o)-> o.live).list
 
   actions:
     faces: ({commit})->
