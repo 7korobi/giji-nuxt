@@ -1,21 +1,11 @@
 mongo = require "mongodb-bluebird"
 ObjectId = false
 
-keys = [
-  "aggregate_message_by_face_by_stories"
-  "aggregate_message_by_faces"
-  "aggregate_message_by_sow_auth"
-  "aggregate_message_by_sow_auth_by_stories"
-  "aggregate_message_by_sow_auths"
-  "aggregate_message_by_stories"
-  "aggregate_message_by_story"
-]
 giji = {}
 
 mongo.connect "mongodb://192.168.0.249/giji"
 .then (db)->
-  for key in keys
-    giji[key[18..]] = db.collection(key, {ObjectId})
+  giji.base = db.collection("message_by_story_for_face", {ObjectId})
 
   giji.scan = (res, next)->
     db.collection("message_by_story_for_face",{ObjectId}).aggregate [
@@ -43,12 +33,12 @@ mongo.connect "mongodb://192.168.0.249/giji"
         console.log o
         if o
           for id in o.story_ids
-            giji.base id, res, next
+            giji.set_base id, res, next
         else
           res.json { err, o }
           next()
 
-  giji.base = (story_id, res, next)->
+  giji.set_base = (story_id, res, next)->
     db.collection("messages",{ObjectId}).aggregate [
       $match:
         story_id: story_id
@@ -99,11 +89,11 @@ module.exports = (app)->
     giji.scan res, next
 
   app.get '/api/aggregate/message/faces/:id', (req, res, next)->
-    Promise.all( c.findOne() for k, c of giji )
-    .then (values)->
-      data = {}
-      for key, idx in Object.keys giji
-        data[key] = values[idx]
+    { id } = req.params
+    giji.base.find
+      _id:
+        face_id: id
+    .then (data)->
       res.json data
       next()
   return
