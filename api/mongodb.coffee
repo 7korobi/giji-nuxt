@@ -134,6 +134,12 @@ module.exports = (app)->
       started: true
     next()
 
+  app.get '/api/aggregate/aggregate_message', (req, res, next)->
+    giji.aggregate()
+    res.json
+      started: true
+    next()
+
   app.get '/api/aggregate/message/faces/:id', (req, res, next)->
     { id } = req.params
     giji.base.find
