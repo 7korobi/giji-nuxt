@@ -17,6 +17,37 @@ mongo.connect "mongodb://192.168.0.249/giji"
   for key in keys
     giji[key[18..]] = db.collection(key, {ObjectId})
 
+  giji.scan = (res, next)->
+    db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+      $group:
+        _id: null
+        story_ids:
+          $addToSet: "$_id.story_id"
+    ], (err, [o])->
+      console.log o
+      db.collection("stories",{ObjectId}).aggregate [
+        $match:
+          _id:
+            $nin: o.story_ids
+          is_finish:
+            $eq: true
+      ,
+        $project:
+          _id: 1
+      ,
+        $group:
+          _id: null
+          story_ids:
+            $addToSet: "$_id"
+      ], (err, [o])->
+        console.log o
+        if o
+          for id in o.story_ids
+            giji.base id, res, next
+        else
+          res.json { err, o }
+          next()
+
   giji.base = (story_id, res, next)->
     db.collection("messages",{ObjectId}).aggregate [
       $match:
@@ -65,29 +96,7 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
 module.exports = (app)->
   app.get '/api/aggregate/by_message', (req, res, next)->
-    db.collection("message_by_story_for_face",{ObjectId}).aggregate [
-      $group:
-        _id: null
-        story_ids:
-          $addToSet: "$_id.story_id"
-    ], (err, [o])->
-      db.collection("stories",{ObjectId}).aggregate [
-        $match:
-          _id:
-            $nin: o.story_ids
-          is_finish:
-            $eq: true
-      ,
-        $project:
-          _id: 1
-      ,
-        $group:
-          _id: null
-          story_ids:
-            $addToSet: "$_id"
-      ], (err, [o])->
-        for id in o.story_ids
-          giji.base id, res, next
+    giji.scan res, next
 
   app.get '/api/aggregate/message/faces/:id', (req, res, next)->
     Promise.all( c.findOne() for k, c of giji )
