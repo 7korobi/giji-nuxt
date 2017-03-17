@@ -54,9 +54,6 @@ mongo.connect "mongodb://192.168.0.249/giji"
           face_id:
             $exists: 1
             $ne: null
-          role_id:
-            $exists: 1
-            $ne: null
       ,
         $group:
           _id: keys
@@ -81,11 +78,14 @@ mongo.connect "mongodb://192.168.0.249/giji"
       sow_auth_id: "$sow_auth_id"
     , (err, o)->
       db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
+        $project:
+          _id: 1
+          count:
+            $size: "$story_ids"
         $group:
           _id: "$_id"
           count:
-            $max:
-              $count: "$story_ids"
+            $max: "$count"
       ,
         $out: "potof_for_face_sow_auth_max"
       ], (err, o)->
