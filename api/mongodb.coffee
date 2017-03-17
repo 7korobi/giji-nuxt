@@ -10,37 +10,28 @@ mongo.connect "mongodb://192.168.0.249/giji"
     .find q
 
   giji.aggregate = ->
-    cmd = (out, keys, ext...)->
-      new Promise (ok, ng)->
-        db.collection("message_by_story_for_face",{ObjectId}).aggregate [
-          ext...
-        ,
-          $match:
-            sow_auth_id:
-              $exists: 1
-              $nin: [null, "master", "admin"]
-            face_id:
-              $exists: 1
-              $ne: null
-        ,
-          $group:
-            _id: keys
-            date_min:
-              $min: "$date_min"
-            date_max:
-              $max: "$date_max"
-            max:
-              $max: "$max"
-            all:
-              $sum: "$all"
-            count:
-              $sum: "$count"
-            story_ids:
-              $addToSet: "$_id.story_id"
-        ,
-          $out: out
-        ], (err, o)->
-          if err then ng(o) else ok(o)
+    end = (err, o)->
+    cmd = (out, keys, ext..., cb)->
+      db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+        ext...
+      ,
+        $group:
+          _id: keys
+          date_min:
+            $min: "$date_min"
+          date_max:
+            $max: "$date_max"
+          max:
+            $max: "$max"
+          all:
+            $sum: "$all"
+          count:
+            $sum: "$count"
+          story_ids:
+            $addToSet: "$_id.story_id"
+      ,
+        $out: out
+      ], cb ? end
 
     cmd "message_for_face",
       face_id: "$_id.face_id"
@@ -52,30 +43,28 @@ mongo.connect "mongodb://192.168.0.249/giji"
       mestype: "$_id.mestype"
 
 
-    cmd = (out, keys, ext...)->
-      new Promise (ok, ng)->
-        db.collection("potofs",{ObjectId}).aggregate [
-          ext...
-        ,
-          $match:
-            sow_auth_id:
-              $exists: 1
-              $nin: [null, "master", "admin"]
-            face_id:
-              $exists: 1
-              $ne: null
-            role_id:
-              $exists: 1
-              $ne: null
-        ,
-          $group:
-            _id: keys
-            story_ids:
-              $addToSet: "$story_id"
-        ,
-          $out: out
-        ], (err, o)->
-          if err then ng(o) else ok(o)
+    cmd = (out, keys, ext..., cb)->
+      db.collection("potofs",{ObjectId}).aggregate [
+        ext...
+      ,
+        $match:
+          sow_auth_id:
+            $exists: 1
+            $nin: [null, "master", "admin"]
+          face_id:
+            $exists: 1
+            $ne: null
+          role_id:
+            $exists: 1
+            $ne: null
+      ,
+        $group:
+          _id: keys
+          story_ids:
+            $addToSet: "$story_id"
+      ,
+        $out: out
+      ], cb ? end
 
     cmd "potof_for_face",
       face_id: "$face_id"
@@ -90,7 +79,7 @@ mongo.connect "mongodb://192.168.0.249/giji"
     cmd "potof_for_face_sow_auth",
       face_id:     "$face_id"
       sow_auth_id: "$sow_auth_id"
-    .then ->
+    , (err, o)->
       db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
         $group:
           _id: "$_id"
