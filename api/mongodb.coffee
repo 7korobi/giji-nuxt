@@ -15,6 +15,14 @@ mongo.connect "mongodb://192.168.0.249/giji"
         db.collection("message_by_story_for_face",{ObjectId}).aggregate [
           ext...
         ,
+          $match:
+            sow_auth_id:
+              $exists: 1
+              $nin: [null, "master", "admin"]
+            face_id:
+              $exists: 1
+              $ne: null
+        ,
           $group:
             _id: keys
             date_min:
@@ -48,6 +56,17 @@ mongo.connect "mongodb://192.168.0.249/giji"
       new Promise (ok, ng)->
         db.collection("potofs",{ObjectId}).aggregate [
           ext...
+        ,
+          $match:
+            sow_auth_id:
+              $exists: 1
+              $nin: [null, "master", "admin"]
+            face_id:
+              $exists: 1
+              $ne: null
+            role_id:
+              $exists: 1
+              $ne: null
         ,
           $group:
             _id: keys
