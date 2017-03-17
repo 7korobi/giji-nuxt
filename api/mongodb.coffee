@@ -95,7 +95,8 @@ mongo.connect "mongodb://192.168.0.249/giji"
         $group:
           _id: "$_id"
           count:
-            $max: "$story_ids.length"
+            $max:
+              $count: "$story_ids"
       ,
         $out: "potof_for_face_sow_auth_max"
       ], (err, o)->
