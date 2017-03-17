@@ -20,8 +20,8 @@ module.exports =
       Collection.aggregate.merge o.all, { is_all: true }
       Collection.aggregate.merge o.mestype
       Collection.aggregate.merge o.sow_auth
-      Collection.aggregate.merge o.role
-      Collection.aggregate.merge o.live
+      # Collection.aggregate.merge o.role
+      # Collection.aggregate.merge o.live
       state.read_at = Date.now()
 
     faces: (state)->

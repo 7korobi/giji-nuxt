@@ -1,17 +1,20 @@
 mongo = require "mongodb-bluebird"
+_ = require "lodash"
+
 ObjectId = false
 
 giji = {}
 
 mongo.connect "mongodb://192.168.0.249/giji"
 .then (db)->
+  end = (err, o)->
+    console.log err, o
   giji.find = (id, q)->
     db.collection id, {ObjectId}
     .find q
 
-  giji.aggregate = ->
-    end = (err, o)->
-    cmd = (out, keys, ext..., cb)->
+  giji.aggregate_message = ->
+    cmd = (out, keys, ext...)->
       db.collection("message_by_story_for_face",{ObjectId}).aggregate [
         ext...
       ,
@@ -31,19 +34,22 @@ mongo.connect "mongodb://192.168.0.249/giji"
             $addToSet: "$_id.story_id"
       ,
         $out: out
-      ], cb ? end
+      ], {ObjectId}
 
-    cmd "message_for_face",
-      face_id: "$_id.face_id"
-    cmd "message_for_face_sow_auth",
-      face_id:     "$_id.face_id"
-      sow_auth_id: "$_id.sow_auth_id"
-    cmd "message_for_face_mestype",
-      face_id: "$_id.face_id"
-      mestype: "$_id.mestype"
+    Promise.all [
+      cmd "message_for_face",
+        face_id: "$_id.face_id"
+      cmd "message_for_face_sow_auth",
+        face_id:     "$_id.face_id"
+        sow_auth_id: "$_id.sow_auth_id"
+      cmd "message_for_face_mestype",
+        face_id: "$_id.face_id"
+        mestype: "$_id.mestype"
+    ]
 
 
-    cmd = (out, keys, ext..., cb)->
+  giji.aggregate_potof = ->
+    cmd = (out, keys, ext...)->
       db.collection("potofs",{ObjectId}).aggregate [
         ext...
       ,
@@ -57,42 +63,72 @@ mongo.connect "mongodb://192.168.0.249/giji"
       ,
         $group:
           _id: keys
+          date_min:
+            $min: "$timer.entrieddt"
+          date_max:
+            $max: "$timer.entrieddt"
           story_ids:
             $addToSet: "$story_id"
+
       ,
         $out: out
-      ], cb ? end
+      ], {ObjectId}
 
-    cmd "potof_for_face",
-      face_id: "$face_id"
-    cmd "potof_for_face_live",
-      face_id: "$face_id"
-      live: "$live"
-    cmd "potof_for_face_role",
-      face_id: "$face_id"
-      role_id: "$role"
-    ,
-      $unwind: "$role"
-    cmd "potof_for_face_sow_auth",
-      face_id:     "$face_id"
-      sow_auth_id: "$sow_auth_id"
-    , (err, o)->
+    Promise.all [
+      cmd "potof_for_face",
+        face_id: "$face_id"
+      cmd "potof_for_face_live",
+        face_id: "$face_id"
+        live: "$live"
+      cmd "potof_for_face_sow_auth",
+        face_id:     "$face_id"
+        sow_auth_id: "$sow_auth_id"
+      cmd "potof_for_face_role",
+        face_id: "$face_id"
+        role_id: "$role"
+      ,
+        $unwind: "$role"
+    ]
+
+  giji.aggregate_max = ->
+    db.collection("potof_for_face_sow_auth_max",{ObjectId}).drop()
+    .then ->
       db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
         $project:
           _id: 1
           count:
             $size: "$story_ids"
+      ,
         $group:
-          _id: "$_id"
+          _id:
+            face_id: "$_id.face_id"
           count:
             $max: "$count"
-      ,
-        $out: "potof_for_face_sow_auth_max"
-      ], (err, o)->
+      ], {ObjectId}
+    .then (data)->
+      Promise.all data.map (o)->
+        giji.find "potof_for_face_sow_auth",
+          "_id.face_id": o._id.face_id
+          story_ids:
+            $size: o.count
+        .then (list)->
+          [top] = _.sortBy list, (a)-> a.date_min
+          o.date_min = top.date_min
+          o.date_max = top.date_max
+          o._id      = top._id
+          o
+    .then (data)->
+      db.collection("potof_for_face_sow_auth_max",{ObjectId}).insert data
 
 
   giji.scan = ->
-    giji.ignore (err, [o])->
+    db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+      $group:
+        _id: null
+        story_ids:
+          $addToSet: "$_id.story_id"
+    ], {ObjectId}
+    .then ([o])->
       list = o?.story_ids ? []
       db.collection("stories",{ObjectId}).aggregate [
         $match:
@@ -108,18 +144,14 @@ mongo.connect "mongodb://192.168.0.249/giji"
           _id: null
           story_ids:
             $addToSet: "$_id"
-      ], (err, [o])->
-        list = o?.story_ids ? []
-        for id in o.story_ids
-          giji.set_base id
-
-  giji.ignore = (cb)->
-    db.collection("message_by_story_for_face",{ObjectId}).aggregate [
-      $group:
-        _id: null
-        story_ids:
-          $addToSet: "$_id.story_id"
-    ], cb
+      ], {ObjectId}
+    .then ([o])->
+      list = o?.story_ids ? []
+      console.log "step B"
+      console.log list
+      set_bases = for id in list
+        giji.set_base id
+      Promise.all set_bases
 
   giji.set_base = (story_id)->
     db.collection("messages",{ObjectId}).aggregate [
@@ -164,30 +196,35 @@ mongo.connect "mongodb://192.168.0.249/giji"
           $sum: "$size"
         count:
           $sum: 1
-    ], (err, data)->
+    ], {ObjectId}
+    .then (data)->
       db.collection("message_by_story_for_face").insert data
 
 .catch ->
   console.log "!!! mongodb connect error !!!"
 
 module.exports = (app)->
-  app.get '/api/aggregate/step/1', (req, res, next)->
+  app.get '/api/aggregate/job', (req, res, next)->
     giji.scan()
-    res.json
-      started: true
-    next()
-
-  app.get '/api/aggregate/step/2', (req, res, next)->
-    giji.aggregate()
-    res.json
-      started: true
-    next()
+    .then ->
+      giji.aggregate_message()
+    .then ->
+      giji.aggregate_potof()
+    .then ->
+      giji.aggregate_max()
+    .then ->
+      res.json
+        started: true
+      next()
+    .catch (e)->
+      res.json e
+      next()
 
   app.get '/api/aggregate/faces', (req, res, next)->
     q = {}
     Promise.all [
       giji.find "potof_for_face", q
-      giji.find "potof_for_face_sow_auth", q
+      giji.find "potof_for_face_sow_auth_max", q
       giji.find "potof_for_face_role", q
       giji.find "potof_for_face_live", q
     ]
