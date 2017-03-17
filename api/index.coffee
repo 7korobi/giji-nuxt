@@ -25,3 +25,4 @@ module.exports = (app)->
   require("./passport.coffee")(app)
   require("./test-data.coffee")(app)
   return
+  

@@ -10,28 +10,29 @@ mongo.connect "mongodb://192.168.0.249/giji"
     .find q
 
   giji.aggregate = ->
-    end = (err,o)->
     cmd = (out, keys, ext...)->
-      db.collection("message_by_story_for_face",{ObjectId}).aggregate [
-        ext...
-      ,
-        $group:
-          _id: keys
-          date_min:
-            $min: "$date_min"
-          date_max:
-            $max: "$date_max"
-          max:
-            $max: "$max"
-          all:
-            $sum: "$all"
-          count:
-            $sum: "$count"
-          story_ids:
-            $addToSet: "$_id.story_id"
-      ,
-        $out: out
-      ], end
+      new Promise (ok, ng)->
+        db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+          ext...
+        ,
+          $group:
+            _id: keys
+            date_min:
+              $min: "$date_min"
+            date_max:
+              $max: "$date_max"
+            max:
+              $max: "$max"
+            all:
+              $sum: "$all"
+            count:
+              $sum: "$count"
+            story_ids:
+              $addToSet: "$_id.story_id"
+        ,
+          $out: out
+        ], (err, o)->
+          if err then ng(o) else ok(o)
 
     cmd "message_for_face",
       face_id: "$_id.face_id"
@@ -44,19 +45,24 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
 
     cmd = (out, keys, ext...)->
-      db.collection("potofs",{ObjectId}).aggregate [
-        ext...
-      ,
-        $group:
-          _id: keys
-          story_ids:
-            $addToSet: "$story_id"
-      ,
-        $out: out
-      ], end
+      new Promise (ok, ng)->
+        db.collection("potofs",{ObjectId}).aggregate [
+          ext...
+        ,
+          $group:
+            _id: keys
+            story_ids:
+              $addToSet: "$story_id"
+        ,
+          $out: out
+        ], (err, o)->
+          if err then ng(o) else ok(o)
 
     cmd "potof_for_face",
       face_id: "$face_id"
+    cmd "potof_for_face_live",
+      face_id: "$face_id"
+      live: "$live"
     cmd "potof_for_face_role",
       face_id: "$face_id"
       role_id: "$role"
@@ -65,9 +71,16 @@ mongo.connect "mongodb://192.168.0.249/giji"
     cmd "potof_for_face_sow_auth",
       face_id:     "$face_id"
       sow_auth_id: "$sow_auth_id"
-    cmd "potof_for_face_live",
-      face_id: "$face_id"
-      live: "$live"
+    .then ->
+      db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
+        $group:
+          _id: "$_id"
+          count:
+            $max: "$story_ids.length"
+      ,
+        $out: "potof_for_face_sow_auth_max"
+      ], (err, o)->
+
 
   giji.scan = ->
     giji.ignore (err, [o])->
