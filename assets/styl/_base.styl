@@ -37,7 +37,8 @@ input[type=button],
 input[type=image],
 input[type=reset],
 [title], [data-tooltip],
-a, b, kbd, code, input, select, button, textarea,
+a, b, kbd, code, strong,
+input, select, button, textarea,
 .btn
   display: inline-block
   user-select: none
@@ -196,6 +197,7 @@ sup, sub
     padding: 1px 0
     user-select: auto
     overflow: visible
+    white-space: pre-wrap
     &.head:first-line
       font-weight: bold
     &.mono
@@ -203,7 +205,7 @@ sup, sub
       font-family: monospace
       overflow-y: visible
       overflow-x: auto
-      text-overflow: ellipsis
+      text-overflow: show
       background: url("~assets/images/bg/grid.gif")
 
   .date

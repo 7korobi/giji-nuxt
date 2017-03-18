@@ -75,7 +75,7 @@ colors = {
   DARK:   dark   = #000000
   BLACK:  black  = #222222
   WEAK:   weak   = #4d4e46
-  BRASS:  brass  = #b5a64d
+  BRASS:  brass  = #aa9955
   GRAY:   gray   = #999a8b
   SILVER: silver = #c0c0c0
   GOLD:   gold   = #ffd700
@@ -93,7 +93,7 @@ palette($themes, $backT, $penT, $border)
       $high   = mix($base,  light, 88%)
       $pen    = $penT
       $emboss = mix($base,  light, 66%)
-      $bold   = mix($base,  light, 66%)
+      $hide   = mix($base,  light, 66%)
       $button = mix($base,  light, 88%)
       $focus  = mix($base, silver, 66%)
       $active = mix($base, silver, 55%)
@@ -101,10 +101,10 @@ palette($themes, $backT, $penT, $border)
 
     if glass == $backT || pens == $backT
       $bg     = mix($comp,  dark, 11%)
-      $high   = mix($comp,  dark, 22%)
+      $high   = mix($comp,  dark, 33%)
       $pen    = mix($base, $penT, 55%)
       $emboss = mix($base,  dark, 66%)
-      $bold   = mix($base,  dark, 55%)
+      $hide   = mix($base,  dark, 55%)
       $button = mix($comp,  dark, 66%)
       $focus  = mix($base,  dark, 77%)
       $active = mix($base,  dark, 88%)
@@ -114,7 +114,7 @@ palette($themes, $backT, $penT, $border)
       $bg     = mix($base, silver, 44%)
       $high   = mix($base,  light, 66%)
       $emboss = mix($base,   gray, 66%)
-      $bold   = mix($base,  $penT, 33%)
+      $hide   = mix($base,  $penT, 33%)
       $button = mix($base,   gray, 77%)
       $focus  = mix($base,  black, 66%)
       $active = mix($base,  black, 55%)
@@ -163,6 +163,10 @@ palette($themes, $backT, $penT, $border)
         color:            $pen
         background-color: $high
 
+      b
+        color: $pen
+        background-color: $high
+
       a:not([name])
         color: $pen
         &:visited
@@ -177,7 +181,7 @@ palette($themes, $backT, $penT, $border)
       input,
       button,
       a:not([name])
-        background-color: $button
+        background-color: $high
         &:hover,
         &:focus
           background-color: $focus
@@ -190,17 +194,16 @@ palette($themes, $backT, $penT, $border)
         &:checked
           background-color: $on
 
-      b,
       em,
-      strong,
       .name,
       .date
-        color: $bold
+        color: $hide
 
+      strong,
       abbr,
       sup,
       sub
         background-color: $emboss
-        color: $bg
+        color: $high
 
 

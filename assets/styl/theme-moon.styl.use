@@ -5,7 +5,7 @@ $border = #333
 
 palette(pens,   glass, light, $border)
 palette(blacks, black,  gold, $border)
-palette(stats,  light,  dark, $border)
+palette(stats,   pens,  dark, $border)
 palette(says,   glass, light, $border)
 
 .chat
@@ -23,7 +23,7 @@ palette(says,   glass, light, $border)
   border-width: 0 0 1px 18px
 
 .contentframe
-  background-color: #113
+  background-color: #282266
   .talk
     .baloon
       left:  -9px
@@ -35,7 +35,7 @@ body
   background-attachment: fixed
   background-repeat: no-repeat
   background-image: url("~assets/images/bg/moon-red.png")
-  background-color: #301
+  background-color: #551826
 
 .filmend
   background-image: url("~assets/images/bg/film-wa-end.png")

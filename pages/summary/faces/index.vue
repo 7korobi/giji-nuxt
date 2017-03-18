@@ -15,7 +15,7 @@
     transition-group.list.chrs(name="list" tag="div")
       portrate(v-for="chr in chrs", :face_id="chr.face_id", :key="chr.face_id")
         p 登場{{chr.story_ids.length}}回
-        nuxt-link(:to="chr.face_id")
+        nuxt-link(:to="show_url(chr)")
           p {{ chr.face.chr_jobs.list[0].job }}
           p {{ chr.face.name }}
         p ♥{{ sow_auth_id(chr.face_id) }}
@@ -34,6 +34,8 @@ module.exports =
       @$store.dispatch "aggregate/faces"
 
     methods:
+      show_url: (chr)->
+        "/summary/faces/" + chr.face_id
       sow_auth_id: (face_id)->
         Query.aggregates
         .where (o)-> o.sow_auth_id && o.face_id == face_id

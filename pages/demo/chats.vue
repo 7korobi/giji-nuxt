@@ -39,7 +39,7 @@
       post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" deco="mono")
         nuxt-link.button(to="/timeago") About page
       talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face_id="c32" log="ねろねろねろねろ")
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" face_id="c91").
+      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" deco="mono" face_id="c91").
         123456789012345678901234567890123456789012345678901234567890
         123456789012345678901234567890123456789012345678901234567890
       talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face_id="c101").
@@ -66,6 +66,35 @@
       report(handle="VGSAY" deco="center") 二日目
       report(handle="GSAY" deco="center") 二日目
       report(handle="SPORT" deco="center") 二日目
+
+      talk(face_id="t01", :write_at="now - 3600000", to="おきる" sign="ななころび" head="TITLE" handle="TITLE")
+        a 霜草蒼蒼
+        sup 人絶獨出
+        sub 門前望野
+        b 蟲切切村
+        strong 南村北行
+        | 霜草蒼蒼蟲切切村南村北行人絶獨出
+        em /*門前望野*/
+        | 田月出蕎麥花如雪
+      talk(face_id="t01", :write_at="now - 3600000", to="おきる" sign="ななころび" head="MAKER" handle="MAKER")
+        a 霜草蒼蒼
+        sup 人絶獨出
+        sub 門前望野
+        b 蟲切切村
+        strong 南村北行
+        | 霜草蒼蒼蟲切切村南村北行人絶獨出
+        em /*門前望野*/
+        | 田月出蕎麥花如雪
+      talk(face_id="t01", :write_at="now - 3600000", to="おきる" sign="ななころび" head="ADMIN" handle="ADMIN")
+        a 霜草蒼蒼
+        sup 人絶獨出
+        sub 門前望野
+        b 蟲切切村
+        strong 南村北行
+        | 霜草蒼蒼蟲切切村南村北行人絶獨出
+        em /*門前望野*/
+        | 田月出蕎麥花如雪
+
       talk(face_id="t01", :write_at="now - 3600000", to="おきる" sign="ななころび" head="TSAY" handle="TSAY")
         a 霜草蒼蒼
         sup 人絶獨出
