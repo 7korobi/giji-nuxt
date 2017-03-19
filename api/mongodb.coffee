@@ -225,11 +225,9 @@ module.exports = (app)->
     Promise.all [
       giji.find "potof_for_face", q
       giji.find "potof_for_face_sow_auth_max", q
-      giji.find "potof_for_face_role", q
-      giji.find "potof_for_face_live", q
     ]
-    .then ([all, sow_auth, role, live])->
-      res.json { all, sow_auth, role, live }
+    .then ([faces, sow_auths])->
+      res.json { faces, sow_auths }
       next()
 
   app.get '/api/aggregate/faces/:id', (req, res, next)->
@@ -243,8 +241,8 @@ module.exports = (app)->
       giji.find "potof_for_face_role", q
       giji.find "potof_for_face_live", q
     ]
-    .then ([all, mestype, sow_auth, role, live])->
-      res.json { all, mestype, sow_auth, role, live }
+    .then ([faces, mestypes, sow_auths, roles, lives])->
+      res.json { faces, mestypes, sow_auths, roles, lives }
       next()
   return
 
