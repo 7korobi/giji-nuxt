@@ -14,7 +14,7 @@ themes = {
     N01:    '.N01'
     N02:    '.N02'
     VLOVE:  '.AIM'
-    LOVE:   '.SPSAY'
+    LOVE:   '.SPSAY, .PSAY'
     N05:    '.N05'
     N06:    '.N06'
     VGRAVE: '.VGSAY'
@@ -112,7 +112,7 @@ palette($themes, $backT, $penT, $border)
 
     if light == $backT || silver == $backT
       $bg     = mix($base, silver, 44%)
-      $high   = mix($base,  light, 66%)
+      $high   = mix($base,  light, 55%)
       $emboss = mix($base,   gray, 66%)
       $hide   = mix($base,  $penT, 33%)
       $button = mix($base,   gray, 77%)
@@ -167,6 +167,7 @@ palette($themes, $backT, $penT, $border)
         color: $pen
         background-color: $high
 
+      body a:not([name])&,
       a:not([name])
         color: $pen
         &:visited
@@ -174,18 +175,20 @@ palette($themes, $backT, $penT, $border)
         &:link
           background-color: $off
 
-      .active,
-      a:not([name]).active
+      .active
         background-color: $active
 
       input,
       button,
+      body a:not([name])&,
       a:not([name])
         background-color: $high
         &:hover,
         &:focus
           background-color: $focus
         &:active
+          background-color: $active
+        .active
           background-color: $active
 
       input[type=checkbox],

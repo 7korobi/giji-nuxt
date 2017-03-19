@@ -7,8 +7,19 @@
         h1 {{ name }}の活躍
         .date
           | #[timeago(:since="face.date_min")] ～ #[timeago(:since="face.date_max")]
-      talk(handle="SSAY" deco="", :face_id="face_id", :head="name")
-        | 全部で#[b {{ all.length }}]の役職になりました。
+      talk(handle="TSAY" deco="", :face_id="face_id", :head="name")
+        | #[b {{ lives.sum }}]人が村にいました。
+        .flex
+          a.label3(v-for="o in lives", :class="o._id.live")
+            .label {{ o.role.label }}
+            .count {{ o.story_ids.length }}回
+        | 全部で#[b {{ roles.length }}]種類、のべ#[b {{ roles.sum }}]の能力を持ちました。
+        .flex
+          a.label3(v-for="o in roles", :class="o.role.win")
+            .label {{ o.role.label }}
+            .count {{ o.story_ids.length }}回
+
+
       report(handle="footer")
         table
           thead
@@ -17,12 +28,12 @@
               th 一番長い発言
               th 総文字数
               th 総発言回数
-          tbody(v-for="title, key in keys")
-            tr(:class="key", :key="key")
-              th {{ title }}
-              td {{ 1234 | currency }} 字
-              td {{ 1 | currency }} 字
-              td {{ 1 | currency }} 回
+          tbody.calc(v-for="o in mestypes")
+            tr(:class="o.handle", :key="o.handle")
+              th {{ o.title }}
+              td {{ o.max | currency }} 字
+              td {{ o.all | currency }} 字
+              td {{ o.count | currency }} 回
 
 
       report(handle="footer")
@@ -33,25 +44,32 @@
               th /村数
               th 文字数
               th 発言回数
-          tbody(v-for="title, key in keys")
-            tr(:class="key", :key="key")
-              th {{ title }}
-              td {{ 1 | currency }} 村
-              td {{ 1 | currency }} 字
-              td {{ 1 | currency }} 回
+          tbody.calc(v-for="o in mestypes")
+            tr(:class="o.handle", :key="o.handle")
+              th {{ o.title }}
+              td {{ o.per | currency }} 村
+              td {{ o.all / o.per | currency }} 字
+              td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in folder_keys" handle="VSAY", :face_id="face_id", :head="folder_head(folder)")
+      talk(v-for="folder in folders" handle="VSAY", :face_id="face_id", :head="folder.nation")
+        | {{ folder.length }}回登場しました
         .flex
-          a.label-mini(v-for="id in ids(folder)", :href="log_url(folder, id)") {{ id }}
+          a.label-mini(v-for="id in folder", :href="log_url(id)") {{ id[1] }}
 
 
-      report(handle="VGSAY", :head="name")
-        .flex
-          a(v-for="o in sow_auths", :class="label_size(o.sow_auth_id)")
-            .label {{ o.sow_auth_id }}
-            .count {{ o.story_ids.length }}回
-
-
+      report(handle="VGSAY", :head="name + 'で活躍した人達'")
+        table
+          tbody
+            tr(v-for="o in sow_auths")
+              td
+                .sow_auth_id {{ o._id.sow_auth_id }}
+              td.r {{ o.story_ids.length }}回
+              td
+                timeago.count(:since="o.date_min")
+              td
+                .pad ～
+              td
+                timeago.count(:since="o.date_max")
 
 </template>
 
@@ -71,18 +89,14 @@ module.exports =
 
     filters:
       currency: (num)->
-        str = String(num)
+        str = String Math.ceil num
         while str != str = str.replace /^(-?\d+)(\d{3})/, "$1,$2"
           true
         return str
 
     methods:
-      ids: (folder)->
-        @folders[folder]
-      log_url: (folder, id)->
+      log_url: ([folder, id])->
         "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{folder}-#{id}"
-      folder_head: (folder)->
-        "#{ folder } #{ @ids(folder).length }回登場しました"
 
       label_size: (str)->
         width  = 0.8 * (str.match(/[iIjl]/g) ? []).length
@@ -102,35 +116,26 @@ module.exports =
             "label6"
 
     computed:
-      all: ->
-        @face.story_ids ? []
-      folder_keys: ->
-        keys = Object.keys @folders
-        _.sortBy keys, (key)=> - @folders[key]?.length ? 0
+      roles: ->
+        @$store.state.aggregate.roles
 
-      folders: ->
-        obj = {}
-        for key in @all
-          [folder, id] = key.split("-")
-          obj[folder] ?= []
-          obj[folder].push id
-        for key, ids of obj
-          obj[key] = _.sortBy ids, (o)->  o - 0
-        obj
+      lives: ->
+        @$store.state.aggregate.lives
 
       sow_auths: ->
-        @$store.state.aggregate.read_at
         @$store.state.aggregate.sow_auths
 
-      keys: ->
+      mestypes: ->
         @$store.state.aggregate.mestypes
+
+      folders: ->
+        @$store.state.aggregate.folders
 
       name: ->
         @face.face?.name
       face_id: ->
         @face._id?.face_id
       face: ->
-        console.log @$store.state.aggregate
         @$store.state.aggregate.face
 
 </script>
@@ -144,9 +149,31 @@ td
   border-radius: 3px
   padding:   2px 4px
 
-td
-  font-weight: bold
-  text-align:  right
+.r
+  text-align: right
+
+.sow_auth_id
+  text-align: center
+  width: 30ex
+  margin: 0 -2ex 0 0
+
+.pad
+  text-align: left
+  font-size: 0.8em
+  margin: 0 -4ex 0 -1ex
+
+.chat
+  .text
+    td.count,
+    td .count,
+    a  .count
+        font-size: 0.8em
+        padding: 0
+
+.calc
+  td
+    font-weight: bold
+    text-align:  right
 
 .flex
   align-items:     center
@@ -166,9 +193,7 @@ td
       display: block
 
     .count
-      font-size: 0.8em
-      margin:   -1.4em -2px -2px -2px
-      padding: 0
+      margin: -1.4em -2px -2px -2px
       text-align: right
       display: block
 

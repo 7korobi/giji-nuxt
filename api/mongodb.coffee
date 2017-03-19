@@ -244,6 +244,30 @@ module.exports = (app)->
     .then ([faces, mestypes, sow_auths, roles, lives])->
       res.json { faces, mestypes, sow_auths, roles, lives }
       next()
+
+  app.get '/api/story/progress', (req, res, next)->
+    q =
+      is_epilogue: false
+      is_finish: false
+    fields =
+      folder: 1
+      vid: 1
+      name: 1
+      "timer.nextcommitdt": 1
+    json = {}
+    giji.find "stories", q, fields
+    .then (data)->
+      json.stories = data
+      data.map (o)-> o._id + "-1"
+    .then (ids)->
+      giji.find "events",
+        _id:
+          $in: ids
+    .then (data)->
+      json.events = data
+    .then ->
+      res.json json
+      next()
   return
 
 

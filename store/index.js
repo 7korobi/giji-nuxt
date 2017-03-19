@@ -11,6 +11,7 @@ const store = new Vuex.Store({
   modules: {
     menu: require("./menu.coffee"),
     book: require("./book.coffee"),
+    story: require("./story.coffee"),
     aggregate: require("./aggregate.coffee")
   }
 });

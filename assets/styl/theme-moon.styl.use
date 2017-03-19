@@ -5,7 +5,7 @@ $border = #333
 
 palette(pens,   glass, light, $border)
 palette(blacks, black,  gold, $border)
-palette(stats,   pens,  dark, $border)
+palette(stats,  light,  dark, $border)
 palette(says,   glass, light, $border)
 
 .chat
