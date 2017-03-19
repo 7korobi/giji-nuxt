@@ -258,7 +258,7 @@ module.exports = (app)->
     giji.find "stories", q, fields
     .then (data)->
       json.stories = data
-      data.map (o)-> o._id + "-1"
+      data.map (o)-> "#{o._id}-0"
     .then (ids)->
       giji.find "events",
         _id:

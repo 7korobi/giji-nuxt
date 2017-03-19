@@ -14,11 +14,11 @@ module.exports =
       progress = _.keyBy data.events, "story_id"
       stories = _.orderBy data.stories, "timer.nextcommitdt", "desc"
       stories = _.groupBy stories, (o)->
-        o.nation = Query.folders.hash[o.folder.toUpperCase()].nation
+        o.folder = Query.folders.hash[o.folder.toUpperCase()]
         if o.progress = progress[o._id]
-          "prologue"
-        else
           "progress"
+        else
+          "prologue"
       state.prologue = stories.prologue
       state.progress = stories.progress
 
