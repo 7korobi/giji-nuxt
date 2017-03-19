@@ -26,10 +26,10 @@
 
       report(handle="footer" deco="center") 開始待ちの村／進行中の村
       post(handle="EVIL", v-for="o in progress", :head="o.name", :write_at="o.timer.nextcommitdt")
-        b {{ o.folder.nation }}{{ o.vid }}
+        a(:href="o.folder.href") {{ o.folder.nation }}{{ o.vid }}
         | は、進行中だ。
       post(handle="MOB",  v-for="o in prologue", :head="o.name", :write_at="o.timer.nextcommitdt")
-        b {{ o.folder.nation }}{{ o.vid }}
+        a(:href="o.folder.href") {{ o.folder.nation }}{{ o.vid }}
         | は、開始が楽しみだ。
 
       report(handle="footer" deco="center") 開発者ツール
