@@ -1,5 +1,3 @@
-require "./aggregate"
-
 require "./chr"
 require "./potof"
 require "./card"

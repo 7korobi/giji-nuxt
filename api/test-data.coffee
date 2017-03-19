@@ -225,7 +225,7 @@ section =
       """
     "demo-0-2-2":
       section_id: "demo-0-1"
-      show: "report"
+      show: "post"
       log: """病人 エリアスが参加しました。"""
     "demo-0-1-1":
       section_id: "demo-0-1"

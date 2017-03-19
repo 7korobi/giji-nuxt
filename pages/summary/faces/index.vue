@@ -4,7 +4,7 @@
   .contentframe
     .inframe
       post(handle="SSAY")
-        | {{ chrs.length }}人を表示しています。
+        | {{ faces.length }}人を表示しています。
         ul
           li 人気度
           li
@@ -12,13 +12,13 @@
           li ♥ いちばん沢山、そのキャラクターで遊んだプレイヤー
   .fullframe
     .btns
-    transition-group.list.chrs(name="list" tag="div")
-      portrate(v-for="chr in chrs", :face_id="chr.face_id", :key="chr.face_id")
+    transition-group.list.faces(name="list" tag="div")
+      portrate(v-for="chr in faces", :face_id="chr._id.face_id", :key="chr._id.face_id")
         p 登場{{chr.story_ids.length}}回
-        nuxt-link(:to="show_url(chr)")
+        nuxt-link(:to="show_url(chr._id.face_id)")
           p {{ chr.face.chr_jobs.list[0].job }}
           p {{ chr.face.name }}
-        p ♥{{ sow_auth_id(chr.face_id) }}
+        p ♥{{ sow_auth_id(chr) }}
 
 </template>
 
@@ -34,16 +34,13 @@ module.exports =
       @$store.dispatch "aggregate/faces"
 
     methods:
-      show_url: (chr)->
-        "/summary/faces/" + chr.face_id
-      sow_auth_id: (face_id)->
-        Query.aggregates
-        .where (o)-> o.sow_auth_id && o.face_id == face_id
-        .list.first.sow_auth_id
+      show_url: (face_id)->
+        "/summary/faces/" + face_id
+      sow_auth_id: (chr)->
+        chr.sow_auth._id.sow_auth_id
     computed:
-      chrs: ->
-        @$store.state.aggregate.read_at
-        @$store.state.aggregate.alls
+      faces: ->
+        @$store.state.aggregate.faces ? []
 
 </script>
 

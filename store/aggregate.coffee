@@ -1,54 +1,53 @@
 { Collection, Model, Query, Rule } = require "~components/models/memory-record"
 axios = require "axios"
+_ = require "lodash"
 
 module.exports =
   namespaced: true
   state:
     read_at: Date.now()
-    alls:     []
-    books:    []
-    parts:    []
-    sections: []
-
-    phases:   []
-    cards:    []
-    stats:    []
-    chats:    []
+    faces: []
+    face: {}
+    titles:
+      SSAY: "通常の発言"
+      VSAY: "見物人発言"
+      GSAY: "墓下の発言"
+      TSAY: "独り言/内緒話"
+      WSAY: "人狼のささやき"
+      XSAY: "念話での会話"
 
   mutations:
-    data: (state, o)->
-      Collection.aggregate.merge o.all, { is_all: true }
-      Collection.aggregate.merge o.mestype
-      Collection.aggregate.merge o.sow_auth
-      Collection.aggregate.merge o.role
-      Collection.aggregate.merge o.live
-      state.read_at = Date.now()
+    join: (state, data)->
+      for o in data.faces
+        o.face = Query.faces.find o._id.face_id
+      data.read_at = Date.now()
 
-    faces: (state)->
-      q = Query.aggregates
-      state.alls = q.where({is_all: true}).list
-      state.sow_auths = q.where((o)-> o.sow_auth_id).list
-      state.roles = q.where((o)-> o.role_id).list
-      state.lives = q.where((o)-> o.live).list
+    faces: (state, data)->
+      sow_auths = _.keyBy data.sow_auths, "_id.face_id"
+      for o in data.faces
+        o.sow_auth = sow_auths[o._id.face_id]
+      state.faces = _.chain data.faces
+      .orderBy "story_ids.length", "desc"
+      .filter "face"
+      .value()
 
-    face: (state, face_id)->
-      q = Query.aggregates.where({face_id})
-      state.all = q.where({is_all: true}).list.first
-      state.mestypes = q.where((o)-> o.mestype).list
-      state.sow_auths = q.where((o)-> o.sow_auth_id).list
-      state.roles = q.where((o)-> o.role_id).list
-      state.lives = q.where((o)-> o.live).list
+    face: (state, data)->
+      _.merge state, data
+      state.face = data.faces[0]
+      state.mestypes = _.keyBy data.mestypes, '_id.mestype'
+      for key, title of state.titles
+        state.mestypes[key].title = title
 
   actions:
     faces: ({commit})->
       axios.get "http://utage.family.jp:4000/api/aggregate/faces"
       .then ({ status, data })->
-        commit "data",  data
-        commit "faces"
+        commit "join",  data
+        commit "faces", data
 
     face: ({commit}, id)->
       axios.get "http://utage.family.jp:4000/api/aggregate/faces/#{id}"
       .then ({ status, data })->
-        commit "data",  data
-        commit "face", id
+        commit "join", data
+        commit "face", data
 

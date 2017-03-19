@@ -19,6 +19,11 @@
         br
         .card 人狼議事で遊ぶことができるキャラクターはこちら。
 
+      post(handle="VSAY")
+        nuxt-link(to="/summary/faces") キャラクター活躍記録
+        br
+        .card どこかの村で活躍したことのあるキャラクターはこちら。
+
       report(handle="footer" deco="center") 開始待ちの村／進行中の村
       post(handle="XSAY", v-for="")
       post(handle="VSAY", v-for="")
@@ -42,8 +47,6 @@ module.exports =
   mounted: ->
     console.log @$storage.aaa = Date.now()
     @$store.dispatch "aggregate/stories"
-    # db.stories.find({is_finish: false, is_epilogue: false}).toArray().map( o => o.name )
-    # db.events.find({turn: 1, story_id: {$in: [ "lobby-11", "lobby-17", "lobby-18", "crazy-212" ]}})
 
 </script>
 <style lang="stylus" scoped>

@@ -6,8 +6,8 @@
       report(handle="footer" deco="center")
         h1 {{ name }}の活躍
         .date
-          | #[timeago(:since="chr.date_min")] ～ #[timeago(:since="chr.date_max")]
-      talk(handle="SSAY" deco="", :face_id="chr.face_id", :head="name")
+          | #[timeago(:since="face.date_min")] ～ #[timeago(:since="face.date_max")]
+      talk(handle="SSAY" deco="", :face_id="face_id", :head="name")
         | 全部で#[b {{ all.length }}]の役職になりました。
       report(handle="footer")
         table
@@ -40,11 +40,9 @@
               td {{ 1 | currency }} 字
               td {{ 1 | currency }} 回
 
-      report(handle="VGSAY", :head="name")
-        div(v-for="folder in folder_keys")
-          .name {{ folder }} x{{ ids(folder).length }}回
-          .flex
-            a.label-mini(v-for="id in ids(folder)", :href="log_url(folder, id)") {{ id }}
+      talk(v-for="folder in folder_keys" handle="VSAY", :face_id="face_id", :head="folder_head(folder)")
+        .flex
+          a.label-mini(v-for="id in ids(folder)", :href="log_url(folder, id)") {{ id }}
 
 
       report(handle="VGSAY", :head="name")
@@ -83,6 +81,9 @@ module.exports =
         @folders[folder]
       log_url: (folder, id)->
         "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{folder}-#{id}"
+      folder_head: (folder)->
+        "#{ folder } #{ @ids(folder).length }回登場しました"
+
       label_size: (str)->
         width  = 0.8 * (str.match(/[iIjl]/g) ? []).length
         width += 1.0 * (str.match(/[0-9a-hkm-z]/g) ? []).length
@@ -91,20 +92,18 @@ module.exports =
         switch
           when width <  6.5
             "label2"
-          when width < 13
-            "label3"
+          # when width < 13
+          #   "label3"
           when width < 20.5
             "label4"
-          when width < 28
-            "label5"
+          # when width < 28
+          #   "label5"
           else
             "label6"
 
     computed:
-      name: ->
-        @chr.face?.name
       all: ->
-        @chr.story_ids ? []
+        @face.story_ids ? []
       folder_keys: ->
         keys = Object.keys @folders
         _.sortBy keys, (key)=> - @folders[key]?.length ? 0
@@ -124,16 +123,15 @@ module.exports =
         @$store.state.aggregate.sow_auths
 
       keys: ->
-        SSAY: "通常の発言"
-        VSAY: "見物人発言"
-        GSAY: "墓下の発言"
-        TSAY: "独り言/内緒話"
-        WSAY: "人狼のささやき"
-        XSAY: "念話での会話"
+        @$store.state.aggregate.mestypes
 
-      chr: ->
-        @$store.state.aggregate.read_at
-        @$store.state.aggregate.all ? {}
+      name: ->
+        @face.face?.name
+      face_id: ->
+        @face._id?.face_id
+      face: ->
+        console.log @$store.state.aggregate
+        @$store.state.aggregate.face
 
 </script>
 
@@ -175,7 +173,7 @@ td
       display: block
 
 .label-mini
-  width: "calc( %s -  4px )" %  6%
+  width: 4ex
   text-align: right
 .label2
   width: "calc( %s -  4px )" % 16%
