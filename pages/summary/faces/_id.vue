@@ -64,11 +64,11 @@
               td
                 .sow_auth_id {{ o._id.sow_auth_id }}
               td.r {{ o.story_ids.length }}回
-              td
+              td.timer
                 timeago.count(:since="o.date_min")
               td
                 .pad ～
-              td
+              td.timer
                 timeago.count(:since="o.date_max")
 
       report(handle="footer" deco="center")
@@ -155,12 +155,16 @@ td
   border-radius: 3px
   padding:   2px 4px
 
+.timer
+  white-space: nowrap
+  width: 17ex
+
 .r
+  white-space: nowrap
   text-align: right
 
 .sow_auth_id
   text-align: center
-  width: 30ex
   margin: 0 -2ex 0 0
 
 .pad

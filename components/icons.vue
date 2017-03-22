@@ -1,4 +1,5 @@
 <script lang="coffee">
+
 module.exports =
   props: ["list"]
   methods:
@@ -18,7 +19,7 @@ module.exports =
 
 <template lang="pug">
 .icons
-  .item(:class="item_class(menu)", v-for="menu in list")
+  .item(v-for="menu in list", :class="item_class(menu)")
     i.fa(:class="menu_class(menu)", @click="menu_tap(menu)")
 </template>
 

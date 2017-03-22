@@ -4,9 +4,15 @@ require "~components/vue.coffee"
 module.exports =
   default:
     data: ->
-      @$store.commit "menu/set", []
+      @$store.commit "menu/set", [
+        { name: "cog",     ext: "spin" }
+        { name: "circle-o-notch", ext: "spin" }
+        { name: "refresh", ext: "spin" }
+        { name: "spinner" }
+        { name: "user"    }
+        { name: "sitemap" }
+      ]
       {}
-
 </script>
 <template lang="pug">
 div

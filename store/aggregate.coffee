@@ -101,12 +101,14 @@ module.exports =
       state[id].folders = _.sortBy folders, (list, key)-> - list.length
 
   actions:
-    faces: ({state, commit})->
+    faces: ({dispatch, state, commit})->
       unless state.read_at
         axios.get "http://utage.family.jp:4000/api/aggregate/faces"
         .then ({ status, data })->
           commit "join",  { data, id: null }
           commit "faces", { data, id: null }
+        .catch (err)->
+          console.log err
 
     face: ({state, commit}, id)->
       unless state[id].read_at
@@ -114,4 +116,6 @@ module.exports =
         .then ({ status, data })->
           commit "join", { data, id }
           commit "face", { data, id }
+        .catch (err)->
+          console.log err
 

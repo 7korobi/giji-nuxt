@@ -330,6 +330,9 @@
         em /*門前望野*/
         | 田月出蕎麥花如雪
       myself(v-if="! show_write", :self_id="self_id")
+
+      report(handle="footer" deco="center")
+        nuxt-link(to="/") 戻る
 </template>
 
 <style lang="stylus" scoped>
@@ -340,6 +343,7 @@
 
 module.exports =
   default:
+    layout: "book"
     data: ->
       part_id: ""
       self_id: ""

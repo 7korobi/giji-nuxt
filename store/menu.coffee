@@ -30,6 +30,11 @@ module.exports =
         state.target = null
       else
         state.target = name
+
+    pulse: (state, ext)->
+      for o in state.list when o.name == "spinner"
+        o.ext = ext
+
     center: (state, top, height)->
       state.top    = top
       state.center = top + height / 2

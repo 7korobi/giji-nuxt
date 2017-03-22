@@ -5,6 +5,8 @@
       post()
       post(head="リアルクロックテスト" sign="ななころび" handle="SSAY")
         timeago(v-for="(time, idx) in times", :key="idx", :since="time.at")
+      report(handle="footer" deco="center")
+        nuxt-link(to="/") 戻る
 </template>
 
 <script lang="coffee">

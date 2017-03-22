@@ -39,7 +39,6 @@
         nuxt-link.button(to="/demo/books") Demo books
       post(:write_at="Date.now()", handle="SSAY")
         nuxt-link.button(to="/demo/chats") Demo chats
-      br
 </template>
 <script lang="coffee">
 module.exports =

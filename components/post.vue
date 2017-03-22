@@ -27,8 +27,7 @@ module.exports = require("~components/chat.vue").component_class()
   .text(:class="deco" v-if="$slots.default")
     slot
   .text(:class="deco" v-html="log_html" v-else)
-  .date(v-if="write_at")
-    abbr {{ anker }}
-    timeago(:since="write_at")
-
+  .date
+    abbr(v-if="anker") {{ anker }}
+    timeago(v-if="write_at", :since="write_at")
 </template>
