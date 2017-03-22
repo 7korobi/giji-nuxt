@@ -20,6 +20,11 @@
           p {{ chr.face.name }}
         p ♥{{ sow_auth_id(chr) }}
 
+  .contentframe
+    .inframe
+      report(handle="footer" deco="center")
+        nuxt-link(to="/") 戻る
+
 </template>
 
 <script lang="coffee">

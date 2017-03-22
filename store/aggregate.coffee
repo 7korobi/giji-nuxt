@@ -79,7 +79,7 @@ module.exports =
       mestypes = _.keyBy data.mestypes, '_id.mestype'
       sum =
         handle: "dark"
-        title: "ー合計ー"
+        title: "－合計－"
         per: state[id].face.story_ids.length
         all: 0
         max: 0

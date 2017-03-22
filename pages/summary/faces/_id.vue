@@ -71,6 +71,9 @@
               td
                 timeago.count(:since="o.date_max")
 
+      report(handle="footer" deco="center")
+        nuxt-link(to=".") 戻る
+
 </template>
 
 <script lang="coffee">

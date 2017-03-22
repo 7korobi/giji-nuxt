@@ -99,6 +99,8 @@
         村を建てるとき気をつけると良いことを心構えに纏めました。
         ぜひご覧ください。
       report(v-for="o in maker.list" handle="SPSAY", :head="o.head", :log="o.log")
+      report(handle="footer" deco="center")
+        nuxt-link(to="/") 戻る
 
 </template>
 

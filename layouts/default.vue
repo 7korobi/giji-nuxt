@@ -91,8 +91,6 @@ div(:class="body_class")
   .outframe
     .contentframe
       .inframe
-        report(handle="footer" deco="center" v-if="$route.path !== '/'")
-          nuxt-link(to="/") 戻る
         report(handle="footer" deco="right")
           br
           | 人狼議事キャラセット by りりんら
