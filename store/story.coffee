@@ -27,4 +27,3 @@ module.exports =
       axios.get "http://utage.family.jp:4000/api/story/progress"
       .then ({ status, data })->
         commit "join",  data
-        commit "stories", data

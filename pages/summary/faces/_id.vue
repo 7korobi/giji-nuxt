@@ -116,27 +116,30 @@ module.exports =
             "label6"
 
     computed:
+      id: ->
+        @$route.params.id
+
       roles: ->
-        @$store.state.aggregate.roles
+        @$store.state.aggregate[@id].roles
 
       lives: ->
-        @$store.state.aggregate.lives
+        @$store.state.aggregate[@id].lives
 
       sow_auths: ->
-        @$store.state.aggregate.sow_auths
+        @$store.state.aggregate[@id].sow_auths
 
       mestypes: ->
-        @$store.state.aggregate.mestypes
+        @$store.state.aggregate[@id].mestypes
 
       folders: ->
-        @$store.state.aggregate.folders
+        @$store.state.aggregate[@id].folders
 
       name: ->
         @face.face?.name
       face_id: ->
         @face._id?.face_id
       face: ->
-        @$store.state.aggregate.face
+        @$store.state.aggregate[@id].face
 
 </script>
 
