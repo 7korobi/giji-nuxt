@@ -10,7 +10,8 @@ module.exports = require("~components/chat.vue").component_class()
 .contentframe
   .post
     margin 0 0 6px 107px
-    box-shadow: inset -30px 0px 45px -35px #222
+    // box-shadow: inset -30px 0px 45px -38px #222
+    // 罫線にshadowが乗らない。
 
 </style>
 

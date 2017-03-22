@@ -7,10 +7,10 @@ module.exports = require("~components/chat.vue").component_class()
   box-shadow: 0px -10px 20px -10px #000
   border-style: double dotted
   border-width: 4px 1px
-  margin: 0 -8px 6px -8px
-  padding: 1px 18px
+  margin: 0 -10px 6px -10px
+  padding: 1px 18px 1px 12px
   .name
-    margin-left: 117px
+    margin-left: 127px
 
 .contentframe
   .report
