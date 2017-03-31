@@ -1,4 +1,4 @@
-require('coffee-script/register')
+require('coffeescript/register')
 
 import webpack from 'webpack'
 import copy    from 'copy-webpack-plugin'

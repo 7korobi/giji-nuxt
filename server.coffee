@@ -1,4 +1,4 @@
-require 'coffee-script/register'
+require 'coffeescript/register'
 express = require 'express'
 
 host = process.env.HOST || '127.0.0.1'
