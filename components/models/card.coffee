@@ -2,9 +2,7 @@
 
 new Rule("card").schema ->
   @order "write_at"
-  @belongs_to "book"
-  @belongs_to "part"
-  @belongs_to "potof"
+  @path "book", "part", "potof"
   @belongs_to "role"
 
   @scope (all)->
@@ -13,32 +11,26 @@ new Rule("card").schema ->
 
   class @model extends @model
     @map_reduce: (o, emit)->
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, part_idx, potof_idx, @idx] = @id.split('-')
-      @part_id  = [@book_id, part_idx].join('-')
-      @potof_id = [@book_id, part_idx, potof_idx].join('-')
 
 new Rule("stat").schema ->
-  @belongs_to "potof"
+  @path "book", "part", "potof"
   @belongs_to "able"
 
   class @model extends @model
     @map_reduce: (o, emit)->
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, part_idx, potof_idx, @able_id] = @id.split('-')
-      @part_id  = [@book_id, part_idx].join('-')
-      @potof_id = [@book_id, part_idx, potof_idx].join('-')
-      @
+      @able_id = @idx
 
 new Rule("role").schema ->
   @has_many "ables", by: "ids"
   class @model extends @model
     @map_reduce: (o, emit)->
-    constructor: ->
+    @deploy: ->
 
 new Rule("trap").schema ->
   @order "write_at"
@@ -47,14 +39,14 @@ new Rule("trap").schema ->
 
   class @model extends @model
     @map_reduce: (o, emit)->
-    constructor: ->
+    @deploy: ->
 
 new Rule("able").schema ->
   @scope (all)->
 
   class @model extends @model
     @map_reduce: (o, emit)->
-    constructor: ->
+    @deploy: ->
 
 
 Collection.role.set require '~components/yaml/set_roles.yml'

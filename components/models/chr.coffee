@@ -22,7 +22,7 @@ new Rule("tag").schema ->
         ! o.disabled
 
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @tag_id = @_id
 
 new Rule("face").schema ->
@@ -56,7 +56,7 @@ new Rule("face").schema ->
       for tag in o.tags.list
         emit "tag", tag, map
 
-    constructor: ->
+    @deploy: ->
       @face_id = @_id
       @path = "http://giji-assets.s3-website-ap-northeast-1.amazonaws.com/images/portrate/#{ @_id }.jpg"
 
@@ -66,7 +66,7 @@ new Rule("chr_set").schema ->
   @has_many "chr_jobs"
   @has_many "chr_npcs"
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @chr_set_id = @_id
 
 new Rule("chr_npc").schema ->
@@ -74,7 +74,7 @@ new Rule("chr_npc").schema ->
   @belongs_to "chr_set", dependent: true
   @belongs_to "face",    dependent: true
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
       @chr_npc_id = @_id
       @chr_set_idx = order.indexOf @chr_set_id
@@ -88,7 +88,7 @@ new Rule("chr_job").schema ->
     face: (face_id)-> all.where({ face_id }).sort "chr_set_idx"
 
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
       @chr_job_id = @_id
       @chr_set_idx = order.indexOf @chr_set_id

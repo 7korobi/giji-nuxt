@@ -7,7 +7,7 @@ new Rule("folder").schema ->
       all.where { hostname }
 
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       if o = @config?.cfg
         @rule     = o.RULE
         @title    = o.NAME_HOME

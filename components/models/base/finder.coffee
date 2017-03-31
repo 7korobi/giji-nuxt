@@ -29,6 +29,7 @@ composite_field = (o, field)->
     o[list][key].push cb
 
 module.exports = class Finder
+  composite_field @, "deploy"
   composite_field @, "depend"
   composite_field @, "validate"
 
@@ -205,13 +206,14 @@ module.exports = class Finder
 
   merge: (from, parent)->
     { _memory } = @all
+    deploys = Finder.deploys[@name.base]
 
     @model.do_map_reduce = false
     each from, (item)=>
       item.__proto__ = @model.prototype
-      for key, val of parent
-        item[key] = val
-      @model.call item, @model
+      Object.assign item, parent
+      for deploy in deploys
+        deploy.call item
       unless item._id
         throw new Error "detect bad data: #{JSON.stringify item}"
 

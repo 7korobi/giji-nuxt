@@ -7,7 +7,7 @@ new Rule("book").schema ->
     {}
 
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
 

@@ -2,13 +2,12 @@
 
 new Rule("part").schema ->
   @order "write_at"
-  @belongs_to "book"
+  @path "book"
 
   @scope (all)->
     {}
 
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, @idx] = @id.split('-')

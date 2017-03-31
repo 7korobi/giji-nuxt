@@ -2,8 +2,7 @@
 
 new Rule("potof").schema ->
   @order "write_at"
-  @belongs_to "book"
-  @belongs_to "part"
+  @path "book", "part"
   @belongs_to "face"
   @has_many "cards"
   @has_many "stats"
@@ -21,11 +20,9 @@ new Rule("potof").schema ->
         o = cb o
         continue unless o
         return o
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, part_idx, @idx] = @id.split('-')
-      @part_id  = [@book_id, part_idx].join('-')
 
       if @face?
         { job, name } = @face

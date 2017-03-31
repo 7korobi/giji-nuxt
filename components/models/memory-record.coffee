@@ -44,11 +44,15 @@ class Mem.Rule
     @model.list = @name.list
     Object.defineProperties @model.prototype, @property
 
+    @deploy   @model.deploy   if @model.deploy
     @validate @model.validate if @model.validate
     Mem.Collection[@name.base] = @dml
     Mem.Model[@name.base] = @finder.model = @model
     Mem.Query[@name.list] = @finder.all
     @
+
+  deploy: (cb)->
+    Mem.Base.Finder.set_deploy @name.base, cb
 
   validate: (cb)->
     Mem.Base.Finder.set_validate @name.base, cb
@@ -120,6 +124,15 @@ class Mem.Rule
       enumerable: true
       value: (n)->
         all[key] [@_id], n
+
+  path: (keys...)->
+    for key in keys
+      @belongs_to key
+    @deploy ->
+      subids = @_id.split("-")
+      @idx = subids[keys.length]
+      for key, idx in keys
+        @["#{key}_id"] = subids[0..idx].join '-'
 
   belongs_to: (to, option = {})->
     name = rename to

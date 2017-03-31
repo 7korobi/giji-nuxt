@@ -2,11 +2,10 @@
 
 new Rule("chat").schema ->
   @order "write_at"
-  @belongs_to "book"
-  @belongs_to "part"
-  @belongs_to "phase"
+  @path "book", "part", "phase"
   @belongs_to "section"
   @belongs_to "potof"
+
 
   # props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
 
@@ -20,9 +19,6 @@ new Rule("chat").schema ->
         min: o.open_at
         max: o.write_at
 
-    constructor: ->
+    @deploy: ->
       @id ?= @_id
       @_id = @id
-      [@book_id, part_idx, phase_idx, @idx] = @id.split('-')
-      @part_id  = [@book_id, part_idx].join('-')
-      @phase_id = [@book_id, part_idx, phase_idx].join('-')

@@ -6,7 +6,7 @@ if process.BROWSER_BUILD
 
 new Rule("menu").schema ->
   class @model extends @model
-    constructor: ->
+    @deploy: ->
       @_id ?= @name
 
 module.exports =
