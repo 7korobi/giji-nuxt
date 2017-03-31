@@ -8,6 +8,7 @@
     "axios": "latest",
     "body-parser": "latest",
     "coffee-loader": "^0.7.3",
+    "coffeescript": "next",
     "copy-webpack-plugin": "latest",
     "express-session": "latest",
     "mongodb-bluebird": "^0.1.1",

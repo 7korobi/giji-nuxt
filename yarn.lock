@@ -1102,6 +1102,12 @@ coffee-loader@^0.7.3:
   dependencies:
     loader-utils "^1.0.2"
 
+coffeescript@next:
+  version "2.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.0.0-alpha1.tgz#abf8b54b5c20a9c9f707c8aff35b227d1d6b5e3b"
+  dependencies:
+    marked "~0.3.6"
+
 color-convert@^1.3.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
@@ -2548,6 +2554,10 @@ lru-cache@^4.0.1, lru-cache@^4.0.2:
 macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
+
+marked@~0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.16"
