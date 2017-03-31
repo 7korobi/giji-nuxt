@@ -1,42 +1,19 @@
-var webpack  = require('webpack');
-var copy = require("copy-webpack-plugin");
+require('coffee-script/register')
 
-var path = require("path");
-var dir = (str) => {
-  return path.resolve(__dirname, "../..", str);
-};
+import webpack from 'webpack'
+import copy    from 'copy-webpack-plugin'
+import path    from 'path'
 
+const dir = (str) => (path.resolve(__dirname, "../..", str))
 
-module.exports = {
+export {
   entry: {
     "rails": "~assets/js/rails.coffee",
     "sow":   "~assets/js/sow.coffee"
   },
 
   module: {
-    loaders: [
-      { test: /\.(png|jpe?g|gif|svg)$/,
-        loader: 'url-loader',
-        query: {
-          limit: 1000, // 1KO
-          name: 'img/[name].[hash:7].[ext]'
-        }
-      },
-      { test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 1000, // 1 KO
-          name: 'fonts/[name].[hash:7].[ext]'
-        }
-      },
-      { test:       /\.pug$/, loader: "pug-html", query: {pretty: true } },
-      { test:      /\.styl$/, loader: "style-loader!css-loader!stylus-loader?resolve url"},
-      { test: /\.styl\.use$/, loader: "style-loader/useable!css-loader!stylus-loader?resolve url"},
-      { test:       /\.yml$/, loader: 'json-loader!yaml-loader' },
-      { test:    /\.coffee$/, loader: "coffee-loader" },
-      { test:       /\.vue$/, loader: 'vue-loader' },
-      { test:        /\.js$/, loader: "babel-loader", exclude: /node_modules/ }
-    ]
+    loaders: require("./build.coffee").loaders
   },
 
   plugins: [
