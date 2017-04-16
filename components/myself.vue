@@ -3,12 +3,12 @@
 div(v-if="self")
   report(deco="center", :handle="phase.handle")
     span
-      btn(v-for="o in parts", :value="part_id", :as="o._id") {{ o.label }}
+      btn(v-for="o in parts", :value="part_id", :as="o._id", :key="o._id") {{ o.label }}
     span
       btn(v-model="handle" as="TITLE") 村の情報
-      btn(v-for="o in phases" v-if="can_phase(o.handle)" v-model="handle", :as="o.handle") {{ o.label }}
+      btn(v-for="o in phases" v-if="can_phase(o.handle)" v-model="handle", :as="o.handle", :key="o.handle") {{ o.label }}
     span
-      btn(v-for="o in phases" v-model="show[o.handle]" @toggle="show[o.handle] = ! show[o.handle]", :as="true") {{ o.label }}
+      btn(v-for="o in phases" v-model="show[o.handle]" @toggle="show[o.handle] = ! show[o.handle]", :as="true", :key="o.handle") {{ o.label }}
 
   div(v-if="sayable")
     talk(:sign="self.sign", :face_id="self.face_id" head="発言投稿", :deco="deco", :handle="phase.handle" )

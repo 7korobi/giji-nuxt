@@ -51,7 +51,7 @@
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in folders" handle="VSAY", :face_id="face_id", :head="folder.nation")
+      talk(v-for="folder in folders" handle="VSAY", :face_id="face_id", :head="folder.nation", :key="folder.nation")
         | {{ folder.length }}回登場しました
         .flex
           a.label-mini(v-for="id in folder", :href="log_url(id)") {{ id[1] }}

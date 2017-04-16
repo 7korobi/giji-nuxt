@@ -30,7 +30,16 @@ class Mem.Rule
     @model = Mem.Base.Model
 
     @dml = new Mem.Base.Collection @
-    @property = {}
+    @property =
+      id:
+        enumerable: true
+        get: -> @_id
+      "#{@name.id}":
+        enumerable: true
+        get: -> @_id
+      _id_key:
+        enumerable: true
+        get: -> @_id
     @schema cb if cb
     return
 
@@ -50,6 +59,11 @@ class Mem.Rule
     Mem.Model[@name.base] = @finder.model = @model
     Mem.Query[@name.list] = @finder.all
     @
+
+  key_by: (cb)->
+    @property._id_key =
+      enumerable: true
+      get: cb
 
   deploy: (cb)->
     Mem.Base.Finder.set_deploy @name.base, cb
@@ -143,17 +157,15 @@ class Mem.Rule
       @depend_on name.base
       @validate _.property name.base
 
+  habtm: (to, option={})->
+    name = rename to.replace /s$/, ""
+    { key = name.ids, target = name.list } = option
+    @relation_to_many name.list, target, key, "_id"
+
   has_many: (to, option = {})->
     name = rename to.replace /s$/, ""
-    { key, target = name.list } = option
-    switch option.by
-      when "ids"
-        ik = key ? name.ids
-        qk = "_id"
-      else
-        ik = "_id"
-        qk = key ? @name.id
-    @relation_to_many name.list, target, ik, qk
+    { key = @name.id, target = name.list } = option
+    @relation_to_many name.list, target, "_id", key
 
   tree: (option={})->
     @relation_tree "nodes", @name.id

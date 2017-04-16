@@ -4,7 +4,7 @@
     .inframe
       br
       report(handle="footer") 準備はいいかな？
-      talk(handle="GSAY" face_id="c96" head="学者 レオナルド", :write_at="1370662886001").
+      talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1370662886001").
         ようこそ。ここにはこのサイトを楽しむためのルールや心構えを綴ってある。
         暖炉のそばが開いているから、腰を下ろして熟読しよう。楽しいゲームは全員が対等で、全員が読んで理解しているルールがあって成り立つんだ。
 
@@ -18,21 +18,21 @@
       report(handle="MAKER") ルール
       report(handle="footer")
         a(name="nation") {{ nation.head }}
-      report(v-for="o in nation.list" handle="VSAY", :head="o.head", :log="o.log")
+      report(v-for="o, idx in nation.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
       report(handle="footer")
         a(name="village") {{ village.head }}
-      report(v-for="o in village.list" handle="TSAY", :head="o.head", :log="o.log")
+      report(v-for="o, idx in village.list" handle="VSAY", :head="o.head", :log="o.log", :key="idx")
 
       report(handle="MAKER") ルール違反があったら？
       report(handle="footer") はじめに
-      talk(handle="GSAY" face_id="c96" head="学者 レオナルド", :write_at="1370662886002").
+      talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1370662886002").
         もし、ルールに違反してしまったとしたら？とても残念なことだけれど、まだ絶望しなくていい。
 
         きみには全員に釈明する、貴重な機会が残されているんだ。遊びに集まった皆が笑い合って解散するために、勇気を奮ってエピローグに顔を出してごらん。
 
         真剣な話し合いが必要なときは、協力してそのための時間をなんとか捻り出してほしい。
         家に帰るまでが遠足なのと同じで、エピローグが済むまでがその村なんだ。
-      talk(handle="GSAY" face_id="c96" head="学者 レオナルド", :write_at="1370662886003").
+      talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1370662886003").
         エピローグでは全員が一同に介し、墓下と地上にわかれることなく、勝つための嘘もなく、より率直な話ができる。
         この特性から、人狼議事ではエピローグでの話し合いを推奨しているよ。
         古い時代にサムライは、どのような事情にも沈黙して咎を一身に引き受けることを美徳としていたそうだ。
@@ -41,15 +41,12 @@
         解散するときに心残りなく、さっぱりとお別れができるよう、エピローグを活用してほしい。もやもやと蟠りが残るのは、だめだね。
 
       report(handle="footer") 突然死
-      talk(handle="VGSAY" face_id="t07" head="勧善懲悪委 アカリ" deco="head", :write_at="1437461000000").
-        突然死は悪！そうですよね先生！
-
-      talk(handle="VGSAY" face_id="t07" head="勧善懲悪委 アカリ" deco="head", :write_at="1437461000000").
+      talk(handle="GSAY" face_id="t07" head="勧善懲悪委 アカリ" deco="head", :write_at="1437461000000").
         突然死は悪！そうですよね先生！
 
         みんな一生懸命がんばっているのに、そんなことで汚されるの、悔しいです！
 
-      talk(handle="GSAY" face_id="c96" head="学者 レオナルド", :write_at="1437461000000").
+      talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1437461000000").
         正解、国のルールだね。
         ただ、人狼議事では、１日間発言しない場合には２つの措置をとっている。
 
@@ -60,7 +57,7 @@
         僕らはここに遊びに来ているんだ。最後には笑い合って解散できることを目指そうね。
 
       report(handle="footer") どうすればいいの？
-      talk(handle="GSAY" face_id="c96" head="学者 レオナルド", :write_at="1437461000000").
+      talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1437461000000").
         ここでは、ルール違反についてとるべき対応を話そう。
 
         さきの項目でアカリくんが嘆いていたように、真剣なゲームをしていれば、ルール違反を許したくないという強い情動もあるものなんだ。
@@ -69,36 +66,36 @@
         こうした考え方が村の中でずれていると、いざ何かがあったときに困ったり、不満が溜まったりしてしまう。
         開始前に、あなたの村ではどう対応する、という方針を明らかにしておくと、志向の合わない人と衝突してしまうこも減るはずだよ。
         どう対応するとよいのかを宿題にします、みなさんの良心にしたがって考えてみよう。
-      talk(handle="VGSAY" face_id="g02" head="白鶴拳 志偉", :write_at="1437461000000").
+      talk(handle="GSAY" face_id="g02" head="白鶴拳 志偉", :write_at="1437461000000").
         うちの道場じゃ、気の抜けた奴は師範代が叩き出してるぜ！リアルがヤバそうだったり、難しくてわかんないなら控えとけよってことよ。
 
         よーし、俺の建てる村は違反なんて許さん。アカリや†ルシフェル†みたいに、きちんと参加できるやつら誘ってガンガンいくのだあ！
-      talk(handle="VGSAY" face_id="t01" head="友愛組合 チアキ", :write_at="1437461000000").
+      talk(handle="GSAY" face_id="t01" head="友愛組合 チアキ", :write_at="1437461000000").
         道場みたいな処だと窮屈だな。僕は自分で、別の村を建てるよ。僕の村は忙しい人もフォローするし、ルール違反（突然死とか）があっても、厳しく責め立てたくはないんだ。
 
         …村に書いちゃうの勇気いるなあ。違反してもOKみたいに聞かれてしまいそうだ。ゴクリ。
         #[em せっかく集まった仲間を責めたくないだけなんだけれど…どう伝えよう…]
-      talk(handle="VGSAY" face_id="c24" head="長老 ナタリア", :write_at="1437461000000").
+      talk(handle="GSAY" face_id="c24" head="長老 ナタリア", :write_at="1437461000000").
         あたしは難しいことを考えるのが苦手でねえ。あんまり上手に勝とうとできていなくても、厳しくしてほしくないねえ。
 
         そうだわ、ヌマタロウさんをお誘いして、そういう村を建ててみようかしらねえ。お茶受けは拳骨煎餅かしらねえ。
 
       report(handle="MAKER") 心構え
-      post(handle="VGSAY") 心構えを守って、楽しく、強く遊ぼう。
+      post(handle="VSAY") 心構えを守って、楽しく、強く遊ぼう。
 
       report(handle="footer")
         a(name="player") 遊びにきたかたへ
-      report(v-for="o in player.list" handle="AIM", :head="o.head", :log="o.log")
+      report(v-for="o, idx in player.list" handle="SSAY", :head="o.head", :log="o.log", :key="idx")
 
       report(handle="footer")
         a(name="maker") {{ maker.head }}
-      talk(handle="GSAY" face_id="t10" head="営利政府 トレイル", :write_at="1437461000000").
+      talk(handle="WSAY" face_id="t10" head="営利政府 トレイル", :write_at="1437461000000").
         村建てフォームには、村のルールが既に記入してあります。
         賛同できる内容はそのまま残して、不足なら筆を加え、余分と判断する事項は削除して村を建ててください。
 
         村を建てるとき気をつけると良いことを心構えに纏めました。
         ぜひご覧ください。
-      report(v-for="o in maker.list" handle="SPSAY", :head="o.head", :log="o.log")
+      report(v-for="o, idx in maker.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
       report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 

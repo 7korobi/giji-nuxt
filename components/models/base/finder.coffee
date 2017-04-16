@@ -207,13 +207,12 @@ module.exports = class Finder
   merge: (from, parent)->
     { _memory } = @all
     deploys = Finder.deploys[@name.base]
-
-    @model.do_map_reduce = false
+    do_map_reduce = false
     each from, (item)=>
       item.__proto__ = @model.prototype
       Object.assign item, parent
       for deploy in deploys
-        deploy.call item
+        deploy.call item, @model
       unless item._id
         throw new Error "detect bad data: #{JSON.stringify item}"
 
@@ -221,7 +220,7 @@ module.exports = class Finder
         o = { item, emits: [] }
         @model.map_reduce item, (keys..., cmd)=>
           o.emits.push [keys, cmd]
-          @model.do_map_reduce = true
+          do_map_reduce = true
 
         old = _memory[item._id]
         if old?
@@ -231,5 +230,6 @@ module.exports = class Finder
           @model.rowid++
         _memory[item._id] = o
       return
+    @model.do_map_reduce = do_map_reduce
     @depends()
 

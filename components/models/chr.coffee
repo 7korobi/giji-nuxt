@@ -15,7 +15,7 @@ order = [
 
 
 new Rule("tag").schema ->
-  @has_many "chr_sets", by: "ids"
+  @habtm "chr_sets"
   @scope (all)->
     enable: ->
       all.where (o)->
@@ -23,10 +23,9 @@ new Rule("tag").schema ->
 
   class @model extends @model
     @deploy: ->
-      @tag_id = @_id
 
 new Rule("face").schema ->
-  @has_many "tags", by: "ids"
+  @habtm "tags"
   @has_many "chr_jobs"
   @has_many "chr_npcs"
 
@@ -57,7 +56,6 @@ new Rule("face").schema ->
         emit "tag", tag, map
 
     @deploy: ->
-      @face_id = @_id
       @path = "http://giji-assets.s3-website-ap-northeast-1.amazonaws.com/images/portrate/#{ @_id }.jpg"
 
 
@@ -67,7 +65,6 @@ new Rule("chr_set").schema ->
   @has_many "chr_npcs"
   class @model extends @model
     @deploy: ->
-      @chr_set_id = @_id
 
 new Rule("chr_npc").schema ->
   @order "label"
@@ -76,7 +73,6 @@ new Rule("chr_npc").schema ->
   class @model extends @model
     @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
-      @chr_npc_id = @_id
       @chr_set_idx = order.indexOf @chr_set_id
 
 new Rule("chr_job").schema ->
@@ -90,7 +86,6 @@ new Rule("chr_job").schema ->
   class @model extends @model
     @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
-      @chr_job_id = @_id
       @chr_set_idx = order.indexOf @chr_set_id
 
 

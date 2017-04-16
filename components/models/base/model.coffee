@@ -8,8 +8,6 @@ module.exports = class Model
   @delete: (old)->
   @validate: (item)-> true
   @map_reduce: (item, emit)->
-
-  constructor: (m)->
+  @deploy: (m)->
     @_id = @[m.id] unless @_id
-    @[m.id] = @_id unless @[m.id]
 

@@ -27,7 +27,7 @@ new Rule("stat").schema ->
       @able_id = @idx
 
 new Rule("role").schema ->
-  @has_many "ables", by: "ids"
+  @habtm "ables"
   class @model extends @model
     @map_reduce: (o, emit)->
     @deploy: ->

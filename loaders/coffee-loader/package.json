@@ -1,0 +1,9 @@
+{
+  "name": "coffee-loader",
+  "version": "2.0.0",
+  "description": "local module",
+  "main": "index.js",
+  "private": true,
+  "author": "7korobi",
+  "license": "MIT"
+}

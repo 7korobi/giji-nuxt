@@ -158,7 +158,7 @@
         | 霜草蒼蒼蟲切切村南村北行人絶獨出
         em /*門前望野*/
         | 田月出蕎麥花如雪
-      talk(face_id="t08", :write_at="now - 3600000", to="おきる" sign="ななころび" head="ELSE" handle="P08")
+      talk(face_id="t08", :write_at="now - 3600000", to="おきる" sign="ななころび" head="ELSE" handle="ELSE")
         a 霜草蒼蒼
         sup 人絶獨出
         sub 門前望野

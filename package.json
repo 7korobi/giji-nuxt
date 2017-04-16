@@ -7,7 +7,7 @@
   "dependencies": {
     "axios": "latest",
     "body-parser": "latest",
-    "coffee-loader": "^0.7.3",
+    "coffee-loader": "file:loaders/coffee-loader",
     "coffeescript": "next",
     "copy-webpack-plugin": "latest",
     "express-session": "latest",
@@ -25,6 +25,7 @@
     "style-loader": "latest",
     "stylus": "latest",
     "stylus-loader": "latest",
+    "uglify-js": "^2.8.20",
     "vue-cookie": "latest",
     "vue-select": "latest",
     "webpack-bundle-analyzer": "latest",

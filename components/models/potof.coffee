@@ -6,8 +6,8 @@ new Rule("potof").schema ->
   @belongs_to "face"
   @has_many "cards"
   @has_many "stats"
-  @has_many "roles", by: "ids"
-  @has_many "ables", by: "ids"
+  @habtm "roles"
+  @habtm "ables"
 
   @scope (all)->
     {}
