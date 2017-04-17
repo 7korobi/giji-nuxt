@@ -49,10 +49,7 @@ module.exports =
       sow_auths = _.keyBy data.sow_auths, "_id.face_id"
       for o in data.faces
         o.sow_auth = sow_auths[o._id.face_id]
-      state.faces = _.chain data.faces
-      .orderBy "story_ids.length", "desc"
-      .filter "face"
-      .value()
+      state.faces = data.faces
 
     face: (state,{ id, data })->
       state[id].read_at = Date.now()

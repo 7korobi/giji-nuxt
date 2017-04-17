@@ -29,12 +29,14 @@
 
 <script lang="coffee">
 { Query } = require "~components/models/memory-record"
+_ = require "lodash"
 
 module.exports =
   default:
     data: ->
       part_id: ""
       self_id: ""
+      order: "story_ids.length"
       tag_id:  "all"
     mounted: ->
       @$store.dispatch "aggregate/faces"
@@ -46,7 +48,12 @@ module.exports =
         chr.sow_auth._id.sow_auth_id
     computed:
       faces: ->
-        @$store.state.aggregate.faces ? []
+        hash = Query.faces.tag(@tag_id).hash
+        _.chain @$store.state.aggregate.faces
+        .orderBy @order, "desc"
+        .filter (o)->
+          o.face && hash[o._id.face_id]
+        .value()
 
 </script>
 
