@@ -38,11 +38,16 @@ new Rule("face").schema ->
         else
           all.in tag_ids: tag_id
 
-    name_head: ->
-      counts = []
+    name_blank: ->
       for idx in ["ア".charCodeAt(0) .. "ン".charCodeAt(0)]
         key = String.fromCharCode idx
-        names = all.where(name:///^#{key}///).pluck "name"
+        continue if all.reduce.name_head[key]
+        "<#{key}>"
+
+    name_head: (tag_id = "all")->
+      counts = []
+      for key, mr of all.tag(tag_id).reduce.name_head
+        names = mr.list.map (o)-> o.name
         counts[names.length] ?= []
         counts[names.length].push "<#{key}>#{names.join(" ")}"
       counts
@@ -52,6 +57,9 @@ new Rule("face").schema ->
   class @model extends @model
     @map_reduce: (o, emit)->
       emit "all", "all", map
+      emit "name_head", o.name[0],
+        count: 1
+        list: o
       for tag in o.tags.list
         emit "tag", tag, map
 

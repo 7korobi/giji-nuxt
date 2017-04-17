@@ -1,0 +1,45 @@
+.expand-transition
+  transition: all .3s ease
+
+.list-move
+  transition: transform 0.3s
+
+.list-enter-to
+  transition: all 0.2s ease 0.1s
+
+.list-enter,
+.list-leave-to
+  opacity: 0
+
+.posts
+  .list-enter,
+  .list-leave-to
+    transform: translateX(30px)
+
+
+.portrates
+  background: #000
+  padding: 2px
+  display: flex
+  flex-direction:  row
+  flex-wrap:       wrap
+  align-items:     center
+  align-content:   space-around
+  justify-content: space-around
+
+  .portrate
+    flex-basis: auto
+
+  .expand-enter,
+  .expand-leave
+    height: 0
+    padding: 0 10px
+    opacity: 0
+
+  .list-leave-to
+    position: absolute
+
+  .list-enter,
+  .list-leave-to
+    transform: translateY(30px)
+

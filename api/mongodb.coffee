@@ -91,7 +91,7 @@ mongo.connect "mongodb://192.168.0.249/giji"
     ]
 
   giji.aggregate_max = ->
-    db.collection("potof_for_face_sow_auth_max",{ObjectId}).drop()
+    db.collection("potof_for_face_sow_auth_max",{ObjectId}).remove({})
     .then ->
       db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
         $project:

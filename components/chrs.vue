@@ -1,84 +1,11 @@
 <style lang="stylus" scoped>
-.expand-transition
-  transition: all .3s ease
-
-.expand-enter, .expand-leave
-  height: 0
-  padding: 0 10px
-  opacity: 0
-
-.list
-  background: #000
-  padding: 2px
-  display: flex
-  flex-direction:  row
-  flex-wrap:       wrap
-  align-items:     center
-  align-content:   space-around
-  justify-content: space-around
-
-.list-move
-  transition: transform 0.3s
-
-.list-enter-to
-  transition: all 0.2s ease 0.1s
-
-.list-leave-to
-  position: absolute
-
-.list-enter,
-.list-leave-to
-  opacity: 0
-  transform: translateY(30px)
-
-.portrate
-  flex-basis: auto
 </style>
 <template lang="pug">
 .fullframe
-  .btns
-    span.tag
-      tag#all
-      tag#giji
-      tag#shoji
-      tag#travel
-      tag#stratos
-      tag#myth
-      tag#asia
-      tag#marchen
-
-    span.tag
-      tag#kid
-      tag#young
-      tag#middle
-      tag#elder
-
-    span.tag
-      tag#river
-      tag#road
-      tag#immoral
-
-    span.tag
-      tag#guild
-      tag#elegant
-      tag#ecclesia
-
-    span.tag
-      tag#medical
-      tag#market
-
-    span.tag
-      tag#apartment
-      tag#servant
-      tag#farm
-      tag#government
-
-    span.tag
-      tag#god
-
-    h6
-      | {{ chrs.length }}人の{{ set.long }}を表示しています。
-  transition-group.list.chrs(name="list" tag="div")
+  tags(v-model="tag_id")
+  h6
+    | {{ chrs.length }}人の{{ set.long }}を表示しています。
+  transition-group.portrates(name="list" tag="div")
     portrate(v-for="chr in chrs", :face_id="chr._id", :key="chr._id")
       p {{ job(chr._id) }}
       p {{ chr.name }}
@@ -88,61 +15,18 @@
 
 
 module.exports =
-  metaInfo: ->
-    title: @set.long
-    titleTemplate: '%s - 人狼議事'
-
-  props:
-    faces:
-      default: -> (o)-> o
-
   data: ->
-    tag_id = @$route.query.tag ? "giji"
-    { tag_id }
+    { tag_id: "giji" }
 
   computed:
+    set: ->
+      Query.tags.find @tag_id
     chrs: ->
-      @face_list(@tag_id)
-    set:  ->
-      @$router.replace { @query }
-      @find_tag @tag_id
-    query: ->
-      query = {}
-      for key, val of @$route.query
-        query[key] = val
-      query.tag = @tag_id
-      query
+      Query.faces.tag(@tag_id).list
 
   methods:
-    find_tag: (tag_id)-> Query.tags.find tag_id
-    face_list: (tag_id)->
-      { list } = @faces Query.faces.tag tag_id
-      list
     job: (face_id)->
       job =  Query.chr_jobs.find("#{@set.chr_set_ids.last}_#{face_id}")
       job ?= Query.chr_jobs.find("all_#{face_id}")
       job.job
-
-  components:
-    tag:
-      functional: true
-      props: ["id"]
-
-      render: (m, ctx)->
-        { id } = ctx.props
-        { label = "- 全体 -" } = ctx.parent.find_tag id
-        size = ctx.parent.face_list(id).length
-        attr =
-          key: id
-          props:
-            as: id
-            value: ctx.parent.tag_id
-          on:
-            input: (as)->
-              ctx.parent.tag_id = as
-        if size
-          m "btn", attr, [
-            label
-            m "sup", size
-          ]
 </script>

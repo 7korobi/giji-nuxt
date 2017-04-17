@@ -33,12 +33,14 @@
         | は、開始が楽しみだ。
 
       report(handle="footer" deco="center") 開発者ツール
-      post(:write_at="Date.now()", handle="SSAY")
+      post(:write_at="Date.now()", handle="TSAY")
         nuxt-link.button(to="/demo/timeago") 時計 page
-      post(:write_at="Date.now()", handle="SSAY")
-        nuxt-link.button(to="/demo/books") Demo books
-      post(:write_at="Date.now()", handle="SSAY")
-        nuxt-link.button(to="/demo/chats") Demo chats
+      post(:write_at="Date.now()", handle="TSAY")
+        nuxt-link.button(to="/demo/books") books
+      post(:write_at="Date.now()", handle="TSAY")
+        nuxt-link.button(to="/demo/chats") chats
+      post(:write_at="Date.now()", handle="TSAY")
+        nuxt-link.button(to="/demo/names") names
 </template>
 <script lang="coffee">
 module.exports =

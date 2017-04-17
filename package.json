@@ -25,7 +25,7 @@
     "style-loader": "latest",
     "stylus": "latest",
     "stylus-loader": "latest",
-    "uglify-js": "^2.8.20",
+    "uglify-js": "github:mishoo/UglifyJS2#harmony",
     "vue-cookie": "latest",
     "vue-select": "latest",
     "webpack-bundle-analyzer": "latest",
