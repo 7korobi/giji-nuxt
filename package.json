@@ -5,6 +5,8 @@
   "author": "7korobi@gmail.com",
   "private": true,
   "dependencies": {
+    "agenda": "^0.9.1",
+    "agenda-ui": "^0.0.7",
     "axios": "latest",
     "body-parser": "latest",
     "coffee-loader": "file:loaders/coffee-loader",

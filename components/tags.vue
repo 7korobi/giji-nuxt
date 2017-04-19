@@ -1,5 +1,5 @@
 <template lang="pug">
-.btns
+p
   span.tag
     tag#all
     tag#giji
@@ -42,17 +42,9 @@
 
 <script lang="coffee">
 { Query } = require "./models/memory-record"
+_ = require "lodash"
 
 module.exports =
-  default:
-    data: ->
-      { tag_id: "all" }
-
-    computed:
-      name_blanks: ->
-        Query.faces.name_blank()
-
-      name_counts: ->
-        Query.faces.name_head(@tag_id)
+  default: _.merge {}, require("./tag.vue").parent, {}
 
 </script>

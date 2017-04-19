@@ -1,4 +1,5 @@
 { Collection, Model, Query, Rule } = require "~components/models/memory-record"
+_ = require "lodash"
 
 module.exports =
   namespaced: true

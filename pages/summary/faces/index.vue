@@ -10,8 +10,9 @@
           li
             a キャラクター名（詳細へリンク）
           li ♥ いちばん沢山、そのキャラクターで遊んだプレイヤー
+      report(handle="header" deco="center")
+        tags(v-model="tag_id")
   .fullframe
-    tags(v-model="tag_id")
     transition-group.portrates(name="list" tag="div")
       portrate(v-for="chr in faces", :face_id="chr._id.face_id", :key="chr._id.face_id")
         p 登場{{chr.story_ids.length}}回

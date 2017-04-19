@@ -41,8 +41,8 @@ module.exports = class Query
   _copy: ({ @_finder, @_all_ids, @_group, @_filters, @_sort })->
 
   in: (req)->
-    query_parser @, req, (q, target, req, path)->
-      add = (f)-> q._filters.push f
+    query_parser @, req, (q, target, req, path)=>
+      add = (f)=> q._filters.push f
       switch req && req.constructor
         when Array
           set = set_for req
@@ -59,12 +59,12 @@ module.exports = class Query
           add (o)->
             -1 < path(o)?.indexOf req
         else
-          console.log { target, req, path }
+          console.log { @_finder, target, req, path }
           throw Error 'unimplemented'
 
   where: (req)->
-    query_parser @, req, (q, target, req, path)->
-      add = (f)-> q._filters.push f
+    query_parser @, req, (q, target, req, path)=>
+      add = (f)=> q._filters.push f
       switch req && req.constructor
         when Function
           add req
@@ -82,7 +82,7 @@ module.exports = class Query
           else
             add (o)-> req == path o
         else
-          console.log { target, req, path }
+          console.log { @_finder, target, req, path }
           throw Error 'unimplemented'
 
   search: (text)->

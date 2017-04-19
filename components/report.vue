@@ -36,7 +36,7 @@ module.exports = require("~components/chat.vue").component_class()
 </style>
 
 <template lang="pug">
-.chat.report(:key="id", :class="classname")
+.chat.report(:id="id", :key="id", :class="classname")
   .name.center(v-if="head && (!! to)")
     span.pull-right {{ to }}
     | ▷

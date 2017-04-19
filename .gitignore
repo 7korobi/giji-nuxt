@@ -1,5 +1,7 @@
 dev.bat
 prod.bat
+dev.sh
+prod.sh
 dev
 prod
 

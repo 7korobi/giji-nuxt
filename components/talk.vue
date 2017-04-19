@@ -37,7 +37,7 @@ module.exports = require("~components/chat.vue").component_class()
 </style>
 
 <template lang="pug">
-table.talk(:key="id")
+table.talk(:id="id", :key="id")
   tbody
     tr
       th

@@ -1,8 +1,9 @@
 <template lang="pug">
 .outframe
-  tags(v-model="tag_id")
   .contentframe
     .inframe
+      report(handle="header" deco="center")
+        tags(v-model="tag_id")
       report(handle="header" deco="center") 0人
       post(handle="TSAY")
         span(v-for="name in name_blanks") {{name}}

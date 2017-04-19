@@ -16,7 +16,7 @@ module.exports = require("~components/chat.vue").component_class()
 </style>
 
 <template lang="pug">
-.chat.post(:key="id", :class="classname")
+.chat.post(:id="id", :key="id", :class="classname")
   .name.center(v-if="head && (!! to)")
     span.pull-right {{ to }}
     | ▷

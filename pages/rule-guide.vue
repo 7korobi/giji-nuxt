@@ -2,6 +2,11 @@
 .outframe
   .contentframe
     .inframe
+      post(handle="TSAY")
+        nuxt-link(to="#nation") 国のルール
+        nuxt-link(to="#village") 村のルール
+        nuxt-link(to="#player") プレーヤー
+        nuxt-link(to="#maker") 村建て
       br
       report(handle="footer") 準備はいいかな？
       talk(handle="ELSE" face_id="c96" head="学者 レオナルド", :write_at="1370662886001").
@@ -16,11 +21,9 @@
         特にここで、六法全書を引き写して退屈な思いをするつもりはないけれど、不正アクセス禁止法、個人情報保護法は関わりが深いはずだ。
 
       report(handle="MAKER") ルール
-      report(handle="footer")
-        a(name="nation") {{ nation.head }}
+      report(handle="footer" id="nation") {{ nation.head }}
       report(v-for="o, idx in nation.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
-      report(handle="footer")
-        a(name="village") {{ village.head }}
+      report(handle="footer" id="village") {{ village.head }}
       report(v-for="o, idx in village.list" handle="VSAY", :head="o.head", :log="o.log", :key="idx")
 
       report(handle="MAKER") ルール違反があったら？
@@ -83,12 +86,10 @@
       report(handle="MAKER") 心構え
       post(handle="VSAY") 心構えを守って、楽しく、強く遊ぼう。
 
-      report(handle="footer")
-        a(name="player") 遊びにきたかたへ
+      report(handle="footer" id="player") 遊びにきたかたへ
       report(v-for="o, idx in player.list" handle="SSAY", :head="o.head", :log="o.log", :key="idx")
 
-      report(handle="footer")
-        a(name="maker") {{ maker.head }}
+      report(handle="footer" id="maker") {{ maker.head }}
       talk(handle="WSAY" face_id="t10" head="営利政府 トレイル", :write_at="1437461000000").
         村建てフォームには、村のルールが既に記入してあります。
         賛同できる内容はそのまま残して、不足なら筆を加え、余分と判断する事項は削除して村を建ててください。
