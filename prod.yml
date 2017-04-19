@@ -1,0 +1,12 @@
+apps:
+  - exec_mode: cluster
+    instances: 1
+    name: giji
+
+    interpreter: coffee
+    script: server.coffee
+    watch:
+      - ./api
+      - ./config
+      - ./nuxt.config.js
+      - ./server.coffee
