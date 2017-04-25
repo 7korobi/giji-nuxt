@@ -1,6 +1,8 @@
-{ Collection, Model, Query, Rule } = require "~components/models/memory-record"
+{ Collection, Model, Set, Query, Rule } = require "~components/models/memory-record"
 
-if process.BROWSER_BUILD
+if window?
+  window.Set = Set
+  window.Model = Model
   window.Query = Query
   window.Collection = Collection
 

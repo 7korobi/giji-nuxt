@@ -45,17 +45,9 @@ table.talk(:id="id", :key="id")
       td
         .baloon(:class="classname")
         .chat(:key="id", :class="classname")
-          .name.center(v-if="head && (!! to)")
-            span.pull-right {{ to }}
-            | ▷
-            span.pull-left {{ head }}
-          .name(v-if="head && (! to)")
-            sup.pull-right(v-if="sign") {{ sign }}
-            | {{ head }}
+          chat-head(v-if="head" :head="head", :to="to", :sign="sign")
           .text(:class="deco" v-if="$slots.default")
             slot
           .text(:class="deco" v-html="log_html" v-else)
-          .date
-            abbr(v-if="anker") {{ anker }}
-            timeago(v-if="write_at", :since="write_at")
+          chat-foot(:anker="anker", :write_at="write_at")
 </template>
