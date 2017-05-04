@@ -1,4 +1,5 @@
 _ = require "lodash"
+Mem = require "./index"
 
 OBJ = ->
   new Object null
@@ -27,18 +28,19 @@ query_parser = (base, req, cb)->
 
 
 module.exports = class Query
-  @build: (_finder)->
+  @build: ->
     _all_ids = _group = null
     _filters = []
     _sort = []
-    new Query { _finder, _all_ids, _group, _filters, _sort }, ->
+    new Query { _all_ids, _group, _filters, _sort }, ->
+      @all = @
       @_memory = OBJ()
 
   constructor: (base, tap)->
     @_copy base
     tap.call @
 
-  _copy: ({ @_finder, @_all_ids, @_group, @_filters, @_sort })->
+  _copy: ({ @all, @_all_ids, @_group, @_filters, @_sort })->
 
   in: (req)->
     query_parser @, req, (q, target, req, path)=>
@@ -59,7 +61,7 @@ module.exports = class Query
           add (o)->
             -1 < path(o)?.indexOf req
         else
-          console.log { @_finder, target, req, path }
+          console.log { target, req, path }
           throw Error 'unimplemented'
 
   where: (req)->
@@ -82,7 +84,7 @@ module.exports = class Query
           else
             add (o)-> req == path o
         else
-          console.log { @_finder, target, req, path }
+          console.log { target, req, path }
           throw Error 'unimplemented'
 
   search: (text)->
@@ -108,9 +110,6 @@ module.exports = class Query
   shuffle: ->
     new Query @, -> @_sort = [Math.random]
 
-  save: ->
-    @_finder.save(@)
-
   find: (id)->
     @hash[id]
 
@@ -121,24 +120,27 @@ module.exports = class Query
   pluck: -> @list.pluck arguments...
 
   Object.defineProperties @prototype,
+    write_at:
+      get: ->
+        @all._write_at
     reduce:
       get: ->
-        @_finder.calculate(@) unless @_reduce?
+        @all._finder.calculate(@, @all) unless @_reduce?
         @_reduce
 
     list:
       get: ->
-        @_finder.calculate(@) unless @_list?
+        @all._finder.calculate(@, @all) unless @_list?
         @_list
 
     hash:
       get: ->
-        @_finder.calculate(@) unless @_hash?
+        @all._finder.calculate(@, @all) unless @_hash?
         @_hash
 
     memory:
       get: ->
-        @_finder.calculate(@) unless @_memory?
+        @all._finder.calculate(@, @all) unless @_memory?
         @_memory
 
     ids:

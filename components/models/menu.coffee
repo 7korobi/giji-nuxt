@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = require "./memory-record"
 
 new Rule("site").schema ->
   @order "rowid"
@@ -108,12 +108,12 @@ new Rule("menu").schema ->
       @width ?= Query.widths.ids
       @site ?= Query.sites.ids
 
-Collection.site.set
+Set.site.set
   top:  {}
   user: {}
   book: {}
 
-Collection.font.set
+Set.font.set
   large:
     label: "大判"
   novel:
@@ -123,7 +123,7 @@ Collection.font.set
   small:
     label: "繊細"
 
-Collection.width.set
+Set.width.set
   full:
     label: "最大"
   wide:
@@ -131,7 +131,7 @@ Collection.width.set
   std:
     label: "狭域"
 
-Collection.theme.set
+Set.theme.set
   cinema:
     label: "煉瓦"
     bg: "lupino.png"
@@ -148,7 +148,7 @@ Collection.theme.set
     label: "和の国"
     bg: "moon.png"
 
-Collection.menu.set
+Set.menu.set
   "menu,calc,cog":
     label: "画面表示を調整します。"
 

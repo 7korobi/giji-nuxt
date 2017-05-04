@@ -5,7 +5,6 @@ module.exports =
   props:
     face_id:
       type: String
-      required: true
     hide:
       type: Boolean
   computed:

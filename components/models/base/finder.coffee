@@ -1,4 +1,5 @@
 _ = require "lodash"
+Mem = require "./index"
 Query = require "./query"
 
 OBJ = ->
@@ -21,91 +22,35 @@ validate = (item, chklist)->
     return false
   true
 
-composite_field = (o, field)->
-  list = "#{field}s"
-  o[list] = {}
-  o["set_#{field}"] = (key, cb)->
-    o[list][key] ?= []
-    o[list][key].push cb
-
 module.exports = class Finder
-  composite_field @, "deploy"
-  composite_field @, "depend"
-  composite_field @, "validate"
-
   constructor: (@name)->
-    @all = Query.build @
-    @all.cache = {}
-    @scope = {}
-    @property =
-      first:
-        enumerable: false
-        get: -> @[0]
-      last:
-        enumerable: false
-        get: -> @[@length - 1]
-      pluck:
-        enumerable: false
-        value: ->
-          keys = arguments
-          switch keys.length
-            when 0
-              @map -> null
-            when 1
-              @map (o)-> _.at(o, keys[0])[0]
-            else
-              @map (o)-> _.at(o, keys...)
-
-  depends: ->
-    for f in Finder.depends[@name.base]
-      f @
-    return
 
   validates: (item)->
-    validate item, Finder.validates[@name.base]
+    validate item, Mem.validates[@name.base]
 
-  use_cache: (key, val)->
-    @scope[key] = val
-    switch val?.constructor
-      when Function
-        @all[key] = (args...)=>
-          @all.cache["#{key}:#{JSON.stringify args}"] ?= val args...
-      else
-        @all[key] = val
-
-  clear_cache: ->
-    delete @all._reduce
-    delete @all._list
-    delete @all._hash
-    @all.cache = {}
-
-    return
-
-  save: (query)->
-    for item in query.list
-      if @validates item
-        @model.save item
-
-  calculate: (query)->
-    @list query, @all._memory
+  calculate: (query, all)->
+    @list query, all._memory
     if query._list.length && @model.do_map_reduce
       @reduce query
       if query._group?
         @group query, query._group
     @sort query
-    Object.defineProperties query._list, @property
     return
 
   reduce: (query)->
-    init = (map)->
+    init = (map)=>
       o = OBJ()
+      @map.bless o
+
       o.count = 0 if map.count
       o.all   = 0 if map.all
-      o.list = [] if map.list
-      o.set  = OBJ() if map.set
+      if map.list
+        o.list = []
+        @set.bless o.list
+      o.set_data = OBJ() if map.set
       o
 
-    reduce = (item, o, map)->
+    reduce = (item, o, map)=>
       if map.list
         o.list.push map.list
       if map.set
@@ -119,9 +64,6 @@ module.exports = class Finder
       o.count += map.count if map.count
       o.all += map.all if map.all
 
-    calc = (o)->
-      o.avg = o.all / o.count if o.all && o.count
-
     # map_reduce
     base = OBJ()
     paths = OBJ()
@@ -133,19 +75,11 @@ module.exports = class Finder
           _.set base, path, o
           o
         reduce item, o, map
-    for path, o of paths
-      calc o
     query._reduce = base
 
   sort: (query)->
-    [sortBy, orderBy] = query._sort
-    if sortBy?
-      query._list =
-        if orderBy?
-          _.orderBy query._list, sortBy, orderBy
-        else
-          _.sortBy query._list, sortBy
-
+    arg = query._sort
+    query._list = query._list.sort(arg...) if arg.length
 
   group: (query)->
     { reduce, target } = query._group
@@ -175,26 +109,41 @@ module.exports = class Finder
     query._hash = OBJ()
     query._list =
       for id in query._all_ids ? Object.keys all
-        o = all[id]
-        continue unless o
+        continue unless o = all[id]
         continue unless validate o.item, query._filters
         deploy id, o
+    @set.bless query._list
 
 
-  remove: (from)->
-    { _memory } = @all
+
+  depends: ->
+    for f in Mem.depends[@name.base]
+      f()
+    return
+
+  clear_cache: (all)->
+    delete all._reduce
+    delete all._list
+    delete all._hash
+    all.cache = {}
+    all._write_at = Date.now()
+
+    return
+
+  remove: (all, from)->
+    { _memory } = all
     each from, (item)=>
-      old = _memory[item._id]
+      old = _memory[item.id]
       if old?
         @model.delete old.item
-        delete _memory[item._id]
+        delete _memory[item.id]
       return
     @depends()
 
-  reset: (from, parent)->
-    { _memory } = @all
-    @all._memory = news = OBJ()
-    @merge from, parent
+  reset: (all, from, parent)->
+    { _memory } = all
+    all._memory = news = OBJ()
+    @merge all, from, parent
 
     for key, old of _memory
       item = news[key]
@@ -204,16 +153,16 @@ module.exports = class Finder
         @model.delete old
     @depends()
 
-  merge: (from, parent)->
-    { _memory } = @all
-    deploys = Finder.deploys[@name.base]
+  merge: (all, from, parent)->
+    { _memory } = all
+    deploys = Mem.deploys[@name.base]
     do_map_reduce = false
     each from, (item)=>
-      item.__proto__ = @model.prototype
+      @model.bless item
       Object.assign item, parent
       for deploy in deploys
         deploy.call item, @model
-      unless item._id
+      unless item.id
         throw new Error "detect bad data: #{JSON.stringify item}"
 
       if @validates item
@@ -222,13 +171,13 @@ module.exports = class Finder
           o.emits.push [keys, cmd]
           do_map_reduce = true
 
-        old = _memory[item._id]
+        old = _memory[item.id]
         if old?
           @model.update item, old.item
         else
           @model.create item
           @model.rowid++
-        _memory[item._id] = o
+        _memory[item.id] = o
       return
     @model.do_map_reduce = do_map_reduce
     @depends()

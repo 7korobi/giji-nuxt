@@ -1,0 +1,286 @@
+_ = require "lodash"
+Mem = require "./index"
+
+Finder = require "./finder"
+Query  = require "./query"
+Model  = require "./model"
+Set    = require "./set"
+Map    = require "./map"
+
+Mem.Name = {}
+rename = (base)->
+  name = Mem.Name[base]
+  return name if name
+
+  id =   "#{base}_id"
+  ids =  "#{base}_ids"
+  list = "#{base}s"
+  Mem.Name[base] = { id, ids, list, base }
+
+module.exports = class Rule
+  constructor: (base, cb)->
+    @name = rename base
+    @model = Model
+    @set   = Set
+    @map   = Map
+
+    @all = Query.build()
+    @all.cache = {}
+    @all._write_at = Date.now()
+    @all._finder = new Finder @name
+
+    base_name = @name.base
+
+    @depend_on base
+
+    @map_property =
+      avg:
+        enumerable: true
+        get: ->
+          @all / @count if @all? && @count
+
+    @model_property =
+      $form:
+        enumerable: false
+        get: ->
+          # TODO
+          Mem.Set[base_name].form(@id)
+      id:
+        enumerable: true
+        get: -> @_id
+      "#{@name.id}":
+        enumerable: true
+        get: -> @_id
+
+    @form_property =
+      $model:
+        enumerable: false
+        get: ->
+          # TODO
+          Mem.Set[base_name].find(@id)
+      changes:
+        enumerable: true
+        value: (key)->
+          if _.isEqual @[key], @find[key]
+            null
+          else
+            @$model[key]
+      isChanged:
+        enumerable: true
+        get: ->
+          keys = Object.keys @
+          for key in keys
+            return true unless _.isEqual @[key], @$model[key]
+          return false
+
+    @set_property =
+      first:
+        enumerable: false
+        get: -> @[0]
+      last:
+        enumerable: false
+        get: -> @[@length - 1]
+      pluck:
+        enumerable: false
+        value: (keys...)->
+          cb =
+            switch keys.length
+              when 0
+                -> null
+              when 1
+                _.property keys[0]
+              else
+                (o)-> _.at(o, keys...)
+          @map cb
+
+    @schema cb if cb
+    return
+
+  schema: (cb)->
+    cb.call @
+    if @model == Model
+      class @model extends @model
+    Object.defineProperties @model.prototype, @model_property
+
+    class @form extends @model
+    Object.defineProperties @form.prototype, @form_property
+
+    if @set == Set
+      class @set extends @set
+    Object.defineProperties @set.prototype, @set_property
+
+    if @map == Map
+      class @map extends @map
+    Object.defineProperties @map.prototype, @map_property
+
+    @model.id   = @set.id   = @name.id
+    @model.ids  = @set.ids  = @name.ids
+    @model.list = @set.list = @name.list
+
+    @deploy   @model.deploy   if @model.deploy
+    @validate @model.validate if @model.validate
+
+    finder = @all._finder
+    finder.set = @set
+
+    Mem.Query[@name.list] = @set.all = @all
+    Mem.Set[@name.base]   = @set.bless []
+    Mem.Map[@name.base]   = finder.map   = @map
+    Mem.Form[@name.base]  = finder.form  = @form
+    Mem.Model[@name.base] = finder.model = @model
+    @
+
+  key_by: (keys)->
+    cb =
+      switch keys?.constructor
+        when undefined
+          (o)-> o
+        when Function
+          keys
+        when String, Array
+          _.property keys
+        else
+          throw Error "unimplemented #{keys}"
+
+    @model_property.id =
+      enumerable: true
+      get: cb
+
+  deploy: (cb)->
+    Mem.set_deploy @name.base, cb
+
+  validate: (cb)->
+    Mem.set_validate @name.base, cb
+
+  depend_on: (parent)->
+    { all } = @
+    Mem.set_depend parent, ->
+      all._finder.clear_cache all
+
+  scope: (cb)->
+    for key, val of cb @all
+      @use_cache key, val
+
+  default_scope: (scope)->
+    @all._copy scope @all
+
+  shuffle: ->
+    @default_scope (all)-> all.shuffle()
+  order: (sortBy, orderBy)->
+    @default_scope (all)-> all.sort sortBy, orderBy
+  sort: (sortBy)->
+    @default_scope (all)-> all.sort sortBy
+
+  relation_to_one: (key, target, ik, else_id)->
+    @model_property[key] =
+      enumerable: true
+      get: ->
+        Mem.Query[target].find(@[ik]) ? (else_id && Mem.Query[target].find(else_id))
+
+  relation_to_many: (key, target, ik, qk)->
+    all = @all
+    @use_cache key, (id)->
+      Mem.Query[target].where "#{qk}": id
+
+    @model_property[key] =
+      enumerable: true
+      get: ->
+        all[key](@[ik])
+
+  relation_tree: (key, ik)->
+    all = @all
+    @use_cache key, (_id, n)->
+      if n
+        q = all.where "#{ik}": _id
+        all[key] q.ids, n - 1
+      else
+        all.where _id: _id
+
+    @model_property[key] =
+      enumerable: true
+      value: (n)->
+        all[key] [@_id], n
+
+  relation_graph: (key, ik)->
+    all = @all
+    @use_cache key, (_id, n)->
+      q = all.where _id: _id
+      if n
+        _id = []
+        for a in q.pluck(ik) when a?
+          for k in a when k?
+            _id.push k
+
+        all[key] _.uniq(_id), n - 1
+      else
+        q
+
+    @model_property[key] =
+      enumerable: true
+      value: (n)->
+        all[key] [@_id], n
+
+  use_cache: (key, val)->
+    switch val?.constructor
+      when Function
+        @all[key] = (args...)=>
+          @all.cache["#{key}:#{JSON.stringify args}"] ?= val args...
+      else
+        @all[key] = val
+
+  embed: (path, target)->
+    prop = _.property path
+    @deploy ->
+      Mem.Map[target].bless prop @
+
+  embed: (path, target)->
+    prop = _.property path
+    @deploy ->
+      Mem.Model[target].bless prop @
+
+  path: (keys...)->
+    for key in keys
+      @belongs_to key
+    @deploy ->
+      subids = @_id.split("-")
+      @idx = subids[keys.length]
+      for key, idx in keys
+        @["#{key}_id"] = subids[0..idx].join '-'
+
+  belongs_to: (to, option = {})->
+    name = rename to
+    { key = name.id, target = name.list, dependent, miss } = option
+    @relation_to_one name.base, target, key, miss
+
+    if dependent
+      @depend_on name.base
+      @validate _.property name.base
+
+  habtm: (to, option={})->
+    name = rename to.replace /s$/, ""
+    { key = name.ids, target = name.list } = option
+    @relation_to_many name.list, target, key, "_id"
+
+  has_many: (to, option = {})->
+    name = rename to.replace /s$/, ""
+    { key = @name.id, target = name.list } = option
+    @relation_to_many name.list, target, "_id", key
+
+  tree: (option={})->
+    @relation_tree "nodes", @name.id
+    @belongs_to @name.base, option
+
+  graph: (option={})->
+    { directed, cost } = option
+    ik = @name.ids
+    @relation_to_many @name.list, @name.list, ik, "_id"
+    @relation_graph "path", ik
+    unless directed
+      true # todo
+
+  @filter: (name, cb)->
+    cb.call
+      list: (from, to, schema)=>
+        schema.call @
+      as: (from, to)=>
+

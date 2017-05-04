@@ -1,32 +1,37 @@
-{ Collection, Model, Query, Rule } = require "~components/models/memory-record"
+{ Set, Model, Query, Rule } = require "~components/models/memory-record"
 axios = require "axios"
 
 module.exports =
   namespaced: true
   state:
     read_at: Date.now()
+    section: {}
+    part: {}
+    book: {}
+
     books:    []
     parts:    []
     sections: []
 
     phases:   []
+    potofs:   []
     cards:    []
     stats:    []
     chats:    []
 
   mutations:
     data: (state, o)->
-      Collection.book.merge    o.books
+      Set.book.merge    o.books
 
-      Collection.part.merge    o.parts
-      Collection.section.merge o.sections
-      Collection.phase.merge   o.phases
+      Set.part.merge    o.parts
+      Set.section.merge o.sections
+      Set.phase.merge   o.phases
 
-      Collection.stat.merge    o.stats
-      Collection.card.merge    o.cards
-      Collection.potof.merge   o.potofs
+      Set.stat.merge    o.stats
+      Set.card.merge    o.cards
+      Set.potof.merge   o.potofs
 
-      Collection.chat.merge    o.chats
+      Set.chat.merge    o.chats
       state.read_at = Date.now()
 
     books: (state, folder)->
@@ -37,27 +42,27 @@ module.exports =
       state.book_id = book_id
       state.book = Query.books.find book_id
 
-      state.books    = Query.books.where(   {book_id}).list
-      state.parts    = Query.parts.where(   {book_id}).list
-      state.sections = Query.sections.where({book_id}).list
-
-      state.potofs   = Query.potofs.where(  {book_id}).list
-
-      state.chats    = Query.chats.where(  {phase_id}).list
+      state.books    = Query.books.list
+      state.parts    = state.book.parts.list
+      state.sections = state.book.sections.list
+      state.potofs   = state.book.potofs.list
+      state.chats    = state.book.chats.list
 
     part: (state, part_id)->
       state.part_id = part_id
       state.part = Query.parts.find part_id
+      state.book = state.part.book
 
-      state.phases = Query.phases.where(  {part_id}).list
-      state.cards  = Query.cards.where(   {part_id}).list
-      state.stats  = Query.stats.where(   {part_id}).list
+      state.phases = state.part.phases.list
+      state.cards  = state.part.cards.list
+      state.stats  = state.part.stats.list
 
+      state.potofs = state.part.potofs
       state.section =
-        if part_id == state.parts.last
-          state.sections.last
+        if part_id == state.book.parts.list.last._id
+          state.book.sections.list.last
         else
-          state.sections.first
+          state.book.sections.list.first
       section_id = state.section_id = state.section._id
       state.chats  = Query.chats.where({section_id}).list
 

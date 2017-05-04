@@ -1,10 +1,7 @@
-{ Collection, Model, Set, Query, Rule } = require "~components/models/memory-record"
+{ Model, Set, Query, Rule } = Mem = require "~components/models/memory-record"
 
 if window?
-  window.Set = Set
-  window.Model = Model
-  window.Query = Query
-  window.Collection = Collection
+  window.Mem = Mem
 
 new Rule("menu").schema ->
   class @model extends @model
@@ -20,11 +17,11 @@ module.exports =
     target: null
   mutations:
     set: (state, list)->
-      Collection.menu.set list
+      Set.menu.set list
       state.list = Query.menus.list
 
     add: (state, menu)->
-      Collection.menu.add menu
+      Set.menu.add menu
       state.list = Query.menus.list
 
     target: (state, name)->

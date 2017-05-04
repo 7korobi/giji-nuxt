@@ -1,11 +1,10 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Model, Query, Rule } = require "./memory-record"
 
 new Rule("chat").schema ->
   @order "write_at"
   @path "book", "part", "phase"
   @belongs_to "section"
   @belongs_to "potof"
-
 
   # props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
 
@@ -18,7 +17,3 @@ new Rule("chat").schema ->
       emit "section", o.section_id,
         min: o.open_at
         max: o.write_at
-
-    @deploy: ->
-      @id ?= @_id
-      @_id = @id

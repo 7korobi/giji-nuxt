@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = require "./memory-record"
 
 new Rule("folder").schema ->
   @scope (all)->
@@ -14,7 +14,8 @@ new Rule("folder").schema ->
         @max_vils = o.MAX_VILLAGES
         if @max_vils
           @href = @config.cfg.URL_SW + "/sow.cgi"
-          [protocol, _, @hostname,path_dir...] = @href.split("/")
+          [protocol,_, hostname,path_dir...] = @href.split("/")
+          @hostname = hostname
           path = "/" + path_dir.join("/")
 
       switch @folder
@@ -24,7 +25,7 @@ new Rule("folder").schema ->
       return if @disabled = ! path
       @route = { path, name: @_id }
 
-Collection.folder.set  require "~components/yaml/sow_folder.yml"
+Set.folder.set  require "~components/yaml/sow_folder.yml"
 
 
 welcome = (h)->
@@ -50,9 +51,9 @@ welcome = (h)->
   祝！人狼議事１０周年！
 """
 
-  Collection.phase.merge phases
-  Collection.potof.merge potofs
-  Collection.chat.merge  chats
+  Set.phase.merge phases
+  Set.potof.merge potofs
+  Set.chat.merge  chats
 
 welcome
   "LOBBY-top-0":   "c20"
@@ -62,7 +63,7 @@ welcome
   "CABALA-top-0":  "c78"
   "top-top-0":     "t31"
 
-Collection.chat.merge
+Set.chat.merge
   "LOBBY-top-0-2":
     write_at: 1370662886000
     potof_id: "LOBBY-top-0"

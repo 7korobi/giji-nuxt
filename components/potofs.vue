@@ -94,6 +94,7 @@ module.exports =
     potofs: ->
       @$store.state.book.read_at
       Query.potofs.where({@part_id}).sort(@sort, @order).list
+
     bgc: ->
       switch @sort
         when "text", "role_labels", "side", "win"

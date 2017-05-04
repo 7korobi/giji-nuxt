@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Model, Query, Rule } = require "./memory-record"
 
 new Rule("section").schema ->
   @order "write_at"
@@ -9,6 +9,4 @@ new Rule("section").schema ->
 
   class @model extends @model
     @deploy: ->
-      @id ?= @_id
-      @_id = @id
       @label ?= @idx

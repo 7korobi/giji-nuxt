@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = require "./memory-record"
 
 order = [
   "ririnra"
@@ -20,9 +20,6 @@ new Rule("tag").schema ->
     enable: ->
       all.where (o)->
         ! o.disabled
-
-  class @model extends @model
-    @deploy: ->
 
 new Rule("face").schema ->
   @habtm "tags"
@@ -47,7 +44,7 @@ new Rule("face").schema ->
     name_head: (tag_id = "all")->
       counts = []
       for key, mr of all.tag(tag_id).reduce.name_head
-        names = mr.list.map (o)-> o.name
+        names = mr.list
         counts[names.length] ?= []
         counts[names.length].push "<#{key}>#{names.join(" ")}"
       counts
@@ -59,8 +56,8 @@ new Rule("face").schema ->
       emit "all", "all", map
       emit "name_head", o.name[0],
         count: 1
-        list: o
-      for tag in o.tags.list
+        list: o.name
+      for tag in o.tag_ids
         emit "tag", tag, map
 
     @deploy: ->
@@ -71,8 +68,6 @@ new Rule("chr_set").schema ->
   @order "label"
   @has_many "chr_jobs"
   @has_many "chr_npcs"
-  class @model extends @model
-    @deploy: ->
 
 new Rule("chr_npc").schema ->
   @order "label"
@@ -97,17 +92,17 @@ new Rule("chr_job").schema ->
       @chr_set_idx = order.indexOf @chr_set_id
 
 
-Collection.tag.set  require "~components/yaml/chr_tag.yml"
-Collection.face.set require "~components/yaml/chr_face.yml"
+Set.tag.set  require "~components/yaml/chr_tag.yml"
+Set.face.set require "~components/yaml/chr_face.yml"
 for key in order
   o = require "~components/yaml/cs_#{key}.yml"
 
-  Collection.chr_set.merge [o.chr_set]
+  Set.chr_set.merge [o.chr_set]
   { chr_set_id } = o.chr_set
   cs_key = { chr_set_id }
 
-  Collection.chr_npc.merge o.chr_npc, cs_key
-  Collection.chr_job.merge o.chr_job, cs_key
+  Set.chr_npc.merge o.chr_npc, cs_key
+  Set.chr_job.merge o.chr_job, cs_key
 
 list =
   for face in Query.faces.list
@@ -117,4 +112,4 @@ list =
     continue unless job?
     { chr_set_id, face_id, job }
 
-Collection.chr_job.merge list
+Set.chr_job.merge list

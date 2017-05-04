@@ -43,7 +43,6 @@ module.exports =
       text: ""
       show: "talk"
       deco: "head"
-      part:  {}
       handle: "SSAY"
       show: {}
 

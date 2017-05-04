@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Model, Query, Rule } = require "./memory-record"
 
 attrs =
   TITLE: { mark: 'T', label: '表題' }
@@ -22,7 +22,5 @@ new Rule("phase").schema ->
 
   class @model extends @model
     @deploy: ->
-      @id ?= @_id
-      @_id = @id
       if o = attrs[@handle]
         Object.assign @, o

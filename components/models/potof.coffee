@@ -1,4 +1,4 @@
-{ Collection, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = require "./memory-record"
 
 new Rule("potof").schema ->
   @order "write_at"
@@ -21,9 +21,6 @@ new Rule("potof").schema ->
         continue unless o
         return o
     @deploy: ->
-      @id ?= @_id
-      @_id = @id
-
       if @face?
         { job, name } = @face
 
@@ -34,10 +31,10 @@ new Rule("potof").schema ->
 
       # for sow
       key = { potof_id: @id }
-      Collection.card.add @live, key if @live
-      Collection.card.add @stat, key if @stat
-      Collection.card.add @role, key if @role
-      Collection.card.add @gift, key if @gift
+      Set.card.add @live, key if @live
+      Set.card.add @stat, key if @stat
+      Set.card.add @role, key if @role
+      Set.card.add @gift, key if @gift
 
       role_id_set = {}
       able_id_set = {}
