@@ -9,9 +9,9 @@ mongo.connect "mongodb://192.168.0.249/giji"
 .then (db)->
   end = (err, o)->
     console.log err, o
-  giji.find = (id, q)->
+  giji.find = (id, query, projection)->
     db.collection id, {ObjectId}
-    .find q
+    .find query, projection
 
   giji.aggregate_message = ->
     cmd = (out, keys, ext...)->
