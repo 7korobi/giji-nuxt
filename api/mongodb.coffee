@@ -275,7 +275,9 @@ module.exports = (app)->
       is_epilogue: true
       is_finish:   true
       folder:    folder
-    giji.find "stories", q
+    fields =
+      comment: 0
+    giji.find "stories", q, fields
     .then (data)->
       res.json
         stories: data
