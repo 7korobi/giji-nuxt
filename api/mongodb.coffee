@@ -268,6 +268,18 @@ module.exports = (app)->
     .then ->
       res.json json
       next()
+
+  app.get '/api/stories/:folder', (req, res, next)->
+    { folder } = req.params
+    q =
+      is_epilogue: true
+      is_finish:   true
+      folder:    folder
+    giji.find "stories", q
+    .then (data)->
+      res.json
+        stories: data
+      next()
   return
 
 
