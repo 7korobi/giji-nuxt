@@ -1,5 +1,55 @@
 { Set, Model, Query, Rule } = require "./memory-record"
 
+
+new Rule("sow_turn").schema ->
+  @order "turn", "asc"
+  @belongs_to "village", target: "sow_villages", key: "story_id"
+
+new Rule("sow_village").schema ->
+  @has_many "turns", target: "sow_turns", key: "story_id"
+
+  @scope (all)->
+    prologue: -> all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
+    progress: -> all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
+    oldlog: (folder)-> all.where({ folder, mode: "oldlog" }).sort "vid", "desc"
+
+  countup =
+    count: 1
+  class @model extends @model
+    @deploy: ->
+      { interval, hour, minute } = @upd
+      hour   = "0#{hour}"   if hour   < 10
+      minute = "0#{minute}" if minute < 10
+      @upd.at = "#{hour}:#{minute}"
+      @upd.range = "#{interval * 24}h"
+
+      @folder_id = @folder.toUpperCase()
+      @folder = Query.folders.find @folder_id
+      @mode =
+        if @is_epilogue && @is_finish
+          @link = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{@_id}"
+          "oldlog"
+        else
+          if @turns.list.first
+            "progress"
+          else
+            "prologue"
+
+    @map_reduce: (o, emit)->
+      emit "upd", "range", o.upd.range, countup
+      emit "upd", "at",    o.upd.at, countup
+      emit "sow_auth_id", o.sow_auth_id, countup
+      emit "rating", o.rating, countup
+      for option in o.options
+        emit "option", option, countup
+      for card in o.card.event
+        emit "event", card, countup
+      for card in o.card.config
+        emit "config", card, countup
+      for card in o.card.discard
+        emit "discard", card, countup
+
+
 new Rule("folder").schema ->
   @scope (all)->
     enable: all.where (o)-> ! o.disabled

@@ -250,10 +250,8 @@ module.exports = (app)->
       is_epilogue: false
       is_finish: false
     fields =
-      folder: 1
-      vid: 1
-      name: 1
-      "timer.nextcommitdt": 1
+      comment:  0
+      password: 0
     json = {}
     giji.find "stories", q, fields
     .then (data)->
@@ -269,14 +267,15 @@ module.exports = (app)->
       res.json json
       next()
 
-  app.get '/api/stories/:folder', (req, res, next)->
+  app.get '/api/story/oldlog/:folder', (req, res, next)->
     { folder } = req.params
     q =
       is_epilogue: true
       is_finish:   true
       folder:    folder
     fields =
-      comment: 0
+      comment:  0
+      password: 0
     giji.find "stories", q, fields
     .then (data)->
       res.json
