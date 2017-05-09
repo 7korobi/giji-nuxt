@@ -29,7 +29,7 @@ module.exports =
           when "progress"
             Query.folders.hash[id].href
           when "finish"
-            "#{env.file}/stories/all?folder=#{id}"
+            "/sow/village/#{id}"
 
     components:
       sow:
@@ -41,11 +41,15 @@ module.exports =
 
           vils = ctx.parent.vils folder
           href = ctx.parent.url  folder
-
+          outer = ctx.parent.export_to == "progress"
           m "p", [
             vils
             if href
-              m "a",{ attrs: { href }}, children
+              if outer
+                m "a",{ attrs: { href }}, children
+              else
+                m "nuxt-link",{ attrs: {to: href}}, children
+
             else
               children
           ]

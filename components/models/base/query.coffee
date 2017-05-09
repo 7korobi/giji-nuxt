@@ -125,22 +125,22 @@ module.exports = class Query
         @all._write_at
     reduce:
       get: ->
-        @all._finder.calculate(@, @all) unless @_reduce?
+        @all._finder.calculate(@, @all._memory) unless @_reduce?
         @_reduce
 
     list:
       get: ->
-        @all._finder.calculate(@, @all) unless @_list?
+        @all._finder.calculate(@, @all._memory) unless @_list?
         @_list
 
     hash:
       get: ->
-        @all._finder.calculate(@, @all) unless @_hash?
+        @all._finder.calculate(@, @all._memory) unless @_hash?
         @_hash
 
     memory:
       get: ->
-        @all._finder.calculate(@, @all) unless @_memory?
+        @all._finder.calculate(@, @all._memory) unless @_memory?
         @_memory
 
     ids:

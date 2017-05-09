@@ -24,20 +24,34 @@ validate = (item, chklist)->
 
 module.exports = class Finder
   constructor: (@name)->
-
-  validates: (item)->
-    validate item, Mem.validates[@name.base]
-
-  calculate: (query, all)->
-    @list query, all._memory
+  calculate: (query, memory)->
+    @list query, memory
     if query._list.length && @model.do_map_reduce
-      @reduce query
+      @reduce query, memory
       if query._group?
         @group query, query._group
     @sort query
     return
 
-  reduce: (query)->
+  list: (query, memory)->
+    if query._memory == memory
+      deploy = (id, o)->
+        query._hash[id] = o.item
+    else
+      query._memory = OBJ()
+      deploy = (id, o)->
+        query._memory[id] = o
+        query._hash[id] = o.item
+
+    query._hash = OBJ()
+    query._list =
+      for id in query._all_ids ? Object.keys memory
+        continue unless o = memory[id]
+        continue unless validate o.item, query._filters
+        deploy id, o
+    @set.bless query._list
+
+  reduce: (query, memory)->
     init = (map)=>
       o = OBJ()
       @map.bless o
@@ -47,14 +61,17 @@ module.exports = class Finder
       if map.list
         o.list = []
         @set.bless o.list
-      o.set_data = OBJ() if map.set
+      if map.set
+        o.set_data = OBJ()
+      if map._id
+        o._id = map._id
       o
 
     reduce = (item, o, map)=>
       if map.list
         o.list.push map.list
       if map.set
-        o.set[map.set] = true
+        o.set_data[map.set] = true
       unless map.max <= o.max
         o.max_is = item
         o.max = map.max
@@ -66,12 +83,11 @@ module.exports = class Finder
 
     # map_reduce
     base = OBJ()
-    paths = OBJ()
-    for id, {item, emits} of query._memory
+    for id, {item, emits} of memory when emits && item
       for [path, map] in emits
         o = _.get base, path
         unless o
-          o = paths[path.join(".")] = init map
+          o = init map
           _.set base, path, o
           o
         reduce item, o, map
@@ -96,31 +112,6 @@ module.exports = class Finder
         o = target_path reduced
         deploy o._id, o
 
-  list: (query, all)->
-    if query._memory == all
-      deploy = (id, o)->
-        query._hash[id] = o.item
-    else
-      query._memory = OBJ()
-      deploy = (id, o)->
-        query._memory[id] = o
-        query._hash[id] = o.item
-
-    query._hash = OBJ()
-    query._list =
-      for id in query._all_ids ? Object.keys all
-        continue unless o = all[id]
-        continue unless validate o.item, query._filters
-        deploy id, o
-    @set.bless query._list
-
-
-
-  depends: ->
-    for f in Mem.depends[@name.base]
-      f()
-    return
-
   clear_cache: (all)->
     delete all._reduce
     delete all._list
@@ -138,7 +129,6 @@ module.exports = class Finder
         @model.delete old.item
         delete _memory[item.id]
       return
-    @depends()
 
   reset: (all, from, parent)->
     { _memory } = all
@@ -151,34 +141,17 @@ module.exports = class Finder
         @model.update item, old.item
       else
         @model.delete old
-    @depends()
 
   merge: (all, from, parent)->
     { _memory } = all
-    deploys = Mem.deploys[@name.base]
-    do_map_reduce = false
     each from, (item)=>
-      @model.bless item
-      Object.assign item, parent
-      for deploy in deploys
-        deploy.call item, @model
-      unless item.id
-        throw new Error "detect bad data: #{JSON.stringify item}"
-
-      if @validates item
-        o = { item, emits: [] }
-        @model.map_reduce item, (keys..., cmd)=>
-          o.emits.push [keys, cmd]
-          do_map_reduce = true
-
-        old = _memory[item.id]
-        if old?
-          @model.update item, old.item
-        else
-          @model.create item
-          @model.rowid++
-        _memory[item.id] = o
+      o = @model.$deploy item, parent
+      old = _memory[item.id]
+      _memory[item.id] = o
+      if old?
+        @model.update item, old.item
+      else
+        @model.create item
+        @model.rowid++
       return
-    @model.do_map_reduce = do_map_reduce
-    @depends()
 

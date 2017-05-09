@@ -1,4 +1,4 @@
-module.exports = index = {
+module.exports = index =
   Set:   {}
   Map:   {}
   Form:  {}
@@ -9,15 +9,6 @@ module.exports = index = {
 
   Finder: {}
   Store:  {}
-}
 
-composite_field = (o, field)->
-  list = "#{field}s"
-  o[list] = {}
-  o["set_#{field}"] = (key, cb)->
-    o[list][key] ?= []
-    o[list][key].push cb
-
-composite_field index, "deploy"
-composite_field index, "depend"
-composite_field index, "validate"
+  set_deploy: (key, cb)-> @Name[key].deploys.push cb
+  set_depend: (key, cb)-> @Name[key].depends.push cb

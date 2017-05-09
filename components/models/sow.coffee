@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = Mem = require "./memory-record"
 
 
 new Rule("sow_turn").schema ->
@@ -7,11 +7,15 @@ new Rule("sow_turn").schema ->
 
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
+  @has_map "option_count"
+  @has_map "event"
+  @has_map "config"
+  @has_map "discard"
 
   @scope (all)->
-    prologue: -> all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
-    progress: -> all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
-    oldlog: (folder)-> all.where({ folder, mode: "oldlog" }).sort "vid", "desc"
+    prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
+    progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
+    oldlog: (folder_id)-> all.where({ folder_id, mode: "oldlog" }).sort "vid", "desc"
 
   countup =
     count: 1
@@ -23,17 +27,18 @@ new Rule("sow_village").schema ->
       @upd.at = "#{hour}:#{minute}"
       @upd.range = "#{interval * 24}h"
 
+      @rating_img = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{@rating}.png"
+
       @folder_id = @folder.toUpperCase()
       @folder = Query.folders.find @folder_id
-      @mode =
-        if @is_epilogue && @is_finish
-          @link = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{@_id}"
-          "oldlog"
+      if @is_epilogue && @is_finish
+        @href = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{@_id}"
+        @mode = "oldlog"
+      else
+        if @turns.list.first
+          @mode = "progress"
         else
-          if @turns.list.first
-            "progress"
-          else
-            "prologue"
+          @mode = "prologue"
 
     @map_reduce: (o, emit)->
       emit "upd", "range", o.upd.range, countup
@@ -41,13 +46,21 @@ new Rule("sow_village").schema ->
       emit "sow_auth_id", o.sow_auth_id, countup
       emit "rating", o.rating, countup
       for option in o.options
-        emit "option", option, countup
+        emit "option_count", option, "item",
+          count: 1
+          _id: option
       for card in o.card.event
-        emit "event", card, countup
+        emit "event", card, "item",
+          count: 1
+          _id: card
       for card in o.card.config
-        emit "config", card, countup
+        emit "config", card, "item",
+          count: 1
+          _id: card
       for card in o.card.discard
-        emit "discard", card, countup
+        emit "discard", card, "item",
+          count: 1
+          _id: card
 
 
 new Rule("folder").schema ->

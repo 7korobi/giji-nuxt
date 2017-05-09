@@ -71,8 +71,8 @@ new Rule("chr_set").schema ->
 
 new Rule("chr_npc").schema ->
   @order "label"
-  @belongs_to "chr_set", dependent: true
-  @belongs_to "face",    dependent: true
+  @belongs_to "chr_set"
+  @belongs_to "face"
   class @model extends @model
     @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
@@ -80,8 +80,8 @@ new Rule("chr_npc").schema ->
 
 new Rule("chr_job").schema ->
   @order "face.order"
-  @belongs_to "chr_set", dependent: true
-  @belongs_to "face",    dependent: true
+  @belongs_to "chr_set"
+  @belongs_to "face"
 
   @scope (all)->
     face: (face_id)-> all.where({ face_id }).sort "chr_set_idx"

@@ -7,12 +7,15 @@ OBJ = ->
 
 f_reset = (list, parent)->
   @all._finder.reset @all, list, parent
+  depends @$name
 
 f_merge = (list, parent)->
   @all._finder.merge @all, list, parent
+  depends @$name
 
 f_remove = (list)->
   @all._finder.remove @all, list
+  depends @$name
 
 f_item = (cb)->
   (item, parent)->
@@ -21,12 +24,17 @@ f_item = (cb)->
 f_clear = ->
   @all._finder.clear_cach @all
 
+depends = (name)->
+  for f in name.depends
+    f()
+  return
 
 module.exports = class Set extends Array
   @bless: (list)->
     ids = list.map (o)=> o.id
     list.__proto__ = @prototype
     list.all = @all
+    list.$name = @$name
     list.query = new Query @all, ->
       @_all_ids = ids
       @_memory = OBJ()

@@ -15,11 +15,13 @@ rename = (base)->
   id =   "#{base}_id"
   ids =  "#{base}_ids"
   list = "#{base}s"
-  Mem.Name[base] = { id, ids, list, base }
+  deploys = []
+  depends = []
+  Mem.Name[base] = { id, ids, list, base, deploys, depends }
 
 module.exports = class Rule
   constructor: (base, cb)->
-    @name = rename base
+    @$name = rename base
     @model = Model
     @set   = Set
     @map   = Map
@@ -27,13 +29,16 @@ module.exports = class Rule
     @all = Query.build()
     @all.cache = {}
     @all._write_at = Date.now()
-    @all._finder = new Finder @name
-
-    base_name = @name.base
+    @all._finder = new Finder @$name
 
     @depend_on base
 
     @map_property =
+      set:
+        enumerable: true
+        get: ->
+          @set_data
+
       avg:
         enumerable: true
         get: ->
@@ -44,11 +49,11 @@ module.exports = class Rule
         enumerable: false
         get: ->
           # TODO
-          Mem.Set[base_name].form(@id)
+          Mem.Set[@$name.base].form(@id)
       id:
         enumerable: true
         get: -> @_id
-      "#{@name.id}":
+      "#{@$name.id}":
         enumerable: true
         get: -> @_id
 
@@ -57,7 +62,7 @@ module.exports = class Rule
         enumerable: false
         get: ->
           # TODO
-          Mem.Set[base_name].find(@id)
+          Mem.Set[@$name.base].find(@id)
       changes:
         enumerable: true
         value: (key)->
@@ -113,21 +118,16 @@ module.exports = class Rule
       class @map extends @map
     Object.defineProperties @map.prototype, @map_property
 
-    @model.id   = @set.id   = @name.id
-    @model.ids  = @set.ids  = @name.ids
-    @model.list = @set.list = @name.list
-
-    @deploy   @model.deploy   if @model.deploy
-    @validate @model.validate if @model.validate
+    @model.$name = @form.$name = @set.$name = @map.$name = @$name
 
     finder = @all._finder
     finder.set = @set
 
-    Mem.Query[@name.list] = @set.all = @all
-    Mem.Set[@name.base]   = @set.bless []
-    Mem.Map[@name.base]   = finder.map   = @map
-    Mem.Form[@name.base]  = finder.form  = @form
-    Mem.Model[@name.base] = finder.model = @model
+    Mem.Query[@$name.list] = @set.all = @all
+    Mem.Set[@$name.base]   = @set.bless []
+    Mem.Map[@$name.base]   = finder.map   = @map
+    Mem.Form[@$name.base]  = finder.form  = @form
+    Mem.Model[@$name.base] = finder.model = @model
     @
 
   key_by: (keys)->
@@ -147,10 +147,7 @@ module.exports = class Rule
       get: cb
 
   deploy: (cb)->
-    Mem.set_deploy @name.base, cb
-
-  validate: (cb)->
-    Mem.set_validate @name.base, cb
+    Mem.set_deploy @$name.base, cb
 
   depend_on: (parent)->
     { all } = @
@@ -228,15 +225,18 @@ module.exports = class Rule
       else
         @all[key] = val
 
-  embed: (path, target)->
-    prop = _.property path
-    @deploy ->
-      Mem.Map[target].bless prop @
+  has_map: (path)->
+    name = rename path
+    all = @all
 
-  embed: (path, target)->
-    prop = _.property path
-    @deploy ->
-      Mem.Model[target].bless prop @
+    @model_property[name.list] =
+      enumerable: true
+      get: ->
+        query = all.where({@id})
+        new Query all, ->
+          @all = @
+          @_finder = all._finder
+          @_memory = _.get query.reduce, path
 
   path: (keys...)->
     for key in keys
@@ -249,12 +249,8 @@ module.exports = class Rule
 
   belongs_to: (to, option = {})->
     name = rename to
-    { key = name.id, target = name.list, dependent, miss } = option
+    { key = name.id, target = name.list, miss } = option
     @relation_to_one name.base, target, key, miss
-
-    if dependent
-      @depend_on name.base
-      @validate _.property name.base
 
   habtm: (to, option={})->
     name = rename to.replace /s$/, ""
@@ -263,24 +259,18 @@ module.exports = class Rule
 
   has_many: (to, option = {})->
     name = rename to.replace /s$/, ""
-    { key = @name.id, target = name.list } = option
+    { key = @$name.id, target = name.list } = option
     @relation_to_many name.list, target, "_id", key
 
   tree: (option={})->
-    @relation_tree "nodes", @name.id
-    @belongs_to @name.base, option
+    @relation_tree "nodes", @$name.id
+    @belongs_to @$name.base, option
 
   graph: (option={})->
     { directed, cost } = option
-    ik = @name.ids
-    @relation_to_many @name.list, @name.list, ik, "_id"
+    ik = @$name.ids
+    @relation_to_many @$name.list, @$name.list, ik, "_id"
     @relation_graph "path", ik
     unless directed
       true # todo
-
-  @filter: (name, cb)->
-    cb.call
-      list: (from, to, schema)=>
-        schema.call @
-      as: (from, to)=>
 
