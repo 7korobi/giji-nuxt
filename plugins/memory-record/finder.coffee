@@ -27,22 +27,15 @@ module.exports = class Finder
   calculate: (query, memory)->
     @list query, memory
     if query._list.length && @model.do_map_reduce
-      @reduce query, memory
+      query._reduce = @reduce query, memory, query._list
       if query._group?
         @group query, query._group
     @sort query
     return
 
   list: (query, memory)->
-    if query._memory == memory
-      deploy = (id, o)->
-        query._hash[id] = o.item
-    else
-      query._memory = OBJ()
-      deploy = (id, o)->
-        query._memory[id] = o
-        query._hash[id] = o.item
-
+    deploy = (id, o)->
+      query._hash[id] = o.item
     query._hash = OBJ()
     query._list =
       for id in query._all_ids ? Object.keys memory
@@ -51,7 +44,7 @@ module.exports = class Finder
         deploy id, o
     @set.bless query._list
 
-  reduce: (query, memory)->
+  reduce: (query, memory, list)->
     init = (map)=>
       o = OBJ()
       @map.bless o
@@ -64,7 +57,7 @@ module.exports = class Finder
       if map.set
         o.set_data = OBJ()
       if map._id
-        o._id = map._id
+        o.id = map._id
       o
 
     reduce = (item, o, map)=>
@@ -83,15 +76,17 @@ module.exports = class Finder
 
     # map_reduce
     base = OBJ()
-    for id, {item, emits} of memory when emits && item
-      for [path, map] in emits
-        o = _.get base, path
-        unless o
-          o = init map
-          _.set base, path, o
-          o
-        reduce item, o, map
-    query._reduce = base
+    for { id } in list
+      {item, emits} = memory[id]
+      if emits
+        for [path, map] in emits
+          o = _.get base, path
+          unless o
+            o = init map
+            _.set base, path, o
+            o
+          reduce item, o, map
+    base
 
   sort: (query)->
     arg = query._sort

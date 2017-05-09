@@ -37,7 +37,7 @@ module.exports = class Rule
       set:
         enumerable: true
         get: ->
-          @set_data
+          Object.keys @set_data
 
       avg:
         enumerable: true
@@ -232,11 +232,7 @@ module.exports = class Rule
     @model_property[name.list] =
       enumerable: true
       get: ->
-        query = all.where({@id})
-        new Query all, ->
-          @all = @
-          @_finder = all._finder
-          @_memory = _.get query.reduce, path
+        all.where({@id}).by_reduce path
 
   path: (keys...)->
     for key in keys

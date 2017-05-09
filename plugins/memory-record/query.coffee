@@ -120,9 +120,19 @@ module.exports = class Query
   pluck: -> @list.pluck arguments...
 
   Object.defineProperties @prototype,
+    by_reduce:
+      value: (path)->
+        memory = _.get(@reduce, path)
+        { all } = @
+        new Query all, ->
+          @all = @
+          @_finder = all._finder
+          @_memory = memory
+
     write_at:
       get: ->
         @all._write_at
+
     reduce:
       get: ->
         @all._finder.calculate(@, @all._memory) unless @_reduce?
@@ -145,6 +155,6 @@ module.exports = class Query
 
     ids:
       get: ->
-        Object.keys @memory
+        Object.keys @hash
 
 

@@ -39,24 +39,26 @@ new Rule("face").schema ->
       for idx in ["ア".charCodeAt(0) .. "ン".charCodeAt(0)]
         key = String.fromCharCode idx
         continue if all.reduce.name_head[key]
-        "<#{key}>"
+        key
 
     name_head: (tag_id = "all")->
       counts = []
       for key, mr of all.tag(tag_id).reduce.name_head
-        names = mr.list
-        counts[names.length] ?= []
-        counts[names.length].push "<#{key}>#{names.join(" ")}"
+        counts[mr.set.length] ?= []
+        counts[mr.set.length].push mr
       counts
 
   map =
     count: 1
   class @model extends @model
     @map_reduce: (o, emit)->
+      head = o.name[0]
+      head = o.name[1] if head in ["†"]
       emit "all", "all", map
-      emit "name_head", o.name[0],
+      emit "name_head", head,
+        _id: head
         count: 1
-        list: o.name
+        set: o.name
       for tag in o.tag_ids
         emit "tag", tag, map
 

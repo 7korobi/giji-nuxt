@@ -6,11 +6,12 @@
         tags(v-model="tag_id")
       report(handle="header" deco="center") 0人
       post(handle="TSAY")
-        span(v-for="name in name_blanks") {{name}}
-      div(v-for="names, count in name_counts" v-if="0 < count", :key="count")
+        span(v-for="name in name_blanks") <{{name}}>
+      div(v-for="group, count in name_counts" v-if="0 < count", :key="count")
         transition-group.posts(name="list" tag="div")
           report(handle="header" deco="center", :key="'h'+count") {{count}}人
-          post(v-for="name in names" handle="SSAY", :key="name") {{name}}
+          post(v-for="map in group" handle="SSAY", :key="map.id")
+            | <{{map.id}}> {{ map.set.join("、") }}
       report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 </template>
