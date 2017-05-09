@@ -122,7 +122,7 @@ module.exports = class Query
   Object.defineProperties @prototype,
     by_reduce:
       value: (path)->
-        memory = _.get(@reduce, path)
+        memory = _.get(@reduce, path) ? {}
         { all } = @
         new Query all, ->
           @all = @
@@ -150,8 +150,7 @@ module.exports = class Query
 
     memory:
       get: ->
-        @all._finder.calculate(@, @all._memory) unless @_memory?
-        @_memory
+        @all._memory
 
     ids:
       get: ->

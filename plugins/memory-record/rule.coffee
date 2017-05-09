@@ -39,6 +39,11 @@ module.exports = class Rule
         get: ->
           Object.keys @set_data
 
+      summary:
+        enumerable: true
+        get: ->
+          _.sortBy @summary_data, (o)-> - o.length
+
       avg:
         enumerable: true
         get: ->

@@ -54,6 +54,8 @@ module.exports = class Finder
       if map.list
         o.list = []
         @set.bless o.list
+      if map.summary
+        o.summary_data = OBJ()
       if map.set
         o.set_data = OBJ()
       if map._id
@@ -65,6 +67,10 @@ module.exports = class Finder
         o.list.push map.list
       if map.set
         o.set_data[map.set] = true
+      if map.summary
+        id = map.summary
+        o.summary_data[id] ?= { id, length: 0 }
+        o.summary_data[id].length += map.count
       unless map.max <= o.max
         o.max_is = item
         o.max = map.max

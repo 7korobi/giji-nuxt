@@ -7,10 +7,6 @@ new Rule("sow_turn").schema ->
 
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
-  @has_map "option_count"
-  @has_map "event"
-  @has_map "config"
-  @has_map "discard"
 
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
@@ -45,22 +41,18 @@ new Rule("sow_village").schema ->
       emit "upd", "at",    o.upd.at, countup
       emit "sow_auth_id", o.sow_auth_id, countup
       emit "rating", o.rating, countup
-      for option in o.options
-        emit "option_count", option, "item",
-          count: 1
-          _id: option
       for card in o.card.event
-        emit "event", card, "item",
+        emit "event",
+          summary: card
           count: 1
-          _id: card
       for card in o.card.config
-        emit "config", card, "item",
+        emit "config",
+          summary: card
           count: 1
-          _id: card
       for card in o.card.discard
-        emit "discard", card, "item",
+        emit "discard",
+          summary: card
           count: 1
-          _id: card
 
 
 new Rule("folder").schema ->
