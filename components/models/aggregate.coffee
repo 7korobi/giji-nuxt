@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "./memory-record"
+{ Model, Query, Rule } = require "~plugins/memory-record"
 
 
 titles =

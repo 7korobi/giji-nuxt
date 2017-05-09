@@ -68,7 +68,7 @@ div(v-if="part_id")
 
 
 <script lang="coffee">
-{ Query } = require "./models/memory-record"
+{ Query } = require "~plugins/memory-record"
 
 module.exports =
   props: ["part_id"]

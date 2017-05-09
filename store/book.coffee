@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = require "~components/models/memory-record"
+{ Set, Model, Query, Rule } = require "~plugins/memory-record"
 axios = require "axios"
 
 module.exports =

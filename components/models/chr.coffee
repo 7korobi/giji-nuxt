@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = require "./memory-record"
+{ Set, Model, Query, Rule } = require "~plugins/memory-record"
 
 order = [
   "ririnra"

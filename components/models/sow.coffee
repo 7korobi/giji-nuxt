@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = Mem = require "./memory-record"
+{ Set, Model, Query, Rule } = Mem = require "~plugins/memory-record"
 
 
 new Rule("sow_turn").schema ->

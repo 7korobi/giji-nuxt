@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Set } = require "~components/models/memory-record"
+{ Model, Query, Rule, Set } = require "~plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 

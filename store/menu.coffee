@@ -1,4 +1,4 @@
-{ Model, Set, Query, Rule } = Mem = require "~components/models/memory-record"
+{ Model, Set, Query, Rule } = Mem = require "~plugins/memory-record"
 
 if window?
   window.Mem = Mem

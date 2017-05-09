@@ -77,7 +77,7 @@
 </template>
 
 <script lang="coffee">
-{ Query } = require "~components/models/memory-record"
+{ Query } = require "~plugins/memory-record"
 
 _ = require "lodash"
 

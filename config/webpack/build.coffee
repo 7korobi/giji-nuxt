@@ -6,7 +6,7 @@ module.exports =
 
   vendor: [
     'axios'
-    '~components/models/memory-record.coffee'
+    '~plugins/memory-record.coffee'
   ]
 
   loaders: [

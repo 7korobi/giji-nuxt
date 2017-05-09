@@ -29,7 +29,7 @@
 </template>
 
 <script lang="coffee">
-{ Query, Set } = require "~components/models/memory-record"
+{ Query, Set } = require "~plugins/memory-record"
 _ = require "lodash"
 
 module.exports =

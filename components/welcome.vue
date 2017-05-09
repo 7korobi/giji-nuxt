@@ -2,7 +2,7 @@
 env =
   file: "http://s3-ap-northeast-1.amazonaws.com/giji-assets"
 
-{ Query } = require "./models/memory-record"
+{ Query } = require "~plugins/memory-record"
 
 module.exports =
   default:
