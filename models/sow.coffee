@@ -80,7 +80,7 @@ new Rule("folder").schema ->
       return if @disabled = ! path
       @route = { path, name: @_id }
 
-Set.folder.set  require "~components/yaml/sow_folder.yml"
+Set.folder.set  require "../yaml/sow_folder.yml"
 
 
 welcome = (h)->

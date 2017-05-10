@@ -106,5 +106,5 @@
 module.exports =
   default:
     data: ->
-      require "~components/yaml/rule.yml"
+      require "../yaml/rule.yml"
 </script>

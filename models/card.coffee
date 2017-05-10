@@ -29,6 +29,6 @@ new Rule("able").schema ->
   @scope (all)->
 
 
-Set.role.set require '~components/yaml/set_roles.yml'
-Set.trap.set require '~components/yaml/set_traps.yml'
-Set.able.set require '~components/yaml/set_ables.yml'
+Set.role.set require '../yaml/set_roles.yml'
+Set.trap.set require '../yaml/set_traps.yml'
+Set.able.set require '../yaml/set_ables.yml'

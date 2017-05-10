@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import "~components/models/index"
+import "../models/index"
 
 const store = new Vuex.Store({
   actions: {

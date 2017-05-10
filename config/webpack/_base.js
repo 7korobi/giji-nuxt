@@ -63,7 +63,6 @@ export {
       '~static':     dir('./static'),
       '~assets':     dir('./assets'),
       '~plugins':    dir('./plugins'),
-      '~store':      dir('./store'),
       '~router':     dir('./.nuxt/router'),
       '~pages':      dir('./pages'),
       '~components': dir('./components')
