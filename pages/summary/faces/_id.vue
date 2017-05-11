@@ -85,13 +85,18 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+HrefQuery = require "~plugins/href-query"
+
+{ data, watch } = HrefQuery
+  order: "story_ids.length"
 
 _ = require "lodash"
 
 module.exports =
   default:
+    watch: watch
     data: ->
-      order: "story_ids.length"
+      data @
     mounted: ->
       { id } = @$route.params
       @$store.dispatch "aggregate/face", id

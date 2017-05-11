@@ -13,6 +13,7 @@
       report(handle="header" deco="center")
         tags(v-model="tag_id")
       report(handle="header" deco="center")
+        btn(as="order"        v-model="order") 基本
         btn(as="story_length" v-model="order") 登場回数
         btn(as="fav_count"    v-model="order") 偏愛度
         btn(as="date_max"     v-model="order") 新着度
@@ -21,16 +22,12 @@
   .fullframe
     transition-group.portrates(name="list" tag="div")
       portrate(v-for="face in faces", :face_id="face.id", :key="face.id")
-        p(v-if="'story_length' == order")
+        p
           | 登場{{face.story_length}}回
-        p(v-if="'fav_count' == order")
-          | {{face.fav_count}}人/pl
         p(v-if="'date_max' == order")
-          timeago(:since="face.date_max")
-          | まで
+          timeago(format="short", :since="face.date_max")
         p(v-if="'date_min' == order")
-          timeago(:since="face.date_min")
-          | から
+          timeago(format="short", :since="face.date_min")
         nuxt-link(:to="face.summary_url")
           p {{ face.chr_jobs.list[0].job }}
           p {{ face.name }}
@@ -44,16 +41,19 @@
 </template>
 
 <script lang="coffee">
-{ Query, Set } = require "~plugins/memory-record"
+{ Query } = require "~plugins/memory-record"
+HrefQuery = require "~plugins/href-query"
 _ = require "lodash"
+
+{ data, watch } = HrefQuery
+  order: "story_length"
+  tag_id:  "all"
 
 module.exports =
   default:
+    watch: watch
     data: ->
-      part_id: ""
-      self_id: ""
-      order: "story_length"
-      tag_id:  "all"
+      data @
 
     mounted: ->
       @$store.dispatch "aggregate/faces"
@@ -62,7 +62,7 @@ module.exports =
       faces: ->
         asc =
           switch @order
-            when "date_min"
+            when "order", "date_min"
               "asc"
             else
               "desc"

@@ -45,6 +45,10 @@ times = [
 for time, idx in times
   time[2] = locales[idx]
 
+suffix =
+  date: "頃"
+  short: ""
+
 format =
   date: new Intl.DateTimeFormat 'ja-JP',
     year:  "numeric"
@@ -52,6 +56,11 @@ format =
     day:   "2-digit"
     weekday: "short"
     hour:    "2-digit"
+
+  short: new Intl.DateTimeFormat 'ja-JP',
+    year:  "numeric"
+    month: "2-digit"
+    day:   "2-digit"
 
   num: new Intl.NumberFormat 'ja-JP',
     style: 'decimal'
@@ -78,6 +87,9 @@ module.exports =
     lock:
       type: Boolean
       default: false
+    format:
+      type: String
+      default: "date"
 
   computed:
     sinceTime: ->
@@ -94,7 +106,7 @@ module.exports =
       if @maxTime && @msec > @maxTime
         clearInterval @interval
         @interval = null
-        return format.date.format(@sinceTime) + "頃"
+        return format[@format].format(@sinceTime) + suffix[@format]
 
       [_, base, text] = @time
       msec = Math.abs 100 + @msec
