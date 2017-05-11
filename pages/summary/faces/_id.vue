@@ -4,10 +4,10 @@
   .contentframe
     .inframe
       report(handle="footer" deco="center")
-        h1 {{ name }}の活躍
+        h1 {{ face.name }}の活躍
         .date
           | #[timeago(:since="face.date_min")] ～ #[timeago(:since="face.date_max")]
-      talk(handle="TSAY" deco="", :face_id="face_id", :head="name")
+      talk(handle="TSAY" deco="", :face_id="face.id", :head="face.name")
         | #[b {{ lives.sum }}]人が村にいました。
         .flex
           a.label3(v-for="o in lives", :class="o._id.live")
@@ -51,19 +51,26 @@
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in folders" handle="VSAY", :face_id="face_id", :head="folder.nation", :key="folder.nation")
+      talk(v-for="folder in folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder.nation")
         | {{ folder.length }}回登場しました
         .flex
           a.label-mini(v-for="id in folder", :href="log_url(id)") {{ id[1] }}
 
 
-      report(handle="VGSAY", :head="name + 'で活躍した人達'")
+      report(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
+        btn(as="story_ids.length" v-model="order") 参加村数
+        btn(as="count" v-model="order") 総発言回数
+        btn(as="all" v-model="order") 総発言文字数
+        btn(as="date_min" v-model="order") 古参度
+        btn(as="date_max" v-model="order") 新着度
         table
-          tbody
-            tr(v-for="o in sow_auths")
+          transition-group.tlist(name="list" tag="tbody")
+            tr(v-for="o in sow_auths", :key="o._id.sow_auth_id")
               td
                 .sow_auth_id {{ o._id.sow_auth_id }}
-              td.r {{ o.story_ids.length }}回
+              td.r {{ o.story_ids.length }}村
+              td.r {{ o.count }}回
+              td.r {{ o.all }}文字
               td.timer
                 timeago.count(:since="o.date_min")
               td
@@ -84,8 +91,7 @@ _ = require "lodash"
 module.exports =
   default:
     data: ->
-      part_id: ""
-      self_id: ""
+      order: "story_ids.length"
     mounted: ->
       { id } = @$route.params
       @$store.dispatch "aggregate/face", id
@@ -129,7 +135,13 @@ module.exports =
         @$store.state.aggregate[@id].lives
 
       sow_auths: ->
-        @$store.state.aggregate[@id].sow_auths
+        asc =
+          switch @order
+            when "date_min"
+              "asc"
+            else
+              "desc"
+        _.orderBy @$store.state.aggregate[@id].sow_auths, @order, asc
 
       mestypes: ->
         @$store.state.aggregate[@id].mestypes
@@ -137,12 +149,8 @@ module.exports =
       folders: ->
         @$store.state.aggregate[@id].folders
 
-      name: ->
-        @face.face?.name
-      face_id: ->
-        @face._id?.face_id
       face: ->
-        @$store.state.aggregate[@id].face
+        Query.faces.find @id
 
 </script>
 

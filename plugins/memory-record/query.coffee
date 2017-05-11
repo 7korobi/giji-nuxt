@@ -57,7 +57,7 @@ module.exports = class Query
             for val in path o
               return true if req.test val
             false
-        when null, Boolean, String, Number
+        when null, 0, Boolean, String, Number
           add (o)->
             -1 < path(o)?.indexOf req
         else
@@ -78,7 +78,7 @@ module.exports = class Query
             add (o)-> set[ path o ]
         when RegExp
           add (o)-> req.test path o
-        when null, Boolean, String, Number
+        when null, 0, Boolean, String, Number
           if "_id" == target
             q._all_ids = [req]
           else

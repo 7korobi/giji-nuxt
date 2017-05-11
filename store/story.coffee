@@ -15,9 +15,6 @@ module.exports =
       state.prologue = Query.sow_villages.prologue.list
       state.progress = Query.sow_villages.progress.list
 
-    oldlog: (state, folder)->
-      state.oldlog[folder] = Query.sow_villages.oldlog(folder).list
-
     join: (state, data)->
       Set.sow_turn.merge    data.events
       Set.sow_village.merge data.stories
@@ -33,4 +30,3 @@ module.exports =
       axios.get "http://utage.family.jp:4000/api/story/oldlog/#{folder}"
       .then ({ status, data })->
         commit "join", data
-        commit "oldlog", folder

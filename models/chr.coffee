@@ -27,6 +27,7 @@ new Rule("face").schema ->
   @has_many "chr_npcs"
 
   @order "order"
+
   @scope (all)->
     tag: (tag_id)->
       switch tag_id
@@ -63,8 +64,28 @@ new Rule("face").schema ->
         emit "tag", tag, map
 
     @deploy: ->
+      @aggregate = {}
+      @summary_url = "/summary/faces/#{@_id}"
       @path = "http://giji-assets.s3-website-ap-northeast-1.amazonaws.com/images/portrate/#{ @_id }.jpg"
-
+  Object.assign @model_property,
+    story_length:
+      get: ->
+        @aggregate.log?.story_ids.length ? 0
+    sow_auth_id:
+      get: ->
+        @aggregate.fav?._id.sow_auth_id ? null
+    fav_count:
+      get: ->
+        @aggregate.fav?.count ? 0
+    date_max:
+      get: ->
+        new Date(@aggregate.log?.date_max ? 0) - 0
+    date_min:
+      get: ->
+        new Date(@aggregate.log?.date_min ? undefined) - 0
+    date_range:
+      get: ->
+        @date_max - @date_min
 
 new Rule("chr_set").schema ->
   @order "label"

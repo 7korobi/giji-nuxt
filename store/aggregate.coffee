@@ -41,15 +41,14 @@ module.exports =
   state: state
   mutations:
     join: (state,{ id, data })->
-      for o in data.faces
-        o.face = Query.faces.find o._id.face_id
+      state.read_at = Date.now()
+      for o in data.faces when face = Query.faces.find o._id.face_id
+        face.aggregate.log = o
 
     faces: (state,{ id, data })->
       state.read_at = Date.now()
-      sow_auths = _.keyBy data.sow_auths, "_id.face_id"
-      for o in data.faces
-        o.sow_auth = sow_auths[o._id.face_id]
-      state.faces = data.faces
+      for o in data.sow_auths when face = Query.faces.find o._id.face_id
+        face.aggregate.fav = o
 
     face: (state,{ id, data })->
       state[id].read_at = Date.now()

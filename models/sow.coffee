@@ -11,7 +11,7 @@ new Rule("sow_village").schema ->
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
     progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
-    oldlog: (folder_id)-> all.where({ folder_id, mode: "oldlog" }).sort "vid", "desc"
+    oldlog: (folder_id)-> all.where({ folder_id, mode: "oldlog" })
 
   countup =
     count: 1
