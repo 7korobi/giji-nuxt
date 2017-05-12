@@ -22,8 +22,11 @@
   .fullframe
     transition-group.portrates(name="list" tag="div")
       portrate(v-for="face in faces", :face_id="face.id", :key="face.id")
-        p
+        p(v-if="'fav_count' == order")
+          | ♥{{face.fav_count}}回
+        p(v-else)
           | 登場{{face.story_length}}回
+
         p(v-if="'date_max' == order")
           timeago(format="short", :since="face.date_max")
         p(v-if="'date_min' == order")
@@ -31,7 +34,8 @@
         nuxt-link(:to="face.summary_url")
           p {{ face.chr_jobs.list[0].job }}
           p {{ face.name }}
-        p ♥{{ face.sow_auth_id }}
+        p
+          | ♥{{ face.sow_auth_id }}
 
   .contentframe
     .inframe
@@ -52,7 +56,7 @@ q.query
 
 module.exports =
   default:
-    watch: q.watch
+    watch: q.watch ->
     data: ->
       q.data @
 

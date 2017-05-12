@@ -20,8 +20,7 @@ deploy = (name, cb)->
     emit = @emit name
     cache = {}
     for to of base
-      @watch[to] = cb base, cache, to, emit
-
+      @_watch[to] = cb base, cache, to, emit
 
 location = (mode)->
   (base, url, to, emit)->
@@ -44,17 +43,18 @@ storage = (store)->
         store.removeItem to
       emit to, val
 
-class BrowserValue
-  constructor: (@_event = {})->
-    @base = {}
-    @watch = {}
 
-  event: (events)->
-    Object.assign @_event, events
+class BrowserValue
+  constructor: ->
+    @_watch = {}
+    @base = {}
+
+  watch: (@_event)->
+    @_watch
 
   emit: (store)->
     (key, val)=>
-      @_event[store]?.call @vue, key, val
+      @_event.call @vue, store, key, val
 
   # name, path, hash
   url: deploy "url", (base, url, to, emit)->
@@ -106,10 +106,10 @@ class BrowserValue
       cache[key] = stored ? val
 
     @vue.$nextTick =>
-      for store, cb of @_event
-        for key of @base[store]
+      for store, base of @base
+        for key of base
           val = cache[key]
-          cb.call @vue, key, val
+          @_event.call @vue, store, key, val
 
     Object.assign cache, data
 

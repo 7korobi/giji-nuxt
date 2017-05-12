@@ -3,12 +3,12 @@
   .contentframe
     transition-group.inframe(name="list" tag="div")
       post(handle="TSAY" key="form")
-        btn(as="vid"             v-model="sort[0]" @toggle="submenu") フォルダ
-        btn(as="vpl.0"           v-model="sort[0]" @toggle="submenu") 人数
-        btn(as="timer.updateddt" v-model="sort[0]" @toggle="submenu") 日時
-        btn(as="sow_auth_id"     v-model="sort[0]" @toggle="submenu") 村建て人
-        btn(as="rating"          v-model="sort[0]" @toggle="submenu") レーティング
-        btn(:as="event_length"   v-model="sort[0]" @toggle="submenu") イベント種類
+        btn(as="vid"             v-model="order" @toggle="submenu") フォルダ
+        btn(as="vpl.0"           v-model="order" @toggle="submenu") 人数
+        btn(as="timer.updateddt" v-model="order" @toggle="submenu") 日時
+        btn(as="sow_auth_id"     v-model="order" @toggle="submenu") 村建て人
+        btn(as="rating"          v-model="order" @toggle="submenu") レーティング
+        btn(:as="event_length"   v-model="order" @toggle="submenu") イベント種類
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
@@ -53,18 +53,22 @@
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+BrowserValue = require "~plugins/browser-value"
+
+q = new BrowserValue
+q.query
+  folder: "all"
+  order:  "vid"
 
 module.exports =
+  watch: q.watch (_, key, val)->
+    switch key
+      when "folder"
+        @$store.dispatch "story/oldlog", @folder
   data: ->
-    sort: ["vid", "desc"]
-    submenu: false
-
-  mounted: ->
-    @$store.dispatch "story/oldlog", @folder
-
-  watch:
-    folder: ->
-      @$store.dispatch "story/oldlog", @folder
+    q.data @,
+      asc: "desc"
+      drill: false
 
   methods:
     event_length: ({id})->
@@ -87,11 +91,9 @@ module.exports =
         { label, win, length, suffix }
 
   computed:
-    folder: ->
-      @$route.query.folder
     villages: ->
       @$store.state.story.read_at
-      Query.sow_villages.oldlog(@folder).sort(@sort...).list
+      Query.sow_villages.oldlog(@folder).sort(@order, @asc).list
 
 </script>
 <style lang="stylus" scoped>

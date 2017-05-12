@@ -1,19 +1,18 @@
 <script lang="coffee">
 BrowserValue = require "~plugins/browser-value"
 q = new BrowserValue
-q.event
-  cookie: (key, val)->
-    @use[key]?.unuse()
-    @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
-    @use[key].use()
-
 q.cookie
   theme: "cinema"
   font:  "std"
 
 module.exports =
   default:
-    watch: q.watch
+    watch: q.watch (_, key, val)->
+      switch key
+        when "theme", "font"
+          @use[key]?.unuse()
+          @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
+          @use[key].use()
     data: ->
       q.data @,
         top:    0

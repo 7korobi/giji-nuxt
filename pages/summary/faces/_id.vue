@@ -97,7 +97,7 @@ _ = require "lodash"
 
 module.exports =
   default:
-    watch: q.watch
+    watch: q.watch ->
     data: ->
       q.data @
 

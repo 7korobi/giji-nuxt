@@ -25,7 +25,7 @@ q.query
   tag_id:  "giji"
 
 module.exports =
-  watch: q.watch
+  watch: q.watch ->
   data: ->
     q.data @
 

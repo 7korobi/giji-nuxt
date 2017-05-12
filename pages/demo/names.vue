@@ -26,7 +26,7 @@ q.query
 
 module.exports =
   default:
-    watch: q.watch
+    watch: q.watch ->
     data: ->
       q.data @
 
