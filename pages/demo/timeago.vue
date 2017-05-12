@@ -24,6 +24,4 @@ module.exports =
       reset: (idx)->
         @clicks++
         @times[idx].at = new Date() - -62000
-    mounted: ->
-      console.log @$storage
 </script>

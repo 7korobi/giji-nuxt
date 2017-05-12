@@ -42,18 +42,19 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-HrefQuery = require "~plugins/href-query"
+BrowserValue = require "~plugins/browser-value"
 _ = require "lodash"
 
-{ data, watch } = HrefQuery
+q = new BrowserValue
+q.query
   order: "story_length"
   tag_id:  "all"
 
 module.exports =
   default:
-    watch: watch
+    watch: q.watch
     data: ->
-      data @
+      q.data @
 
     mounted: ->
       @$store.dispatch "aggregate/faces"

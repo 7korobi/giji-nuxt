@@ -1,44 +1,37 @@
 <script lang="coffee">
-style_use = (key)-> ->
-  val = @style[key]
-  return val unless process.BROWSER_BUILD
-  @use[key]?.unuse()
-  @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
-  @use[key].use()
-  val
+BrowserValue = require "~plugins/browser-value"
+q = new BrowserValue
+q.event
+  cookie: (key, val)->
+    @use[key]?.unuse()
+    @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
+    @use[key].use()
+
+q.cookie
+  theme: "cinema"
+  font:  "std"
 
 module.exports =
   default:
+    watch: q.watch
     data: ->
-      theme = "cinema"
-      font  = "std"
-      top:    0
-      width:  0
-      height: 0
-      use: {}
-      style: { theme, font }
-      welcome: true # @$route.name == 'demo'
+      q.data @,
+        top:    0
+        width:  0
+        height: 0
+        use: {}
+        welcome: true # @$route.name == 'demo'
 
     created: ->
-      return unless process.BROWSER_BUILD
+      return unless window?
       document.ontouchstart = ->
-      if css = @$cookie.get "css"
-        [theme, font] = css.split "~"
-        @style = { theme, font }
       @poll()
 
     computed:
-      theme: style_use "theme"
-      font:  style_use "font"
       center: ->
         @$store.commit "menu/center", @top, @height
       body_class: ->
-        str = [@theme, @font].join("~")
-        if process.BROWSER_BUILD
-          @$cookie.set "css", str,
-            path: '/'
-            expires: '7D'
-        str
+        [@theme, @font].join("~")
 
     methods:
       poll: ->
@@ -55,17 +48,17 @@ div(:class="body_class")
   welcome(:top="-top / 3", :show="welcome")
     .btns
       span.font
-        btn(v-model="style.font" as="large") 大判
-        btn(v-model="style.font" as="novel") 明朝
-        btn(v-model="style.font" as="std") ゴシック
-        btn(v-model="style.font" as="small") 繊細
+        btn(v-model="font" as="large") 大判
+        btn(v-model="font" as="novel") 明朝
+        btn(v-model="font" as="std") ゴシック
+        btn(v-model="font" as="small") 繊細
 
       span.theme
-        btn(v-model="style.theme" as="cinema") 煉瓦
-        btn(v-model="style.theme" as="star")   蒼穹
-        btn(v-model="style.theme" as="night")  闇夜
-        btn(v-model="style.theme" as="moon")   月夜
-        btn(v-model="style.theme" as="wa")   和の国
+        btn(v-model="theme" as="cinema") 煉瓦
+        btn(v-model="theme" as="star")   蒼穹
+        btn(v-model="theme" as="night")  闇夜
+        btn(v-model="theme" as="moon")   月夜
+        btn(v-model="theme" as="wa")   和の国
 
   writeframe(:top="top")
   .outframe.filmend-frame

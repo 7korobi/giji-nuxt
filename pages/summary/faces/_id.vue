@@ -85,21 +85,24 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-HrefQuery = require "~plugins/href-query"
+BrowserValue = require "~plugins/browser-value"
 
-{ data, watch } = HrefQuery
+q = new BrowserValue
+q.params
+  id: "c41"
+q.query
   order: "story_ids.length"
 
 _ = require "lodash"
 
 module.exports =
   default:
-    watch: watch
+    watch: q.watch
     data: ->
-      data @
+      q.data @
+
     mounted: ->
-      { id } = @$route.params
-      @$store.dispatch "aggregate/face", id
+      @$store.dispatch "aggregate/face", @id
 
     filters:
       currency: (num)->
@@ -130,9 +133,6 @@ module.exports =
             "label6"
 
     computed:
-      id: ->
-        @$route.params.id
-
       roles: ->
         @$store.state.aggregate[@id].roles
 

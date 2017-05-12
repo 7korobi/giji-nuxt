@@ -18,15 +18,16 @@
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-HrefQuery = require "~plugins/href-query"
+BrowserValue = require "~plugins/browser-value"
 
-{ data, watch } = HrefQuery
+q = new BrowserValue
+q.query
   tag_id:  "giji"
 
 module.exports =
-  watch: watch
+  watch: q.watch
   data: ->
-    data @
+    q.data @
 
   computed:
     set: ->

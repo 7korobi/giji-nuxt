@@ -3,7 +3,6 @@ Vue = require "vue"
 if window?
   Vue = Vue.default
   Vue.use require "vue-cookie"
-  Vue.use require "~plugins/vue-local-storage"
 
 Vue.use require "vee-validate"
 

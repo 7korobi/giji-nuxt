@@ -43,14 +43,11 @@
         nuxt-link.button(to="/demo/names") names
 </template>
 <script lang="coffee">
+
 module.exports =
-  localStorage:
-    aaa:
-      default: "bbb"
   data: ->
     a: 1
   mounted: ->
-    console.log @$storage.aaa = Date.now()
     @$store.dispatch "story/progress"
   computed:
     prologue: ->

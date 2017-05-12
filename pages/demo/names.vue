@@ -18,11 +18,17 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+BrowserValue = require "~plugins/browser-value"
+
+q = new BrowserValue
+q.query
+  tag_id:  "all"
 
 module.exports =
   default:
+    watch: q.watch
     data: ->
-      { tag_id: "all" }
+      q.data @
 
     computed:
       name_blanks: ->
