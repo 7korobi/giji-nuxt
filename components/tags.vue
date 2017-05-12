@@ -1,5 +1,5 @@
 <template lang="pug">
-p
+p.form
   span.tag
     tag#all
     tag#giji

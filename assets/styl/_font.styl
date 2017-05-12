@@ -1,7 +1,13 @@
 @import "./_width.styl"
 
+
 inline($base, $inline, $family)
   font-family: $family
+  //if sans-serif == $family
+  //  font-family: Avenir, "Helvetica Neue", Helvetica, "游ゴシック", "Yu Gothic", sans-serif
+  //if serif == $family
+  //  font-family: "花園明朝 A", "花園明朝 B", "HanaMin A", "HanaMin B", serif
+
   font-size:   $base
   line-height: $inline
 
@@ -26,36 +32,42 @@ font($small, $base, $family)
   body,
   .btns,
   .links,
-  .chat .name
+  .name,
+  .text,
+  dfn,
+  abbr,
+  input,
+  select,
+  button,
+  textarea,
+  time,
+  a,
+  b,
+  p
     inline($base,  $block,  $family)
-    dfn,
-    abbr,
-    input,
-    select,
-    button,
-    textarea,
-    time,
-    a,
-    b,
-    p
-      inline($base,  $block,  $family)
-
-  .chat .text
-    inline($base,  $inline, $family)
-    dfn,
-    abbr,
-    input,
-    select,
-    button,
-    textarea,
-    time,
-    a,
-    b,
-    p
-      inline($base,  $inline, $family)
 
   h6
     padding: $pad
+
+  h6,
+  kbd,
+  code,
+  .swipe table td,
+  .swipe table th,
+  .fine,
+  .date
+    inline($small, $middle, $family)
+    dfn,
+    abbr,
+    input,
+    select,
+    button,
+    textarea,
+    time,
+    a,
+    b,
+    p
+      inline($small, $middle, $family)
 
   .chrblank
     inline(12px, 15px, $family)
@@ -70,27 +82,4 @@ font($small, $base, $family)
     b,
     p
       inline(12px, 15px, $family)
-
-  h6,
-  .fine,
-  .chat .date
-    inline($small, $middle, $family)
-    dfn,
-    abbr,
-    input,
-    select,
-    button,
-    textarea,
-    time,
-    a,
-    b,
-    p
-      inline($small, $middle, $family)
-
-  code,
-  kbd,
-  .swipe table td,
-  .swipe table th
-    inline($small, $middle, $family)
-
 
