@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "~plugins/memory-record"
+{ Model, Query, Rule, Set } = require "~plugins/memory-record"
 
 new Rule("book").schema ->
   @order "write_at"
@@ -9,3 +9,17 @@ new Rule("book").schema ->
 
   @scope (all)->
     {}
+
+
+new Rule("winner").schema ->
+  @scope (all)->
+
+new Rule("option").schema ->
+  @scope (all)->
+
+new Rule("say").schema ->
+  @scope (all)->
+
+Set.option.set require '../yaml/set_option.yml'
+Set.winner.set require '../yaml/set_winner.yml'
+Set.say.set    require '../yaml/set_says.yml'

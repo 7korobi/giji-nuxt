@@ -1,18 +1,17 @@
 
-ls = window?.localStorage
-ss = window?.sessionStorage
 
 try
   test = '__vue-localstorage-test__'
+  ls = window?.localStorage
+  ss = window?.sessionStorage
+  if document?
+    Cookie = require('tiny-cookie');
   ls.setItem(test, test)
   ls.removeItem(test)
-  Cookie = require('tiny-cookie');
+  ss.setItem(test, test)
+  ss.removeItem(test)
 catch e
   console.error 'Local storage not supported by this browser'
-  Cookie =
-    get: ->
-    set: ->
-
 
 deploy = (name, cb)->
   (base)->
@@ -90,20 +89,23 @@ class BrowserValue
     for key, val of @base.query
       cache[key] = @vue.$route.query[key] ? val
 
-    for key, val of @base.session
-      stored = ss.getItem key
-      stored &&= JSON.parse stored
-      cache[key] = stored ? val
+    if ss
+      for key, val of @base.session
+        stored = ss.getItem key
+        stored &&= JSON.parse stored
+        cache[key] = stored ? val
 
-    for key, val of @base.local
-      stored = ls.getItem key
-      stored &&= JSON.parse stored
-      cache[key] = stored ? val
+    if ls
+      for key, val of @base.local
+        stored = ls.getItem key
+        stored &&= JSON.parse stored
+        cache[key] = stored ? val
 
-    for key, val of @base.cookie
-      stored = Cookie.get key
-      stored &&= JSON.parse stored
-      cache[key] = stored ? val
+    if Cookie
+      for key, val of @base.cookie
+        stored = Cookie.get key
+        stored &&= JSON.parse stored
+        cache[key] = stored ? val
 
     @vue.$nextTick =>
       for store, base of @base

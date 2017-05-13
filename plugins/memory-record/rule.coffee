@@ -177,7 +177,7 @@ module.exports = class Rule
     @model_property[key] =
       enumerable: true
       get: ->
-        Mem.Query[target].find(@[ik]) ? (else_id && Mem.Query[target].find(else_id))
+        Mem.Query[target].find(_.get @, ik) ? (else_id && Mem.Query[target].find(else_id))
 
   relation_to_many: (key, target, ik, qk)->
     all = @all

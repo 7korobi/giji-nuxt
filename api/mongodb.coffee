@@ -272,7 +272,8 @@ module.exports = (app)->
     q =
       is_epilogue: true
       is_finish:   true
-      folder:    folder
+    unless "all" == folder
+      q.folder = folder
     fields =
       comment:  0
       password: 0

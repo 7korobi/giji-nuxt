@@ -1,4 +1,110 @@
 
+nothing:
+  label: 普通の日
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+aprilfool:
+  label: 四月馬鹿
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+turnfink:
+  label: 二重スパイ
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+turnfairy:
+  label: 妖精の輪
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+eclipse:
+  label: 日蝕
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+cointoss:
+  label: Sir Cointoss
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+force:
+  label: 影響力
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+miracle:
+  label: 奇跡
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+prophecy:
+  label: 聖者のお告げ
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+clamor:
+  label: 不満
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+fire:
+  label: 熱意
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+nightmare:
+  label: 悪夢
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+ghost:
+  label: 亡霊
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+escape:
+  label: 逃亡
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+seance:
+  label: 降霊会
+  win:
+  group: EVENT
+  able_ids: []
+  help: |-
+
+
 entry:
   label: エントリー
   win:

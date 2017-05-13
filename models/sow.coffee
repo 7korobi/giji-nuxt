@@ -1,5 +1,8 @@
 { Set, Model, Query, Rule } = Mem = require "~plugins/memory-record"
 
+monthry = new Intl.DateTimeFormat 'ja-JP',
+  year:  "numeric"
+  month: "2-digit"
 
 new Rule("sow_turn").schema ->
   @order "turn", "asc"
@@ -7,14 +10,19 @@ new Rule("sow_turn").schema ->
 
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
+  @habtm "option_datas", target: "options", key: "options"
+  @belongs_to "say", target: "says", key: "type.say"
 
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
     progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
-    oldlog: (folder_id)-> all.where({ folder_id, mode: "oldlog" })
+    oldlog: (folder_id)->
+      switch folder_id
+        when "all"
+          all.where({ mode: "oldlog" })
+        else
+          all.where({ folder_id, mode: "oldlog" })
 
-  countup =
-    count: 1
   class @model extends @model
     @deploy: ->
       { interval, hour, minute } = @upd
@@ -22,6 +30,10 @@ new Rule("sow_village").schema ->
       minute = "0#{minute}" if minute < 10
       @upd.at = "#{hour}:#{minute}"
       @upd.range = "#{interval * 24}h"
+
+      @rating = "default"  if @rating in [null, 0, "0","null","view"]
+      @rating = "alert"    if @rating in ["R15","r15","r18"]
+      @rating = "violence" if @rating in ["gro"]
 
       @rating_img = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{@rating}.png"
 
@@ -37,21 +49,41 @@ new Rule("sow_village").schema ->
           @mode = "prologue"
 
     @map_reduce: (o, emit)->
-      emit "upd", "range", o.upd.range, countup
-      emit "upd", "at",    o.upd.at, countup
-      emit "sow_auth_id", o.sow_auth_id, countup
-      emit "rating", o.rating, countup
+      emit "at",
+        summary: monthry.format new Date o.timer.updateddt
+        count: 1
+      emit "folder_id",
+        summary: o.folder_id
+        count: 1
+      emit "upd_range",
+        summary: o.upd.range,
+        count: 1
+      emit "upd_at",
+        summary: o.upd.at
+        count:1
+      emit "sow_auth_id",
+        summary: o.sow_auth_id
+        count: 1
+      emit "rating_img",
+        summary: o.rating_img
+        count: 1
+      emit "size",
+        summary: o.vpl[0] + "人"
+        count: 1
+      emit "say",
+        summary: o.say.CAPTION
+        count: 1
       for card in o.card.event
         emit "event",
-          summary: card
+          summary: Query.roles.find(card).label
           count: 1
       for card in o.card.config
         emit "config",
-          summary: card
+          summary: Query.roles.find(card).label
           count: 1
       for card in o.card.discard
         emit "discard",
-          summary: card
+          summary: Query.roles.find(card).label
           count: 1
 
 
