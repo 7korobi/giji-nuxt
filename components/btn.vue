@@ -36,6 +36,6 @@ module.exports =
 </script>
 
 <template lang="pug">
-a(:class="btn", @click="tap()")
+a(:class="btn", @click="tap")
   slot
 </template>

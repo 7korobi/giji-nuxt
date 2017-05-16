@@ -16,47 +16,51 @@
           btn(:as="event_length"   v-model="order" @toggle="submenu") イベント種類
       post(handle="btns" key="subform")
         p
-          btn(v-for="o in summary('at')" )
+          btn(v-for="o in summary('yeary')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('folder_id')" )
+          btn(v-for="o in summary('monthry')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('upd_range')" )
+          btn(v-for="o in summary('folder_id')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('upd_at')" )
+          btn(v-for="o in summary('upd_range')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('sow_auth_id')" )
+          btn(v-for="o in summary('upd_at')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('rating_img')" )
+          btn(v-for="o in summary('sow_auth_id')", :key="o.id")
+            | {{ o.id }}
+            sup {{ o.length }}
+        p
+          btn(v-for="o in summary('rating_img')", :key="o.id")
             img(:src="o.id")
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('size')" )
+          btn(v-for="o in summary('size')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('say')" )
+          btn(v-for="o in summary('say')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('event')" )
+          btn(v-for="o in summary('event')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('config')" )
+          btn(v-for="o in summary('config')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
         p
-          btn(v-for="o in summary('discard')" )
+          btn(v-for="o in summary('discard')", :key="o.id")
             | {{ o.id }}
             sup {{ o.length }}
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
@@ -93,11 +97,14 @@
                .label
                  | {{ role.label }}
                  sup(v-if="role.suffix") {{ role.suffix }}
+      report(handle="btns" key="limitup")
+        scroll-mine(key="add" v-model="limit", :as="limit_next") さらに表示 {{ limit_next }}
 
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
 BrowserValue = require "~plugins/browser-value"
+el = require "~plugins/dom"
 
 q = new BrowserValue
 q.query
@@ -109,9 +116,10 @@ module.exports =
     switch key
       when "folder"
         unless @villages.length
-          @$store.dispatch "story/oldlog", @folder
+          @$store.dispatch "story/oldlog"
   data: ->
     q.data @,
+      limit: 10
       asc: "desc"
       drill: false
 
@@ -140,9 +148,19 @@ module.exports =
         { label, win, length, suffix }
 
   computed:
-    villages: ->
+    limit_next: ->
+      if @villages_all.length < @limit + 10
+        @villages_all.length
+      else
+        @limit + 10
+
+    villages_all: ->
       @$store.state.story.read_at
+      @limit = 10
       Query.sow_villages.oldlog(@folder).sort(@order, @asc).list
+
+    villages: ->
+      @villages_all[0..@limit]
 
 </script>
 <style lang="stylus" scoped>

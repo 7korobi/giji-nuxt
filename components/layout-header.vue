@@ -28,15 +28,16 @@ module.exports =
 
     computed:
       center: ->
-        @$store.commit "menu/center", @top, @height
+        @$store.commit "menu/center", { @top, @left, @height, @width }
       body_class: ->
         [@theme, @font].join("~")
 
     methods:
       poll: ->
-        if @top == scrollY
+        if @top == scrollY && @left == scrollX
           @center
         @top = scrollY
+        @left = scrollX
         @width = innerWidth
         @height = innerHeight
         requestAnimationFrame @poll

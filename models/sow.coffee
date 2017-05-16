@@ -4,6 +4,11 @@ monthry = new Intl.DateTimeFormat 'ja-JP',
   year:  "numeric"
   month: "2-digit"
 
+yeary = new Intl.DateTimeFormat 'ja-JP',
+  year:  "numeric"
+
+new Rule("sow_roletable").schema ->
+
 new Rule("sow_turn").schema ->
   @order "turn", "asc"
   @belongs_to "village", target: "sow_villages", key: "story_id"
@@ -11,7 +16,8 @@ new Rule("sow_turn").schema ->
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
   @habtm "option_datas", target: "options", key: "options"
-  @belongs_to "say", target: "says", key: "type.say"
+  @belongs_to "say", target: "says",  key: "type.say"
+  @belongs_to "mob", target: "roles", key: "type.mob"
 
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
@@ -49,7 +55,10 @@ new Rule("sow_village").schema ->
           @mode = "prologue"
 
     @map_reduce: (o, emit)->
-      emit "at",
+      emit "yeary",
+        summary: yeary.format new Date o.timer.updateddt
+        count: 1
+      emit "monthry",
         summary: monthry.format new Date o.timer.updateddt
         count: 1
       emit "folder_id",
@@ -77,15 +86,16 @@ new Rule("sow_village").schema ->
         emit "event",
           summary: Query.roles.find(card).label
           count: 1
-      for card in o.card.config
-        emit "config",
-          summary: Query.roles.find(card).label
-          count: 1
       for card in o.card.discard
         emit "discard",
           summary: Query.roles.find(card).label
           count: 1
-
+      list = Query.sow_roletables.find(o.type.roletable).role_ids_list?[o.vpl[0]] ? o.card.config
+      for card_id in list
+        if card = Query.roles.find card_id
+          emit "config",
+            summary: card.label
+            count: 1
 
 new Rule("folder").schema ->
   @scope (all)->
@@ -112,7 +122,8 @@ new Rule("folder").schema ->
       return if @disabled = ! path
       @route = { path, name: @_id }
 
-Set.folder.set  require "../yaml/sow_folder.yml"
+Set.folder.set        require "../yaml/sow_folder.yml"
+Set.sow_roletable.set require "../yaml/sow_roletables.yml"
 
 
 welcome = (h)->

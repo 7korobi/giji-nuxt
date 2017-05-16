@@ -1,5 +1,6 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+el = require "~plugins/dom"
 
 module.exports =
   functional: true
@@ -38,6 +39,7 @@ module.exports =
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     computed:
+      el_adjust: el.adjust
       anker: ->
         if @id
           @$store.state.book.read_at
@@ -52,16 +54,7 @@ module.exports =
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
 
       classname: ->
-        if process.BROWSER_BUILD &&  @$el?
-          top = @$el.offsetTop
-          btm = @$el.clientHeight + top + 6
-          center = @$store.state.menu.center
-          if btm < center
-            return [@handle, "old"]
-          if top < center < btm
-            @$store.commit "book/see", @id
-            return [@handle, "focus"]
-          if btm < center
-            return [@handle, "future"]
-        [@handle]
+        if "focus" == @el_adjust
+          @$store.commit "book/see", @id
+        [@handle, @el_adjust]
 </script>

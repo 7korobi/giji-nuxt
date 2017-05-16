@@ -14,6 +14,14 @@ module.exports =
     top:    0
     center: 0
     bottom: 0
+
+    left:   0
+    right:  0
+
+    horizon: 0
+    height:  0
+    width:   0
+
     target: null
   mutations:
     set: (state, list)->
@@ -34,7 +42,15 @@ module.exports =
       for o in state.list when o.name == "spinner"
         o.ext = ext
 
-    center: (state, top, height)->
+    center: (state, { top, left, height, width })->
+      state.height  = height
+      state.horizon = height / 2
+      state.width   = width
+
       state.top    = top
       state.center = top + height / 2
       state.bottom = top + height
+
+      state.left  = left
+      state.right = left + width
+

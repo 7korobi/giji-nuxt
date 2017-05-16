@@ -340,13 +340,20 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+BrowserValue = require "~plugins/browser-value"
+
+q = new BrowserValue
+q.query
+  chat_id: ""
+  part_id: ""
+  self_id: ""
 
 module.exports =
   default:
     layout: "book"
+    watch: q.watch ->
     data: ->
-      part_id: ""
-      self_id: ""
+      q.data @
     mounted: ->
       @$store.dispatch "book/book", "demo"
       .then =>
@@ -365,7 +372,8 @@ module.exports =
       show_write: ->
         @$store.state.menu.target == 'comment'
       chats: ->
-        @$store.state.book.read_at
-        @$store.state.book.chats
+        { read_at, chat_id, chats } = @$store.state.book
+        @chat_id = chat_id
+        chats
 
 </script>

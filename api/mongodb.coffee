@@ -267,13 +267,11 @@ module.exports = (app)->
       res.json json
       next()
 
-  app.get '/api/story/oldlog/:folder', (req, res, next)->
+  app.get '/api/story/oldlog', (req, res, next)->
     { folder } = req.params
     q =
       is_epilogue: true
       is_finish:   true
-    unless "all" == folder
-      q.folder = folder
     fields =
       comment:  0
       password: 0

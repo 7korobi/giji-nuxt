@@ -8,7 +8,6 @@ module.exports =
     read_at: Date.now()
     prologue: []
     progress: []
-    oldlog: {}
 
   mutations:
     progress: (state)->
@@ -26,7 +25,7 @@ module.exports =
       .then ({ status, data })->
         commit "join", data
         commit "progress", data
-    oldlog: ({commit}, folder)->
-      axios.get "http://utage.family.jp:4000/api/story/oldlog/#{folder}"
+    oldlog: ({commit})->
+      axios.get "http://utage.family.jp:4000/api/story/oldlog"
       .then ({ status, data })->
         commit "join", data
