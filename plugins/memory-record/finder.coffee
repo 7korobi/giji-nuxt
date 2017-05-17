@@ -44,21 +44,17 @@ module.exports = class Finder
     @set.bless query._list
 
   reduce: (query, memory, list)->
-    init = (map)=>
-      o = OBJ()
-      @map.bless o
-
+    init = (o, map)=>
       o.count = 0 if map.count
       o.all   = 0 if map.all
       if map.list
-        o.list = []
-        @set.bless o.list
+        o.list ?= @set.bless([])
       if map.summary
-        o.summary_data = OBJ()
+        o.summary_data ?= OBJ()
       if map.set
-        o.set_data = OBJ()
+        o.set_data ?= OBJ()
       if map._id
-        o.id = map._id
+        o.id ?= map._id
       o
 
     reduce = (item, o, map)=>
@@ -102,11 +98,9 @@ module.exports = class Finder
       { item, emits } = memory[id]
       if emits
         for [path, map] in emits
-          o = _.get base, path
-          unless o
-            o = init map
-            _.set base, path, o
-            o
+          o = _.get(base, path) ? @map.bless({})
+          init o, map
+          _.set base, path, o
           reduce item, o, map
     base
 

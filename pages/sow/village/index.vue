@@ -6,12 +6,14 @@
         span
           btn(as="" @input="reset()")
             i.fa.fa-eraser
+        span
           btn(as="vid"             v-model="order" @toggle="submenu")
             | 州
             sup(v-if="folder_id.length") {{ folder_id.length }}
-          btn(as="vpl.0"           v-model="order" @toggle="submenu")
-            | 人数
-            sup(v-if="size.length") {{ size.length }}
+          btn(as="rating"          v-model="order" @toggle="submenu")
+            | レーティング
+            sup(v-if="rating.length") {{ rating.length }}
+        span
           btn(as="timer.updateddt" v-model="order" @toggle="submenu")
             | 日時
             sup(v-if="yeary.length + monthry.length") {{ yeary.length + monthry.length }}
@@ -19,26 +21,36 @@
             | 更新間隔
             sup(v-if="upd_range.length") {{ upd_range.length }}
           btn(as="upd_at"          v-model="order" @toggle="submenu")
-            | 更新日時
+            | 更新時刻
             sup(v-if="upd_at.length") {{ upd_at.length }}
-          btn(as="sow_auth_id"     v-model="order" @toggle="submenu")
-            | 村建て人
-            sup(v-if="sow_auth_id.length") {{ sow_auth_id.length }}
-          btn(as="rating"          v-model="order" @toggle="submenu")
-            | レーティング
-            sup(v-if="rating.length") {{ rating.length }}
+        span
+          btn(as="vpl.0"           v-model="order" @toggle="submenu")
+            | 人数
+            sup(v-if="size.length") {{ size.length }}
           btn(as="say.CAPTION"     v-model="order" @toggle="submenu")
             | 発言ルール
             sup(v-if="say.length") {{ say.length }}
+          btn(as="game.label"     v-model="order" @toggle="submenu")
+            | ゲーム
+            sup(v-if="game.length") {{ game.length }}
+        span
+          btn(as="sow_auth_id"     v-model="order" @toggle="submenu")
+            | 村建て人
+            sup(v-if="sow_auth_id.length") {{ sow_auth_id.length }}
+
+        span
+          btn(as="card.option"      v-model="order" @toggle="submenu")
+            | 村設定
+            sup(v-if="event.length") {{ event.length }}
+          btn(as="card.event"      v-model="order" @toggle="submenu")
+            | イベント
+            sup(v-if="event.length") {{ event.length }}
           btn(as="card.discard"    v-model="order" @toggle="submenu")
             | 破棄役職
             sup(v-if="discard.length") {{ discard.length }}
           btn(as="card.config"     v-model="order" @toggle="submenu")
             | 参加役職
             sup(v-if="config.length") {{ config.length }}
-          btn(as="card.event"      v-model="order" @toggle="submenu")
-            | イベント
-            sup(v-if="event.length") {{ event.length }}
         sub(style="width: 100%")
           | {{ villages_all.list.length }}村があてはまります。
 
@@ -76,6 +88,10 @@
             | {{ o.id }}人
             sup(v-if="1 < o.length") {{ o.length }}
 
+        p(v-if="order === 'card.option'")
+          check(v-for="o in summary('option')" v-model="option", :as="o.id", :key="o.id")
+            | {{ o.label }}
+            sup(v-if="1 < o.length") {{ o.length }}
         p(v-if="order === 'card.event'")
           check(v-for="o in summary('event')" v-model="event", :as="o.id", :key="o.id")
             | {{ o.label }}
@@ -94,30 +110,38 @@
             | {{ o.CAPTION }}
             sup(v-if="1 < o.length") {{ o.length }}
 
+        p(v-if="order === 'game.label'")
+          check(v-for="o in summary('game')" v-model="game", :as="o.id", :key="o.id")
+            | {{ o.label }}
+            sup(v-if="1 < o.length") {{ o.length }}
+
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
-          kbd
-            img(:src="rating_img(o.rating)")
           a(:href="o.href") {{ o.name }}
         .cards
-          table.btns.card
+          table.btns.card(style="width: 33%")
             tbody
               tr
-                td(colspan="2") {{ o._id }}
+                td(style="text-align: right" colspan="2")
+                  | {{ o._id }}
+                  kbd(style="width: 40px")
+                    img(:src="rating_img(o.q.rating)")
               tr
                 th 更新
-                td {{ o.upd_range }}毎 {{ o.upd_at }}
+                td {{ o.q.upd_range }}毎 {{ o.q.upd_at }}
               tr
                 th 規模
-                td {{ o.vpl[0] }}人 {{ o.say.CAPTION }}
+                td {{ o.q.size }}人 {{ o.say.CAPTION }}
               tr
-                th ルール
+                th 見物人
                 td
-          .card(style="width: 26em")
+                  .label(v-if="o.mob", :class="o.mob.win") {{ o.mob.label }}
+          .card(style="width: 66%")
             p
-              a(v-for="option in o.options")
-               .label {{ option_label(option) }}
+              a(v-for="opt in o.option_datas.list")
+               .label {{ opt.label }}
+            p(v-if="o.game") {{ o.game.label }}
             p
               a(v-for="role in roles(o, 'event')", :class="role.win")
                .label
@@ -150,6 +174,8 @@ q.query
   rating: []
   size: []
   say: []
+  game: []
+  option: []
   event: []
   discard: []
   config: []
@@ -178,9 +204,6 @@ module.exports =
     rating_img: (rating)->
       "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{rating}.png"
 
-    option_label: (o)->
-      Query.options.find(o)?.label || o
-
     submenu: (as)->
       console.log(as)
       @drill = ! @drill
@@ -194,14 +217,14 @@ module.exports =
   computed:
     query_in: ->
       obj = {}
-      for key in ["event","discard","config"]
+      for key in ["option", "event","discard","config"]
         continue unless @[key].length
         obj["card." + key] = @[key]
       obj
 
     query_where: ->
       obj = {}
-      for key in ["folder_id","yeary","monthry","upd_range","upd_at","sow_auth_id","rating","size","say"]
+      for key in ["folder_id","yeary","monthry","upd_range","upd_at","sow_auth_id","rating","size","say","game"]
         continue unless @[key].length
         obj["q." + key] = @[key]
       obj
@@ -228,7 +251,7 @@ module.exports =
 .cards
   display: flex
   flex-direction:  row
-  flex-wrap:       wrap
+  flex-wrap:       nowrap
   align-content:   space-around
   align-items:     flex-start
   justify-content: flex-start

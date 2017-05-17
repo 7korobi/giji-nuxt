@@ -16,8 +16,9 @@ new Rule("sow_turn").schema ->
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
   @habtm "option_datas", target: "options", key: "options"
-  @belongs_to "say", target: "says",  key: "q.say"
-  @belongs_to "mob", target: "roles", key: "q.mob"
+  @belongs_to "say",  target: "says",  key: "q.say"
+  @belongs_to "mob",  target: "roles", key: "q.mob"
+  @belongs_to "game", target: "games", key: "q.game"
 
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
@@ -36,10 +37,12 @@ new Rule("sow_village").schema ->
       updated_at = new Date @timer.updateddt
 
       @q =
+        sow_auth_id: @sow_auth_id
         folder_id: @folder.toUpperCase()
         size: @vpl[0]
-        say: @type.say
-        mob: @type.mob
+        say:  @type.say
+        mob:  @type.mob
+        game: @type.game
         upd_at: "#{hour}:#{minute}"
         upd_range: "#{interval * 24}h"
         yeary: yeary.format updated_at
@@ -49,6 +52,11 @@ new Rule("sow_village").schema ->
       @q.rating = "default"  if @rating in [null, 0, "0","null","view"]
       @q.rating = "alert"    if @rating in ["R15","r15","r18"]
       @q.rating = "violence" if @rating in ["gro"]
+
+
+      list = Query.sow_roletables.find(@type.roletable).role_ids_list?[@q.size]
+      @card.config = list if list?.length && ! @card.config.length
+      @card.option = @options
 
       @folder = Query.folders.find @q.folder_id
       if @is_epilogue && @is_finish
@@ -71,7 +79,7 @@ new Rule("sow_village").schema ->
         summary: o.q.folder_id
         count: 1
       emit "upd_range",
-        summary: o.q.upd_range,
+        summary: o.q.upd_range
         count: 1
       emit "upd_at",
         summary: o.q.upd_at
@@ -89,10 +97,19 @@ new Rule("sow_village").schema ->
         belongs_to: "says"
         summary: o.q.say
         count: 1
+      emit "game",
+        belongs_to: "games"
+        summary: o.q.game
+        count: 1
       emit "mob",
         belongs_to: "roles"
         summary: o.q.mob
         count: 1
+      for opt_id in o.card.option
+        emit "option",
+          belongs_to: "options"
+          summary: opt_id
+          count: 1
       for card_id in o.card.event
         emit "event",
           belongs_to: "roles"
@@ -103,8 +120,7 @@ new Rule("sow_village").schema ->
           belongs_to: "roles"
           summary: card_id
           count: 1
-      list = Query.sow_roletables.find(o.type.roletable).role_ids_list?[o.vpl[0]] ? o.card.config
-      for card_id in list
+      for card_id in o.card.config
         emit "config",
           belongs_to: "roles"
           summary: card_id
@@ -137,7 +153,6 @@ new Rule("folder").schema ->
 
 Set.folder.set        require "../yaml/sow_folder.yml"
 Set.sow_roletable.set require "../yaml/sow_roletables.yml"
-
 
 welcome = (h)->
   chats  = {}
