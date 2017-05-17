@@ -207,10 +207,11 @@ module.exports =
       obj
 
     limit_next: ->
-      if @villages_all.list.length < @limit + 10
+      @$store.state.story.read_at
+      if @villages_all.list.length < @limit + 25
         @villages_all.list.length
       else
-        @limit + 10
+        @limit + 25
 
     all: ->
       @$store.state.story.read_at
