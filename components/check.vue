@@ -5,15 +5,19 @@ module.exports =
   props: ["as", "value"]
   methods:
     tap: ->
-      if _.isEqual @as, @value
-        @$emit 'toggle', @as
-      else
-        @$emit 'input',  @as
+      idx = @value.indexOf(@as)
+      newVal =
+        if idx < 0
+          [@as, @value...]
+        else
+          [@value[0...idx]...,@value[idx + 1..-1]...]
+      @$emit 'input', newVal
 
 
   computed:
     btn: ->
-      bool = _.isEqual @as, @value
+      idx = @value.indexOf(@as)
+      bool = !(idx < 0)
       if bool
         ["active"]
       else

@@ -1,6 +1,5 @@
 _ = require "lodash"
-Mem = require "./index"
-Query = require "./query"
+{ Query } = require "./index"
 
 OBJ = ->
   new Object null
@@ -63,27 +62,44 @@ module.exports = class Finder
       o
 
     reduce = (item, o, map)=>
+      if map.belongs_to
+        mdl = (id)->
+          val = { id, length: 0 }
+          val.__proto__ = Query[map.belongs_to].find id
+          val
+      else
+        mdl = (id)-> { id, length: 0 }
+
+      if map.count
+        o.count += map.count
+      if map.all
+        o.all += map.all
       if map.list
         o.list.push map.list
       if map.set
         o.set_data[map.set] = true
-      if map.summary
-        id = map.summary
-        o.summary_data[id] ?= { id, length: 0 }
-        o.summary_data[id].length += map.count
+
       unless map.max <= o.max
         o.max_is = item
         o.max = map.max
       unless o.min <= map.min
         o.min_is = item
         o.min = map.min
-      o.count += map.count if map.count
-      o.all += map.all if map.all
+
+      if map.summary
+        id = map.summary
+        val = o.summary_data[id]
+        unless val
+          return unless val = mdl id
+          val.length = 0
+          o.summary_data[id] = val
+        val.length += map.count
+
 
     # map_reduce
     base = OBJ()
     for { id } in list
-      {item, emits} = memory[id]
+      { item, emits } = memory[id]
       if emits
         for [path, map] in emits
           o = _.get base, path

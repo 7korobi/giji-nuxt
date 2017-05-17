@@ -29,7 +29,7 @@ module.exports =
           when "progress"
             Query.folders.hash[id].href
           when "finish"
-            "/sow/village?folder=#{id}"
+            "/sow/village?folder_id=#{id}"
 
     components:
       sow:

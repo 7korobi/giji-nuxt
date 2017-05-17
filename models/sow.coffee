@@ -16,35 +16,41 @@ new Rule("sow_turn").schema ->
 new Rule("sow_village").schema ->
   @has_many "turns", target: "sow_turns", key: "story_id"
   @habtm "option_datas", target: "options", key: "options"
-  @belongs_to "say", target: "says",  key: "type.say"
-  @belongs_to "mob", target: "roles", key: "type.mob"
+  @belongs_to "say", target: "says",  key: "q.say"
+  @belongs_to "mob", target: "roles", key: "q.mob"
 
   @scope (all)->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
     progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
-    oldlog: (folder_id)->
-      switch folder_id
-        when "all"
-          all.where({ mode: "oldlog" })
-        else
-          all.where({ folder_id, mode: "oldlog" })
+
+  Object.assign @model_property,
+    event_length:
+      get: ->
+        Query.sow_villages.where({@id}).reduce.event?.summary?.length ? 0
 
   class @model extends @model
     @deploy: ->
       { interval, hour, minute } = @upd
       hour   = "0#{hour}"   if hour   < 10
       minute = "0#{minute}" if minute < 10
-      @upd.at = "#{hour}:#{minute}"
-      @upd.range = "#{interval * 24}h"
+      updated_at = new Date @timer.updateddt
 
-      @rating = "default"  if @rating in [null, 0, "0","null","view"]
-      @rating = "alert"    if @rating in ["R15","r15","r18"]
-      @rating = "violence" if @rating in ["gro"]
+      @q =
+        folder_id: @folder.toUpperCase()
+        size: @vpl[0]
+        say: @type.say
+        mob: @type.mob
+        upd_at: "#{hour}:#{minute}"
+        upd_range: "#{interval * 24}h"
+        yeary: yeary.format updated_at
+        monthry: monthry.format updated_at
+        rating: @rating
 
-      @rating_img = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{@rating}.png"
+      @q.rating = "default"  if @rating in [null, 0, "0","null","view"]
+      @q.rating = "alert"    if @rating in ["R15","r15","r18"]
+      @q.rating = "violence" if @rating in ["gro"]
 
-      @folder_id = @folder.toUpperCase()
-      @folder = Query.folders.find @folder_id
+      @folder = Query.folders.find @q.folder_id
       if @is_epilogue && @is_finish
         @href = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{@_id}"
         @mode = "oldlog"
@@ -56,46 +62,53 @@ new Rule("sow_village").schema ->
 
     @map_reduce: (o, emit)->
       emit "yeary",
-        summary: yeary.format new Date o.timer.updateddt
+        summary: o.q.yeary
         count: 1
       emit "monthry",
-        summary: monthry.format new Date o.timer.updateddt
+        summary: o.q.monthry
         count: 1
       emit "folder_id",
-        summary: o.folder_id
+        summary: o.q.folder_id
         count: 1
       emit "upd_range",
-        summary: o.upd.range,
+        summary: o.q.upd_range,
         count: 1
       emit "upd_at",
-        summary: o.upd.at
+        summary: o.q.upd_at
         count:1
       emit "sow_auth_id",
-        summary: o.sow_auth_id
+        summary: o.q.sow_auth_id
         count: 1
-      emit "rating_img",
-        summary: o.rating_img
+      emit "rating",
+        summary: o.q.rating
         count: 1
       emit "size",
-        summary: o.vpl[0] + "人"
+        summary: o.q.size
         count: 1
       emit "say",
-        summary: o.say.CAPTION
+        belongs_to: "says"
+        summary: o.q.say
         count: 1
-      for card in o.card.event
+      emit "mob",
+        belongs_to: "roles"
+        summary: o.q.mob
+        count: 1
+      for card_id in o.card.event
         emit "event",
-          summary: Query.roles.find(card).label
+          belongs_to: "roles"
+          summary: card_id
           count: 1
-      for card in o.card.discard
+      for card_id in o.card.discard
         emit "discard",
-          summary: Query.roles.find(card).label
+          belongs_to: "roles"
+          summary: card_id
           count: 1
       list = Query.sow_roletables.find(o.type.roletable).role_ids_list?[o.vpl[0]] ? o.card.config
       for card_id in list
-        if card = Query.roles.find card_id
-          emit "config",
-            summary: card.label
-            count: 1
+        emit "config",
+          belongs_to: "roles"
+          summary: card_id
+          count: 1
 
 new Rule("folder").schema ->
   @scope (all)->

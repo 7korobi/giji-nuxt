@@ -24,7 +24,7 @@ query_parser = (base, req, cb)->
         cb @, null, req, (o)-> o
       else
         console.log { req }
-        throw Error 'unimplemented'
+        #throw Error 'unimplemented'
 
 
 module.exports = class Query

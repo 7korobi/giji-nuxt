@@ -1,4 +1,8 @@
 
+sow:
+  CAPTION: 人狼議事
+  disabled: true
+
 say5: &SAY5
   CAPTION: 寡黙への挑戦
   COST_SAY:  count # 回数勘定

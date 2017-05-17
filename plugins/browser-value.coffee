@@ -24,8 +24,8 @@ deploy = (name, cb)->
 location = (mode)->
   (base, url, to, emit)->
     (val)->
-      for key of base
-        url[key] = @$route[mode][key]
+      for key, base_value of base
+        url[key] = type_as base_value, @$route[mode][key]
       url[to] = val
       o = {}
       o[mode] = url
@@ -42,6 +42,17 @@ storage = (store)->
         store.removeItem to
       emit to, val
 
+type_as = (val, ret)->
+  if Array == val?.constructor
+    if Array == ret?.constructor
+      ret ? val
+    else
+      if ret
+        [ret]
+      else
+        val
+  else
+    ret ? val
 
 class BrowserValue
   constructor: ->
@@ -81,31 +92,31 @@ class BrowserValue
   data: (@vue, data)->
     cache = {}
     for key, val of @base.url
-      cache[key] = @vue.$route[key] ? val
+      cache[key] = type_as val, @vue.$route[key]
 
     for key, val of @base.params
-      cache[key] = @vue.$route.params[key] ? val
+      cache[key] = type_as val, @vue.$route.params[key]
 
     for key, val of @base.query
-      cache[key] = @vue.$route.query[key] ? val
+      cache[key] = type_as val, @vue.$route.query[key]
 
     if ss
       for key, val of @base.session
         stored = ss.getItem key
         stored &&= JSON.parse stored
-        cache[key] = stored ? val
+        cache[key] = type_as val, stored
 
     if ls
       for key, val of @base.local
         stored = ls.getItem key
         stored &&= JSON.parse stored
-        cache[key] = stored ? val
+        cache[key] = type_as val, stored
 
     if Cookie
       for key, val of @base.cookie
         stored = Cookie.get key
         stored &&= JSON.parse stored
-        cache[key] = stored ? val
+        cache[key] = type_as val, stored
 
     @vue.$nextTick =>
       for store, base of @base
