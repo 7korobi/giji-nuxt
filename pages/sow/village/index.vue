@@ -133,15 +133,12 @@
               tr
                 th 規模
                 td {{ o.q.size }}人 {{ o.say.CAPTION }}
-              tr
-                th 見物人
-                td
-                  .label(v-if="o.mob", :class="o.mob.win") {{ o.mob.label }}
           .card(style="width: 66%")
             p
+              a.label(v-if="o.mob", :class="o.mob.win") {{ o.mob.label }}
+              a.label(v-if="o.game") {{ o.game.label }}
               a(v-for="opt in o.option_datas.list")
                .label {{ opt.label }}
-            p(v-if="o.game") {{ o.game.label }}
             p
               a(v-for="role in roles(o, 'event')", :class="role.win")
                .label
@@ -149,6 +146,12 @@
                  sup(v-if="1 < role.length") {{ role.length }}
             p
               a(v-for="role in roles(o, 'config')", :class="role.win")
+               .label
+                 | {{ role.label }}
+                 sup(v-if="1 < role.length") {{ role.length }}
+            hr
+            p
+              a(v-for="role in roles(o, 'discard')", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.length") {{ role.length }}

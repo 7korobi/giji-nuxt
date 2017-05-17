@@ -1,3 +1,51 @@
+51:
+  label: ?51?
+  win:
+  group: EVIL
+  able_ids: []
+  cmd: role
+  help: |-
+
+57:
+  label: ?57?
+  win:
+  group: EVIL
+  able_ids: []
+  cmd: role
+  help: |-
+
+dyingpossess:
+  label: 衰退狂人
+  win: EVIL
+  group: EVIL
+  able_ids:
+    - aura
+    - human
+    - evil
+    - vote
+    - entrust
+  cmd: role
+  help: |-
+
+aurawolf:
+  label: 気狼
+  win: WOLF
+  group: WOLF
+  able_ids:
+    - aura
+    - wolf
+    - hunt
+    - friend
+    - spy_aura
+    - vote
+    - entrust
+    - WSAY
+  cmd: role
+  help: |-
+
+
+
+
 
 nothing:
   label: 普通の日
@@ -1057,19 +1105,6 @@ semiwolf:
   help: |-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SEMIWOLF" TARGET="_blank">半狼</A>です。
 
-dyingpossess:
-  label: ---
-  win: EVIL
-  group: EVIL
-  able_ids:
-    - aura
-    - human
-    - evil
-    - vote
-    - entrust
-  cmd: role
-  help: |-
-
 oracle:
   label: 魔神官
   win: EVIL
@@ -1153,22 +1188,6 @@ wolf:
   cmd: role
   help: |-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WOLF" TARGET="_blank">人狼</A>です。
-
-aurawolf:
-  label: ---
-  win: WOLF
-  group: WOLF
-  able_ids:
-    - aura
-    - wolf
-    - hunt
-    - friend
-    - spy_aura
-    - vote
-    - entrust
-    - WSAY
-  cmd: role
-  help: |-
 
 intwolf:
   label: 智狼
