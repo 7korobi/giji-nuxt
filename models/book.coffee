@@ -2,6 +2,7 @@
 
 new Rule("book").schema ->
   @order "write_at"
+  @path "shelf"
   @has_many "parts"
   @has_many "sections"
   @has_many "potofs"

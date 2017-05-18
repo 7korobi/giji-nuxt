@@ -1,7 +1,7 @@
 
 <template lang="pug">
 .outframe
-  .summary(v-if="show_sitemap")
+  .summary
     .inframe
       h6
         | 参照されている
@@ -12,7 +12,7 @@
         i.fa.fa-pin
       h6 一日目の参加者
     .inframe.hover
-      sow-potofs(:story_id="story_id")
+      potofs(:story_id="story_id")
 
   .contentframe
     .inframe

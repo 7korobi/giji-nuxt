@@ -2,7 +2,7 @@
 
 new Rule("card").schema ->
   @order "write_at"
-  @path "book", "part", "potof"
+  @path "shelf", "book", "part", "potof"
   @belongs_to "role"
 
   @scope (all)->
@@ -10,7 +10,7 @@ new Rule("card").schema ->
     for_phase: (phase_id)-> all.where { phase_id }
 
 new Rule("stat").schema ->
-  @path "book", "part", "potof"
+  @path "shelf", "book", "part", "potof"
   @belongs_to "able"
 
   class @model extends @model

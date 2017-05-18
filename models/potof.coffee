@@ -2,7 +2,7 @@
 
 new Rule("potof").schema ->
   @order "write_at"
-  @path "book", "part"
+  @path "shelf", "book", "part"
   @belongs_to "face"
   @has_many "cards"
   @has_many "stats"

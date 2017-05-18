@@ -2,7 +2,7 @@
 
 new Rule("section").schema ->
   @order "write_at"
-  @path "book", "part"
+  @path "shelf", "book", "part"
 
   @scope (all)->
     {}
