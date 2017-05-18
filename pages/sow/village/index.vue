@@ -42,15 +42,17 @@
           btn(as="card.option"      v-model="order" @toggle="submenu")
             | 村設定
             sup(v-if="event.length") {{ event.length }}
+          btn(as="card.config"     v-model="order" @toggle="submenu")
+            | 参加役職
+            sup(v-if="config.length") {{ config.length }}
+
+        span
           btn(as="card.event"      v-model="order" @toggle="submenu")
-            | イベント
+            | 破棄事件
             sup(v-if="event.length") {{ event.length }}
           btn(as="card.discard"    v-model="order" @toggle="submenu")
             | 破棄役職
             sup(v-if="discard.length") {{ discard.length }}
-          btn(as="card.config"     v-model="order" @toggle="submenu")
-            | 参加役職
-            sup(v-if="config.length") {{ config.length }}
         sub(style="width: 100%")
           | {{ villages_all.list.length }}村があてはまります。
 
@@ -140,16 +142,16 @@
               a(v-for="opt in o.option_datas.list")
                .label {{ opt.label }}
             p
-              a(v-for="role in roles(o, 'event')", :class="role.win")
-               .label
-                 | {{ role.label }}
-                 sup(v-if="1 < role.length") {{ role.length }}
-            p
               a(v-for="role in roles(o, 'config')", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.length") {{ role.length }}
             hr
+            p
+              a(v-for="role in roles(o, 'event')", :class="role.win")
+               .label
+                 | {{ role.label }}
+                 sup(v-if="1 < role.length") {{ role.length }}
             p
               a(v-for="role in roles(o, 'discard')", :class="role.win")
                .label
@@ -241,10 +243,10 @@ module.exports =
 
     all: ->
       @$store.state.story.read_at
-      Query.sow_villages
+      Query.sow_villages.where({ @mode })
 
     villages_all: ->
-      @all.in(@query_in).where(@query_where).where({ @mode }).sort(@order, @asc)
+      @all.in(@query_in).where(@query_where).sort(@order, @asc)
 
     villages: ->
       @villages_all.list[0..@limit]
