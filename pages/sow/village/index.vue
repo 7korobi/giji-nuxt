@@ -41,7 +41,7 @@
         span
           btn(as="card.option"      v-model="order" @toggle="submenu")
             | 村設定
-            sup(v-if="event.length") {{ event.length }}
+            sup(v-if="option.length") {{ option.length }}
           btn(as="card.config"     v-model="order" @toggle="submenu")
             | 参加役職
             sup(v-if="config.length") {{ config.length }}

@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     }
   },
   modules: {
+    sow: require("./sow.coffee"),
     menu: require("./menu.coffee"),
     book: require("./book.coffee"),
     story: require("./story.coffee"),

@@ -15,7 +15,7 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
   giji.aggregate_message = ->
     cmd = (out, keys, ext...)->
-      db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+      db.collection("message_by_story_for_face", {ObjectId}).aggregate [
         ext...
       ,
         $group:
@@ -50,7 +50,7 @@ mongo.connect "mongodb://192.168.0.249/giji"
 
   giji.aggregate_potof = ->
     cmd = (out, keys, ext...)->
-      db.collection("potofs",{ObjectId}).aggregate [
+      db.collection("potofs", {ObjectId}).aggregate [
         ext...
       ,
         $match:
@@ -268,7 +268,6 @@ module.exports = (app)->
       next()
 
   app.get '/api/story/oldlog', (req, res, next)->
-    { folder } = req.params
     q =
       is_epilogue: true
       is_finish:   true
@@ -280,6 +279,21 @@ module.exports = (app)->
       res.json
         stories: data
       next()
+
+  app.get '/api/story/oldlog/:story_id', (req, res, next)->
+    fields =
+      comment:  0
+      password: 0
+    Promise.all [
+      giji.find "stories",  { _id: story_id, is_epilogue: true, is_finish: true}, fields
+      giji.find "messages", { story_id }
+      giji.find "events",   { story_id }
+      giji.find "potofs",   { story_id }
+    ]
+    .then ([stories, messages, events, potofs])->
+      res.json { stories, messages, events, potofs }
+      next()
+
   return
 
 

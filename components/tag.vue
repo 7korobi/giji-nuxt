@@ -3,19 +3,6 @@
 _ = require "lodash"
 
 module.exports =
-  ancestor:
-    created: ->
-      tag_id = @$route.query?.tag
-      console.log tag_id
-      if tag_id && tag_id != @value
-        @$emit 'input', tag_id
-
-    computed:
-      query: ->
-        query = Object.assign {}, @$route.query,
-          tag: @value
-        @$router.replace { query }
-
   parent:
     props:
       value:

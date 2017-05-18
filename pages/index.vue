@@ -32,15 +32,8 @@
         a(:href="o.folder.href") {{ o.folder.nation }}{{ o.vid }}
         | は、開始が楽しみだ。
 
-      report(handle="footer" deco="center") 開発者ツール
-      post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/timeago") 時計 page
-      post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/books") books
-      post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/chats") chats
-      post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/names") names
+      report(handle="footer" deco="center")
+        nuxt-link(to="/demo") 開発者用ページ
 </template>
 <script lang="coffee">
 

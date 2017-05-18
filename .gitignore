@@ -5,6 +5,9 @@ prod.sh
 dev
 prod
 
+# editor
+.vscode
+
 # mac
 .DS_Store
 
