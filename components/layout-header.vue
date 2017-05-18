@@ -8,6 +8,7 @@ q.cookie
 module.exports =
   default:
     watch: q.watch (_, key, val)->
+      return unless window?
       switch key
         when "theme", "font"
           @use[key]?.unuse()

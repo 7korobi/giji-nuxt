@@ -3,10 +3,10 @@
 
 inline($base, $inline, $family)
   font-family: $family
-  //if sans-serif == $family
-  //  font-family: Avenir, "Helvetica Neue", Helvetica, "游ゴシック", "Yu Gothic", sans-serif
-  //if serif == $family
-  //  font-family: "花園明朝 A", "花園明朝 B", "HanaMin A", "HanaMin B", serif
+  if sans-serif == $family
+    font-family: Avenir, "Helvetica Neue", Helvetica, "游ゴシック", "Yu Gothic", sans-serif
+  if serif == $family
+    font-family: "花園明朝A", "花園明朝B", "HanaMinA", "HanaMinB", serif
 
   font-size:   $base
   line-height: $inline

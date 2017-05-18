@@ -2,14 +2,16 @@
 
 try
   test = '__vue-localstorage-test__'
-  ls = window?.localStorage
-  ss = window?.sessionStorage
-  if document?
-    Cookie = require('tiny-cookie');
+  ls = window.localStorage
+  ss = window.sessionStorage
+  Cookie = require('tiny-cookie');
   ls.setItem(test, test)
   ls.removeItem(test)
   ss.setItem(test, test)
   ss.removeItem(test)
+  Cookie.set test, test,
+    expires: '1s'
+  Cookie.get test
 catch e
   console.error 'Local storage not supported by this browser'
 
@@ -54,10 +56,25 @@ type_as = (val, ret)->
   else
     ret ? val
 
+get_by_json = (storage, val, cb)->
+        if storage
+          stored = cb()
+          stored &&= JSON.parse stored
+          type_as val, stored
+        else
+          val
+
 class BrowserValue
   constructor: ->
     @_watch = {}
     @base = {}
+    @_get =
+      url:     (key, val)=> type_as val, @vue.$route[key]
+      params:  (key, val)=> type_as val, @vue.$route.params[key]
+      query:   (key, val)=> type_as val, @vue.$route.query[key]
+      session: (key, val)-> get_by_json ss,     val, -> ss.getItem key
+      local:   (key, val)-> get_by_json ls,     val, -> ls.getItem key
+      cookie:  (key, val)-> get_by_json Cookie, val, -> Cookie.get key
 
   watch: (@_event)->
     @_watch
@@ -91,32 +108,9 @@ class BrowserValue
 
   data: (@vue, data)->
     cache = {}
-    for key, val of @base.url
-      cache[key] = type_as val, @vue.$route[key]
-
-    for key, val of @base.params
-      cache[key] = type_as val, @vue.$route.params[key]
-
-    for key, val of @base.query
-      cache[key] = type_as val, @vue.$route.query[key]
-
-    if ss
-      for key, val of @base.session
-        stored = ss.getItem key
-        stored &&= JSON.parse stored
-        cache[key] = type_as val, stored
-
-    if ls
-      for key, val of @base.local
-        stored = ls.getItem key
-        stored &&= JSON.parse stored
-        cache[key] = type_as val, stored
-
-    if Cookie
-      for key, val of @base.cookie
-        stored = Cookie.get key
-        stored &&= JSON.parse stored
-        cache[key] = type_as val, stored
+    for type, base of @base
+      for key, val of base
+        cache[key] = @_get[type] key, val
 
     @vue.$nextTick =>
       for store, base of @base
