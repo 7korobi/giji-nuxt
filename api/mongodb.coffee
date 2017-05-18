@@ -281,6 +281,7 @@ module.exports = (app)->
       next()
 
   app.get '/api/story/oldlog/:story_id', (req, res, next)->
+    { story_id } = req.params
     fields =
       comment:  0
       password: 0
