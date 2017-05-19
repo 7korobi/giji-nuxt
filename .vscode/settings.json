@@ -1,0 +1,10 @@
+// 既定の設定とユーザー設定を上書きするには、このファイル内に設定を挿入します
+{
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\Sysnative\\bash.exe",
+  "workbench.colorTheme": "Default High Contrast",
+  "editor.fontFamily": "'Mgen+ 1mn regular'",
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.mouseWheelScrollSensitivity": 2,
+  "editor.renderWhitespace": "all",
+}
