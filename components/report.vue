@@ -8,9 +8,13 @@ module.exports = require("~components/chat.vue").component_class()
   border-style: double dotted
   border-width: 4px 1px
   margin: 0 -10px 6px -10px
-  padding: 1px 18px 1px 12px
+  padding: 1px 8px 1px 10px
   .name
     margin-left: 127px
+    margin-right: 13px
+  .date
+    margin-right: 13px
+    
 
 .contentframe
   .report
@@ -41,5 +45,5 @@ module.exports = require("~components/chat.vue").component_class()
   .text(:class="deco" v-if="$slots.default")
     slot
   .text(:class="deco" v-html="log_html" v-else)
-  chat-foot(:anker="anker", :write_at="write_at")
+  chat-foot(:chat_id="id", :anker="anker", :write_at="write_at")
 </template>
