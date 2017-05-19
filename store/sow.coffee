@@ -86,35 +86,38 @@ module.exports =
 
       data.messages.map (o)->
         { face_id, log } = o
+        return if "*CAST*" == log
         handle = o.mestype
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
           potof_id = Query.potofs.where(face_id: face_id, book_id: o.story_id).list.first?.id
 
+        switch o.subid
+          when "S"
+            show = "talk"
+          when "M"
+            show = "report"
+          when "I"
+            potof_id = undefined
+            show = "report"
+          when "A"
+            potof_id = undefined
+            show = "post"
+            log = o.name + "は、" + log
 
         switch handle
           when "DELETED"
             return
+          when "MAKER", "ADMIN"
+            show = "report"
           when "INFONOM"
             handle = "TITLE"
           when "INFOSP"
             handle = "header"
+          when "VSAY"
+            handle = "VSSAY"
           when "SAY"
             handle = "SSAY"
-
-        show =
-          switch o.subid
-            when "S"
-              "talk"
-            when "A"
-              potof_id = undefined
-              log = o.name + "は、" + log
-              "post"
-            when "M"
-              "report"
-            when "I"
-              potof_id = undefined
-              "report"
 
         write_at = o.date
         write_clock = format.date.format(new Date write_at)

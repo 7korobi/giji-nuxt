@@ -248,6 +248,14 @@ module.exports = class Rule
       for key, idx in keys
         @["#{key}_id"] = subids[0..idx].join '-'
 
+    { all } = @
+    pk = keys[-1..][0] + "_id"
+    @model_property.siblings =
+      get: ->
+        q = {}
+        q[pk] = @[pk]
+        all.where q
+
   belongs_to: (to, option = {})->
     name = rename to
     { key = name.id, target = name.list, miss } = option

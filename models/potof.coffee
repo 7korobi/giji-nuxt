@@ -38,7 +38,7 @@ new Rule("potof").schema ->
         role_id_set[card.role_id] = true
         switch card.idx
           when "request"
-            role_id_set[card.role_id] = false
+            delete role_id_set[card.role_id]
 
         for { _id } in card.role.ables.list
           able_id_set[_id] = true
