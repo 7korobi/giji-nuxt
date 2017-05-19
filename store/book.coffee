@@ -5,19 +5,14 @@ module.exports =
   namespaced: true
   state:
     read_at: Date.now()
-    section: {}
-    part: {}
-    book: {}
 
-    books:    []
-    parts:    []
-    sections: []
-
-    phases:   []
-    potofs:   []
-    cards:    []
-    stats:    []
-    chats:    []
+    folder_id: ""
+    book_id: ""
+    part_id: ""
+    section_id: ""
+    phase_id: ""
+    
+    chat_id: ""
 
   mutations:
     data: (state, o)->
@@ -34,55 +29,43 @@ module.exports =
       Set.chat.merge    o.chats
       state.read_at = Date.now()
 
-    books: (state, folder)->
-      state.books = Query.books.where {folder}
+    folder: (state, folder_id)->
+      state.folder_id = folder_id
 
     book: (state, book_id)->
-      phase_id = "#{book_id}-0-0"
+      state.phase_id = "#{book_id}-0-0"
       state.book_id = book_id
-      state.book = Query.books.find book_id
-
-      state.books    = Query.books.list
-      state.parts    = state.book.parts.list
-      state.sections = state.book.sections.list
-      state.potofs   = state.book.potofs.list
-      state.chats    = state.book.chats.list
 
     part: (state, part_id)->
+      part = Query.parts.find(part_id)
+      book = Query.books.find(part.book.id)
       state.part_id = part_id
-      state.part = Query.parts.find part_id
-      state.book = state.part.book
-
-      state.phases = state.part.phases.list
-      state.cards  = state.part.cards.list
-      state.stats  = state.part.stats.list
-
-      state.potofs = state.part.potofs
-      state.section =
-        if part_id == state.book.parts.list.last._id
-          state.book.sections.list.last
+      state.book_id = part.book.id
+      state.section_id = section_id =
+        if part_id == book.parts.list.last.id
+          book.sections.list.last.id
         else
-          state.book.sections.list.first
-      section_id = state.section_id = state.section._id
-      state.chats  = Query.chats.where({section_id}).list
+          book.sections.list.first.id
 
-    section: (state, section_id, data)->
+    section: (state, section_id)->
+      section = Query.sections.find section_id
       state.section_id = section_id
-      state.section = Query.sections.find section_id
-
-      state.chats = Query.chats.where({section_id}).list
 
     see: (state, chat_id)->
       return unless chat_id
       state.chat_id = chat_id
+      return unless chat = Query.chats.find(chat_id)
+      state.folder_id = chat.folder_id
+      state.book_id = chat.book_id
+      state.part_id = chat.part_id
+      state.phase_id = chat.phase_id
 
   actions:
     books: ({commit}, folder)->
       axios.get "/api/books", { folder }
       .then ({ status, data })->
-        console.log "HTTP :: /api/books {folder: #{folder}}"
         commit "data",  data
-        commit "books", folder
+        commit "folder", folder
 
     book: ({commit}, id)->
       axios.get "/api/books/#{id}"

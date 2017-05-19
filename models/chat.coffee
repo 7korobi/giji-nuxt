@@ -2,7 +2,7 @@
 
 new Rule("chat").schema ->
   @order "write_at"
-  @path "shelf", "book", "part", "phase"
+  @path "folder", "book", "part", "phase"
   @belongs_to "section"
   @belongs_to "potof"
 

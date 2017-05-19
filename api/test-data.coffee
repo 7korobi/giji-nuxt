@@ -1,10 +1,10 @@
 folder =
   books: [
-    { _id: "demo-0", label: "デモブック", winner: "WOLF", potof_size: 10 }
+    { _id: "demo-0", label: "デモブック", winner_id: "WOLF", potof_size: 10 }
   ]
 
 book =
-  books: [{ _id: "demo-0", label: "デモページ", winner: "WOLF", potof_size: 10 }]
+  books: [{ _id: "demo-0", label: "デモページ", winner_id: "WOLF", potof_size: 10 }]
   parts: [
     { _id: "demo-0-0", label: "プロローグ" }
     { _id: "demo-0-1", label: "一日目" }
@@ -153,16 +153,16 @@ part =
     { _id: "demo-0-0-10-love", cmd: "bond", target: "demo-0-0-10" }
   ]
   potofs: [
-    { _id: "demo-0-0-10", face_id: "c30", side: "HATER", job: "R-", sign: "七転び" }
-    { _id: "demo-0-0-9",  face_id: "c40", side: "GURU",  job: "R-", sign: "七転び" }
-    { _id: "demo-0-0-8",  face_id: "c50", side: "LOVER", job: "R-", sign: "ななころ" }
-    { _id: "demo-0-0-7",  face_id: "c87", side: "HUMAN", job: "病人", sign: "七転び" }
-    { _id: "demo-0-0-6",  face_id: "t05", side: "HUMAN", job: "開放的市民", sign: "noko" }
-    { _id: "demo-0-0-5",  face_id: "c29", side: "HUMAN", job: "記者", sign: "うに" }
-    { _id: "demo-0-0-4",  face_id: "c90", side: "WOLF",  job: "粉ひき", sign: "魚屋" }
-    { _id: "demo-0-0-3",  face_id: "c70", side: "EVIL",  job: "腐女子", sign: "namba" }
-    { _id: "demo-0-0-2",  face_id: "c80", side: "HUMAN", job: "少年", sign: "ななころ" }
-    { _id: "demo-0-0-1",  face_id: "c60", side: "NONE",  job: "両家の末娘", sign: "ななころ" }
+    { _id: "demo-0-0-10", face_id: "c30", winner_id: "HATER", job: "R-", sign: "七転び" }
+    { _id: "demo-0-0-9",  face_id: "c40", winner_id: "GURU",  job: "R-", sign: "七転び" }
+    { _id: "demo-0-0-8",  face_id: "c50", winner_id: "LOVER", job: "R-", sign: "ななころ" }
+    { _id: "demo-0-0-7",  face_id: "c87", winner_id: "HUMAN", job: "病人", sign: "七転び" }
+    { _id: "demo-0-0-6",  face_id: "t05", winner_id: "HUMAN", job: "開放的市民", sign: "noko" }
+    { _id: "demo-0-0-5",  face_id: "c29", winner_id: "HUMAN", job: "記者", sign: "うに" }
+    { _id: "demo-0-0-4",  face_id: "c90", winner_id: "WOLF",  job: "粉ひき", sign: "魚屋" }
+    { _id: "demo-0-0-3",  face_id: "c70", winner_id: "EVIL",  job: "腐女子", sign: "namba" }
+    { _id: "demo-0-0-2",  face_id: "c80", winner_id: "HUMAN", job: "少年", sign: "ななころ" }
+    { _id: "demo-0-0-1",  face_id: "c60", winner_id: "NONE",  job: "両家の末娘", sign: "ななころ" }
   ]
 section =
   chats:

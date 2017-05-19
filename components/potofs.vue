@@ -1,5 +1,5 @@
 <template lang="pug">
-div(v-if="part_id")
+div
   .swipe
     table
       tfoot
@@ -23,7 +23,7 @@ div(v-if="part_id")
           th
             btn(v-model="sort" as="win", @toggle="reverse") 勝敗
           th
-            btn(v-model="sort" as="side", @toggle="reverse") 陣営
+            btn(v-model="sort" as="winner_id", @toggle="reverse") 陣営
           th
             btn(v-model="sort" as="role_labels", @toggle="reverse") 役割
           th
@@ -42,11 +42,11 @@ div(v-if="part_id")
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
           td.c(:class="o.live.role_id")
-            kbd {{ o.request.role.label }}
-          td.c(:class="o.side") {{ o.win }}
-          td.c(:class="o.side") {{ o.side }}
-          td.c(:class="o.side") {{ o.role_labels.join("、") }}
-          td.l(:class="o.side") {{ o.text }}
+            kbd(v-if="o.request") {{ o.request.role.label }}
+          td.c(:class="o.winner_id") {{ o.win }}
+          td.c(:class="o.winner_id") {{ o.winner.label }}
+          td.c(:class="o.winner_id") {{ o.role_labels.join("、") }}
+          td.l(:class="o.winner_id") {{ o.text }}
           td.last
   transition-group.swipe.list(name="list" tag="div")
     table.btns(key="btns")
@@ -71,7 +71,6 @@ div(v-if="part_id")
 { Query } = require "~plugins/memory-record"
 
 module.exports =
-  props: ["part_id"]
   data: ->
     sort: "live"
     order: "asc"
@@ -85,6 +84,7 @@ module.exports =
       for id in @hide_ids
         Query.potofs.hash[id].hide = true
       @$store.commit "book/data", {}
+
   computed:
     full_on:  ->  @potof_ids -> false
     full_off: ->  @potof_ids -> true
@@ -92,13 +92,16 @@ module.exports =
     live_off: ->  @potof_ids (o)-> o.commit
 
     potofs: ->
-      @$store.state.book.read_at
-      Query.potofs.where({@part_id}).sort(@sort, @order).list
+      { read_at, book_id, part_id } = @$store.state.book
+      if book_id
+        Query.potofs.where({book_id}).sort(@sort, @order).list
+      else
+        []
 
     bgc: ->
       switch @sort
-        when "text", "role_labels", "side", "win"
-          (o)-> o.side
+        when "text", "role_labels", "winner_id", "win"
+          (o)-> o.winner_id
         else
           (o)-> o.live.role_id
 
@@ -120,6 +123,7 @@ module.exports =
           @order = "desc"
         when "desc"
           @order = "asc"
+
     count: (unit, n)->
       switch n
         when 0, Infinity

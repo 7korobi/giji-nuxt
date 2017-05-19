@@ -12,7 +12,7 @@
         i.fa.fa-pin
       h6 一日目の参加者
     .inframe.hover
-      potofs(:story_id="story_id")
+      potofs()
 
   .contentframe
     .inframe
@@ -31,7 +31,10 @@ BrowserValue = require "~plugins/browser-value"
 
 q = new BrowserValue
 q.params
-  story_id: ""
+  book_id: ""
+q.query
+  chat_id: ""
+  part_id: ""
 
 module.exports =
   default:
@@ -40,14 +43,18 @@ module.exports =
       q.data @
 
     mounted: ->
-      @$store.dispatch "sow/story", @story_id
+      @$store.dispatch "sow/story", @book_id
+      .then =>
+        { id } = Query.parts.where({ @book_id }).list.last
+        @part_id = id
 
     computed:
       chats: ->
+        { @chat_id } = @$store.state.book
         { read_at } = @$store.state.sow
-        Query.sow_villages.where({ @story_id }).list
-        Query.sow_turns.where({ @story_id }).list
-        Query.potofs.where({ @story_id }).list
-        Query.chats.where({ @story_id }).list
+        Query.sow_villages.where({ @book_id }).list
+        Query.sow_turns.where({ @book_id }).list
+        Query.potofs.where({ @book_id }).list
+        Query.chats.where({ @book_id }).list
 
 </script>

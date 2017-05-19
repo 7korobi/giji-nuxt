@@ -2,16 +2,26 @@
 
 new Rule("card").schema ->
   @order "write_at"
-  @path "shelf", "book", "part", "potof"
+  @path "folder", "book", "part", "potof"
   @belongs_to "role"
+
+  Object.assign @model_property,
+    stat:
+      get: ->
+        Query.stats.find("#{@potof_id}-#{@idx}")
 
   @scope (all)->
     for_part:  (part_id)->  all.where {  part_id }
     for_phase: (phase_id)-> all.where { phase_id }
 
 new Rule("stat").schema ->
-  @path "shelf", "book", "part", "potof"
+  @path "folder", "book", "part", "potof"
   @belongs_to "able"
+
+  Object.assign @model_property,
+    card:
+      get: ->
+        Query.stats.find("#{@potof_id}-#{@idx}")
 
   class @model extends @model
     @deploy: ->

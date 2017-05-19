@@ -12,7 +12,7 @@
         i.fa.fa-pin
       h6 一日目の参加者
     .inframe.hover
-      potofs(:part_id="part_id")
+      potofs
 
   .contentframe
     .inframe
@@ -355,13 +355,13 @@ module.exports =
     data: ->
       q.data @
     mounted: ->
-      @$store.dispatch "book/book", "demo"
+      @$store.dispatch "book/book", "demo-0"
       .then =>
-        @$store.dispatch "book/part", "demo-0"
+        @$store.dispatch "book/part", "demo-0-0"
       .then =>
-        @$store.dispatch "book/section", "demo-0-1"
+        @$store.dispatch "book/section", "demo-0-0-1"
       .then =>
-        @self_id = "demo-0-8"
+        @self_id = "demo-0-0-8"
         @part_id = @$store.state.book.part_id
 
     computed:
@@ -372,8 +372,11 @@ module.exports =
       show_write: ->
         @$store.state.menu.target == 'comment'
       chats: ->
-        { read_at, chat_id, chats } = @$store.state.book
-        @chat_id = chat_id
-        chats
+        { read_at, @chat_id, book_id } = @$store.state.book
+        book = Query.books.find(book_id)
+        if book
+          book.chats.list
+        else
+          []
 
 </script>

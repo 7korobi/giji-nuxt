@@ -2,84 +2,138 @@
 axios = require "axios"
 _ = require "lodash"
 
+format =
+  date: new Intl.DateTimeFormat 'ja-JP',
+    year:  "numeric"
+    month: "2-digit"
+    day:   "2-digit"
+    weekday: "short"
+    hour:    "2-digit"
+
 module.exports =
   namespaced: true
   state:
     read_at: Date.now()
 
   mutations:
-    join: (state, data, book_id)->
-      for o in data.potofs
+    join: (state, data)->
+      book_id = data.stories[0]._id
+      for o, idx in data.potofs
+        potof_id = "#{o.event_id}-#{idx}"
         Set.stat.add
           _id: "#{o.event_id}"
 
-        Set.card.merge [
-          _id: "#{o.event_id}-request"
-          role_id: o.select
-        ,
-          _id: "#{o.event_id}-live"
-          role_id: o.live
-          date: o.deathday || Infinity
-        ,
-          _id: "#{o.event_id}-role"
-          role_id: o.role[0]
-        ]
-        if o.role[1]
+        if Query.roles.find o.live
+          date = o.deathday
+          date = undefined unless 0 < o.deathday
           Set.card.add
-            _id: "#{o.event_id}-gift"
+            _id: "#{potof_id}-live"
+            role_id: o.live
+            date: date
+
+        if Query.roles.find o.select
+          Set.card.add
+            _id: "#{potof_id}-request"
+            role_id: o.select
+
+        if Query.roles.find o.role[0]
+          Set.card.add
+            _id: "#{potof_id}-role"
+            role_id: o.role[0]
+
+        if Query.roles.find o.role[1]
+          Set.card.add
+            _id: "#{potof_id}-gift"
             role_id: o.role[1]
-        
+
+        ssay_pt = o.say.say
+        ssay_pt = undefined if 10000 < ssay_pt
+        gsay_pt = undefined if 10000 < gsay_pt
         Set.stat.merge [
-          _id: "#{o.event_id}-give"
+          _id: "#{potof_id}-give"
           give: o.point.actaddpt
         ,
-          _id: "#{o.event_id}-SSAY"
-          pt: o.say.say
+          _id: "#{potof_id}-SSAY"
+          pt: ssay_pt
+          said: 0
         ,
-          _id: "#{o.event_id}-GSAY"
-          pt: o.say.gsay
+          _id: "#{potof_id}-GSAY"
+          pt: gsay_pt
+          said: 0
         ]
+        if o.live == "live"
+          Set.stat.add
+            _id: "#{potof_id}-commit"
+            sw: true
+
         if o.zapcount
           job = ["IR","R","O","Y","G","B","I","V","UV"][o.clearance] + "-"
         else
           job = Query.chr_jobs.find("#{o.csid}_#{o.face_id}").job
 
         Set.potof.add
-          _id:     o.event_id
+          _id:       potof_id
           job:            job
           pno:          o.pno
           face_id:  o.face_id
-          side:         "NONE"
           sign: o.sow_auth_id
 
       phases =
         "#{book_id}-0":
           handle: "TITLE"
           update: false
+      sections = {}
 
-      Set.chat.merge data.messages.map (o)->
-        _id = "#{o.event_id}-#{o.mestype}-#{o.logid[2..-1]}"
-        phase_id = "#{o.event_id}-#{o.mestype}"
-        phases[phase_id] ?=
-          handle: o.mestype
-          update: false
+      data.messages.map (o)->
+        { face_id, log } = o
+        handle = o.mestype
+        idx = Number o.logid[2..-1]
+        if o.story_id && face_id
+          potof_id = Query.potofs.where(face_id: face_id, book_id: o.story_id).list.first?.id
 
-        potof_id = Query.where(face_id: o.face_id, part_id: o.event_id).list.first?.id
-        deco = o.style
-        log = o.log
+
+        switch handle
+          when "DELETED"
+            return
+          when "INFONOM"
+            handle = "TITLE"
+          when "INFOSP"
+            handle = "header"
+          when "SAY"
+            handle = "SSAY"
+
         show =
           switch o.subid
             when "S"
               "talk"
             when "A"
+              potof_id = undefined
               log = o.name + "は、" + log
               "post"
+            when "M"
+              "report"
             when "I"
-              "post"
-        { _id, potof_id, show, deco, log }
-      Set.phase.merge phases
+              potof_id = undefined
+              "report"
 
-      Set.event.merge data.events.map (o)->
+        write_at = o.date
+        write_clock = format.date.format(new Date write_at)
+        _id = "#{o.event_id}-#{handle}-#{idx}"
+        phase_id = "#{o.event_id}-#{handle}"
+        section_id = "#{o.event_id}-#{write_clock}"
+        deco = o.style
+
+        sections[section_id] ?=
+          _id: section_id
+          label: write_clock
+        phases[phase_id] ?=
+          handle: handle
+          update: false
+        Set.chat.add { _id, potof_id, phase_id, section_id, write_at, show, deco, log }
+      Set.phase.merge phases
+      Set.section.merge sections
+
+      Set.part.merge data.events.map (o)->
         _id: o._id
         label: o.name ? "#{o.turn}日目"
 
@@ -87,13 +141,12 @@ module.exports =
       Set.book.add
         _id: o._id
         label: o.name
-        winner: data.events[-1..][0].winner
+        winner_id: data.events[-1..][0].winner[4..]
         potof_size: Query.potofs.where({book_id}).list.length
-
       state.read_at = Date.now()
 
   actions:
     story: ({commit}, story_id)->
       axios.get "http://utage.family.jp:4000/api/story/oldlog/#{story_id}"
       .then ({ status, data })->
-        commit "join", data, story_id
+        commit "join", data

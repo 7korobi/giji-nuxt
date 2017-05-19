@@ -2,11 +2,12 @@
 
 new Rule("book").schema ->
   @order "write_at"
-  @path "shelf"
+  @path "folder"
   @has_many "parts"
   @has_many "sections"
   @has_many "potofs"
   @has_many "chats"
+  @belongs_to "winner"
 
   @scope (all)->
     {}
