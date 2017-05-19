@@ -68,7 +68,7 @@ module.exports =
               head = ""
             else
               head = "#{part_idx}:"
-            """<b>&gt;&gt;#{head}#{phase.mark}#{chat_idx}</b>"""
+            """<abbr>&gt;&gt;#{head}#{phase.mark}#{chat_idx}</abbr>"""
         log
         .replace ///[a-z]+\:\/\/([^ ]*)+///g, (url)->
           """<a href="#{url}" target="blank">URL</a>"""
