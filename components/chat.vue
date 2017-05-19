@@ -38,15 +38,8 @@ module.exports =
   component_class: ->
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
-    methods:
-      phase: (args...)->
-        Query.phases.hash[args.join "-"]
-      chat: (args...)->
-        Query.chats.hash[args.join "-"]
-
     computed:
       el_adjust: el.adjust
-
       anker: ->
         @$store.state.book.read_at
         chat = Query.chats.hash[@id]
@@ -65,20 +58,17 @@ module.exports =
         log = @log
         if chat
           log = log
-          .replace ///<mw\ +(..)(\d+),(\d+),(\d+)>///g, (str, $1, _, part_idx, idx)=>
+          .replace ///<mw\ +(..)(\d+),(\d+),(\d+)>///g, (str, $1, _, part_idx, chat_idx)->
             phase_idx = $1.toUpperCase() + "AY"
             phase_idx = "VSSAY" if phase_idx == "VSAY"
             phase_idx = "SSAY"  if phase_idx == "SAY"
-            target = @chat chat.book.id, part_idx, phase_idx, idx
-            phase = @phase chat.book.id, part_idx, phase_idx
-            if target && phase
-              if chat.part.idx != part_idx
-                head = "#{part_idx}:"
-              else
-                head = ""
-              """<abbr chat_id="#{target.id}">&gt;&gt;#{head}#{phase.mark}#{idx}</abbr>"""
+            phase_id = "#{chat.book.id}-#{part_idx}-#{phase_idx}"
+            phase = Query.phases.hash[phase_id]
+            if chat.part.idx == part_idx
+              head = ""
             else
-              """<abbr>&gt;&gt;#{part_idx}:#{phase.mark}#{idx}</abbr>"""
+              head = "#{part_idx}:"
+            """<abbr>&gt;&gt;#{head}#{phase.mark}#{chat_idx}</abbr>"""
         log
         .replace ///[a-z]+\:\/\/([^ ]*)+///g, (url)->
           """<a href="#{url}" target="blank">URL</a>"""
