@@ -38,15 +38,15 @@ div
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
           td.r(:class="o.live.role_id") {{ count("回", o.say.said) }}
           td.r(:class="o.live.role_id") {{ count("回", o.say.pt) || "∞" }}
-          td.r(:class="o.live.role_id") {{ count("回", o.give.give) }}
+          td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) }}
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
           td.c(:class="o.live.role_id")
             kbd(v-if="o.request") {{ o.request.role.label }}
-          td.c(:class="o.winner_id || 'NONE'") {{ o.win }}
-          td.c(:class="o.winner_id || 'NONE'") {{ o.winner && o.winner.label }}
-          td.c(:class="o.winner_id || 'NONE'") {{ o.role_labels.join("、") }}
-          td.l(:class="o.winner_id || 'NONE'") {{ o.text }}
+          td.c(:class="o.winner_id") {{ o.win }}
+          td.c(:class="o.winner_id") {{ o.winner && o.winner.label }}
+          td.c(:class="o.winner_id") {{ o.role_labels.join("、") }}
+          td.l(:class="o.winner_id") {{ o.text }}
           td.last
   transition-group.swipe.list(name="list" tag="div")
     table.btns(key="btns")
@@ -126,7 +126,7 @@ module.exports =
 
     count: (unit, n)->
       switch n
-        when 0, Infinity
+        when 0, undefined, null, Infinity
           ""
         else
           "#{n}#{unit}"

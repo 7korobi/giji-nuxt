@@ -3,10 +3,7 @@ axios = require "axios"
 _ = require "lodash"
 
 format =
-  date: new Intl.DateTimeFormat 'ja-JP',
-    year:  "numeric"
-    month: "2-digit"
-    day:   "2-digit"
+  hour: new Intl.DateTimeFormat 'ja-JP',
     weekday: "short"
     hour:    "2-digit"
 
@@ -86,11 +83,32 @@ module.exports =
 
       data.messages.map (o)->
         { face_id, log } = o
+        face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
         handle = o.mestype
+        phase_idx = o.logid[0..1]
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
-          potof_id = Query.potofs.where(face_id: face_id, book_id: o.story_id).list.first?.id
+          potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
+          unless potof_id
+            Set.card.add
+              _id: [o.event_id, o.face_id, "live"].join("-")
+              role_id: "leave"
+              date: 0
+            Set.stat.add
+              _id: [o.event_id, o.face_id, "SSAY"].join("-")
+              said: 0
+            Set.potof.add
+              _id: [o.event_id, o.face_id].join("-")
+              face_id:  o.face_id
+              job: Query.chr_jobs.find([o.csid, o.face_id].join("_"))?.job
+              sign: o.sow_auth_id
+              pno:  ""
+            
+
+        switch phase_idx
+          when "-S"
+            phase_idx = "wS"
 
         switch o.subid
           when "S"
@@ -119,16 +137,16 @@ module.exports =
           when "SAY"
             handle = "SSAY"
 
-        write_at = o.date
-        write_clock = format.date.format(new Date write_at)
-        _id = "#{o.event_id}-#{handle}-#{idx}"
-        phase_id = "#{o.event_id}-#{handle}"
+        write_at = new Date(o.date)
+        write_clock = Math.floor(write_at / (60 * 60 * 1000)).toString(36)
+        _id = "#{o.event_id}-#{phase_idx}-#{idx}"
+        phase_id = "#{o.event_id}-#{phase_idx}"
         section_id = "#{o.event_id}-#{write_clock}"
         deco = o.style
 
         sections[section_id] ?=
           _id: section_id
-          label: write_clock
+          label: format.hour.format write_at
         phases[phase_id] ?=
           handle: handle
           update: false

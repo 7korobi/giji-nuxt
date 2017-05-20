@@ -33,12 +33,21 @@ module.exports =
       Object.assign attrs,
         handle: o.handle
 
-    m attrs.show, { attrs }
+    m attrs.show, { attrs, key: id }
 
   component_class: ->
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     methods:
+      click: ({ target })->
+        { chat_id, href } = target.attributes
+        if chat_id
+          chat = Query.chats.find chat_id.value
+          console.log chat
+        if href
+          url = href.value
+          console.log url
+
       phase: (args...)->
         Query.phases.hash[args.join "-"]
       chat: (args...)->
@@ -51,6 +60,7 @@ module.exports =
         @$store.state.book.read_at
         chat = Query.chats.hash[@id]
         if chat
+          console.log chat unless chat.phase
           { mark } = chat.phase
           if mark?
             "#{mark}#{chat.idx}"
@@ -65,23 +75,24 @@ module.exports =
         log = @log
         if chat
           log = log
-          .replace ///<mw\ +(..)(\d+),(\d+),(\d+)>///g, (str, $1, _, part_idx, idx)=>
-            phase_idx = $1.toUpperCase() + "AY"
-            phase_idx = "VSSAY" if phase_idx == "VSAY"
-            phase_idx = "SSAY"  if phase_idx == "SAY"
+          .replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)=>
+            idx = Number($1)
             target = @chat chat.book.id, part_idx, phase_idx, idx
-            phase = @phase chat.book.id, part_idx, phase_idx
-            if target && phase
-              if chat.part.idx != part_idx
-                head = "#{part_idx}:"
-              else
-                head = ""
-              """<abbr chat_id="#{target.id}">&gt;&gt;#{head}#{phase.mark}#{idx}</abbr>"""
+            if target
+              """<abbr chat_id="#{target.id}">&gt;&gt;#{code}</abbr>"""
             else
-              """<abbr>&gt;&gt;#{part_idx}:#{phase.mark}#{idx}</abbr>"""
+              """<abbr>&gt;&gt;#{code}</abbr>"""
         log
-        .replace ///[a-z]+\:\/\/([^ ]*)+///g, (url)->
-          """<a href="#{url}" target="blank">URL</a>"""
+        .replace ///[a-z]+\:\/\/[^\s<>]+///g, (url)->
+          suffix = ""
+          url = url.replace ///&lt;$|&gt;$|\]$|\[$///, (last)->
+            suffix = last
+            ""
+          console.log url
+          console.log url.split(///(\://|/|\?|\#)///g)
+          [protocol, hostname] = url.split(///\://|/|\?|\#///g)
+          title = [protocol, hostname].join("\n")
+          """<b href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""
         .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
 

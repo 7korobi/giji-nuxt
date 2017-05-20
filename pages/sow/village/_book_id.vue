@@ -15,10 +15,25 @@
       potofs()
 
   .contentframe
-    .inframe
-      report(handle="footer" deco="center")
-        nuxt-link(to="/") 戻る
-      chat(v-for="o in chats", :id="o._id", :key="o._id")
+    transition-group.inframe(name="list" tag="div")
+      report(handle="footer" deco="center" key="finder")
+        p
+          nuxt-link(to="/") 戻る
+        p
+          nuxt-link(v-for="o in parts", :to="{query: {part_id: o.id, phase_id: o.phases.list.first.id, section_id: o.sections.list.first.id}}")
+            | {{o.label}}
+            sup {{ o.chats.list.length }}
+        p
+          nuxt-link(v-for="o in phases", :to="{query: {part_id: o.part.id, phase_id: o.id, section_id: o.part.sections.list.first.id}}")
+            | {{o.label}}
+            sup {{ o.chats.list.length }}
+        p
+          nuxt-link(v-for="o in sections", :to="{query: {part_id: o.part.id, phase_id: o.part.phases.list.first.id, section_id: o.id}}")
+            | {{o.label}}
+            sup {{ o.chats.list.length }}
+      chat(v-for="o in chats", :id="o.id", :key="o.id")
+      report(handle="btns" key="limitup")
+        scroll-mine(key="add" v-model="limit", :as="limit_next") {{ limit_next }}件
 
 </template>
 
@@ -35,26 +50,49 @@ q.params
 q.query
   chat_id: ""
   part_id: ""
+  phase_id: ""
+  section_id: ""
+
 
 module.exports =
   default:
     watch: q.watch ->
     data: ->
-      q.data @
+      q.data @,
+        limit: 25
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
       .then =>
-        { id } = Query.parts.where({ @book_id }).list.last
-        @part_id = id
+        @part_id  = @book.parts.list.first.id
+        @phase_id = @book.phases.list.first.id
+        @section_id = @book.sections.list.first.id
 
     computed:
+      book: ->
+        { read_at } = @$store.state.sow
+        Query.books.find @book_id
+      part: ->
+        { read_at } = @$store.state.sow
+        Query.parts.find @part_id
+      phase: ->
+        { read_at } = @$store.state.sow
+        Query.phases.find @phase_id
+      section: ->
+        { read_at } = @$store.state.sow
+        Query.sections.find @section_id
+
+      parts: ->
+        @book?.parts.list ? []
+      phases: ->
+        @part?.phases.list ? []
+      sections: ->
+        @part?.sections.list ? []
       chats: ->
         { @chat_id } = @$store.state.book
-        { read_at } = @$store.state.sow
-        Query.sow_villages.where({ @book_id }).list
-        Query.sow_turns.where({ @book_id }).list
-        Query.potofs.where({ @book_id }).list
-        Query.chats.where({ @book_id }).list
+        @section?.chats.list ? []
+      
+      limit_next: ->
+        Math.min @chats.length, @limit + 25
 
 </script>

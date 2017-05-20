@@ -7,6 +7,7 @@ new Rule("part").schema ->
   @has_many "phases"
   @has_many "cards"
   @has_many "stats"
+  @has_many "chats"
 
   @scope (all)->
     {}

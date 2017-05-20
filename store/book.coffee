@@ -59,6 +59,7 @@ module.exports =
       state.book_id = chat.book_id
       state.part_id = chat.part_id
       state.phase_id = chat.phase_id
+      state.section_id = chat.section_id
 
   actions:
     books: ({commit}, folder)->

@@ -44,7 +44,7 @@ table.talk(:id="id", :key="id")
         portrate(:face_id="face_id")
       td
         .baloon(:class="classname")
-        .chat(:key="id", :class="classname")
+        .chat(@click="click", :key="id", :class="classname")
           chat-head(v-if="head" :head="head", :to="to", :sign="sign")
           .text(:class="deco" v-if="$slots.default")
             slot

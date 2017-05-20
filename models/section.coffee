@@ -3,6 +3,7 @@
 new Rule("section").schema ->
   @order "write_at"
   @path "folder", "book", "part"
+  @has_many "chats"
 
   @scope (all)->
     {}

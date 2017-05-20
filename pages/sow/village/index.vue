@@ -236,10 +236,7 @@ module.exports =
 
     limit_next: ->
       @$store.state.story.read_at
-      if @villages_all.list.length < @limit + 25
-        @villages_all.list.length
-      else
-        @limit + 25
+      Math.min @villages_all.list.length, @limit + 25
 
     all: ->
       @$store.state.story.read_at

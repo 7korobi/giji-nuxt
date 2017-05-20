@@ -50,7 +50,7 @@ new Rule("potof").schema ->
         head = stat?.label ? ""
         "#{head}#{o.label}"
 
-      @live    = @cards.hash["#{@_id}-live"]
+      @live    = @cards.hash["#{@_id}-live"] ? 
       @request = @cards.hash["#{@_id}-request"]
       @commit  = @stats.hash["#{@_id}-commit"]
       @give    = @stats.hash["#{@_id}-give"]
@@ -59,6 +59,7 @@ new Rule("potof").schema ->
       @winner_id = @find @cards, ["bond", "gift", "role", "live"], (o)=> o.role.win
 
       if @live
+        @live_class = @live.role_id
         @live.date ?= Infinity
         switch @live.role_id
           when "suddendead", "leave"
@@ -71,6 +72,8 @@ new Rule("potof").schema ->
                 @win = "敗北"
             else
               @win = "参加"
+
+      @winner_id ?=  "NONE"
 
       if @say
         @say.pt ?= Infinity
