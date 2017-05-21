@@ -89,10 +89,12 @@ module.exports =
       sections: ->
         @part?.sections.list ? []
       chats: ->
+        @chats_all[0...@limit]
+      chats_all: ->
         { @chat_id } = @$store.state.book
-        @section?.chats.list ? []
+        @phase?.chats.list ? []
       
       limit_next: ->
-        Math.min @chats.length, @limit + 25
+        Math.min @chats_all.length, @limit + 25
 
 </script>

@@ -246,7 +246,7 @@ module.exports =
       @all.in(@query_in).where(@query_where).sort(@order, @asc)
 
     villages: ->
-      @villages_all.list[0..@limit]
+      @villages_all.list[0...@limit]
 
 </script>
 <style lang="stylus" scoped>

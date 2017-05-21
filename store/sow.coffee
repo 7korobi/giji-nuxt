@@ -76,7 +76,7 @@ module.exports =
           sign: o.sow_auth_id
 
       phases =
-        "#{book_id}-0":
+        "#{book_id}-0-mA":
           handle: "TITLE"
           update: false
       sections = {}
