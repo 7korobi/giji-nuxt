@@ -90,9 +90,10 @@ input, select, button, textarea,
 .outframe
   margin: 0 auto
 
-.writeframe,
 .summary,
-.sideframe
+.sideframe,
+.writeframe,
+.currentframe
   position: fixed
   overflow-y: auto
   pointer-events: none
@@ -113,6 +114,11 @@ input, select, button, textarea,
 .summary
   left:   0
   bottom: 0
+  overflow-x: hidden
+
+.currentframe
+  right:   0
+  bottom: 50%
   overflow-x: hidden
 
 .sideframe

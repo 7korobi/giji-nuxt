@@ -8,17 +8,19 @@ module.exports =
     id:
       type: String
       required: true
+    show:
+      type: String
 
   render: (m, ctx)->
-    { id } = ctx.props
+    { id, show } = ctx.props
     chat = Query.chats.hash[id]
-
     return [] unless chat
+
     attrs =
       id: id
-      write_at: chat.write_at
-      show:     chat.show
-      deco:     chat.deco
+      show: show ? chat.show
+      write_at:   chat.write_at
+      deco:      chat.deco
       log:      chat.log
 
     if o = chat.potof
@@ -56,40 +58,38 @@ module.exports =
     computed:
       el_adjust: el.adjust
 
+      full: ->
+        @$store.state.book.full
+
       anker: ->
-        @$store.state.book.read_at
+        { read_at, chat_id } = @$store.state.book
+        current = Query.chats.hash[chat_id]
         chat = Query.chats.hash[@id]
         if chat
           console.log chat unless chat.phase
           { mark } = chat.phase
           if mark?
-            "#{mark}#{chat.idx}"
+            prefix =
+              if current && current.part_id == chat.part_id
+                ""
+              else
+                "#{chat.part.idx}:"
+            "#{prefix}#{mark}#{chat.idx}"
           else
             ""
+
+      log_mention: ->
+        @log_html.replace ///<br>///g, " "
 
       log_html: ->
         return "" unless @log
         @$store.state.book.read_at
-        chat = Query.chats.hash[@id]
-
-        log = @log
-        if chat
-          log = log
-          .replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)=>
-            idx = Number($1)
-            target = @chat chat.book.id, part_idx, phase_idx, idx
-            if target
-              """<abbr chat_id="#{target.id}">&gt;&gt;#{code}</abbr>"""
-            else
-              """<abbr>&gt;&gt;#{code}</abbr>"""
-        log
+        @log
         .replace ///[a-z]+\:\/\/[^\s<>]+///g, (url)->
           suffix = ""
           url = url.replace ///&lt;$|&gt;$|\]$|\[$///, (last)->
             suffix = last
             ""
-          console.log url
-          console.log url.split(///(\://|/|\?|\#)///g)
           [protocol, hostname] = url.split(///\://|/|\?|\#///g)
           title = [protocol, hostname].join("\n")
           """<b href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""

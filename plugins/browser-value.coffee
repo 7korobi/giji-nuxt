@@ -45,16 +45,19 @@ storage = (store)->
       emit to, val
 
 type_as = (val, ret)->
-  if Array == val?.constructor
-    if Array == ret?.constructor
-      ret ? val
-    else
-      if ret
-        [ret]
+  switch val?.constructor
+    when Number
+      Number(ret ? val)
+    when Array
+      if Array == ret?.constructor
+        ret ? val
       else
-        val
-  else
-    ret ? val
+        if ret
+          [ret]
+        else
+          val
+    else
+      ret ? val
 
 get_by_json = (storage, val, cb)->
         if storage

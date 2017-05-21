@@ -31,7 +31,7 @@ div
           th
 
       transition-group.tlist(name="list" tag="tbody")
-        tr(v-for="o in potofs", :key="o._id" v-if="! o.hide")
+        tr(v-for="o in potofs", :key="o.id" v-if="! o.hide")
           th.r(:class="o.live.role_id") {{ o.job }}
           th.l(:class="o.live.role_id") {{ o.face.name }}
           td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
@@ -109,13 +109,13 @@ module.exports =
     potof_ids: (f)->
       @potofs
       .filter f
-      .map (o)-> o._id
+      .map (o)-> o.id
 
     toggle: (o)->
       o.hide = ! o.hide
       @hide_ids = @potofs
       .filter (o)-> o.hide
-      .map (o)-> o._id
+      .map (o)-> o.id
 
     reverse: ->
       switch @order

@@ -14,6 +14,11 @@ new Rule("chat").schema ->
 
   class @model extends @model
     @map_reduce: (o, emit)->
-      emit "section", o.section_id,
-        min: o.open_at
-        max: o.write_at
+      o.log = o.log.replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)->
+        idx = Number($1)
+        target_id = [o.book_id, part_idx, phase_idx, idx].join("-")
+        emit "mention", target_id,
+          belongs_to: "chats"
+          summary: o.id
+          count: 1          
+        """<abbr chat_id="#{target_id}">&gt;&gt;#{code}</abbr>"""

@@ -5,14 +5,15 @@
     .inframe
       h6
         | 参照されている
-        i.fa.fa-pin
 
-      h6
-        | よく見ていた
         i.fa.fa-pin
+      mentions
       h6 一日目の参加者
     .inframe.hover
-      potofs()
+      potofs
+  .currentframe
+    .inframe
+      chat(v-if="chat" show="current", :id="chat.id")
 
   .contentframe
     transition-group.inframe(name="list" tag="div")
@@ -52,14 +53,14 @@ q.query
   part_id: ""
   phase_id: ""
   section_id: ""
+  limit: 25
 
 
 module.exports =
   default:
     watch: q.watch ->
     data: ->
-      q.data @,
-        limit: 25
+      q.data @, {}
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
@@ -81,6 +82,9 @@ module.exports =
       section: ->
         { read_at } = @$store.state.sow
         Query.sections.find @section_id
+      chat: ->
+        { read_at } = @$store.state.sow
+        Query.chats.find @chat_id
 
       parts: ->
         @book?.parts.list ? []
@@ -91,10 +95,10 @@ module.exports =
       chats: ->
         @chats_all[0...@limit]
       chats_all: ->
-        { @chat_id } = @$store.state.book
         @phase?.chats.list ? []
       
       limit_next: ->
+        { @chat_id } = @$store.state.book
         Math.min @chats_all.length, @limit + 25
 
 </script>
