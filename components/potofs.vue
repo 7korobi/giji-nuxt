@@ -11,13 +11,14 @@ div
           th
             btn(v-model="sort" as="live.role_id", @toggle="reverse") 状態
           th
-            btn(v-model="sort" as="say.said", @toggle="reverse") 発言
+            btn(v-model="sort" as="say.count", @toggle="reverse") 発言
           th
-            btn(v-model="sort" as="say.pt", @toggle="reverse") 残り
+            btn(v-model="sort" as="say.all", @toggle="reverse") 発言
           th
             btn(v-model="sort" as="give.give", @toggle="reverse") 促
           th
-            i.fa.fa-user
+            btn(v-model="sort" as="sign", @toggle="reverse")
+              i.fa.fa-user
           th
             btn(v-model="sort" as="request.role_id", @toggle="reverse") 希望
           th
@@ -36,8 +37,8 @@ div
           th.l(:class="o.live.role_id") {{ o.face.name }}
           td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
-          td.r(:class="o.live.role_id") {{ count("回", o.say.said) }}
-          td.r(:class="o.live.role_id") {{ count("回", o.say.pt) || "∞" }}
+          td.r(:class="o.live.role_id") {{ count("回", say(o.id).count) }}
+          td.r(:class="o.live.role_id") {{ count("字", say(o.id).all) }}
           td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) }}
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
@@ -92,9 +93,15 @@ module.exports =
     live_off: ->  @potof_ids (o)-> o.commit
 
     potofs: ->
-      { read_at, book_id, part_id } = @$store.state.book
+      { read_at, book_id } = @$store.state.book
+      { sort } = @
       if book_id
-        Query.potofs.where({book_id}).sort(@sort, @order).list
+        switch sort
+          when "say.count"
+            sort = (o)=> @say(o.id).count
+          when "say.all"
+            sort = (o)=> @say(o.id).all
+        Query.potofs.where({book_id}).sort(sort, @order).list
       else
         []
 
@@ -106,6 +113,14 @@ module.exports =
           (o)-> o.live.role_id
 
   methods:
+    say: (potof_id)->
+      part_id = @$parent.part.id
+      for idx in ["SS", "GS", "VS"]
+        q = Query.chats.where({ potof_id, phase_id: "#{part_id}-#{idx}"})
+        if q.list.length
+          return q.reduce?.say ? {}
+      return q.reduce?.say ? {}
+
     potof_ids: (f)->
       @potofs
       .filter f

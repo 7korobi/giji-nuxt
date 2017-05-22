@@ -13,12 +13,26 @@ new Rule("chat").schema ->
     for_phase: (phase_id)-> all.where { phase_id }
 
   class @model extends @model
-    @map_reduce: (o, emit)->
-      o.log = o.log.replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)->
+    @deploy: ->
+      @q =
+        mention_ids: []
+      @log = @log.replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)=>
         idx = Number($1)
-        target_id = [o.book_id, part_idx, phase_idx, idx].join("-")
-        emit "mention", target_id,
+        @q.mention_ids.push mention_id = [@book_id, part_idx, phase_idx, idx].join("-")
+        """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
+
+    @map_reduce: (o, emit)->
+      emit "say",
+        count: 1
+        all: o.log.length
+
+      for mention_id in o.q.mention_ids
+        emit "mention",
+          belongs_to: "chats"
+          summary: mention_id
+          count: 1
+        
+        emit "mention_to", mention_id,
           belongs_to: "chats"
           summary: o.id
-          count: 1          
-        """<abbr chat_id="#{target_id}">&gt;&gt;#{code}</abbr>"""
+          count: 1

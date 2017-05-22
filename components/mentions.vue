@@ -5,7 +5,7 @@ module.exports =
   computed:
     mentions: ->
       { read_at, chat_id } = @$store.state.book
-      Query.chats.reduce?.mention[chat_id]?.summary ? []
+      Query.chats.reduce?.mention_to?[chat_id]?.summary ? []
 
 </script>
 

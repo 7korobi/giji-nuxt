@@ -11,9 +11,9 @@ module.exports = class Model
   @$deploy: (item, parent)->
     @bless item
     Object.assign item, parent
-    @deploy.call item, @
     for deploy in @$name.deploys
       deploy.call item, @
+    @deploy.call item, @
     unless item.id
       throw new Error "detect bad data: #{JSON.stringify item}"
 

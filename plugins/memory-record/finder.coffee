@@ -45,8 +45,10 @@ module.exports = class Finder
 
   reduce: (query, memory, list)->
     init = (o, map)=>
-      o.count = 0 if map.count
-      o.all   = 0 if map.all
+      if map.count
+        o.count ?= 0 
+      if map.all
+        o.all ?= 0 
       if map.list
         o.list ?= @set.bless([])
       if map.summary
@@ -93,15 +95,24 @@ module.exports = class Finder
 
 
     # map_reduce
-    base = OBJ()
+    cache = OBJ()
     for { id } in list
       { item, emits } = memory[id]
       if emits
         for [path, map] in emits
-          o = _.get(base, path) ? @map.bless({})
+          o = cache[path.join('.')] ?= @map.bless({})
           init o, map
-          _.set base, path, o
+
+    for { id } in list
+      { item, emits } = memory[id]
+      if emits
+        for [path, map] in emits
+          o = cache[path.join('.')]
           reduce item, o, map
+
+    base = OBJ()
+    for path, o of cache
+      _.set base, path, o
     base
 
   sort: (query)->

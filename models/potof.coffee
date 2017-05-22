@@ -8,6 +8,7 @@ new Rule("potof").schema ->
   @belongs_to "winner"
   @has_many "cards"
   @has_many "stats"
+  @has_many "chats"
   @habtm "roles"
   @habtm "ables"
 
@@ -55,7 +56,6 @@ new Rule("potof").schema ->
       @commit  = @stats.hash["#{@_id}-commit"]
       @give    = @stats.hash["#{@_id}-give"]
 
-      @say = @find @stats, ["SSAY", "GSAY", "VSSAY"]
       @winner_id = @find @cards, ["bond", "gift", "role", "live"], (o)=> o.role.win
 
       if @live
@@ -75,5 +75,3 @@ new Rule("potof").schema ->
 
       @winner_id ?=  "NONE"
 
-      if @say
-        @say.pt ?= Infinity

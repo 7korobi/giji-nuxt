@@ -11,3 +11,4 @@ new Rule("part").schema ->
 
   @scope (all)->
     {}
+

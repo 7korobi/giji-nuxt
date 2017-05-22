@@ -1,14 +1,13 @@
 
 <template lang="pug">
 .outframe
-  .summary
+  .summary(v-if="chat")
     .inframe
       h6
         | 参照されている
-
         i.fa.fa-pin
       mentions
-      h6 一日目の参加者
+      h6 {{ part.label }}の参加者
     .inframe.hover
       potofs
   .currentframe
@@ -21,15 +20,15 @@
         p
           nuxt-link(to="/") 戻る
         p
-          nuxt-link(v-for="o in parts", :to="{query: {part_id: o.id, phase_id: o.phases.list.first.id, section_id: o.sections.list.first.id}}")
+          nuxt-link(v-for="o in parts", :key="o.id", :to="{query: {part_id: o.id, phase_id: o.phases.list.first.id, section_id: o.sections.list.first.id}}")
             | {{o.label}}
             sup {{ o.chats.list.length }}
         p
-          nuxt-link(v-for="o in phases", :to="{query: {part_id: o.part.id, phase_id: o.id, section_id: o.part.sections.list.first.id}}")
+          nuxt-link(v-for="o in phases", :key="o.id", :to="{query: {part_id: o.part.id, phase_id: o.id, section_id: o.part.sections.list.first.id}}")
             | {{o.label}}
             sup {{ o.chats.list.length }}
         p
-          nuxt-link(v-for="o in sections", :to="{query: {part_id: o.part.id, phase_id: o.part.phases.list.first.id, section_id: o.id}}")
+          nuxt-link(v-for="o in sections", :key="o.id", :to="{query: {part_id: o.part.id, phase_id: o.part.phases.list.first.id, section_id: o.id}}")
             | {{o.label}}
             sup {{ o.chats.list.length }}
       chat(v-for="o in chats", :id="o.id", :key="o.id")
