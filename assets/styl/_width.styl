@@ -22,7 +22,8 @@ width($font, $center)
     .sideframe
       width: "calc( 50% - %s )" % $half
   @media screen and (max-width: $limit2)
-    .currentframe,
+    .currentframe
+      width: "calc( 50% - %s )" % $half
     .sideframe
       width: 80px
 

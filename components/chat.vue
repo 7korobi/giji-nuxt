@@ -59,7 +59,7 @@ module.exports =
       el_adjust: el.adjust
 
       full: ->
-        @$store.state.book.full
+        ! @$store.state.menu.set.current
 
       anker: ->
         { read_at, chat_id } = @$store.state.book

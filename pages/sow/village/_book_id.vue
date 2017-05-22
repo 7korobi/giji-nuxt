@@ -1,24 +1,27 @@
 
 <template lang="pug">
 .outframe
-  .summary(v-if="chat")
+  .sideframe
     .inframe
-      h6
-        | 参照されている
-        i.fa.fa-pin
-      mentions
-      h6 {{ part.label }}の参加者
-    .inframe.hover
-      potofs
+      .icons
+        check.item(as="pin" v-model="menus")
+          i.fa.fa-pin
+        check.item(as="link" v-model="menus")
+          i.fa.fa-film
+        check.item(as="potof" v-model="menus")
+          i.fa.fa-sitemap
+        check.item(as="current" v-model="menus")
+          i.fa.fa-user
+  .summary
+    links
+    mentions
+    potofs
   .currentframe
-    .inframe
-      chat(v-if="chat" show="current", :id="chat.id")
+    hr
 
   .contentframe
     transition-group.inframe(name="list" tag="div")
       report(handle="footer" deco="center" key="finder")
-        p
-          nuxt-link(to="/") 戻る
         p
           nuxt-link(v-for="o in parts", :key="o.id", :to="{query: {part_id: o.id, phase_id: o.phases.list.first.id, section_id: o.sections.list.first.id}}")
             | {{o.label}}
@@ -53,11 +56,15 @@ q.query
   phase_id: ""
   section_id: ""
   limit: 25
-
+q.session
+  menus: []
 
 module.exports =
   default:
-    watch: q.watch ->
+    watch: q.watch (_, key, val)->
+      switch key
+        when "menus"
+          @$store.commit "menu/mode", @menus
     data: ->
       q.data @, {}
 
