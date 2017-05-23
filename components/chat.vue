@@ -85,7 +85,8 @@ module.exports =
         return "" unless @log
         @$store.state.book.read_at
         @log
-        .replace ///[a-z]+\:\/\/[^\s<>]+///g, (url)->
+        .replace ///[a-z]+\:\/\/[^"\s<>]+///g, (url, idx, src)->
+          return url if '<a href="' == src[idx - 9...idx].toLowerCase()
           suffix = ""
           url = url.replace ///&lt;$|&gt;$|\]$|\[$///, (last)->
             suffix = last

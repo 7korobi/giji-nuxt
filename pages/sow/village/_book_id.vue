@@ -27,8 +27,8 @@
             | {{o.label}}
             sup {{ o.chats.list.length }}
         phases(v-if="part_id" v-model="phase_ids", :part_id="part_id")
-        p
-          btn(v-for="o in sections" v-model="section_id", :as="o.id", :key="o.id")
+        p(v-for="o in sections")
+          btn(v-model="section_id", :as="o.id", :key="o.id")
             | {{o.label}}
             sup {{ o.chats.list.length }}
     transition-group.inframe(name="list" tag="div")
@@ -49,31 +49,19 @@ BrowserValue = require "~plugins/browser-value"
 q = new BrowserValue
 q.params
   book_id: ""
-q.query
-  chat_id: ""
-  part_id: ""
-  section_id: ""
-  limit: 25
-q.session
-  phase_ids: []
-  menus: []
 
 module.exports =
   default:
     watch: q.watch (_, key, val)->
-      switch key
-        when "part_id"
-          console.log key, val
-          if @part
-            @limit = 25
-            @phase_ids = @part.phases.pluck('id')
-            @section_id = @sections[0]?.id
-        when "section_id"
-          @limit = 25
-        when "menus"
-          @$store.commit "menu/mode", @menus
+
     data: ->
-      q.data @, {}
+      q.data @,
+        phase_ids: []
+        menus: []
+        chat_id: ""
+        part_id: ""
+        section_id: ""
+        limit: 25
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
@@ -85,14 +73,25 @@ module.exports =
 
     computed:
       book: ->
+        @$store.commit "menu/mode", @menus
         { read_at } = @$store.state.sow
         Query.books.find @book_id
       part: ->
         { read_at } = @$store.state.sow
-        Query.parts.find @part_id
+        o = Query.parts.find @part_id
+        if o
+          @limit = 25
+          @phase_ids = o.phases.pluck('id')
+          @section_id = o.sections.list.first.id
+        o
+
       section: ->
         { read_at } = @$store.state.sow
-        Query.sections.find @section_id
+        o = Query.sections.find @section_id
+        if o
+          @limit = 25
+        o
+
       chat: ->
         { read_at } = @$store.state.sow
         Query.chats.find @chat_id

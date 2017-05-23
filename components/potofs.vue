@@ -103,9 +103,9 @@ module.exports =
       if book_id
         switch sort
           when "say.count"
-            sort = (o)=> @say(o.id).count
+            sort = (o)=> @say(o.id).count ? 0
           when "say.all"
-            sort = (o)=> @say(o.id).all
+            sort = (o)=> @say(o.id).all ? 0
         Query.potofs.where({book_id}).sort(sort, @order).list
       else
         []

@@ -43,20 +43,9 @@ module.exports =
             _id: "#{potof_id}-gift"
             role_id: o.role[1]
 
-        ssay_pt = o.say.say
-        ssay_pt = undefined if 10000 < ssay_pt
-        gsay_pt = undefined if 10000 < gsay_pt
         Set.stat.merge [
           _id: "#{potof_id}-give"
           give: o.point.actaddpt
-        ,
-          _id: "#{potof_id}-SSAY"
-          pt: ssay_pt
-          said: 0
-        ,
-          _id: "#{potof_id}-GSAY"
-          pt: gsay_pt
-          said: 0
         ]
         if o.live == "live"
           Set.stat.add
@@ -111,12 +100,13 @@ module.exports =
         switch phase_idx
           when "-S"
             phase_idx = "wS"
+            phase_group = "I"
 
         switch o.subid
-          when "S"
-            show = "talk"
           when "M"
             show = "report"
+          when "S"
+            show = "talk"
           when "I"
             potof_id = undefined
             show = "report"
@@ -129,9 +119,10 @@ module.exports =
           when "DELETED"
             return
           when "MAKER", "ADMIN"
+            potof_id = undefined
             show = "report"
           when "INFONOM"
-            handle = "TITLE"
+            handle = "dark"
           when "INFOSP"
             handle = "header"
           when "VSAY"

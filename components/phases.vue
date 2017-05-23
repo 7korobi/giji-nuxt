@@ -9,7 +9,7 @@ module.exports =
         @$emit 'input', value
 
       phase_at: (xk, yk)->
-        Query.phases.where(part_id: @part_id, handle: xk, group: yk).list.first
+        Query.phases.where(part_id: @part_id, handle: xk, group: yk).list
     computed:
       groups: ->
         list = Query.chats.where(part_id: @part_id).reduce?.phase_group.summary ? []
@@ -44,7 +44,7 @@ table
           sup {{ yo.length }}
 
       td(v-for="xo in handles")
-        check(v-if="phase_at(xo.id, yo.id)" @input="tap", :value="value", :as="phase_at(xo.id, yo.id).id")
-          abbr {{ phase_at(xo.id, yo.id).chats.list.length }}
+        check(v-for="o in phase_at(xo.id, yo.id)" @input="tap", :value="value", :as="o.id")
+          abbr {{ o.chats.list.length }}
 
 </template>
