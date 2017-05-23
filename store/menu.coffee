@@ -22,16 +22,13 @@ module.exports =
     height:  0
     width:   0
 
+    set:
+      pin: false
+      link: false
+      potof: false
+      current: false
     target: null
   mutations:
-    set: (state, list)->
-      Set.menu.set list
-      state.list = Query.menus.list
-
-    add: (state, menu)->
-      Set.menu.add menu
-      state.list = Query.menus.list
-
     target: (state, name)->
       if state.target == name
         state.target = null
@@ -41,6 +38,12 @@ module.exports =
     pulse: (state, ext)->
       for o in state.list when o.name == "spinner"
         o.ext = ext
+
+    mode: (state, list)->
+      for id of state.set
+        state.set[id] = false
+      for id in list
+        state.set[id] = true
 
     center: (state, { top, left, height, width })->
       state.height  = height

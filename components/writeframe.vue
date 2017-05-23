@@ -4,8 +4,6 @@ module.exports =
   default:
     props: ["top"]
     data: ->
-      @$store.commit "menu/add",
-        name: "comment"
       text: ""
 
     computed:

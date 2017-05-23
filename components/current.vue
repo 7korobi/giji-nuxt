@@ -2,24 +2,18 @@
 module.exports = require("~components/chat.vue").component_class()
 </script>
 <style lang="stylus" scoped>
-
 .current
-  padding: 0 2px
-  margin:  0 0 0 8px
-
-.chat
-  border-bottom-width: 2px
   border-bottom-style: solid
-  margin: 0 0 6px 0
-
+  border-bottom-width: 1px
 </style>
 
 <template lang="pug">
-.chat(:id="id", :key="id")
-  .current(@click="click", :class="classname")
-    .date
+.chat.current(@click="click", :id="id", :key="id", :class="classname")
+  .date
+    span
       abbr(v-if="sign") {{ sign }}
+    span
       abbr(v-if="id", :chat_id="id") {{ anker }}
-    .date
+    span
       timeago(v-if="write_at", :since="write_at")
 </template>

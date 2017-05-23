@@ -3,16 +3,23 @@
 
 module.exports =
   computed:
+    chat: ->
+      { read_at, chat_id } = @$store.state.book
+      Query.chats.find chat_id
+    current: ->
+      @$store.state.menu.set.current
     mentions: ->
       { read_at, chat_id } = @$store.state.book
-      Query.chats.reduce?.mention_to?[chat_id]?.summary ? []
-
+      Query.chats.reduce?.mention_to?[chat_id]?.summary
 </script>
 
 <template lang="pug">
-table
-  transition-group.tlist(name="list" tag="tbody")
-    tr-intro-chat(v-for="o in mentions", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")
+.inframe(v-if="current")
+  h6 参照されている
+  chat(v-if="chat" show="current", :id="chat.id")
+  table
+    transition-group.tlist(name="list" tag="tbody")
+      tr-intro-chat(v-for="o in mentions", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")
 </template>
 
 <style lang="stylus" scoped>

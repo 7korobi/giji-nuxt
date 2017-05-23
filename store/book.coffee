@@ -5,7 +5,6 @@ module.exports =
   namespaced: true
   state:
     read_at: Date.now()
-    full: true
 
     folder_id: ""
     book_id: ""

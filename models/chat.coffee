@@ -25,6 +25,12 @@ new Rule("chat").schema ->
       emit "say",
         count: 1
         all: o.log.length
+      emit "phase_group",
+        summary: o.phase_group
+        count: 1
+      emit "phase_handle",
+        summary: o.phase_handle
+        count: 1
 
       for mention_id in o.q.mention_ids
         emit "mention",

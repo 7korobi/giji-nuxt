@@ -26,3 +26,5 @@ new Rule("phase").schema ->
     @deploy: ->
       if o = attrs[@handle]
         Object.assign @, o
+        
+

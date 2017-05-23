@@ -1,5 +1,6 @@
 <template lang="pug">
-div
+.inframe(v-if="part")
+  h6 {{ part.label }}の参加者
   .swipe
     table
       tfoot
@@ -49,7 +50,7 @@ div
           td.c(:class="o.winner_id") {{ o.role_labels.join("、") }}
           td.l(:class="o.winner_id") {{ o.text }}
           td.last
-  transition-group.swipe.list(name="list" tag="div")
+  transition-group.swipe.list(v-if="part" name="list" tag="div")
     table.btns(key="btns")
       tbody
         tr
@@ -92,8 +93,12 @@ module.exports =
     live_on:  ->  @potof_ids (o)-> ! o.commit
     live_off: ->  @potof_ids (o)-> o.commit
 
+    part: ->
+      { potof } = @$store.state.menu.set
+      potof && @$parent.part
+
     potofs: ->
-      { read_at, book_id } = @$store.state.book
+      { book_id } = @$parent
       { sort } = @
       if book_id
         switch sort
@@ -114,7 +119,7 @@ module.exports =
 
   methods:
     say: (potof_id)->
-      part_id = @$parent.part.id
+      { part_id } = @$parent
       for idx in ["SS", "GS", "VS"]
         q = Query.chats.where({ potof_id, phase_id: "#{part_id}-#{idx}"})
         if q.list.length

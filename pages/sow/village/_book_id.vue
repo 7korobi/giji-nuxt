@@ -1,37 +1,39 @@
 
 <template lang="pug">
 .outframe
-  .summary(v-if="chat")
+  .sideframe
     .inframe
-      h6
-        | 参照されている
-        i.fa.fa-pin
-      mentions
-      h6 {{ part.label }}の参加者
-    .inframe.hover
-      potofs
-  .currentframe
-    .inframe
-      chat(v-if="chat" show="current", :id="chat.id")
+      .icons
+        check.item(as="pin" v-model="menus")
+          i.fa.fa-pin
+        check.item(as="link" v-model="menus")
+          i.fa.fa-film
+        check.item(as="potof" v-model="menus")
+          i.fa.fa-sitemap
+        check.item(as="current" v-model="menus")
+          i.fa.fa-user
+  .summary
+    links
+    mentions
+    potofs
+  .center-left
+  .center-right
 
   .contentframe
-    transition-group.inframe(name="list" tag="div")
+    .inframe
       report(handle="footer" deco="center" key="finder")
         p
-          nuxt-link(to="/") 戻る
-        p
-          nuxt-link(v-for="o in parts", :key="o.id", :to="{query: {part_id: o.id, phase_id: o.phases.list.first.id, section_id: o.sections.list.first.id}}")
+          btn(v-for="o in parts" v-model="part_id", :as="o.id", :key="o.id")
             | {{o.label}}
             sup {{ o.chats.list.length }}
+        phases(v-if="part_id" v-model="phase_ids", :part_id="part_id")
         p
-          nuxt-link(v-for="o in phases", :key="o.id", :to="{query: {part_id: o.part.id, phase_id: o.id, section_id: o.part.sections.list.first.id}}")
+          btn(v-for="o in sections" v-model="section_id", :as="o.id", :key="o.id")
             | {{o.label}}
             sup {{ o.chats.list.length }}
-        p
-          nuxt-link(v-for="o in sections", :key="o.id", :to="{query: {part_id: o.part.id, phase_id: o.part.phases.list.first.id, section_id: o.id}}")
-            | {{o.label}}
-            sup {{ o.chats.list.length }}
+    transition-group.inframe(name="list" tag="div")
       chat(v-for="o in chats", :id="o.id", :key="o.id")
+    .inframe
       report(handle="btns" key="limitup")
         scroll-mine(key="add" v-model="limit", :as="limit_next") {{ limit_next }}件
 
@@ -50,22 +52,35 @@ q.params
 q.query
   chat_id: ""
   part_id: ""
-  phase_id: ""
   section_id: ""
   limit: 25
-
+q.session
+  phase_ids: []
+  menus: []
 
 module.exports =
   default:
-    watch: q.watch ->
+    watch: q.watch (_, key, val)->
+      switch key
+        when "part_id"
+          console.log key, val
+          if @part
+            @limit = 25
+            @phase_ids = @part.phases.pluck('id')
+            @section_id = @sections[0]?.id
+        when "section_id"
+          @limit = 25
+        when "menus"
+          @$store.commit "menu/mode", @menus
     data: ->
       q.data @, {}
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
       .then =>
-        @part_id  = @book.parts.list.first.id
-        @phase_id = @book.phases.list.first.id
+        part = @book.parts.list.first
+        @part_id  = part.id
+        @phase_ids = part.phases.pluck('id')
         @section_id = @book.sections.list.first.id
 
     computed:
@@ -75,9 +90,6 @@ module.exports =
       part: ->
         { read_at } = @$store.state.sow
         Query.parts.find @part_id
-      phase: ->
-        { read_at } = @$store.state.sow
-        Query.phases.find @phase_id
       section: ->
         { read_at } = @$store.state.sow
         Query.sections.find @section_id
@@ -94,7 +106,7 @@ module.exports =
       chats: ->
         @chats_all[0...@limit]
       chats_all: ->
-        @phase?.chats.list ? []
+        Query.chats.where(phase_id: @phase_ids).list
       
       limit_next: ->
         { @chat_id } = @$store.state.book

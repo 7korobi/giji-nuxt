@@ -85,8 +85,10 @@ module.exports =
         { face_id, log } = o
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
+        log ?= "メモをはがした。"
         handle = o.mestype
         phase_idx = o.logid[0..1]
+        phase_group = o.subid
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
           potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
@@ -118,7 +120,7 @@ module.exports =
           when "I"
             potof_id = undefined
             show = "report"
-          when "A"
+          when "A", "B"
             potof_id = undefined
             show = "post"
             log = o.name + "は、" + log
@@ -149,8 +151,9 @@ module.exports =
           label: format.hour.format write_at
         phases[phase_id] ?=
           handle: handle
+          group: phase_group
           update: false
-        Set.chat.add { _id, potof_id, phase_id, section_id, write_at, show, deco, log }
+        Set.chat.add { _id, potof_id, phase_id, section_id, write_at, show, deco, log, phase_group, phase_handle: handle }
       Set.phase.merge phases
       Set.section.merge sections
 

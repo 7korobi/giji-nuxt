@@ -4,16 +4,12 @@ require "~components/vue.coffee"
 module.exports =
   default:
     data: ->
-      @$store.commit "menu/set", []
       {}
 
 </script>
 <template lang="pug">
 div
   layout-header
-  .sideframe
-    .inframe
-      icons(:list="$store.state.menu.list")
   nuxt
   layout-footer
 
