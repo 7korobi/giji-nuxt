@@ -27,15 +27,17 @@ module.exports =
   .swipe.header
     table
       tbody
-        tr(v-for="o in $parent.parts", :key="o.id")
+        tr(v-for="(o, line) in $parent.parts", :key="o.id")
           th.r
             btn(@input="input_part", :value="$parent.part_id", :as="o.id")
               | {{o.label}}
               sup {{ o.chats.list.length }}
           td.l
-            span(v-for="(oo, idx) in o.sections.list", :key="oo.id")
-              btn(@input="input_section" @toggle="input_section", :title="oo.label", :value="$parent.section_ids", :as="[oo.id]", bool="include")
-                | {{ idx + 1 }}
+            span(v-for="(oo, section_idx) in o.sections.list", :key="oo.id")
+              btn.tooltip-top(v-if="1 < line" @input="input_section" @toggle="input_section", :data-tooltip="oo.label", :value="$parent.section_ids", :as="[oo.id]", bool="include")
+                | {{ section_idx + 1 }}
+              btn.tooltip-bottom(v-else @input="input_section" @toggle="input_section", :data-tooltip="oo.label", :value="$parent.section_ids", :as="[oo.id]", bool="include")
+                | {{ section_idx + 1 }}
 
 </template>
 
