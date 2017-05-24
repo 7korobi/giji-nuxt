@@ -1,7 +1,7 @@
 <template lang="pug">
 .inframe(v-if="part")
   h6 {{ part.label }}の参加者
-  .swipe
+  .swipe.potofs
     table
       tfoot
         tr.btns

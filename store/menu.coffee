@@ -24,7 +24,7 @@ module.exports =
 
     set:
       pin: false
-      link: false
+      toc: false
       potof: false
       current: false
     target: null

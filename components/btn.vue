@@ -1,20 +1,37 @@
 <script lang="coffee">
 _ = require "lodash"
 
+methods =
+  undefined: _.isEqual
+
 module.exports =
-  props: ["as", "value"]
+  props:
+    as:
+      required: true
+    value:
+      required: true
+    bool:
+      default: "equal"
+
   methods:
     tap: ->
-      if _.isEqual @as, @value
+      if @bool_is
         @$emit 'toggle', @as
       else
         @$emit 'input',  @as
 
-
   computed:
+    bool_is: ->
+      switch @bool
+        when "equal"
+          _.isEqual @as, @value
+        when "include"
+          for as in @as
+            unless as in @value
+              return false 
+          return true
     btn: ->
-      bool = _.isEqual @as, @value
-      if bool
+      if @bool_is
         ["active"]
       else
         []

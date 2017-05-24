@@ -2,11 +2,6 @@
 axios = require "axios"
 _ = require "lodash"
 
-format =
-  hour: new Intl.DateTimeFormat 'ja-JP',
-    weekday: "short"
-    hour:    "2-digit"
-
 module.exports =
   namespaced: true
   state:
@@ -64,17 +59,20 @@ module.exports =
           face_id:  o.face_id
           sign: o.sow_auth_id
 
+      phase_types = {}
       phases =
         "#{book_id}-0-mA":
-          handle: "TITLE"
+          handle: "MAKER"
+          group:  "A"
           update: false
+
       sections = {}
 
-      gap_time = 10 * 60 * 1000 # 10分
+      gap_time = 5 * 60 * 1000 # 5分
       log_length = 0
       section_idx = 1
-      last_at = -Infinity
-      last_event_id = section_id = null
+      chat_at = -Infinity
+      chat = section_id = section = null
 
       write_at = 0
 
@@ -84,14 +82,15 @@ module.exports =
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
         log ?= "メモをはがした。"
-        if o.event_id != last_event_id
+        if o.event_id != chat?.event_id
           section_idx = 1
-          last_at = -Infinity
-        silent = write_at - last_at
+          chat_at = -Infinity
+        silent = write_at - chat_at
 
         handle = o.mestype
         phase_group = o.subid
-        phase_idx = o.subid + o.mestype
+        phase_type = o.subid + o.mestype
+        phase_idx = o.logid[0..1]
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
           potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
@@ -113,6 +112,7 @@ module.exports =
 
         switch o.logid[0..1]
           when "-S"
+            phase_idx  = "iI"
             phase_group = "I"
 
         switch o.subid
@@ -143,38 +143,40 @@ module.exports =
           when "SAY"
             handle = "SSAY"
         if to
+          phase_idx = "AIM"
           handle = "AIM"
 
-        _id = "#{o.event_id}-#{phase_idx}-#{idx}"
         phase_id = "#{o.event_id}-#{phase_idx}"
+        _id = "#{phase_id}-#{idx}"
         deco = o.style
 
         if silent > gap_time
           if silent == Infinity || 10000 < log_length
-            if last = sections[section_id]
-              last.log_length = log_length
-              last.label = "#{last.label} ～ #{format.hour.format write_at}"
+            if section = sections[section_id]
+              section.write_at = chat.write_at
 
             write_clock = Math.floor(write_at / gap_time).toString(36)
             section_id = "#{o.event_id}-#{write_clock}"
             sections[section_id] =
               _id: section_id
-              label: format.hour.format write_at
+              begin_at: write_at
               write_at: write_at
             log_length = 0
 
+        phase_types[phase_idx] ?= phase_type
         phases[phase_id] ?=
           handle: handle
+          type:  phase_type
           group: phase_group
           update: false
-        Set.chat.add oo = { _id, potof_id, phase_id, section_id, write_at, to, show, deco, log, phase_group, phase_handle: handle }
-        last_at = write_at
-        last_event_id = o.event_id
+        Set.chat.add { _id, potof_id, phase_id, section_id, silent, write_at, to, show, deco, log, handle, phase_group, phase_handle: handle }
+        chat_at = write_at
+        chat = o
         if o.subid in ["S","A","I"]
           log_length += log.length
-      if last = sections[section_id]
-        last.log_length = log_length
-        last.label = "#{last.label} ～ #{format.hour.format write_at}"
+
+      if section = sections[section_id]
+        section.write_at = write_at
 
       Set.phase.merge phases
       Set.section.merge sections
@@ -189,6 +191,7 @@ module.exports =
         label: o.name
         winner_id: data.events[-1..][0].winner[4..]
         potof_size: Query.potofs.where({book_id}).list.length
+        write_at: chat.write_at
       state.read_at = Date.now()
 
   actions:

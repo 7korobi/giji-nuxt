@@ -18,8 +18,9 @@ module.exports =
 
     attrs =
       id: id
-      show: show ? chat.show
       write_at: chat.write_at
+      handle: chat.handle
+      show: show ? chat.show
       deco: chat.deco
       log: chat.log
       to: chat.to
@@ -34,7 +35,7 @@ module.exports =
 
     if o = chat.phase
       Object.assign attrs,
-        handle: o.handle
+        handle: chat.handle ? o.handle
 
     m attrs.show, { attrs, key: id }
 
