@@ -292,6 +292,8 @@ module.exports = (app)->
       giji.find "potofs",   { story_id }
     ]
     .then ([stories, messages, events, potofs])->
+      unless stories.length
+        messages = events = potofs = []
       res.json { stories, messages, events, potofs }
       next()
 

@@ -19,9 +19,10 @@ module.exports =
     attrs =
       id: id
       show: show ? chat.show
-      write_at:   chat.write_at
-      deco:      chat.deco
-      log:      chat.log
+      write_at: chat.write_at
+      deco: chat.deco
+      log: chat.log
+      to: chat.to
 
     if o = chat.potof
       if o.hide

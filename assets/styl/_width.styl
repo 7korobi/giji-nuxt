@@ -10,6 +10,10 @@ width($font, $center)
   .outframe
     width: 100%
 
+  .center-left,
+  .center-right
+    width: "calc( 50% - %s )" % ($half + 30px)
+
   @media screen and (min-width: $limit3)
     .summary
       width: "calc( 50% - %s )" % $half
@@ -18,14 +22,9 @@ width($font, $center)
       width: $font * 9
 
   @media screen and (min-width: $limit2)
-    .center-left,
-    .center-right,
     .sideframe
       width: "calc( 50% - %s )" % $half
   @media screen and (max-width: $limit2)
-    .center-left,
-    .center-right
-      width: "calc( 50% - %s )" % $half
     .sideframe
       width: 80px
 

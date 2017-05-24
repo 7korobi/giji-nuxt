@@ -28,14 +28,12 @@
             sup {{ o.chats.list.length }}
         phases(v-if="part_id" v-model="phase_ids", :part_id="part_id")
         p(v-for="o in sections")
-          btn(v-model="section_id", :as="o.id", :key="o.id")
+          check(v-model="section_ids", :as="o.id", :key="o.id")
             | {{o.label}}
             sup {{ o.chats.list.length }}
+            sub {{ o.log_length }}
     transition-group.inframe(name="list" tag="div")
       chat(v-for="o in chats", :id="o.id", :key="o.id")
-    .inframe
-      report(handle="btns" key="limitup")
-        scroll-mine(key="add" v-model="limit", :as="limit_next") {{ limit_next }}件
 
 </template>
 
@@ -56,12 +54,11 @@ module.exports =
 
     data: ->
       q.data @,
+        section_ids: []
         phase_ids: []
         menus: []
         chat_id: ""
         part_id: ""
-        section_id: ""
-        limit: 25
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
@@ -69,7 +66,7 @@ module.exports =
         part = @book.parts.list.first
         @part_id  = part.id
         @phase_ids = part.phases.pluck('id')
-        @section_id = @book.sections.list.first.id
+        @section_ids = part.sections.pluck('id')[0..0]
 
     computed:
       book: ->
@@ -103,12 +100,6 @@ module.exports =
       sections: ->
         @part?.sections.list ? []
       chats: ->
-        @chats_all[0...@limit]
-      chats_all: ->
-        Query.chats.where(phase_id: @phase_ids).list
-      
-      limit_next: ->
-        { @chat_id } = @$store.state.book
-        Math.min @chats_all.length, @limit + 25
+        Query.chats.where(phase_id: @phase_ids, section_id: @section_ids).list
 
 </script>

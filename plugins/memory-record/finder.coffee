@@ -92,7 +92,12 @@ module.exports = class Finder
           val.length = 0
           o.summary_data[id] = val
         val.length += map.count
-
+        unless map.max <= val.max
+          val.max_is = item
+          val.max = map.max
+        unless val.min <= map.min
+          val.min_is = item
+          val.min = map.min
 
     # map_reduce
     cache = OBJ()

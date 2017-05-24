@@ -70,14 +70,28 @@ module.exports =
           update: false
       sections = {}
 
-      data.messages.map (o)->
-        { face_id, log } = o
+      gap_time = 10 * 60 * 1000 # 10分
+      log_length = 0
+      section_idx = 1
+      last_at = -Infinity
+      last_event_id = section_id = null
+
+      write_at = 0
+
+      _.sortBy data.messages, (o)-> o.write_at = new Date o.date
+      .map (o)->
+        { face_id, to, log, write_at } = o
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
         log ?= "メモをはがした。"
+        if o.event_id != last_event_id
+          section_idx = 1
+          last_at = -Infinity
+        silent = write_at - last_at
+
         handle = o.mestype
-        phase_idx = o.logid[0..1]
         phase_group = o.subid
+        phase_idx = o.subid + o.mestype
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
           potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
@@ -97,9 +111,8 @@ module.exports =
               pno:  ""
             
 
-        switch phase_idx
+        switch o.logid[0..1]
           when "-S"
-            phase_idx = "wS"
             phase_group = "I"
 
         switch o.subid
@@ -129,22 +142,40 @@ module.exports =
             handle = "VSSAY"
           when "SAY"
             handle = "SSAY"
+        if to
+          handle = "AIM"
 
-        write_at = new Date(o.date)
-        write_clock = Math.floor(write_at / (60 * 60 * 1000)).toString(36)
         _id = "#{o.event_id}-#{phase_idx}-#{idx}"
         phase_id = "#{o.event_id}-#{phase_idx}"
-        section_id = "#{o.event_id}-#{write_clock}"
         deco = o.style
 
-        sections[section_id] ?=
-          _id: section_id
-          label: format.hour.format write_at
+        if silent > gap_time
+          if silent == Infinity || 10000 < log_length
+            if last = sections[section_id]
+              last.log_length = log_length
+              last.label = "#{last.label} ～ #{format.hour.format write_at}"
+
+            write_clock = Math.floor(write_at / gap_time).toString(36)
+            section_id = "#{o.event_id}-#{write_clock}"
+            sections[section_id] =
+              _id: section_id
+              label: format.hour.format write_at
+              write_at: write_at
+            log_length = 0
+
         phases[phase_id] ?=
           handle: handle
           group: phase_group
           update: false
-        Set.chat.add { _id, potof_id, phase_id, section_id, write_at, show, deco, log, phase_group, phase_handle: handle }
+        Set.chat.add oo = { _id, potof_id, phase_id, section_id, write_at, to, show, deco, log, phase_group, phase_handle: handle }
+        last_at = write_at
+        last_event_id = o.event_id
+        if o.subid in ["S","A","I"]
+          log_length += log.length
+      if last = sections[section_id]
+        last.log_length = log_length
+        last.label = "#{last.label} ～ #{format.hour.format write_at}"
+
       Set.phase.merge phases
       Set.section.merge sections
 
