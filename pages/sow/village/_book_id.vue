@@ -24,11 +24,13 @@
       report(handle="footer" key="finder")
         phases(v-if="part_id" v-model="phase_ids", :part_id="part_id", :groups="['M']")
         phases(v-if="part_id" v-model="phase_ids", :part_id="part_id", :groups="['S','A','I']")
+    report(v-if="1 < section_ids.length" handle="footer" key="small")
+      btn(v-model="section_ids", :as="[section_here_id]") {{ section_here.label }} へ巻き取る
     transition-group.inframe(name="list" tag="div")
       chat(v-for="o in chats", :id="o.id", :key="o.id")
     report(handle="footer" key="limitup")
-      scroll-mine(v-if="section_next" @input="section_add", :as="section_next") 次へ
-      btn(v-model="part_id", :as="part_next") 次の日へ
+      scroll-mine(v-if="section_next_id" @input="section_add", :as="section_next_id") 次へ
+      btn(v-else v-model="part_id", :as="part_next_id") 次の日へ
 
 </template>
 
@@ -74,13 +76,18 @@ module.exports =
         { read_at } = @$store.state.sow
         Query.parts.find @part_id
 
-      part_next: ->
+      section_here: ->
+        Query.sections.find @section_here_id
+      section_here_id: ->
+        @section_ids[0]
+
+      part_next_id: ->
         if @chat && @book
           ids = @book.parts.pluck('id')
           idx = ids.indexOf @part_id
           ids[idx + 1]
 
-      section_next: ->
+      section_next_id: ->
         if @chat && @part
           ids = @part.sections.pluck('id')
           idx = ids.indexOf @chat.section_id

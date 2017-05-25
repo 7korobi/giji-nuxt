@@ -27,6 +27,12 @@ module.exports =
     query:
       pretty: true
   ,
+    test: /\.css$/
+    loader: 'style-loader!css-loader?resolve url'
+  ,
+    test: /\.styl\.css$/
+    loader: 'style-loader/useable!css-loader?resolve url'
+  ,
     test: /\.styl$/
     loader: 'style-loader!css-loader!stylus-loader?resolve url'
   ,

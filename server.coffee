@@ -12,15 +12,17 @@ api app
 
 config = require './nuxt.config.js'
 Nuxt = require 'nuxt'
-nuxt = new Nuxt config
-if config.dev
-  nuxt.build()
-  .catch (err)->
-    console.error err
-    process.exit(1)
 
-app.use nuxt.render
+do ->
+  nuxt = await new Nuxt config
+  app.use nuxt.render
+  app.listen port, host
+  console.log("Server is listening on http://#{host}:#{port}")
 
+  if config.dev
+    try
+      await nuxt.build()
+    catch err
+      console.error err
+      process.exit(1)
 
-app.listen port, host
-console.log("Server is listening on http://#{host}:#{port}")

@@ -16,6 +16,7 @@ module.exports = {
     ],
     link: [
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" },
+      { rel: 'stylesheet', type: 'text/css', href: "/css/index.css" },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { href: "mailto:7korobi@gmail.com" }
     ],
@@ -25,7 +26,6 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    { src: "~assets/styl/_base.styl", lang: 'styl' }
   ],
   /*
   ** Customize the progress-bar color

@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import "../models/index"
 
-const store = new Vuex.Store({
+const store = {
   actions: {
     nuxtServerInit ({ commit }, { req }) {
     },
@@ -15,5 +15,8 @@ const store = new Vuex.Store({
     story: require("./story.coffee"),
     aggregate: require("./aggregate.coffee")
   }
-});
-export default store
+};
+
+export default function(){
+  return new Vuex.Store(store);
+}

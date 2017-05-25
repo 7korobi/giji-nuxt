@@ -1,0 +1,131 @@
+html,
+body,
+p
+  margin: 0
+
+body
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  -webkit-overflow-scrolling: touch
+  -webkit-touch-callout: none
+  text-size-adjust: 100%
+  font-smooth: antialiased
+  user-select: none
+  overflow-wrap: break-word
+  word-wrap:     break-word
+
+.swipe
+  overflow-y: hidden
+  overflow-x: scroll
+
+  table
+    border-collapse: collapse
+  td,
+  th
+    margin:  0
+    padding: 0
+    white-space: nowrap
+    vertical-align: center
+
+.fullframe
+  margin: 0
+
+.summary,
+.fullframe,
+.outframe,
+.contentframe,
+.inframe
+  box-sizing: content-box
+  transition: all 250ms ease
+
+.writeframe,
+.outframe
+  margin: 0 auto
+
+.center-left,
+.center-right
+  position: fixed
+  overflow-y: auto
+  pointer-events: none
+  z-index: 9
+  bottom: 50%
+  overflow-x: hidden
+  border-bottom-width: 2px
+  border-bottom-style: solid
+
+.center-left
+  left:   0
+
+.center-right
+  right:   0
+
+.summary,
+.sideframe,
+.writeframe
+  position: fixed
+  overflow-y: auto
+  pointer-events: none
+  z-index: 10
+  &:hover
+    z-index: 30
+
+.contentframe
+  .inframe
+    padding: 10px 0
+
+.writeframe
+  top: 0
+  box-sizing: content-box
+  .contentframe
+    background-attachment: scroll
+
+.summary
+  left:   0
+  bottom: 0
+  overflow-x: hidden
+
+.sideframe
+  right:  0
+  bottom: 0
+  overflow-x: visible
+
+.inframe
+  pointer-events: auto
+
+.sideframe
+  .icons
+    color: rgba(200, 210, 200, 0.5)
+    width: 40px
+    margin: 0 0 0 auto
+    overflow: hidden
+    display: flex
+    flex-direction: column
+    flex-wrap:       nowrap
+    align-items:     center
+    align-content:   space-around
+    justify-content: space-around
+
+    .item
+      flex-basis: auto
+      text-align: center
+      width:        40px
+      font-size: 35px
+      border-radius: 5px
+    .item.active
+      box-shadow:
+        0 0 20px 3px rgba(0,0,0,0.5) inset
+    .fa
+      margin: 2px auto
+
+  .icons-move
+    transition: transform 0.3s
+
+  .icons-enter-to
+    transition: all 0.2s ease 0.1s
+
+  .icons-leave-to
+    position: absolute
+
+  .icons-enter,
+  .icons-leave-to
+    opacity: 0
+    transform: translateX(60px)

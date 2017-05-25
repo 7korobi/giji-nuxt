@@ -14,5 +14,3 @@ div
   layout-footer
 
 </template>
-<style lang="stylus" scoped>
-</style>

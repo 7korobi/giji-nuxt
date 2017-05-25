@@ -90,7 +90,7 @@ div
             sup {{ yo.length }}
 
         td(v-for="xo in handle_calcs")
-          check(v-for="o in phase_at(xo.id, yo.id)" @input="tap", :value="value", :as="o.id")
+          check(v-for="o in phase_at(xo.id, yo.id)" @input="tap", :value="value", :as="o.id", :key="o.id")
             | {{ o.chats.list.length }}
 
 </template>
