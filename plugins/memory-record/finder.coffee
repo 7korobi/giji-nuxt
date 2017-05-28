@@ -25,11 +25,18 @@ module.exports = class Finder
   constructor: (@name)->
   calculate: (query, memory)->
     @list query, memory
+
+    arg = query._sort
+    query._list = query._list.sort(arg...) if arg.length
+
+    arg = query._page
+    query._list = query._list.page(arg...) if arg.length
+
     if query._list.length && @model.do_map_reduce
       query._reduce = @reduce query, memory, query._list
       if query._group?
         @group query, query._group
-    @sort query
+
     return
 
   list: (query, memory)->
@@ -119,10 +126,6 @@ module.exports = class Finder
     for path, o of cache
       _.set base, path, o
     base
-
-  sort: (query)->
-    arg = query._sort
-    query._list = query._list.sort(arg...) if arg.length
 
   group: (query)->
     { reduce, target } = query._group

@@ -26,5 +26,12 @@ new Rule("phase").schema ->
     @deploy: ->
       if o = attrs[@handle]
         Object.assign @, o
-        
+    @map_reduce: (o, emit)->
+      emit "group",
+        summary: o.group
+        count: 1
+      emit "handle",
+        summary: o.handle
+        count: 1
+
 

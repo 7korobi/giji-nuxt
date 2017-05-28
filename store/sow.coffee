@@ -59,22 +59,14 @@ module.exports =
           face_id:  o.face_id
           sign: o.sow_auth_id
 
-      phase_types = {}
       phases =
         "#{book_id}-0-mA":
           handle: "MAKER"
           group:  "A"
           update: false
 
-      sections = {}
-
-      gap_time = 5 * 60 * 1000 # 5分
-      log_length = 0
-      section_idx = 1
-      chat_at = -Infinity
-      chat = section_id = section = null
-
       write_at = 0
+      chat = null
 
       _.sortBy data.messages, (o)-> o.write_at = new Date o.date
       .map (o)->
@@ -82,10 +74,6 @@ module.exports =
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
         log ?= "メモをはがした。"
-        if o.event_id != chat?.event_id
-          section_idx = 1
-          chat_at = -Infinity
-        silent = write_at - chat_at
 
         handle = o.mestype
         phase_group = o.subid
@@ -150,36 +138,16 @@ module.exports =
         _id = "#{phase_id}-#{idx}"
         deco = o.style
 
-        if silent > gap_time
-          if silent == Infinity || 10000 < log_length
-            if section = sections[section_id]
-              section.write_at = chat.write_at
-
-            write_clock = Math.floor(write_at / gap_time).toString(36)
-            section_id = "#{o.event_id}-#{write_clock}"
-            sections[section_id] =
-              _id: section_id
-              begin_at: write_at
-              write_at: write_at
-            log_length = 0
-
-        phase_types[phase_idx] ?= phase_type
         phases[phase_id] ?=
           handle: handle
           type:  phase_type
           group: phase_group
           update: false
-        Set.chat.add { _id, potof_id, phase_id, section_id, silent, write_at, to, show, deco, log, handle, phase_group, phase_handle: handle }
+        Set.chat.add { _id, potof_id, phase_id, write_at, to, show, deco, log, handle }
         chat_at = write_at
         chat = o
-        if o.subid in ["S","A","I"]
-          log_length += log.length
-
-      if section = sections[section_id]
-        section.write_at = write_at
 
       Set.phase.merge phases
-      Set.section.merge sections
 
       Set.part.merge data.events.map (o)->
         _id: o._id

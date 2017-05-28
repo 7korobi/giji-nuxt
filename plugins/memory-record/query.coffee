@@ -32,7 +32,8 @@ module.exports = class Query
     _all_ids = _group = null
     _filters = []
     _sort = []
-    new Query { _all_ids, _group, _filters, _sort }, ->
+    _page = [Infinity, 0]
+    new Query { _all_ids, _group, _filters, _sort, _page }, ->
       @all = @
       @_memory = OBJ()
 
@@ -40,7 +41,7 @@ module.exports = class Query
     @_copy base
     tap.call @
 
-  _copy: ({ @all, @_all_ids, @_group, @_filters, @_sort })->
+  _copy: ({ @all, @_all_ids, @_group, @_filters, @_sort, @_page })->
 
   in: (req)->
     query_parser @, req, (q, target, req, path)=>
@@ -106,7 +107,11 @@ module.exports = class Query
   sort: (sort...)->
     return @ if _.isEqual sort, @_sort
     new Query @, -> @_sort = sort
-
+  
+  page: (page...)->
+    return @ if _.isEqual page, @_page
+    new Query @, -> @_page = page
+    
   shuffle: ->
     new Query @, -> @_sort = [Math.random]
 

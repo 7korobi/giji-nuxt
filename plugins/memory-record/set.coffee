@@ -58,6 +58,12 @@ module.exports = class Set extends Array
     o.__proto__ = @__proto__
     o
 
+  page: (per, pages...)->
+    o = for a, idx in @ when Math.floor(idx / per) in pages
+      a
+    o.__proto__ = @__proto__
+    o
+
   where: (req)-> @query.where req
   in:    (req)-> @query.in    req
 

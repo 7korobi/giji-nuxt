@@ -35,7 +35,7 @@
       transition-group.tlist(name="list" tag="tbody")
         tr(v-for="o in potofs", :key="o.id" v-if="! o.hide")
           th.r(:class="o.live.role_id") {{ o.job }}
-          th.l(:class="o.live.role_id") {{ o.face.name }}
+          th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
           td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
           td.r(:class="o.live.role_id") {{ count("回", say(o.id).count) }}
@@ -55,14 +55,14 @@
       tbody
         tr
           td
-            btn(v-model="hide_ids", :as="live_on")  参加者
+            btn(@input="reset", :value="value", :as="live_on")  参加者
           td
-            btn(v-model="hide_ids", :as="live_off") リタイア
+            btn(@input="reset", :value="value", :as="live_off") リタイア
         tr
           td
-            btn(v-model="hide_ids", :as="full_on")  全表示
+            btn(@input="reset", :value="value", :as="full_on")  全表示
           td
-            btn(v-model="hide_ids", :as="full_off") クリア
+            btn(@input="reset", :value="value", :as="full_off") クリア
 
     portrate(v-for="o in potofs", :key="o.face_id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
       .bar(:class="bgc(o)")
@@ -73,17 +73,17 @@
 { Query } = require "~plugins/memory-record"
 
 module.exports =
+  props: ["value"]
   data: ->
     sort: "live"
     order: "asc"
     full_mode: true
     live_mode: true
-    hide_ids: []
   watch:
-    hide_ids: ->
+    value: ->
       for o in @potofs
         o.hide = false
-      for id in @hide_ids
+      for id in @value
         Query.potofs.hash[id].hide = true
       @$store.commit "book/data", {}
 
@@ -131,11 +131,15 @@ module.exports =
       .filter f
       .map (o)-> o.id
 
+    reset: (as)->
+      @$emit 'input', as
+
     toggle: (o)->
       o.hide = ! o.hide
-      @hide_ids = @potofs
+      ids = @potofs
       .filter (o)-> o.hide
       .map (o)-> o.id
+      @$emit 'input', ids
 
     reverse: ->
       switch @order

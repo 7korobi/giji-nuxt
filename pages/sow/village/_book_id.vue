@@ -13,26 +13,51 @@
         check.item(as="current" v-model="menus")
           i.fa.fa-user
   .summary
-    toc
+    toc(:chats="chats", :parts="parts")
     mentions
-    potofs
+    potofs(v-model="hide_potof_ids")
   .center-left
   .center-right
 
   .contentframe
     .inframe
       report(handle="footer" key="finder")
-        phases(v-if="part_id" v-model="phase_ids", :part_id="part_id", :groups="['M']")
-        phases(v-if="part_id" v-model="phase_ids", :part_id="part_id", :groups="['S','A','I']")
-    report(v-if="1 < section_ids.length" handle="footer" key="small")
-      btn(v-model="section_ids", :as="[section_here_id]") {{ section_here.label }} へ巻き取る
-    transition-group.inframe(name="list" tag="div")
-      chat(v-for="o in chats", :id="o.id", :key="o.id")
-    report(handle="footer" key="limitup")
-      scroll-mine(v-if="section_next_id" @input="section_add", :as="section_next_id") 次へ
-      btn(v-else v-model="part_id", :as="part_next_id") 次の日へ
+        span
+          btn(v-model="mode", as="title")
+            | タイトル
+            sup(v-if="part") {{ now.title.list.length }}
+          btn(v-model="mode", as="memo")
+            | メモ
+            sup(v-if="part") {{ now.memo.list.length }}
+        span
+          btn(v-model="mode", as="normal")
+            | 通常
+            sup(v-if="part") {{ now.normal.list.length }}
+        span
+          btn(v-model="mode", as="solo")
+            | 独り言
+            sup(v-if="part") {{ now.solo.list.length }}
+          btn(v-model="mode", as="extra")
+            | 非日常
+            sup(v-if="part") {{ now.extra.list.length }}
+          btn(v-model="mode", as="rest")
+            | 墓休み
+            sup(v-if="part") {{ now.rest.list.length }}
+        span
+          btn(v-model="mode", as="full")
+            | バレ
+            sup(v-if="part") {{ now.full.list.length }}
+
+      report(v-if="1 < page_ids.length" handle="footer" key="small")
+        btn(v-model="page_ids", :as="[page_here_id]") {{ page_here_id + 1 }} page へ巻き取る
+      transition-group.inframe(name="list" tag="div")
+        chat(v-for="o in chats_here", :id="o.id", :key="o.id")
+      report(handle="footer" key="limitup")
+        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次へ
+        btn(v-else v-model="part_id", :as="part_next_id") 次の日へ
 
 </template>
+
 
 <style lang="stylus" scoped>
 </style>
@@ -51,21 +76,24 @@ module.exports =
 
     data: ->
       q.data @,
-        section_ids: []
+        hide_potof_ids: []
         phase_ids: []
+        page_ids: []
         menus: []
         chat_id: ""
         part_id: ""
+        mode: "full"
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
       .then =>
         part = @book.parts.list.first
         @part_id  = part.id
+        @page_ids = [0]
 
     methods:
-      section_add: (id)->
-        @section_ids = [id, @section_ids...]
+      page_add: (id)->
+        @page_ids = [id, @page_ids...]
 
     computed:
       book: ->
@@ -76,22 +104,18 @@ module.exports =
         { read_at } = @$store.state.sow
         Query.parts.find @part_id
 
-      section_here: ->
-        Query.sections.find @section_here_id
-      section_here_id: ->
-        @section_ids[0]
-
       part_next_id: ->
         if @chat && @book
           ids = @book.parts.pluck('id')
           idx = ids.indexOf @part_id
           ids[idx + 1]
 
-      section_next_id: ->
-        if @chat && @part
-          ids = @part.sections.pluck('id')
-          idx = ids.indexOf @chat.section_id
-          ids[idx + 1]
+      page_here_id: ->
+        @page_ids[0]
+
+      page_next_id: ->
+        if @page_here_id? && @now[@mode].page(50, @page_here_id + 1).list.length
+          @page_here_id + 1
 
       chat: ->
         { read_at } = @$store.state.sow
@@ -100,6 +124,37 @@ module.exports =
 
       parts: ->
         @book?.parts.list ? []
+
       chats: ->
-        Query.chats.where(phase_id: @phase_ids, section_id: @section_ids).list ? []
+        @all[@mode]
+
+      chats_here: ->
+        @now[@mode]
+        .where (o)=> !(o.potof_id in @hide_potof_ids)
+        .page 50, @page_ids...
+        .list
+
+      all: ->
+        full = Query.chats.where("phase.group": ['S','A','I'])
+
+        memo:   Query.chats.where("phase.group": ['M'])
+        full:   full
+        title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','dark']
+        rest:   full.where (o)-> o.phase.handle in ['GSAY']
+        normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark']
+        extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY'])
+        solo:   full.where (o)-> o.phase.handle in ['TSAY']
+
+      now: ->
+        if @part
+          title:   @all.title.where({@part_id})
+          memo:     @all.memo.where({@part_id})
+          full:     @all.full.where({@part_id})
+          rest:     @all.rest.where({@part_id})
+          normal: @all.normal.where({@part_id})
+          extra:   @all.extra.where({@part_id})
+          solo:     @all.solo.where({@part_id})
+        else
+          @all
+
 </script>
