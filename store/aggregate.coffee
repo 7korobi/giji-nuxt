@@ -99,7 +99,7 @@ module.exports =
   actions:
     faces: ({dispatch, state, commit})->
       unless state.read_at
-        axios.get "http://utage.family.jp:4000/api/aggregate/faces"
+        axios.get "http://giji.check.jp/api/aggregate/faces"
         .then ({ status, data })->
           commit "join",  { data, id: null }
           commit "faces", { data, id: null }
@@ -108,7 +108,7 @@ module.exports =
 
     face: ({state, commit}, id)->
       unless state[id].read_at
-        axios.get "http://utage.family.jp:4000/api/aggregate/faces/#{id}"
+        axios.get "http://giji.check.jp/api/aggregate/faces/#{id}"
         .then ({ status, data })->
           commit "join", { data, id }
           commit "face", { data, id }

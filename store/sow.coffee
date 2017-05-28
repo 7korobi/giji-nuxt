@@ -164,6 +164,6 @@ module.exports =
 
   actions:
     story: ({commit}, story_id)->
-      axios.get "http://utage.family.jp:4000/api/story/oldlog/#{story_id}"
+      axios.get "http://giji.check.jp/api/story/oldlog/#{story_id}"
       .then ({ status, data })->
         commit "join", data

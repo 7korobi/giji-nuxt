@@ -21,11 +21,11 @@ module.exports =
 
   actions:
     progress: ({commit})->
-      axios.get "http://utage.family.jp:4000/api/story/progress"
+      axios.get "http://giji.check.jp/api/story/progress"
       .then ({ status, data })->
         commit "join", data
         commit "progress", data
     oldlog: ({commit})->
-      axios.get "http://utage.family.jp:4000/api/story/oldlog"
+      axios.get "http://giji.check.jp/api/story/oldlog"
       .then ({ status, data })->
         commit "join", data
