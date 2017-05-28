@@ -34,8 +34,8 @@ body
   background-position-y: top
   background-attachment: fixed
   background-repeat: no-repeat
-  background-image: url("~assets/images/bg/moon-red.png")
+  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/moon-red.png")
   background-color: #551826
 
 .filmend
-  background-image: url("~assets/images/bg/film-wa-end.png")
+  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-wa-end.png")

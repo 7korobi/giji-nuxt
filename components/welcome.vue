@@ -116,7 +116,7 @@ module.exports =
 
 #welcome
   background-size:  cover
-  background-image: url(../assets/images/bg/fhd-giji.png)
+  background-image: url(http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/fhd-giji.png)
   .btns
     background-color: rgba(77, 78, 70, 0.9)
 

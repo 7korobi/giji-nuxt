@@ -33,11 +33,11 @@ palette(says,  silver,   dark, $border)
   background-repeat: repeat
   background-position: right
   background-attachment: fixed
-  background-image: url("~assets/images/bg/renga.png")
+  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/renga.png")
   .talk
     .baloon
       left:  -6px
       border-right-width 1px
 
 .filmend
-  background-image: url("~assets/images/bg/film-end.png")
+  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")
