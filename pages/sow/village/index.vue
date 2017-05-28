@@ -4,7 +4,7 @@
     transition-group.inframe(name="list" tag="div")
       post.form(handle="btns" key="form")
         span
-          btn(as="" @input="reset()")
+          btn(as="" @input="reset()" value="order")
             i.fa.fa-eraser
         span
           btn(as="vid"             v-model="order" @toggle="submenu")
