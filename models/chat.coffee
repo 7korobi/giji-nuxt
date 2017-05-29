@@ -17,6 +17,9 @@ new Rule("chat").schema ->
       @q =
         mention_ids: []
       @log = @log.replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)=>
+        [phase_handle_head, phase_group] = phase_idx
+        if phase_idx == 'MM'
+          phase_idx = phase.idx[0] + phase_group
         idx = Number($1)
         @q.mention_ids.push mention_id = [@book_id, part_idx, phase_idx, idx].join("-")
         """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
