@@ -1,5 +1,8 @@
 module.exports =
   extend: (config, { isDev, isClient })->
+    if config.plugins[7]
+      console.log config.plugins.pop()
+
     config.resolve.extensions = ['.vue', '.coffee', '.js', '.json']
     if isClient
       config.devtool = 'source-map'

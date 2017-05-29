@@ -27,7 +27,6 @@
     "style-loader": "latest",
     "stylus": "latest",
     "stylus-loader": "latest",
-    "uglify-js": "github:mishoo/UglifyJS2#harmony",
     "vee-validate": "latest",
     "vue": "latest",
     "vue-cookie": "latest",
