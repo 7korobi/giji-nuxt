@@ -54,11 +54,11 @@ module.exports =
     table
       tbody
         tr(v-for="(o, line) in parts", :key="o.id")
-          th.r
+          th.r.form
             btn(@input="input_part", :value="$parent.part_id", :as="o.id")
               | {{o.label}}
               sup {{ chats.where({part_id: o.id}).list.length }}
-          td.l
+          td.l.form
             span(v-for="page in pages(o.id)", :key="page")
               btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, [page])" @toggle="input_page(o.id, [page])", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
                 | {{ page + 1 }}

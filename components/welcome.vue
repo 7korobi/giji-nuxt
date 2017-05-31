@@ -66,17 +66,17 @@ module.exports =
         th.btns ＲＰ
     tbody
       tr
-        td.links
+        td.links.form
           sow(folder="LOBBY")
           sow(folder="OFFPARTY")
-        td.links
+        td.links.form
           sow(folder="MORPHE")
           sow(folder="CABALA") cafe
-        td.links
+        td.links.form
           sow(folder="WOLF")
           sow(folder="ULTIMATE")
           sow(folder="ALLSTAR")
-        td.links
+        td.links.form
           sow(folder="RP") role-play
           sow(folder="PRETENSE") RP-advance
           sow(folder="PERJURY")
