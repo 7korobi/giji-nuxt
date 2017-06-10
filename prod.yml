@@ -1,10 +1,9 @@
 apps:
-  - exec_mode: cluster
-    instances: 1
+  - exec_mode: cluster_mode
+    instances: 3
     name: giji
 
-    interpreter: coffee
-    script: server.coffee
+    script: prod.js
     watch:
       - ./api
       - ./config
