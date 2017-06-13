@@ -11,6 +11,7 @@
 <script lang="coffee">
 module.exports =
   default:
+    middleware: 'test'
     data: (req)->
       now = new Date() - 0
       clicks: 0

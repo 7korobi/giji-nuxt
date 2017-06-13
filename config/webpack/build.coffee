@@ -1,15 +1,13 @@
 module.exports =
   extend: (config, { isDev, isClient })->
-    if config.plugins[7]
-      console.log config.plugins.pop()
-
-    config.resolve.extensions = ['.vue', '.coffee', '.js', '.json']
     if isClient
       config.devtool = 'source-map'
 
   vendor: [
     'axios'
+    'vee-validate'
     '~plugins/memory-record.coffee'
+    '~plugins/browser-value'
   ]
 
   loaders: [
@@ -22,29 +20,12 @@ module.exports =
     test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/
     loader: 'url-loader'
     query:
-      limit: 1000 # 1 KO
+      limit: 1000 # 1KO
       name: 'fonts/[name].[hash:7].[ext]'
-  ,
-    test: /\.pug$/
-    loader: 'pug-html'
-    query:
-      pretty: true
-  ,
-    test: /\.css$/
-    loader: 'style-loader!css-loader?resolve url'
-  ,
-    test: /\.styl\.css$/
-    loader: 'style-loader/useable!css-loader?resolve url'
   ,
     test: /\.styl$/
     loader: 'style-loader!css-loader!stylus-loader?resolve url'
   ,
     test: /\.styl\.use$/
     loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
-  ,
-    test: /\.yml$/
-    loader: 'json-loader!yaml-loader'
-  ,
-    test: /\.coffee$/
-    loader: 'coffee-loader'
   ]
