@@ -4,7 +4,7 @@ _ = require "lodash"
 
 module.exports =
   namespaced: true
-  state:
+  state: ->
     read_at: Date.now()
 
   mutations:

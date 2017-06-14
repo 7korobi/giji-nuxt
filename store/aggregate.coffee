@@ -38,7 +38,8 @@ for { _id } in Query.faces.list
 
 module.exports =
   namespaced: true
-  state: state
+  state: ->
+    state
   mutations:
     join: (state,{ id, data })->
       state.read_at = Date.now()

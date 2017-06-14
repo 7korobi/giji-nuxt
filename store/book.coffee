@@ -3,7 +3,7 @@ axios = require "axios"
 
 module.exports =
   namespaced: true
-  state:
+  state: ->
     read_at: Date.now()
 
     folder_id: ""

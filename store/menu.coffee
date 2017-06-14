@@ -10,7 +10,7 @@ new Rule("menu").schema ->
 
 module.exports =
   namespaced: true
-  state:
+  state: ->
     top:    0
     center: 0
     bottom: 0

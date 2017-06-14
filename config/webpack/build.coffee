@@ -23,9 +23,6 @@ module.exports =
       limit: 1000 # 1KO
       name: 'fonts/[name].[hash:7].[ext]'
   ,
-    test: /\.styl$/
-    loader: 'style-loader!css-loader!stylus-loader?resolve url'
-  ,
     test: /\.styl\.use$/
     loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
   ]

@@ -9,7 +9,6 @@
     "agenda-ui": "latest",
     "axios": "latest",
     "body-parser": "latest",
-    "copy-webpack-plugin": "latest",
     "express-session": "latest",
     "mongodb-bluebird": "latest",
     "mongoose": "latest",
