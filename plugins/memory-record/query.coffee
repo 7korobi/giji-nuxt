@@ -145,13 +145,11 @@ module.exports = class Query
 
     list:
       get: ->
-        @all._finder.calculate(@, @all._memory) unless @_list?
-        @_list
+        @reduce?.list ? []
 
     hash:
       get: ->
-        @all._finder.calculate(@, @all._memory) unless @_hash?
-        @_hash
+        @reduce?.hash ? {}
 
     memory:
       get: ->

@@ -1,5 +1,5 @@
 _ = require "lodash"
-{ Query } = require "./index"
+{ Query, Format } = require "./index"
 
 OBJ = ->
   new Object null
@@ -24,128 +24,27 @@ validate = (item, chklist)->
 module.exports = class Finder
   constructor: (@name)->
   calculate: (query, memory)->
-    @list query, memory
-
-    arg = query._sort
-    query._list = query._list.sort(arg...) if arg.length
-
-    arg = query._page
-    query._list = query._list.page(arg...) if arg.length
-
-    if query._list.length && @model.do_map_reduce
-      query._reduce = @reduce query, memory, query._list
-      if query._group?
-        @group query, query._group
-
+    cache = _.cloneDeep Format[@name.base]
+    @reduce @map, cache, query, memory
     return
 
-  list: (query, memory)->
-    deploy = (id, o)->
-      query._hash[id] = o.item
-    query._hash = OBJ()
-    query._list =
-      for id in query._all_ids ? Object.keys memory
-        continue unless o = memory[id]
-        continue unless validate o.item, query._filters
-        deploy id, o
-    @set.bless query._list
+  reduce: (map, cache, query, memory)->
+    for id in query._all_ids ? Object.keys memory
+      continue unless o = memory[id]
+      { item, emits } = o
+      continue unless validate item, query._filters
+      for [path, a] in emits
+        map.reduce item, cache[path], a
 
-  reduce: (query, memory, list)->
-    init = (o, map)=>
-      if map.count
-        o.count ?= 0 
-      if map.all
-        o.all ?= 0 
-      if map.list
-        o.list ?= @set.bless([])
-      if map.summary
-        o.summary_data ?= OBJ()
-      if map.set
-        o.set_data ?= OBJ()
-      if map._id
-        o.id ?= map._id
-      o
-
-    reduce = (item, o, map)=>
-      if map.belongs_to
-        mdl = (id)->
-          val = { id, length: 0 }
-          val.__proto__ = Query[map.belongs_to].find id
-          val
-      else
-        mdl = (id)-> { id, length: 0 }
-
-      if map.count
-        o.count += map.count
-      if map.all
-        o.all += map.all
-      if map.list
-        o.list.push map.list
-      if map.set
-        o.set_data[map.set] = true
-
-      unless map.max <= o.max
-        o.max_is = item
-        o.max = map.max
-      unless o.min <= map.min
-        o.min_is = item
-        o.min = map.min
-
-      if map.summary
-        id = map.summary
-        val = o.summary_data[id]
-        unless val
-          return unless val = mdl id
-          val.length = 0
-          o.summary_data[id] = val
-        val.length += map.count
-        unless map.max <= val.max
-          val.max_is = item
-          val.max = map.max
-        unless val.min <= map.min
-          val.min_is = item
-          val.min = map.min
-
-    # map_reduce
-    cache = OBJ()
-    for { id } in list
-      { item, emits } = memory[id]
-      if emits
-        for [path, map] in emits
-          o = cache[path.join('.')] ?= @map.bless({})
-          init o, map
-
-    for { id } in list
-      { item, emits } = memory[id]
-      if emits
-        for [path, map] in emits
-          o = cache[path.join('.')]
-          reduce item, o, map
-
-    base = OBJ()
+    if cache._reduce
+      cache._reduce.sort = query._sort if query._sort
+      cache._reduce.page = query._page if query._page
     for path, o of cache
-      _.set base, path, o
-    base
-
-  group: (query)->
-    { reduce, target } = query._group
-    reduce_path = _.property reduce
-    target_path = _.property target
-
-    deploy = (id, o)->
-      query._memory[id] = o
-      query._hash[id] = o.item
-    query._memory = OBJ()
-    query._hash = OBJ()
-    query._list =
-      for id, reduced of reduce_path query._reduce
-        o = target_path reduced
-        deploy o._id, o
+      map.finish o, query, @set
+      _.set query, path, o
 
   clear_cache: (all)->
     delete all._reduce
-    delete all._list
-    delete all._hash
     all.cache = {}
     all._write_at = Date.now()
 
@@ -175,7 +74,7 @@ module.exports = class Finder
   merge: (all, from, parent)->
     { _memory } = all
     each from, (item)=>
-      o = @model.$deploy item, parent
+      o = @map.$deploy @model, item, parent
       old = _memory[item.id]
       _memory[item.id] = o
       if old?

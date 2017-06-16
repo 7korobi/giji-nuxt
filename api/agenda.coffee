@@ -1,4 +1,4 @@
-agenda    = new require("agenda")
+agenda = new require("agenda")
   db:
     address: "mongodb://localhost/giji"
     collection: "jobCollectionName"

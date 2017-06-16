@@ -30,6 +30,8 @@ depends = (name)->
   return
 
 module.exports = class Set extends Array
+  @$deploy: (map, model, item, parent)->
+
   @bless: (list)->
     ids = list.map (o)=> o.id
     list.__proto__ = @prototype

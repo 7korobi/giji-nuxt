@@ -60,62 +60,62 @@
         p(v-if="order === 'vid'")
           check(v-for="o in summary('folder_id')" v-model="folder_id", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'timer.updateddt'")
           check(v-for="o in summary('yeary')" v-model="yeary", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'timer.updateddt'")
           check(v-for="o in summary('monthry')" v-model="monthry", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'upd_range'")
           check(v-for="o in summary('upd_range')" v-model="upd_range", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'upd_at'")
           check(v-for="o in summary('upd_at')" v-model="upd_at", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'sow_auth_id'")
           check(v-for="o in summary('sow_auth_id')" v-model="sow_auth_id", :as="o.id", :key="o.id")
             | {{ o.id }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'rating'")
           check(v-for="o in summary('rating')" v-model="rating", :as="o.id", :key="o.id")
             img(:src="rating_img(o.id)")
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'vpl.0'")
           check(v-for="o in summary('size')" v-model="size", :as="o.id", :key="o.id")
             | {{ o.id }}人
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
 
         p(v-if="order === 'card.option'")
           check(v-for="o in summary('option')" v-model="option", :as="o.id", :key="o.id")
             | {{ o.label }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'card.event'")
           check(v-for="o in summary('event')" v-model="event", :as="o.id", :key="o.id")
             | {{ o.label }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'card.config'")
           check(v-for="o in summary('config')" v-model="config", :as="o.id", :key="o.id")
             | {{ o.label }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'card.discard'")
           check(v-for="o in summary('discard')" v-model="discard", :as="o.id", :key="o.id")
             | {{ o.label }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
 
         p(v-if="order === 'say.CAPTION'")
           check(v-for="o in summary('say')" v-model="say", :as="o.id", :key="o.id")
             | {{ o.CAPTION }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
 
         p(v-if="order === 'game.label'")
           check(v-for="o in summary('game')" v-model="game", :as="o.id", :key="o.id")
             | {{ o.label }}
-            sup(v-if="1 < o.length") {{ o.length }}
+            sup(v-if="1 < o.count") {{ o.count }}
 
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name

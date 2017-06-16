@@ -42,7 +42,7 @@ module.exports = class Rule
       summary:
         enumerable: true
         get: ->
-          _.sortBy @summary_data, (o)-> - o.length
+          _.sortBy @summary_data, (o)-> - o.count
 
       avg:
         enumerable: true
@@ -129,10 +129,12 @@ module.exports = class Rule
     finder.set = @set
 
     Mem.Query[@$name.list] = @set.all = @all
-    Mem.Set[@$name.base]   = @set.bless []
-    Mem.Map[@$name.base]   = finder.map   = @map
-    Mem.Form[@$name.base]  = finder.form  = @form
+
+    Mem.Set[@$name.base] = @set.bless []
+    Mem.Map[@$name.base] = finder.map = @map
+    Mem.Form[@$name.base] = finder.form  = @form
     Mem.Model[@$name.base] = finder.model = @model
+    Mem.Format[@$name.base] = finder.format = @map.format = {}
     @
 
   key_by: (keys)->
