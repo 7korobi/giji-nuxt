@@ -45,6 +45,7 @@ new Rule("face").schema ->
     name_head: (tag_id = "all")->
       counts = []
       for key, mr of all.tag(tag_id).reduce.name_head
+        mr.id = key
         counts[mr.set.length] ?= []
         counts[mr.set.length].push mr
       counts
@@ -57,7 +58,6 @@ new Rule("face").schema ->
       head = o.name[1] if head in ["†"]
       emit "all", "all", map
       emit "name_head", head,
-        _id: head
         count: 1
         set: o.name
       for tag in o.tag_ids

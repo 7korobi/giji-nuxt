@@ -33,21 +33,7 @@ module.exports = class Rule
 
     @depend_on base
 
-    @map_property =
-      set:
-        enumerable: true
-        get: ->
-          Object.keys @set_data
-
-      summary:
-        enumerable: true
-        get: ->
-          _.sortBy @summary_data, (o)-> - o.count
-
-      avg:
-        enumerable: true
-        get: ->
-          @all / @count if @all? && @count
+    @map_property = {}
 
     @model_property =
       $form:

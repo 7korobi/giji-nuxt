@@ -23,10 +23,6 @@ module.exports = class Map
     o
 
   @init: (o, map)->
-    if map._id
-      o.id = map._id
-    if map.length
-      o.length = 0 
     if map.count
       o.count = 0 
     if map.all
@@ -52,15 +48,24 @@ module.exports = class Map
       o.list = o.list.sort(o.sort...) if o.sort
       o.list = o.list.page(o.page...) if o.page
 
-    if o.summary_data && o.belongs_to
-      for id, val of o.summary_data
-        val.__proto__ = Query[o.belongs_to].find id
+    if o.all? && o.count
+      o.avg = o.all / o.count
+
+    if o.set_data
+      o.set = Object.keys o.set_data
+
+    if o.summary_data
+      if o.belongs_to
+        for id, val of o.summary_data
+          val.__proto__ = Query[o.belongs_to].find id
+      o.summary = _.orderBy o.summary_data, "count", "desc"
 
   @reduce: (item, o, map)->
     if map.count
       o.count += map.count
     if map.all
       o.all += map.all
+
     if map.list
       o.list.push map.list
     if map.hash
