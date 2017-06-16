@@ -24,23 +24,23 @@ module.exports = class Map
 
   @init: (o, map)->
     if map._id
-      o.id ?= map._id
+      o.id = map._id
     if map.length
-      o.length ?= 0 
+      o.length = 0 
     if map.count
-      o.count ?= 0 
+      o.count = 0 
     if map.all
-      o.all ?= 0 
+      o.all = 0 
 
     if map.list
-      o.list ?= []
+      o.list = []
     if map.set
-      o.set_data ?= {}
+      o.set_data = {}
     if map.hash
-      o.hash ?= {}
+      o.hash = {}
 
     if map.summary
-      o.summary_data ?= {}
+      o.summary_data = {}
     if map.belongs_to
       o.belongs_to = map.belongs_to
 
