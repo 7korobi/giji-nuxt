@@ -1,11 +1,6 @@
 apps:
-  - exec_mode: cluster_mode
+  - exec_mode: fork
     instances: 3
     name: giji
 
     script: prod.js
-    watch:
-      - ./api
-      - ./config
-      - ./nuxt.config.js
-      - ./server.coffee
