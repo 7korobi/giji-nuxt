@@ -8,12 +8,6 @@ module.exports = (app)->
     res.header "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
     next()
 
-  app.get '/api/test', (req, res)->
-    res.json
-      a: 1
-    res.status(401).json
-      error: "bad credentials"
-
   app.use session
     secret: process.env.SECRET_KEY_BASE
     resave: false
