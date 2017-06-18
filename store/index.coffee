@@ -1,16 +1,26 @@
 require "../models/index"
+axios = require "axios"
 
 module.exports =
   default:
     state: ->
-      id: null
+      user: null
       profile: {}
 
     actions:
       nuxtServerInit: ({ commit }, { req })->
-        { id, profile } = req.session
-        commit 'oauth', { id, profile }
+        { cookie, passport } = req.session
+        if id = passport?.user
+          commit "login", id
+
+          axios.get "http://giji.check.jp/api/user/#{id}"
+          .then ({ status, data })->
+            console.log "HTTP :: /api/books/#{id}"
+            commit "profile", data
 
     mutations:
-      oauth: (state, data)->
-        Object.assign state, data
+      login: (state, id)->
+        state.user = id
+
+      profile: (state, data)->
+        state.profile = data

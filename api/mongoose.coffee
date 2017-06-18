@@ -15,29 +15,20 @@ Passport = mongoose.model 'Passport', new Schema
 
 passport = require "passport"
 passport.serializeUser (o, done)->
-  _id = [o.provider, o.account].join("-")
-  Passport.findByIdAndUpdate _id, o,
+  id = [o.provider, o.account].join("-")
+  Passport.findByIdAndUpdate id, o,
     upsert: true
   .exec (err, doc)->
     if err
       console.error err
-    else
-      console.log doc
-    done err, _id
+    done err, id
 
 passport.deserializeUser (id, done)->
-  Passport.findById id, (err, doc)->
-    if err
-      console.error err
-    else
-      console.log doc
-    done err, doc
-
+  done null, id
 
 module.exports = (app)->
-  app.get '/api/user', (req, res)->
-    res.json
-      a: 1
-    res.status(401).json
-      error: "bad credentials"
+  app.get '/api/user/:id', (req, res)->
+    { id } = req.params
+    Passport.findById id, (err, doc)->
+      res.json doc
   return

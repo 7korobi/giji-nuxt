@@ -4,6 +4,7 @@
     .inframe
       br
       post(:write_at="Date.now()", handle="SSAY")
+        p {{ user }}
         ul
           li(v-for="(val, key) in profile")
             kbd {{ key }}
@@ -27,5 +28,6 @@ module.exports =
 
   computed:
     profile: -> @$store.state.profile
+    user:    -> @$store.state.user
     
 </script>
