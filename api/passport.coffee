@@ -38,6 +38,9 @@ auth =
 module.exports = (app)->
   app.use passport.initialize()
   app.use passport.session()
+  app.get "/logout", (req, res)->
+    req.logout()
+    res.redirect('/')
 
   for provider, { attr, module } of auth
     if config.dev
@@ -46,7 +49,8 @@ module.exports = (app)->
       attr.callbackURL = "http://giji.check.jp/auth/#{provider}/callback"
     
 
-    passport.use new module attr, (accessToken, refreshToken, profile, done)->
+    passport.use new module attr, (accessToken, refreshToken, { provider, id, displayName, name, emails, photos }, done)->
+      console.log { accessToken, refreshToken, provider, id, displayName, name, emails, photos }
       passport.session.id = profile.id
       passport.session.provider = provider
       process.nextTick ->
