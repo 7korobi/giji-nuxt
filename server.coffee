@@ -2,7 +2,7 @@ require 'coffeescript/register'
 express = require 'express'
 
 host = process.env.HOST || '127.0.0.1'
-port = process.env.PORT || '4000'
+port = 4000 + parseInt process.env.NODE_APP_INSTANCE ? 0
 
 
 app = express()
