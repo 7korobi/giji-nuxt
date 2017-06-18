@@ -41,9 +41,9 @@ module.exports = (app)->
 
   for provider, { attr, module } of auth
     if config.dev
-      attr.callbackURL = "http://giji.check.jp/auth/#{provider}/callback"
-    else
       attr.callbackURL = "http://lvh.me:4000/auth/#{provider}/callback"
+    else
+      attr.callbackURL = "http://giji.check.jp/auth/#{provider}/callback"
     
 
     passport.use new module attr, (accessToken, refreshToken, profile, done)->
