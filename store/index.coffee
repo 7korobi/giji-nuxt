@@ -5,11 +5,12 @@ module.exports =
     state: ->
       id: null
       profile: {}
+
     actions:
       nuxtServerInit: ({ commit }, { req })->
-        { profile, id } = req.session.id
+        { id, profile } = req.session
         commit 'oauth', { id, profile }
 
     mutations:
-      oauth: (state, id)->
-        state.id = id
+      oauth: (state, data)->
+        Object.assign state, data
