@@ -3040,7 +3040,7 @@ number-is-nan@^1.0.0:
 
 nuxt@7korobi/nuxt.js#coffee:
   version "1.0.0-alpha.4"
-  resolved "https://codeload.github.com/7korobi/nuxt.js/tar.gz/c6a21ec89522451c53bc45f296b3309e4ac2bc6e"
+  resolved "https://codeload.github.com/7korobi/nuxt.js/tar.gz/74975bea58690ed1c02b95ff5f58b5863c9669cf"
   dependencies:
     ansi-html "^0.0.7"
     autoprefixer "^7.1.1"

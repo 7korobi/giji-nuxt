@@ -27,8 +27,9 @@ passport.deserializeUser (id, done)->
   done null, id
 
 module.exports = (app)->
-  app.get '/api/user/:id', (req, res)->
+  app.get '/api/user/:id', (req, res, next)->
     { id } = req.params
     Passport.findById id, (err, doc)->
       res.json doc
+      next()
   return
