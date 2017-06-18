@@ -4,20 +4,19 @@
     .inframe
       br
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/oauth") OpenID
+        a(href="/auth/slack") slack
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/timeago") 時計 page
+        a(href="/auth/google") google
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/names") names
+        a(href="/auth/facebook") facebook
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/demo/chats") chats sample
+        a(href="/auth/github") github
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/sow/village/allstar-2") 村ログ(allstar-2)
+        a(href="/auth/twitter") twitter
 </template>
 <script lang="coffee">
 
 module.exports =
-  data: ->
-    a: 1
+  data: -> {}
 
 </script>
