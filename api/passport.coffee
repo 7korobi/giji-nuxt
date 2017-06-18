@@ -53,8 +53,9 @@ module.exports = (app)->
         provider: provider
         account: id
         token: accessToken
-      Object.assign passport.session, profile
 
+      passport.session.id = [provider, id].join "-"
+      passport.session.profile = profile
       process.nextTick ->
         done null, profile
 
