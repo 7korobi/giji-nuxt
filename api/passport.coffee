@@ -2,8 +2,10 @@ config = require '../nuxt.config.js'
 
 passport = require "passport"
 passport.serializeUser (user, done)->
+  console.log serialize: user
   done null, user.id
 passport.deserializeUser (obj, done)->
+  console.log deserialize: obj
   done null, obj
 
 auth =
@@ -49,11 +51,17 @@ module.exports = (app)->
       attr.callbackURL = "http://giji.check.jp/auth/#{provider}/callback"
     
 
-    passport.use new module attr, (accessToken, refreshToken, { provider, id, displayName, name, emails, photos }, done)->
-      console.log { accessToken, refreshToken, provider, id, displayName, name, emails, photos }
-      passport.session.id = profile.id
-      passport.session.provider = provider
+    passport.use new module attr, (accessToken, refreshToken, { provider, id, displayName, emails, photos }, done)->
+      profile =
+        id: [provider, id].join("-")
+        icon: photos?[0].value
+        mail: emails?[0].value
+        nick: displayName
+        token: accessToken
+      Object.assign passport.session, profile
+
       process.nextTick ->
+        console.log passport.session
         done null, profile
 
     console.log "#{provider} authenticate set."
