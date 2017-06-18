@@ -1,12 +1,28 @@
 config = require '../nuxt.config.js'
 
+{ model, Schema } = mongoose = require "mongoose"
+
+Passport = model 'Passport', new Schema
+  _id: String
+  nick: String
+  icon: String
+  mail: String
+  token: String
+  write_at: Number
+
 passport = require "passport"
-passport.serializeUser (user, done)->
-  console.log serialize: user
-  done null, user.id
-passport.deserializeUser (obj, done)->
-  console.log deserialize: obj
-  done null, obj
+passport.serializeUser (o, done)->
+  _id = [o.provider, o.account].join("-")
+  Passport.findByIdAndUpdate _id, o,
+    upsert: true
+  .exec (err, doc, op)->
+    console.log [err, doc, op]
+    done null, _id
+
+passport.deserializeUser (id, done)->
+  Passport.findById id, (err, doc)->
+    console.log [err, doc]
+    done null, doc
 
 auth =
   slack:
@@ -53,15 +69,16 @@ module.exports = (app)->
 
     passport.use new module attr, (accessToken, refreshToken, { provider, id, displayName, emails, photos }, done)->
       profile =
-        id: [provider, id].join("-")
         icon: photos?[0].value
         mail: emails?[0].value
         nick: displayName
+        write_at: new Date - 0
+        provider: provider
+        account: id
         token: accessToken
       Object.assign passport.session, profile
 
       process.nextTick ->
-        console.log passport.session
         done null, profile
 
     console.log "#{provider} authenticate set."
