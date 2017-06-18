@@ -1,7 +1,7 @@
-{ model, Schema } = mongoose = require "mongoose"
+{ Schema } = mongoose = require "mongoose"
 mongoose.connect "mongodb://localhost/giji"
 
-Passport = model 'Passport', new Schema
+Passport = mongoose.model 'Passport', new Schema
   _id: String
   nick: String
   icon: String
