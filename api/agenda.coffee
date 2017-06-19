@@ -12,7 +12,8 @@ agenda.define "ping pong", (job, done)->
   done()
 
 agenda.on 'ready', ->
-  agenda.every '15 minutes', 'ping pong'
+  unless process.env.NODE_APP_INSTANCE
+    agenda.every '15 minutes', 'ping pong'
   agenda.start()
 
 agenda_ui = require "agenda-ui"
