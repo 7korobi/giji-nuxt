@@ -4,7 +4,7 @@
   group: EVIL
   able_ids: []
   cmd: role
-  help: |-
+  help: >-
 
 57:
   label: ?57?
@@ -12,7 +12,7 @@
   group: EVIL
   able_ids: []
   cmd: role
-  help: |-
+  help: >-
 
 dyingpossess:
   label: 衰退狂人
@@ -25,7 +25,7 @@ dyingpossess:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
 
 aurawolf:
   label: 気狼
@@ -41,7 +41,7 @@ aurawolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
 
 
 
@@ -52,105 +52,105 @@ nothing:
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 aprilfool:
   label: 四月馬鹿
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 turnfink:
   label: 二重スパイ
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 turnfairy:
   label: 妖精の輪
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 eclipse:
   label: 日蝕
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 cointoss:
   label: Sir Cointoss
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 force:
   label: 影響力
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 miracle:
   label: 奇跡
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 prophecy:
   label: 聖者のお告げ
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 clamor:
   label: 不満
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 fire:
   label: 熱意
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 nightmare:
   label: 悪夢
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 ghost:
   label: 亡霊
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 escape:
   label: 逃亡
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 seance:
   label: 降霊会
   win:
   group: EVENT
   able_ids: []
-  help: |-
+  help: >-
 
 
 entry:
@@ -159,21 +159,21 @@ entry:
   group: TURN
   able_ids:
     - ENTRY
-  help: |-
+  help: >-
 
 start:
   label: 初日
   win:
   group: TURN
   able_ids: []
-  help: |-
+  help: >-
 
 main:
   label: 二日目以降
   win:
   group: TURN
   able_ids: []
-  help: |-
+  help: >-
 
 prologue:
   label: プロローグ
@@ -181,14 +181,14 @@ prologue:
   group: TURN
   able_ids:
     - exit
-  help: |-
+  help: >-
 
 epilogue:
   label: エピローグ
   win:
   group: TURN
   able_ids: []
-  help: |-
+  help: >-
 
 live:
   label: 生存者
@@ -199,7 +199,7 @@ live:
     - TSAY
     - AIM
     - commit
-  help: |-
+  help: >-
 
 executed:
   label: 処刑
@@ -208,7 +208,7 @@ executed:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 victim:
   label: 襲撃
@@ -217,7 +217,7 @@ victim:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 cursed:
   label: 呪詛
@@ -226,7 +226,7 @@ cursed:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 droop:
   label: 衰退
@@ -235,7 +235,7 @@ droop:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 suicide:
   label: 後追
@@ -244,7 +244,7 @@ suicide:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 feared:
   label: 恐怖
@@ -253,7 +253,7 @@ feared:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 suddendead:
   label: 突然死
@@ -262,28 +262,28 @@ suddendead:
   able_ids:
     - GSAY
     - TSAY
-  help: |-
+  help: >-
 
 leave:
   label: ―
   win:
   group:
   able_ids: []
-  help: |-
+  help: >-
 
 none:
   label: ""
   win:
   group:
   able_ids: []
-  help: |-
+  help: >-
 
 bind:
   label: ―
   win:
   group:
   able_ids: []
-  help: |-
+  help: >-
 
 hide:
   label: ？？？
@@ -293,7 +293,7 @@ hide:
     - hike
     - vote
     - entrust
-  help: |-
+  help: >-
     あなたは正体不明です。
 
 mob:
@@ -301,7 +301,7 @@ mob:
   win: MOB
   group:
   able_ids: []
-  help: |-
+  help: >-
     見物人全般のための仮想役職です。
 
 visiter:
@@ -311,7 +311,7 @@ visiter:
   able_ids:
     - VSAY
     - TSAY
-  help: |-
+  help: >-
     進行中会話は客席同士のみ
 
 grave:
@@ -321,7 +321,7 @@ grave:
   able_ids:
     - VSAY
     - TSAY
-  help: |-
+  help: >-
     進行中会話は墓下と
 
 alive:
@@ -331,7 +331,7 @@ alive:
   able_ids:
     - VSAY
     - TSAY
-  help: |-
+  help: >-
     進行中会話は地上、墓下、両方と
 
 juror:
@@ -343,7 +343,7 @@ juror:
     - TSAY
     - vote
     - entrust
-  help: |-
+  help: >-
     進行中会話は陪審同士のみ。陪審（＆決定者）だけが投票する。
 
 gamemaster:
@@ -357,7 +357,7 @@ gamemaster:
     - gm_enable_vote
     - VSAY
     - TSAY
-  help: |-
+  help: >-
     進行中会話は地上、墓下、両方と。場を支配する特権をもつ。
 
 master:
@@ -391,9 +391,8 @@ lost:
   group: OTHER
   able_ids: []
   cmd: gift
-  help: |-
+  help: >-
     あなたは贈り物を<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_LOST" TARGET="_blank">喪失</A>しました。
-    <br>
     もう二度と手にすることはないでしょう。もしまたあなたの手に贈り物があっても、消え去ってしまいます。そして、あなたがそれに気付くことはないでしょう。
 
 
@@ -405,11 +404,9 @@ shield:
     - circular
     - guard
   cmd: gift
-  help: |-
+  help: >-
     あなたを<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_SHIELD" TARGET="_blank">光の輪</A>が取り巻きます。
-    <br>
     あなたはもし昨夜、襲撃されていたとしても守られました。
-    <br>
     光の輪はひとりを一度しか守りません。
 
 glass:
@@ -420,9 +417,8 @@ glass:
     - circular
     - see
   cmd: gift
-  help: |-
+  help: >-
     あなたを<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_GLASS" TARGET="_blank">魔鏡</A>が照らします。
-    <br>
     あなたは、魔鏡を渡す相手を占います。
     魔鏡はひとりを一度しか照らしません。
 
@@ -436,9 +432,8 @@ ogre:
     - friend
     - WSAY
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_OGRE" TARGET="_blank">悪鬼</A>です。
-    <br>
     表向きは他の役目を帯びていますが、あなたは人を襲う悪い鬼なのです。
 
 fairy:
@@ -448,9 +443,8 @@ fairy:
   able_ids:
     - pixi
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_FAIRY" TARGET="_blank">妖精から生まれた子</A>です。
-    <br>
     表向きは他の役目を帯びていますが、あなたは人ならぬ存在なのです。
     占い師、霊能者にどう判別されるかは、もともとの役職によります。
 
@@ -461,9 +455,8 @@ fink:
   able_ids:
     - evil
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_FINK" TARGET="_blank">半端者</A>です。
-    <br>
     表向きは他の役目を帯びていますが、あなたは人ともつかぬ、人狼ともつかぬ、半端な正体を隠しています。
 
 decide:
@@ -474,9 +467,8 @@ decide:
   able_ids:
     - vote_role
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_DECIDE" TARGET="_blank">決定者</A>です。
-    <br>
     あなたは追加票を投じる権利を持ちつづけます。行使することで、健在を示すこともできるでしょう。
 
 seeronce:
@@ -489,7 +481,7 @@ seeronce:
     - see
     - spy_wolf
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_SEERONCE" TARGET="_blank">夢占師</A>です。
 
 dipsy:
@@ -498,11 +490,9 @@ dipsy:
   group: OTHER
   able_ids:
   cmd: gift
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_DIPSY" TARGET="_blank">酔払い</A>です。
-    <br>
     あなたが人外もしくは村人に相対するものであれば、自分の役割を見失うことはありません。
-    <br>
     また、光の輪や魔鏡といった贈り物を受け取った場合、酔いが醒めることでしょう。
 
 
@@ -517,9 +507,8 @@ lover:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_LOVER" TARGET="_blank">弟子</A>です。
-    <br>
     好きな人物を師匠として選び、弟子入りします。次の朝、あなたは頭角をあらわし、絆の師匠と同じ役職になっています。
 
 robber:
@@ -532,9 +521,8 @@ robber:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_ROBBER" TARGET="_blank">盗賊</A>です。
-    <br>
 
 tangle:
   label: 怨念
@@ -547,7 +535,7 @@ tangle:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_TANGLE" TARGET="_blank">怨念</A>です。
 
 villager:
@@ -559,9 +547,8 @@ villager:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_VILLAGER" TARGET="_blank">村人</A>です。
-    <br>
     特殊な能力はもっていません。
 
 stigma:
@@ -575,7 +562,7 @@ stigma:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_STIGMA" TARGET="_blank">聖痕者</A>です。
 
 fm:
@@ -589,9 +576,8 @@ fm:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_FM" TARGET="_blank">結社員</A>です。
-    <br>
     独自の人脈を持つ秘密結社の一員です。
 
 sympathy:
@@ -606,7 +592,7 @@ sympathy:
     - entrust
     - SPSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SYMPATHY" TARGET="_blank">共鳴者</A>です。
 
 seer:
@@ -621,7 +607,7 @@ seer:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SEER" TARGET="_blank">占い師</A>です。
 
 seerwin:
@@ -636,7 +622,7 @@ seerwin:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SEERWIN" TARGET="_blank">信仰占師</A>です。
 
 aura: &aura
@@ -651,7 +637,7 @@ aura: &aura
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_AURA" TARGET="_blank">気（オーラ）占い師</A>です。
 oura: *aura
 
@@ -667,7 +653,7 @@ seerrole:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SEERROLE" TARGET="_blank">賢者</A>です。
 
 guard:
@@ -681,7 +667,7 @@ guard:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_GUARD" TARGET="_blank">守護者</A>です。
 
 medium:
@@ -696,7 +682,7 @@ medium:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_MEDIUM" TARGET="_blank">霊能者</A>です。
 
 mediumwin:
@@ -711,7 +697,7 @@ mediumwin:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_MEDIUMWIN" TARGET="_blank">信仰霊能者</A>です。
 
 mediumrole:
@@ -726,7 +712,7 @@ mediumrole:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_MEDIUMROLE" TARGET="_blank">導師</A>です。
 
 necromancer:
@@ -742,7 +728,7 @@ necromancer:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_NECROMANCER" TARGET="_blank">降霊者</A>です。
 
 follow:
@@ -754,9 +740,8 @@ follow:
     - human
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_FOLLOW" TARGET="_blank">追従者</A>です。
-    <br>
     だれかを信じ、委ねましょう。
 
 fan:
@@ -771,7 +756,7 @@ fan:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_FAN" TARGET="_blank">煽動者</A>です。
 
 hunter:
@@ -786,9 +771,8 @@ hunter:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HUNTER" TARGET="_blank">賞金稼</A>です。
-    <br>
     毎夜、一人を付け狙います。
 
 weredog:
@@ -802,7 +786,7 @@ weredog:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WEREDOG" TARGET="_blank">人犬</A>です。
 
 prince:
@@ -816,7 +800,7 @@ prince:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_PRINCE" TARGET="_blank">王子様</A>です。
 
 rightwolf:
@@ -831,9 +815,8 @@ rightwolf:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_VILLAGER" TARGET="_blank">村人</A>です。
-    <br>
     特殊な能力はもっていません。
 
     狼血族のあなたは、占い師、霊能者に人狼と判定されます。ですが、あなたは村人で、勝利条件も変わりません。
@@ -851,7 +834,7 @@ doctor:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_DOCTOR" TARGET="_blank">医師</A>です。
 
 curse:
@@ -865,7 +848,7 @@ curse:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_CURSE" TARGET="_blank">呪人</A>です。
 
 dying:
@@ -879,7 +862,7 @@ dying:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_DYING" TARGET="_blank">預言者</A>です。
 
 invalid:
@@ -894,9 +877,8 @@ invalid:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_INVALID" TARGET="_blank">病人</A>です。
-    <br>
     あなたが命を落としたとき、犯人は病気に感染します。
 
 alchemist:
@@ -912,7 +894,7 @@ alchemist:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_ALCHEMIST" TARGET="_blank">錬金術師</A>です。
     あなたは一度だけ、薬を飲むことが出来ます。
 
@@ -928,9 +910,8 @@ witch:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WITCH" TARGET="_blank">魔女</A>です。
-    <br>
     あなたは二日目に、毒薬と蘇生薬をひとつずつ完成させます。
 
 girl:
@@ -944,7 +925,7 @@ girl:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_GIRL" TARGET="_blank">少女</A>です。
 
 scapegoat:
@@ -959,7 +940,7 @@ scapegoat:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SCAPEGOAT" TARGET="_blank">生贄</A>です。
 
 elder:
@@ -975,9 +956,8 @@ elder:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_ELDER" TARGET="_blank">長老</A>です。
-    <br>
     もしも命を落としたら、あなたの恨みは犯人を襲います。
 
 jammer:
@@ -994,7 +974,7 @@ jammer:
     - entrust
     - XSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_JAMMER" TARGET="_blank">邪魔之民</A>です。
 
 snatch:
@@ -1010,7 +990,7 @@ snatch:
     - entrust
     - XSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SNATCH" TARGET="_blank">宿借之民</A>です。
 
 bat:
@@ -1025,7 +1005,7 @@ bat:
     - entrust
     - XSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_BAT" TARGET="_blank">念波之民</A>です。
 
 possess:
@@ -1039,7 +1019,7 @@ possess:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_POSSESS" TARGET="_blank">狂人</A>です。
 
 fanatic:
@@ -1054,7 +1034,7 @@ fanatic:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_FANATIC" TARGET="_blank">狂信者</A>です。
 
 muppeting:
@@ -1069,7 +1049,7 @@ muppeting:
     - entrust
     - MSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_MUPPETER" TARGET="_blank">人形使い</A>です。
 
 wisper: &wisper
@@ -1084,9 +1064,8 @@ wisper: &wisper
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WISPER" TARGET="_blank">囁き狂人</A>です。
-    <br>
     少人数になると勝敗が確定する状況もあります、ですがこの場合も自動で終了することはありません。
 cpossess: *wisper
 
@@ -1102,7 +1081,7 @@ semiwolf:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SEMIWOLF" TARGET="_blank">半狼</A>です。
 
 oracle:
@@ -1118,7 +1097,7 @@ oracle:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_ORACLE" TARGET="_blank">魔神官</A>です。
 
 sorcerer:
@@ -1134,7 +1113,7 @@ sorcerer:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SORCERER" TARGET="_blank">魔術師</A>です。
 
 walpurgis:
@@ -1151,9 +1130,8 @@ walpurgis:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WALPURGIS" TARGET="_blank">魔法少年</A>です。
-    <br>
     やがて命を落とすと魔女になると宿命付けられています。
 
 headless:
@@ -1168,9 +1146,8 @@ headless:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HEADLESS" TARGET="_blank">首のない騎士</A>です。
-    <br>
     あなたは人狼仲間を斬り捨てることも厭いません。
 
 wolf:
@@ -1186,7 +1163,7 @@ wolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WOLF" TARGET="_blank">人狼</A>です。
 
 intwolf:
@@ -1203,7 +1180,7 @@ intwolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_INTWOLF" TARGET="_blank">智狼</A>です。特殊な能力を持つ人狼です。
 
 cwolf:
@@ -1220,9 +1197,8 @@ cwolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_CURSEWOLF" TARGET="_blank">呪狼</A>です。特殊な能力を持つ人狼です。
-    <br>
 
 cursewolf:
   label: 呪狼
@@ -1238,9 +1214,8 @@ cursewolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_CURSEWOLF" TARGET="_blank">呪狼</A>です。特殊な能力を持つ人狼です。
-    <br>
 
 whitewolf:
   label: 白狼
@@ -1254,9 +1229,8 @@ whitewolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_WHITEWOLF" TARGET="_blank">白狼</A>です。特殊な能力を持つ人狼です。
-    <br>
     あなたを占った占い師は、あなたを人間とみなします。あなたは能力者特有のオーラを発しません。
 
 childwolf:
@@ -1274,7 +1248,7 @@ childwolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_CHILDWOLF" TARGET="_blank">仔狼</A>です。特殊な能力を持つ人狼です。
 
 dyingwolf:
@@ -1290,7 +1264,7 @@ dyingwolf:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_DYINGWOLF" TARGET="_blank">衰狼</A>です。特殊な能力を持つ人狼です。
 
 silentwolf:
@@ -1304,9 +1278,8 @@ silentwolf:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_SILENTWOLF" TARGET="_blank">黙狼</A>です。
-    <br>
     人狼の襲撃対象となることはありませんが、人狼（と囁き狂人、擬狼妖精）同士にしか聞こえない会話は、あなたには聞こえません。
 
 hamster:
@@ -1320,7 +1293,7 @@ hamster:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_PIXI" TARGET="_blank">栗鼠妖精</A>です。
 
 werebat:
@@ -1334,11 +1307,9 @@ werebat:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_BAT" TARGET="_blank">蝙蝠妖精</A>です。
-    <br>
     あなたは他の妖精が誰であるか知っていますし、新たに生まれた妖精を知ることもできます。ただし、姿を換えてしまった宿借妖精の行方はわかりません。
-    <br>
     また、蝙蝠妖精同士にしか聞こえない会話が可能です。
 
 mimicry:
@@ -1353,7 +1324,7 @@ mimicry:
     - entrust
     - WSAY
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_MIMICRY" TARGET="_blank">擬狼妖精</A>です。
 
 dyingpixi:
@@ -1368,7 +1339,7 @@ dyingpixi:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_DYINGPIXI" TARGET="_blank">風花妖精</A>です。
 
 trickster:
@@ -1383,9 +1354,8 @@ trickster:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_TRICKSTER" TARGET="_blank">悪戯妖精</A>です。
-    <br>
     結ばれた人たちにとっては、単なるはた迷惑な悪戯にすぎません。
 
 hatedevil:
@@ -1400,9 +1370,8 @@ hatedevil:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HATEDEVIL" TARGET="_blank">邪気悪魔</A>です。
-    <br>
     結びつけた二人のうち、どちらか片方だけが生き延びれば、あなたの勝利となります。あなたにその絆が結ばれていない限り、あなた自身の死は勝敗には直接関係しません。
 
 hate:
@@ -1417,7 +1386,7 @@ hate:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたには<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_HATEDEVIL" TARGET="_blank">宿敵</A>がいます。
 
 love:
@@ -1432,7 +1401,7 @@ love:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたには<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_LOVEANGEL" TARGET="_blank">恋人</A>がいます。
 
 loveangel:
@@ -1447,9 +1416,8 @@ loveangel:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_LOVEANGEL" TARGET="_blank">恋愛天使</A>です。
-    <br>
     結びつけた二人が生き延びれば、あなたの勝利となります。あなたにその絆が結ばれていない限り、あなた自身の死は勝敗には直接関係しません。
 
 passion:
@@ -1464,9 +1432,8 @@ passion:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_PASSION" TARGET="_blank">片想い</A>です。
-    <br>
     選んだ人が生き延び、あなたが生き延びれば、あなたの勝利となります。
 
 lonewolf:
@@ -1481,9 +1448,8 @@ lonewolf:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_LONEWOLF" TARGET="_blank">一匹狼</A>です。
-    <br>
     襲撃先はあなた以外であれば誰でもかまいません。
 
 guru:
@@ -1497,7 +1463,7 @@ guru:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_GURU" TARGET="_blank">笛吹き</A>です。
 
 dish:
@@ -1511,7 +1477,7 @@ dish:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_DISH" TARGET="_blank">鱗魚人</A>です。新鮮なふぃーっしゅ。です。
 
 bitch:
@@ -1525,6 +1491,6 @@ bitch:
     - vote
     - entrust
   cmd: role
-  help: |-
+  help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Role)ROLEID_BITCH" TARGET="_blank">遊び人</A>です。
     本命とあなたが生き延びれば、あなたの勝利です。

@@ -17,14 +17,18 @@ div(v-if="self")
       text-editor(v-model="text", :max-size="120")
     report(:sign="self.sign", :face_id="self.face_id" head="レポート投稿", :deco="deco", :handle="phase.handle" )
       text-editor(v-model="text", :max-row="5", :max-size="2000")
-  report(:handle="self.side", :head="self.role_labels.join('、')")
+  report(:handle="self.winner_id", :head="self.role_labels.join('、')")
     div(v-for="o in self.roles.list", v-if="o.help")
       p(v-html="o.help")
+    br
     div(v-for="o in self.ables.list", v-if="o.label")
+      label {{ o.label }}
       p(v-if="o.help" v-html="o.help")
+    br
     div(v-for="o in self.ables.list", v-if="o.target")
       label {{ o.target }}
       p(v-if="o.help" v-html="o.help")
+    br
     div(v-for="o in self.ables.list", v-if="o.sw")
       label {{ o.sw }}
       p(v-if="o.help" v-html="o.help")

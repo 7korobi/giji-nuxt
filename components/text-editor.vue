@@ -1,12 +1,17 @@
 
 <template lang="pug">
 .text-editor
-  textarea(@input="update($event)", :value="value", :rows="areaRow")
+  textarea(ref="input", @input="input", :value="value", :rows="areaRow")
   i.fa(:class="mark")
     | {{size}}/
     span.per {{maxSize}}字
     | {{row}}/
     span.per {{maxRow}}行
+  span.pull-right
+    a(@click="nDm") [[]]
+    a(@click="anker") >>
+    a(@click="comment") /**/
+    a(@click="submit") 投稿
 </template>
 
 <style lang="stylus" scoped>
@@ -19,6 +24,17 @@
 </style>
 
 <script lang="coffee">
+caret = (cb)-> ->
+  { input } = @$refs
+  st = input.selectionStart
+  ed = input.selectionEnd
+  value = @value
+  after = cb value[...st], value[st...ed], value[ed...]
+  size = after.length - value.length
+  @$emit 'input', after
+  @$nextTick ->
+    input.selectionStart = st
+    input.selectionEnd = ed + size
 
 module.exports =
   default:
@@ -35,8 +51,19 @@ module.exports =
       minRow:
         type: Number
         default: 1
+
+    data: ->
+      caret: {}
+
     methods:
-      update: (e)->
+      nDm:     caret (pre, select, post)-> "#{pre}[[#{select}]]#{post}"
+      anker:   caret (pre, select, post)-> "#{pre}>>#{select}#{post}"
+      comment: caret (pre, select, post)-> "#{pre}/*#{select}*/#{post}"
+
+      submit: ->
+        console.log @value
+
+      input: (e)->
         @$emit 'input', e.target.value
 
     computed:
