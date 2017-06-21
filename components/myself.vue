@@ -11,12 +11,15 @@ div(v-if="self")
       btn(v-for="o in phases" v-model="show[o.handle]" @toggle="show[o.handle] = ! show[o.handle]", :as="true", :key="o.handle") {{ o.label }}
 
   div(v-if="sayable")
+    talk(:sign="self.sign", :face_id="self.face_id" head="monaco editor", :deco="deco", :handle="phase.handle" )
+      monaco-editor(v-model="text", :max-row="10")
     talk(:sign="self.sign", :face_id="self.face_id" head="発言投稿", :deco="deco", :handle="phase.handle" )
       text-editor(v-model="text", :max-row="10", :max-size="2000")
     post(:sign="self.sign", :face_id="self.face_id" head="ト書き投稿", :deco="deco", :handle="phase.handle" )
       text-editor(v-model="text", :max-size="120")
     report(:sign="self.sign", :face_id="self.face_id" head="レポート投稿", :deco="deco", :handle="phase.handle" )
       text-editor(v-model="text", :max-row="5", :max-size="2000")
+    
   report(:handle="self.winner_id", :head="self.role_labels.join('、')")
     div(v-for="o in self.roles.list", v-if="o.help")
       p(v-html="o.help")
@@ -59,7 +62,7 @@ module.exports =
         @can_phase @handle
       self: ->
         @$store.state.book.read_at
-        Query.potofs.hash[@self_id]
+        Query.potofs.find @self_id
       parts: ->
         @$store.state.book.parts
       part: ->

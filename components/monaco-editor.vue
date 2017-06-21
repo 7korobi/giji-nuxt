@@ -1,0 +1,109 @@
+<template lang="pug">
+div(v-once, :style="style")
+</template>
+
+<script lang="coffee">
+
+if window?
+  window.require.config
+    paths:
+      vs: '/monaco-editor/vs'
+
+module.exports =
+  default:
+    props:
+      value: String
+      maxRow:
+        type: Number
+        default: 1
+
+    data: ->
+      value_past: ""
+      editor: null
+      monaco: null
+
+    mounted: ->
+      window?.require ['vs/editor/editor.main'], =>
+        @monaco = monaco
+        @editor = monaco.editor.create @$el,
+          value: @value
+          theme: 'vs'
+          language: 'markdown'
+
+          rulers: [58, 70]
+
+          scrollbar:
+            horizontal: 'hidden'
+            vertical:   'hidden'
+
+          folding: true
+          readOnly: false
+
+          disableMonospaceOptimizations: true
+          experimentalScreenReader: false
+          emptySelectionClipboard: false
+          fixedOverflowWidgets: false
+          scrollBeyondLastLine: false
+          selectOnLineNumbers: true
+          snippetSuggestions: "bottom"
+          roundedSelection: true
+          automaticLayout: false
+          parameterHints: true
+          glyphMargin: true
+          useTabStops: true
+
+          cursorStyle: "line"
+          cursorBlinking: "smooth"
+
+          wordWrap: false
+          wrappingColumn: 58
+          wrappingIndent: 'same'
+
+          renderControlCharacters: true
+          renderLineHighlight: "line"
+          renderWhitespace: "all"
+          renderIndentGuides: true
+
+          formatOnPaste: true
+          formatOnType:  true
+
+          suggestLineHeight: 14
+          suggestFontSize: 12
+
+          lineNumbers: "on"
+          lineNumbersMinChars: 2
+          lineDecorationsWidth: 4
+          lineHeight: 20
+          fontSize: 16
+          fontWeight: "normal"
+          fontFamily: "monospace"
+          fontLigatures: false
+        
+        @editor.onDidChangeModelContent (e)=>
+          @$emit "input", @editor.getValue
+            preserveBOM: false
+        @editor.onDidChangeCursorPosition (e)=>
+          console.log e
+        @editor.onDidChangeCursorSelection (e)=>
+          console.log e
+        
+
+    beforeDestroy: ->
+      return unless window?
+      # garbage cleanup
+      @editor.dispose()
+
+    watch:
+      value: (newStr, oldStr)->
+        @value_past = @editor.getValue
+          preserveBOM: false
+        return if newStr == @value_past
+
+        console.log newStr, oldStr
+        @editor.setValue newStr
+
+    computed:
+      style: ->
+        height: "#{ 16 * @maxRow }px"
+
+</script>
