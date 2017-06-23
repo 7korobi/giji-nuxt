@@ -5,11 +5,15 @@
   "author": "7korobi@gmail.com",
   "private": true,
   "dependencies": {
+    "ace-builds": "latest",
     "agenda": "latest",
     "agenda-ui": "latest",
     "axios": "latest",
     "body-parser": "latest",
+    "brace": "latest",
+    "codemirror": "^5.26.0",
     "express-session": "latest",
+    "monaco-editor": "^0.8.3",
     "mongodb-bluebird": "latest",
     "mongoose": "latest",
     "nuxt": "7korobi/nuxt.js#coffee",
@@ -31,6 +35,8 @@
     "yaml-loader": "latest"
   },
   "scripts": {
+    "cp-ace":    "rm -rf static/ace && cp -r node_modules/ace-builds/src-min-noconflict static/ace",
+    "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
     "dev": "coffee server.coffee",
     "build": "nuxt build",
     "start": "nuxt start",
