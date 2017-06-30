@@ -130,15 +130,17 @@ module.exports =
       @potofs
       .filter f
       .map (o)-> o.id
+      .sort()
 
     reset: (as)->
-      @$emit 'input', as
+      @$emit 'input', as.sort()
 
     toggle: (o)->
       o.hide = ! o.hide
       ids = @potofs
       .filter (o)-> o.hide
       .map (o)-> o.id
+      .sort()
       @$emit 'input', ids
 
     reverse: ->

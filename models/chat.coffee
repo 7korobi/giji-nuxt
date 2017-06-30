@@ -8,9 +8,24 @@ new Rule("chat").schema ->
   # props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
 
   @scope (all)->
-    for_part:  (part_id)->  all.where {  part_id }
-    for_phase: (phase_id)-> all.where { phase_id }
+    full = all.where("phase.group": ['S','A','I'])
 
+    memo:   all.where("phase.group": ['M'])
+    full:   full
+    title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','dark']
+    rest:   full.where (o)-> o.phase.handle in ['GSAY']
+    normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark']
+    extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY'])
+    solo:   full.where (o)-> o.phase.handle in ['TSAY']
+    parts: (hides, mode)-> all.pages.bind(all, hides, mode)
+    pages: (hides, mode, part_id)->
+      all[mode]
+      .where (o)=> part_id == o.part_id && !(o.potof_id in hides)
+
+  anker =
+    belongs_to: 'chats'
+    sort: ["count", "desc"]
+  
   class @model extends @model
     @deploy: ->
       @q =
@@ -34,14 +49,13 @@ new Rule("chat").schema ->
         emit "mention", mention_id,
           count: 1
         
-        emit "mention_to", mention_id, o.id
+        emit "mention_to", mention_id, o.id,
           count: 1
 
     @order: (o, emit)->
       emit "list",
         sort: ["write_at"]
-      emit "mention",
-        sort: ["count", "desc"]
+        page_by: 50
+      emit "mention", anker
       for mention_id in o.q.mention_ids
-        emit "mention_to", mention_id,
-          sort: ["count", "desc"]
+        emit "mention_to", mention_id, anker

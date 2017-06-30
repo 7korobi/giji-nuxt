@@ -27,53 +27,6 @@ module.exports = class Map
     model.order item, emit
     o
 
-
-  ###
-  query.map_reduce [
-    (o)->
-      @ "list",
-        list: o
-        all: o.log.length
-        count: 1
-      for id in o.q.mention_ids
-        @ "mention",
-          list: query.find id
-          count: 1
-        @ "mention_to", id,
-          list: o
-          count: 1
-
-    (o, idx)->
-      @ "list", "page",
-        page_by: 50
-        index: idx
-        min: idx
-        max: idx
-
-      page_by = 50
-      page = Math.floor(idx / page_by)
-      @ "list", "page", page,
-        list: o
-        assign: { page }
-        min: idx
-        max: idx
-
-      @ "list", "page", ["no", "asc"]
-
-    (reduce)->
-      @ "list",
-        sort: ["write_at",  "asc"]
-        page_by: 50
-
-      @ "reverse",
-        sort: ["write_at", "desc"]
-      @ "mention", ["count", "desc"]
-      for id of reduce.mention_to
-        @ "mention_to", id,
-          sort: ["count", "desc"]
-  ]
-  ###
-
   @init: (o, map)->
     if map.id
       o.id = map.id
@@ -89,20 +42,28 @@ module.exports = class Map
   @order: (o, map, set)->
     from = o
     if Object == from.constructor
-      for id, val of from
-        val.id = id
+      if map.belongs_to
+        for id, val of from
+          val.__proto__ = Query[map.belongs_to].find id
+      else
+        for id, val of from
+          val.id = id
 
     if map.sort
       o = _.orderBy o, map.sort...
+
+    if map.belongs_to
+      o.map (a)-> Query[map.belongs_to].find a.id
 
     if per = map.page_by
       idx = 0
       groups = Object.values _.groupBy o, (o)->
         Math.floor(idx++ / per)
+      groups.all = idx
       o = groups
       for a in groups
         a.__proto__ = set.prototype
-        
+
     if map.index
       counts = []
       for key, oo of o
@@ -120,8 +81,6 @@ module.exports = class Map
   @finish: (o, query, set)->
     if o.hash
       o.set = Object.keys o.hash
-    if o.list
-      set.bless o.list
     if o.all? && o.count
       o.avg = o.all / o.count
 
