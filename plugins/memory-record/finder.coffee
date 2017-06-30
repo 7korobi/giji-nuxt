@@ -24,23 +24,29 @@ validate = (item, chklist)->
 module.exports = class Finder
   constructor: (@name)->
   calculate: (query, memory)->
-    cache = _.cloneDeep Format[@name.base]
+    cache = _.cloneDeep @format
     @reduce @map, cache, query, memory
     return
 
   reduce: (map, cache, query, memory)->
+    paths =
+      _reduce:
+        list: []
+        hash: {}
     for id in query._all_ids ? Object.keys memory
       continue unless o = memory[id]
-      { item, emits } = o
+      { item, $group } = o
       continue unless validate item, query._filters
-      for [path, a] in emits
-        map.reduce item, cache[path], a
+      for [path, a] in $group
+        o = paths[path] = cache[path]
+        map.reduce item, o, a
 
-    if cache._reduce
-      cache._reduce.sort = query._sort if query._sort
-      cache._reduce.page = query._page if query._page
-    for path, o of cache
+    for path, o of paths
       map.finish o, query, @set
+      _.set query, path, o
+
+    for path, cmd of query.$sort when o =_.get(query, path)
+      o = map.order o, cmd, @set
       _.set query, path, o
 
   clear_cache: (all)->
@@ -74,7 +80,7 @@ module.exports = class Finder
   merge: (all, from, parent)->
     { _memory } = all
     each from, (item)=>
-      o = @map.$deploy @model, item, parent
+      o = @map.$deploy @model, @format, all, item, parent
       old = _memory[item.id]
       _memory[item.id] = o
       if old?

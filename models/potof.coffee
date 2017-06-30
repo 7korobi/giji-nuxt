@@ -18,7 +18,7 @@ new Rule("potof").schema ->
   class @model extends @model
     find: (q, keys, cb = (o)-> o )->
       for key in keys
-        o = q.hash["#{@_id}-#{key}"]
+        o = q.find("#{@_id}-#{key}")
         continue unless o
         o = cb o
         continue unless o
@@ -47,14 +47,14 @@ new Rule("potof").schema ->
       @able_ids = Object.keys able_id_set
 
       @role_labels = @roles.list.map (o)=>
-        stat = @stats.hash["#{@_id}-#{o._id}"]
+        stat = @stats.find("#{@_id}-#{o._id}")
         head = stat?.label ? ""
         "#{head}#{o.label}"
 
-      @live    = @cards.hash["#{@_id}-live"] ? 
-      @request = @cards.hash["#{@_id}-request"]
-      @commit  = @stats.hash["#{@_id}-commit"]
-      @give    = @stats.hash["#{@_id}-give"]
+      @live    = @cards.find("#{@_id}-live") ? 
+      @request = @cards.find("#{@_id}-request")
+      @commit  = @stats.find("#{@_id}-commit")
+      @give    = @stats.find("#{@_id}-give")
 
       @winner_id = @find @cards, ["bond", "gift", "role", "live"], (o)=> o.role.win
 

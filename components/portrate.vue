@@ -16,7 +16,7 @@ module.exports =
     has_html: ->
       !! @$slots.default
     face_url: ->
-      Query.faces.hash[@face_id ? "all"]?.path
+      Query.faces.find(@face_id, "all")?.path
   methods:
     click: ->
       @$emit 'click', @face_id

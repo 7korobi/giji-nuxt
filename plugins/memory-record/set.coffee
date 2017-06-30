@@ -51,20 +51,21 @@ module.exports = class Set extends Array
       o = _.cloneDeep @find id
       o.__proto__ = Form.prototype
 
-  sort: (sortBy, orderBy)->
-    o =
-      if orderBy?
-        _.orderBy @, sortBy, orderBy
-      else
-        _.sortBy @, sortBy
+  sort: (sort...)->
+    o = _.orderBy @, sort...
     o.__proto__ = @__proto__
     o
 
-  page: (per, pages...)->
-    o = for a, idx in @ when Math.floor(idx / per) in pages
-      a
-    o.__proto__ = @__proto__
+  group_by: (cb)->
+    o = _.groupBy @, cb
+    for key, oo of o
+      oo.__proto__ = @__proto__
     o
+
+  page_by: (per)->
+    idx = 0
+    Object.values @group_by (o)->
+      Math.floor(idx++ / per)
 
   where: (req)-> @query.where req
   in:    (req)-> @query.in    req

@@ -24,5 +24,10 @@ module.exports = class Model
   @create: (item)->
   @delete: (old)->
 
+  @aggregate: [
+    (o, idx)->
+  ]
   @map_reduce: (item, emit)->
 
+  @order: (reduce, emit)->
+    

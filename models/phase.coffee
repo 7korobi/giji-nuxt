@@ -27,11 +27,15 @@ new Rule("phase").schema ->
       if o = attrs[@handle]
         Object.assign @, o
     @map_reduce: (o, emit)->
+      emit "group", o.group,
+        count: 1
+      emit "handle", o.handle,
+        count: 1
+
+    @order: (o, emit)->
       emit "group",
-        summary: o.group
-        count: 1
+        sort: ["count", "desc"]
       emit "handle",
-        summary: o.handle
-        count: 1
+        sort: ["count", "desc"]
 
 

@@ -18,7 +18,7 @@ module.exports =
 
     methods:
       vils: (id)->
-        max_vils = Query.folders.hash[id].max_vils
+        max_vils = Query.folders.find(id).max_vils
         if max_vils && "progress" == @export_to
           "#{max_vils}村:"
         else
@@ -27,7 +27,7 @@ module.exports =
       url: (id)->
         switch @export_to
           when "progress"
-            Query.folders.hash[id].href
+            Query.folders.find(id).href
           when "finish"
             "/sow/village?folder_id=#{id}"
 

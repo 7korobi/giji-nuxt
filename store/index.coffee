@@ -9,8 +9,8 @@ module.exports =
 
     actions:
       nuxtServerInit: ({ commit }, { req })->
-        { cookie, passport } = req.session
-        if id = passport?.user
+        # { cookie, passport } = req.session
+        if id = req.session?.passport?.user
           commit "login", id
 
           axios.get "http://giji.check.jp/api/user/#{id}"

@@ -31,9 +31,8 @@ module.exports = class Query
   @build: ->
     _all_ids = _group = null
     _filters = []
-    _sort = []
-    _page = [Infinity, 0]
-    new Query { _all_ids, _group, _filters, _sort, _page }, ->
+    $sort = {}
+    new Query { _all_ids, _group, _filters, $sort }, ->
       @all = @
       @_memory = OBJ()
 
@@ -41,7 +40,8 @@ module.exports = class Query
     @_copy base
     tap.call @
 
-  _copy: ({ @all, @_all_ids, @_group, @_filters, @_sort, @_page })->
+  _copy: ({ @all, @_all_ids, @_group, @_filters, $sort })->
+    @$sort = _.cloneDeep $sort
 
   in: (req)->
     query_parser @, req, (q, target, req, path)=>
@@ -99,24 +99,25 @@ module.exports = class Query
     regexp = (new RegExp list.join("|"), "ig")
     @where (o)-> (! o.search_words) || regexp.test o.search_words
 
-  distinct: (reduce, target)->
-    group = {reduce, target}
-    return @ if _.isEqual group, @_group
-    new Query @, -> @_group = group
+  shuffle: ->
+    @sort Math.random
 
   sort: (sort...)->
-    return @ if _.isEqual sort, @_sort
-    new Query @, -> @_sort = sort
+    return @ if _.isEqual sort, @$sort['_reduce.list']?.sort
+    new Query @, ->
+      @$sort['_reduce.list'] ?= {}
+      Object.assign @$sort['_reduce.list'], { sort }
   
-  page: (page...)->
-    return @ if _.isEqual page, @_page
-    new Query @, -> @_page = page
+  page: (page_by)->
+    return @ if _.isEqual page_by, @$sort['_reduce.list']?.page_by
+    new Query @, ->
+      @$sort['_reduce.list'] ?= {}
+      Object.assign @$sort['_reduce.list'], { page_by }
     
-  shuffle: ->
-    new Query @, -> @_sort = [Math.random]
-
-  find: (id)->
-    @hash[id]
+  find: (ids...)->
+    for id in ids when o = @hash[id]
+      return o if o
+    null
 
   finds: (ids)->
     for id in ids when o = @hash[id]
@@ -125,15 +126,6 @@ module.exports = class Query
   pluck: -> @list.pluck arguments...
 
   Object.defineProperties @prototype,
-    by_reduce:
-      value: (path)->
-        memory = _.get(@reduce, path) ? {}
-        { all } = @
-        new Query all, ->
-          @all = @
-          @_finder = all._finder
-          @_memory = memory
-
     write_at:
       get: ->
         @all._write_at
@@ -145,11 +137,11 @@ module.exports = class Query
 
     list:
       get: ->
-        @reduce?.list ? []
+        @reduce.list
 
     hash:
       get: ->
-        @reduce?.hash ? {}
+        @reduce.hash
 
     memory:
       get: ->

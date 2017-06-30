@@ -84,7 +84,7 @@ module.exports =
       for o in @potofs
         o.hide = false
       for id in @value
-        Query.potofs.hash[id].hide = true
+        Query.potofs.find(id).hide = true
       @$store.commit "book/data", {}
 
   computed:

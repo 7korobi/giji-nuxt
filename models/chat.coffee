@@ -1,7 +1,6 @@
 { Model, Query, Rule } = require "~plugins/memory-record"
 
 new Rule("chat").schema ->
-  @order "write_at"
   @path "folder", "book", "part", "phase"
   @belongs_to "section"
   @belongs_to "potof"
@@ -32,12 +31,17 @@ new Rule("chat").schema ->
         all: o.log.length
 
       for mention_id in o.q.mention_ids
-        emit "mention",
-          belongs_to: "chats"
-          summary: mention_id
+        emit "mention", mention_id,
           count: 1
         
-        emit "mention_to", mention_id,
-          belongs_to: "chats"
-          summary: o.id
+        emit "mention_to", mention_id, o.id
           count: 1
+
+    @order: (o, emit)->
+      emit "list",
+        sort: ["write_at"]
+      emit "mention",
+        sort: ["count", "desc"]
+      for mention_id in o.q.mention_ids
+        emit "mention_to", mention_id,
+          sort: ["count", "desc"]

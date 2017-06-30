@@ -27,7 +27,7 @@ new Rule("sow_village").schema ->
   Object.assign @model_property,
     event_length:
       get: ->
-        Query.sow_villages.where({@id}).reduce.event?.summary?.length ? 0
+        Query.sow_villages.where({@id}).reduce.event?.length ? 0
 
   class @model extends @model
     @deploy: ->
@@ -37,7 +37,7 @@ new Rule("sow_village").schema ->
       updated_at = new Date @timer.updateddt
 
       @q =
-        sow_auth_id: @sow_auth_id
+        sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')
         folder_id: @folder.toUpperCase()
         size: @vpl[0]
         say:  @type.say
@@ -68,62 +68,66 @@ new Rule("sow_village").schema ->
         else
           @mode = "prologue"
 
+    @order: (o, emit)->
+      sort =
+        sort: ["count", "desc"]
+      emit "yeary", sort
+      emit "monthry", sort
+      emit "folder_id", sort
+      emit "upd_range", sort
+      emit "upd_at", sort
+      emit "sow_auth_id", sort
+      emit "rating", sort
+      emit "size", sort
+      emit "say", sort
+      emit "game", sort
+      emit "mob", sort
+      emit "option", sort
+      emit "event", sort
+      emit "discard", sort
+      emit "config", sort
+
     @map_reduce: (o, emit)->
-      emit "yeary",
-        summary: o.q.yeary
+      emit "yeary", o.q.yeary,
         count: 1
-      emit "monthry",
-        summary: o.q.monthry
+      emit "monthry", o.q.monthry,
         count: 1
-      emit "folder_id",
-        summary: o.q.folder_id
+      emit "folder_id", o.q.folder_id,
         count: 1
-      emit "upd_range",
-        summary: o.q.upd_range
+      emit "upd_range", o.q.upd_range,
         count: 1
-      emit "upd_at",
-        summary: o.q.upd_at
+      emit "upd_at", o.q.upd_at,
         count:1
-      emit "sow_auth_id",
-        summary: o.q.sow_auth_id
+      emit "sow_auth_id", o.q.sow_auth_id,
         count: 1
-      emit "rating",
-        summary: o.q.rating
+      emit "rating", o.q.rating,
         count: 1
-      emit "size",
-        summary: o.q.size
+      emit "size", o.q.size,
         count: 1
-      emit "say",
-        belongs_to: "says"
-        summary: o.q.say
+      emit "say", o.q.say,
+        belongs_to: "says" 
         count: 1
-      emit "game",
-        belongs_to: "games"
-        summary: o.q.game
+      emit "game", o.q.game,
+        belongs_to: "games" 
         count: 1
-      emit "mob",
+      emit "mob", o.q.mob,
         belongs_to: "roles"
-        summary: o.q.mob
         count: 1
       for opt_id in o.card.option
-        emit "option",
+        emit "option", opt_id,
           belongs_to: "options"
-          summary: opt_id
           count: 1
       for card_id in o.card.event
-        emit "event",
+        emit "event", card_id,
           belongs_to: "roles"
-          summary: card_id
           count: 1
       for card_id in o.card.discard
-        emit "discard",
+        emit "discard", card_id,
           belongs_to: "roles"
-          summary: card_id
           count: 1
       for card_id in o.card.config
-        emit "config",
+        emit "config", card_id,
           belongs_to: "roles"
-          summary: card_id
           count: 1
 
 new Rule("folder").schema ->
@@ -182,17 +186,17 @@ welcome = (h)->
   Set.chat.merge  chats
 
 welcome
-  "LOBBY-top-0":   "c20"
-  "CIEL-top-0":    "c24"
-  "BRAID-top-0":   "c24"
-  "PERJURY-top-0": "c25"
-  "CABALA-top-0":  "c78"
-  "top-top-0":     "t31"
+  "LOBBY-top-0-0":   "c20"
+  "CIEL-top-0-0":    "c24"
+  "BRAID-top-0-0":   "c24"
+  "PERJURY-top-0-0": "c25"
+  "CABALA-top-0-0":  "c78"
+  "top-top-0-0":     "t31"
 
 Set.chat.merge
-  "LOBBY-top-0-2":
+  "LOBBY-top-0-0-2":
     write_at: 1370662886000
-    potof_id: "LOBBY-top-0"
+    potof_id: "LOBBY-top-0-0"
     show: "talk"
     style: "plain"
     log: """
@@ -200,9 +204,9 @@ Set.chat.merge
 相談や困りごと、ちょっとした疑問などをお持ちでしたら、どうぞ、ごゆっくりなさいませ。
 """
 
-  "CIEL-top-0-2":
+  "CIEL-top-0-0-2":
     write_at: 1379511895000
-    potof_id: "CIEL-top-0"
+    potof_id: "CIEL-top-0-0"
     show: "talk"
     style: "plain"
     log: """
@@ -210,9 +214,9 @@ Set.chat.merge
 早い者勝ちがよいのだけれど、<a href="http://jsfun525.gamedb.info/wiki/?%B4%EB%B2%E8%C2%BC%CD%BD%C4%EA%C9%BD">企画村予定表</a>という便利なページも見てみましょうね。
 """
 
-  "BRAID-top-0-2":
+  "BRAID-top-0-0-2":
     write_at: 1484445101002
-    potof_id: "BRAID-top-0"
+    potof_id: "BRAID-top-0-0"
     show: "talk"
     style: "plain"
     log: """
@@ -228,9 +232,9 @@ Set.chat.merge
 </li></ul>
 """
 
-  "PERJURY-top-0-2":
+  "PERJURY-top-0-0-2":
     write_at: 1393597313000
-    potof_id: "PERJURY-top-0"
+    potof_id: "PERJURY-top-0-0"
     show: "talk"
     style: "plain"
     log: """
@@ -238,9 +242,9 @@ Set.chat.merge
 紳士淑女の諸君には、<a href="http://jsfun525.gamedb.info/wiki/?%B4%EB%B2%E8%C2%BC%CD%BD%C4%EA%C9%BD">企画村予定表</a>を参考に、譲り合いの精神で調整してほしい。
 """
 
-  "CABALA-top-0-2":
+  "CABALA-top-0-0-2":
     write_at: 1420047938191
-    potof_id: "CABALA-top-0"
+    potof_id: "CABALA-top-0-0"
     show: "talk"
     style: "plain"
     log: """

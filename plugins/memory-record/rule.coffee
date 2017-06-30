@@ -111,16 +111,17 @@ module.exports = class Rule
 
     @model.$name = @form.$name = @set.$name = @map.$name = @$name
 
-    finder = @all._finder
-    finder.set = @set
 
     Mem.Query[@$name.list] = @set.all = @all
 
     Mem.Set[@$name.base] = @set.bless []
-    Mem.Map[@$name.base] = finder.map = @map
-    Mem.Form[@$name.base] = finder.form  = @form
-    Mem.Model[@$name.base] = finder.model = @model
-    Mem.Format[@$name.base] = finder.format = @map.format = {}
+    Mem.Finder[@$name.base] = finder = @all._finder
+
+    finder.set = @set
+    finder.map = @map
+    finder.form = @form
+    finder.model = @model
+    finder.format = {}
     @
 
   key_by: (keys)->
@@ -156,16 +157,15 @@ module.exports = class Rule
 
   shuffle: ->
     @default_scope (all)-> all.shuffle()
-  order: (sortBy, orderBy)->
-    @default_scope (all)-> all.sort sortBy, orderBy
-  sort: (sortBy)->
-    @default_scope (all)-> all.sort sortBy
+  order: (sort...)->
+    @default_scope (all)-> all.sort sort...
 
   relation_to_one: (key, target, ik, else_id)->
     @model_property[key] =
       enumerable: true
       get: ->
-        Mem.Query[target].find(_.get @, ik) ? (else_id && Mem.Query[target].find(else_id))
+        id = _.get @, ik
+        Mem.Query[target].find id, else_id
 
   relation_to_many: (key, target, ik, qk)->
     all = @all
@@ -217,15 +217,6 @@ module.exports = class Rule
           @all.cache["#{key}:#{JSON.stringify args}"] ?= val args...
       else
         @all[key] = val
-
-  has_map: (path)->
-    name = rename path
-    all = @all
-
-    @model_property[name.list] =
-      enumerable: true
-      get: ->
-        all.where({@id}).by_reduce path
 
   path: (keys...)->
     for key in keys

@@ -79,7 +79,7 @@
             sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'sow_auth_id'")
           check(v-for="o in summary('sow_auth_id')" v-model="sow_auth_id", :as="o.id", :key="o.id")
-            | {{ o.id }}
+            | {{ o.id.replace(/\&\#2e/ig,'.') }}
             sup(v-if="1 < o.count") {{ o.count }}
         p(v-if="order === 'rating'")
           check(v-for="o in summary('rating')" v-model="rating", :as="o.id", :key="o.id")
@@ -214,10 +214,10 @@ module.exports =
       @drill = ! @drill
 
     summary: (key)->
-      @all.reduce?[key]?.summary
+      @all.reduce?[key]
 
     roles: ({ id }, key)->
-      @all.where({id}).reduce[key]?.summary ? []
+      @all.where({id}).reduce[key] ? []
 
   computed:
     query_in: ->

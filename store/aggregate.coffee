@@ -59,7 +59,7 @@ module.exports =
       state[id].lives = _.sortBy data.lives, (o)-> - o.story_ids.length
       sum = 0
       state[id].lives = for o in state[id].lives
-        o.role = Query.roles.hash[o._id.live] ? Query.roles.hash.mob
+        o.role = Query.roles.find(o._id.live, "mob")
         continue if o._id.live == "leave"
         sum += o.story_ids.length
         o
@@ -68,7 +68,7 @@ module.exports =
       state[id].roles = _.sortBy data.roles, (o)-> - o.story_ids.length
       sum = 0
       state[id].roles = for o in state[id].roles
-        o.role = Query.roles.hash[o._id.role_id] ? Query.roles.hash.mob
+        o.role = Query.roles.find(o._id.role_id, "mob")
         sum += o.story_ids.length
         o
       state[id].roles.sum = sum
@@ -94,7 +94,7 @@ module.exports =
       folders = _.groupBy keys, (o)-> o[0]
       for key, list of folders
         folders[key] = _.sortBy list, (o)-> o[1] - 0
-        folders[key].nation = Query.folders.hash[key.toUpperCase()].nation
+        folders[key].nation = Query.folders.find(key.toUpperCase()).nation
       state[id].folders = _.sortBy folders, (list, key)-> - list.length
 
   actions:

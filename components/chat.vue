@@ -13,7 +13,7 @@ module.exports =
 
   render: (m, ctx)->
     { id, show } = ctx.props
-    chat = Query.chats.hash[id]
+    chat = Query.chats.find id
     return [] unless chat
 
     attrs =
@@ -53,9 +53,9 @@ module.exports =
           console.log url
 
       phase: (args...)->
-        Query.phases.hash[args.join "-"]
+        Query.phases.find args.join "-"
       chat: (args...)->
-        Query.chats.hash[args.join "-"]
+        Query.chats.find args.join "-"
 
     computed:
       el_adjust: el.adjust
@@ -65,8 +65,8 @@ module.exports =
 
       anker: ->
         { read_at, chat_id } = @$store.state.book
-        current = Query.chats.hash[chat_id]
-        chat = Query.chats.hash[@id]
+        current = Query.chats.find chat_id
+        chat = Query.chats.find @id
         if chat
           console.log chat unless chat.phase
           { mark } = chat.phase

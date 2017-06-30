@@ -10,7 +10,7 @@ module.exports =
       @$store.state.menu.set.current
     mentions: ->
       { read_at, chat_id } = @$store.state.book
-      Query.chats.reduce?.mention_to?[chat_id]?.summary
+      Query.chats.reduce?.mention_to?[chat_id]
 </script>
 
 <template lang="pug">

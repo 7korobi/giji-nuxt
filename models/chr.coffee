@@ -26,8 +26,6 @@ new Rule("face").schema ->
   @has_many "chr_jobs"
   @has_many "chr_npcs"
 
-  @order "order"
-
   @scope (all)->
     tag: (tag_id)->
       switch tag_id
@@ -39,26 +37,27 @@ new Rule("face").schema ->
     name_blank: ->
       for idx in ["ア".charCodeAt(0) .. "ン".charCodeAt(0)]
         key = String.fromCharCode idx
-        continue if all.reduce.name_head[key]
+        continue if all.reduce.name_head.from[key]
         key
 
     name_head: (tag_id = "all")->
-      counts = []
-      for key, mr of all.tag(tag_id).reduce.name_head
-        mr.id = key
-        counts[mr.set.length] ?= []
-        counts[mr.set.length].push mr
-      counts
+      all.tag(tag_id).reduce.name_head
 
   map =
     count: 1
   class @model extends @model
+    @order: (o, emit)->
+      emit "list",
+        sort: ["order"]
+      emit "name_head",
+        sort: ["id"]
+        index: "set.length"
+
     @map_reduce: (o, emit)->
       head = o.name[0]
       head = o.name[1] if head in ["†"]
       emit "all", "all", map
       emit "name_head", head,
-        count: 1
         set: o.name
       for tag in o.tag_ids
         emit "tag", tag, map
