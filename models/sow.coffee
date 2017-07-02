@@ -24,10 +24,18 @@ new Rule("sow_village").schema ->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
     progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
 
+    mode: ( mode )->
+      all.where({ mode })
+    search: ( mode, query_in, query_where, order, asc )->
+      all.where({ mode }).in(query_in).where(query_where).sort(order, asc)
+
   Object.assign @model_property,
+    roles:
+      get: ->
+        @query.reduce ? []
     event_length:
       get: ->
-        Query.sow_villages.where({@id}).reduce.event?.length ? 0
+        @query.reduce.event?.length ? 0
 
 
   sort = ['count', 'desc']
@@ -40,10 +48,11 @@ new Rule("sow_village").schema ->
       minute = "0#{minute}" if minute < 10
       updated_at = new Date @timer.updateddt
 
+      @query = Query.sow_villages.where({@id})
       @q =
         sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')
         folder_id: @folder.toUpperCase()
-        size: @vpl[0]
+        size: "x" + @vpl[0]
         say:  @type.say
         mob:  @type.mob
         game: @type.game

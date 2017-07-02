@@ -55,7 +55,7 @@
           chat(v-for="o in chats", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次へ
-        btn(v-else v-model="part_id", :as="part_next_id") 次の日へ
+        a(v-else @click="part_next") 次の日へ
 
 </template>
 
@@ -95,6 +95,10 @@ module.exports =
     methods:
       page_add: (id)->
         @page_ids = [id, @page_ids...].sort()
+      part_next: ->
+        window.scrollTo 0, 0
+        @part_id = @part_next_id
+        @page_ids = [0]
 
     computed:
       book: ->

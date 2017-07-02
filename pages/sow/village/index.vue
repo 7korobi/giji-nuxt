@@ -126,7 +126,7 @@
             tbody
               tr
                 td(style="text-align: right" colspan="2")
-                  | {{ o._id }}
+                  a(:href="'village/' + o.id") {{ o.id }}
                   kbd(style="width: 40px")
                     img(:src="rating_img(o.q.rating)")
               tr
@@ -142,18 +142,18 @@
               a(v-for="opt in o.option_datas.list")
                .label {{ opt.label }}
             p
-              a(v-for="role in roles(o, 'config')", :class="role.win")
+              a(v-for="role in o.roles.config", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.length") {{ role.length }}
             hr
             p
-              a(v-for="role in roles(o, 'event')", :class="role.win")
+              a(v-for="role in o.roles.event", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.length") {{ role.length }}
             p
-              a(v-for="role in roles(o, 'discard')", :class="role.win")
+              a(v-for="role in o.roles.discard", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.length") {{ role.length }}
@@ -210,14 +210,10 @@ module.exports =
       "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{rating}.png"
 
     submenu: (as)->
-      console.log(as)
       @drill = ! @drill
 
     summary: (key)->
       @all.reduce?[key]
-
-    roles: ({ id }, key)->
-      @all.where({id}).reduce[key] ? []
 
   computed:
     query_in: ->
@@ -240,10 +236,11 @@ module.exports =
 
     all: ->
       @$store.state.story.read_at
-      Query.sow_villages.where({ @mode })
+      Query.sow_villages.mode @mode
 
     villages_all: ->
-      @all.in(@query_in).where(@query_where).sort(@order, @asc)
+      @$store.state.story.read_at
+      Query.sow_villages.search @mode, @query_in, @query_where, @order, @asc
 
     villages: ->
       @villages_all.list[0...@limit]
