@@ -23,12 +23,12 @@ new Rule("potof").schema ->
 
   class @model extends @model
     say: (part_id)->
-        for idx in ["SS", "GS", "VS"] when o = @book.chats.reduce.potof["#{part_id}-#{idx}"]?[@id]
-          return o
-        count: 0
-        all:   0
-        max: null
-        min: null
+      for idx in ["SS", "GS", "VS"] when o = @book.chats.reduce.potof["#{part_id}-#{idx}"]?[@id]
+        return o
+      count: 0
+      all:   0
+      max: null
+      min: null
     
     find: (q, keys, cb = (o)-> o )->
       for key in keys
