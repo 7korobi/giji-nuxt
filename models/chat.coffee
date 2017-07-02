@@ -17,6 +17,7 @@ new Rule("chat").schema ->
     normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark']
     extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY'])
     solo:   full.where (o)-> o.phase.handle in ['TSAY']
+
     parts: (hides, mode)-> all.pages.bind(all, hides, mode)
     pages: (hides, mode, part_id)->
       all[mode]
@@ -39,6 +40,12 @@ new Rule("chat").schema ->
         """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
 
     @map_reduce: (o, emit)->
+      if o.phase_id in ["#{o.part_id}-SS", "#{o.part_id}-GS", "#{o.part_id}-VS"]
+        emit "potof", o.phase_id, o.potof_id,
+          count: 1
+          all: o.log.length
+          max: o.write_at
+          min: o.write_at
       emit "say",
         max: o.write_at
         min: o.write_at

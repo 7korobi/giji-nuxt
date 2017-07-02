@@ -26,13 +26,15 @@ module.exports =
         begin
         .replace "時", "-" + write
       
-    input_part: (as)->
-      part = Query.parts.find as
+    input_part: (part_id)->
+      part = Query.parts.find part_id
       if part
+        window.scrollTo 0, 0
         @$parent.page_ids = [0]
-        @$parent.part_id = part.id
+        @$parent.part_id = part_id
 
     input_page: (part_id, page_ids)->
+      window.scrollTo 0, 0
       @$parent.page_ids = page_ids
       @$parent.part_id = part_id
   

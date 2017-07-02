@@ -13,9 +13,23 @@ new Rule("potof").schema ->
   @habtm "ables"
 
   @scope (all)->
-    {}
+    catalog: (book_id, part_id, sort, order)->
+      switch sort
+        when "say.count"
+          sort = (o)=> o.say(part_id).count
+        when "say.all"
+          sort = (o)=> o.say(part_id).all
+      Query.books.find(book_id).potofs.sort(sort, order)
 
   class @model extends @model
+    say: (part_id)->
+        for idx in ["SS", "GS", "VS"] when o = @book.chats.reduce.potof["#{part_id}-#{idx}"]?[@id]
+          return o
+        count: 0
+        all:   0
+        max: null
+        min: null
+    
     find: (q, keys, cb = (o)-> o )->
       for key in keys
         o = q.find("#{@_id}-#{key}")
@@ -75,3 +89,6 @@ new Rule("potof").schema ->
 
       @winner_id ?=  "NONE"
 
+    @map_reduce: (o, emit)->
+
+    @order: (o, emit)->
