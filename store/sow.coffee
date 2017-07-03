@@ -11,6 +11,8 @@ module.exports =
     join: (state, data)->
       book_id = data.stories[0]._id
       for o, idx in data.potofs
+        csid = o.csid
+        csid = 'sf' if csid == 'SF'
         potof_id = "#{o.event_id}-#{idx}"
         Set.stat.add
           _id: "#{o.event_id}"
@@ -50,7 +52,7 @@ module.exports =
         if o.zapcount
           job = ["IR","R","O","Y","G","B","I","V","UV"][o.clearance] + "-"
         else
-          job = Query.chr_jobs.find("#{o.csid}_#{o.face_id}").job
+          job = Query.chr_jobs.find("#{csid}_#{o.face_id}")?.job
 
         Set.potof.add
           _id:       potof_id
@@ -70,7 +72,8 @@ module.exports =
 
       _.sortBy data.messages, (o)-> o.write_at = new Date o.date
       .map (o)->
-        { face_id, to, log, write_at } = o
+        { face_id, to, log, write_at, csid } = o
+        csid = 'sf' if csid == 'SF'
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
         log ?= "メモをはがした。"
@@ -93,7 +96,7 @@ module.exports =
             Set.potof.add
               _id: [o.event_id, o.face_id].join("-")
               face_id:  o.face_id
-              job: Query.chr_jobs.find([o.csid, o.face_id].join("_"))?.job
+              job: Query.chr_jobs.find([csid, o.face_id].join("_"))?.job
               sign: o.sow_auth_id
               pno:  ""
             
