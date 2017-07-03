@@ -40,8 +40,7 @@ module.exports = class Query
     @_copy base
     tap.call @
 
-  _copy: ({ @all, @_all_ids, @_group, @_filters, $sort })->
-    @$sort = _.cloneDeep $sort
+  _copy: ({ @all, @_all_ids, @_group, @_filters, @$sort })->
 
   in: (req)->
     query_parser @, req, (q, target, req, path)=>
@@ -105,12 +104,14 @@ module.exports = class Query
   sort: (sort...)->
     return @ if _.isEqual sort, @$sort['_reduce.list']?.sort
     new Query @, ->
+      @$sort = _.cloneDeep @$sort
       @$sort['_reduce.list'] ?= {}
       Object.assign @$sort['_reduce.list'], { sort }
   
   page: (page_by)->
     return @ if _.isEqual page_by, @$sort['_reduce.list']?.page_by
     new Query @, ->
+      @$sort = _.cloneDeep @$sort
       @$sort['_reduce.list'] ?= {}
       Object.assign @$sort['_reduce.list'], { page_by }
     

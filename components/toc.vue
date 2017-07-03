@@ -12,16 +12,13 @@ module.exports =
   props: ["chats", "parts"]
   methods:
     pages: (part_id)->
-      last = Math.floor @chats.where({part_id}).list.length / 50
-      [0 .. last]
+      last = @chats(part_id).list.length
+      [0 ... last]
 
     page_label: (part_id, page_id)->
-      { reduce } = @chats.where({part_id}).page(50, page_id)
-      return "" unless reduce?.say
-
-      { max, min } = reduce.say
-      begin = format.head.format min
-      write = format.head.format max
+      [ first,..., last ] = @chats(part_id).list[page_id]
+      begin = format.head.format first.write_at
+      write = format.head.format last.write_at
       if begin == write
         begin
       else
@@ -29,13 +26,15 @@ module.exports =
         begin
         .replace "時", "-" + write
       
-    input_part: (as)->
-      part = Query.parts.find as
+    input_part: (part_id)->
+      part = Query.parts.find part_id
       if part
+        window.scrollTo 0, 0
         @$parent.page_ids = [0]
-        @$parent.part_id = part.id
+        @$parent.part_id = part_id
 
     input_page: (part_id, page_ids)->
+      window.scrollTo 0, 0
       @$parent.page_ids = page_ids
       @$parent.part_id = part_id
   
@@ -57,7 +56,7 @@ module.exports =
           th.r.form
             btn(@input="input_part", :value="$parent.part_id", :as="o.id")
               | {{o.label}}
-              sup {{ chats.where({part_id: o.id}).list.length }}
+              sup {{ chats(o.id).list.all }}
           td.l.form
             span(v-for="page in pages(o.id)", :key="page")
               btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, [page])" @toggle="input_page(o.id, [page])", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")

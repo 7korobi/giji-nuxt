@@ -25,36 +25,37 @@
         span
           btn(v-model="mode", as="title")
             | タイトル
-            sup(v-if="part") {{ now.title.list.length }}
+            sup(v-if="part") {{ now.title.list.all }}
           btn(v-model="mode", as="memo")
             | メモ
-            sup(v-if="part") {{ now.memo.list.length }}
+            sup(v-if="part") {{ now.memo.list.all }}
         span
           btn(v-model="mode", as="normal")
             | 通常
-            sup(v-if="part") {{ now.normal.list.length }}
+            sup(v-if="part") {{ now.normal.list.all }}
         span
           btn(v-model="mode", as="solo")
             | 独り言
-            sup(v-if="part") {{ now.solo.list.length }}
+            sup(v-if="part") {{ now.solo.list.all }}
           btn(v-model="mode", as="extra")
             | 非日常
-            sup(v-if="part") {{ now.extra.list.length }}
+            sup(v-if="part") {{ now.extra.list.all }}
           btn(v-model="mode", as="rest")
             | 墓休み
-            sup(v-if="part") {{ now.rest.list.length }}
+            sup(v-if="part") {{ now.rest.list.all }}
         span
           btn(v-model="mode", as="full")
             | バレ
-            sup(v-if="part") {{ now.full.list.length }}
+            sup(v-if="part") {{ now.full.list.all }}
 
       report(v-if="1 < page_ids.length" handle="footer" key="small")
         btn(v-model="page_ids", :as="[page_here_id]") {{ page_here_id + 1 }} page へ巻き取る
       transition-group.inframe(name="list" tag="div")
-        chat(v-for="o in chats_here", :id="o.id", :key="o.id")
+        div(v-for="(chats, idx) in chats_pages", :key="idx")
+          chat(v-for="o in chats", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次へ
-        btn(v-else v-model="part_id", :as="part_next_id") 次の日へ
+        a(v-else @click="part_next") 次の日へ
 
 </template>
 
@@ -93,7 +94,11 @@ module.exports =
 
     methods:
       page_add: (id)->
-        @page_ids = [id, @page_ids...]
+        @page_ids = [id, @page_ids...].sort()
+      part_next: ->
+        window.scrollTo 0, 0
+        @part_id = @part_next_id
+        @page_ids = [0]
 
     computed:
       book: ->
@@ -111,10 +116,11 @@ module.exports =
           ids[idx + 1]
 
       page_here_id: ->
-        @page_ids[0]
+        [..., last] = @page_ids
+        last
 
       page_next_id: ->
-        if @page_here_id? && @now[@mode].page(50, @page_here_id + 1).list.length
+        if @page_here_id? && @page_here_id + 1 < @chats_here.length
           @page_here_id + 1
 
       chat: ->
@@ -126,34 +132,26 @@ module.exports =
         @book?.parts.list ? []
 
       chats: ->
-        @all[@mode]
+        Query.chats.parts @hide_potof_ids, @mode
 
       chats_here: ->
-        @now[@mode]
-        .where (o)=> !(o.potof_id in @hide_potof_ids)
-        .page 50, @page_ids...
-        .list
+        @now[@mode].list
+
+      chats_pages: ->
+        @page_ids.map (page)=> @chats_here[page]
 
       all: ->
-        full = Query.chats.where("phase.group": ['S','A','I'])
-
-        memo:   Query.chats.where("phase.group": ['M'])
-        full:   full
-        title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','dark']
-        rest:   full.where (o)-> o.phase.handle in ['GSAY']
-        normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark']
-        extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY'])
-        solo:   full.where (o)-> o.phase.handle in ['TSAY']
+        Query.chats
 
       now: ->
         if @part
-          title:   @all.title.where({@part_id})
-          memo:     @all.memo.where({@part_id})
-          full:     @all.full.where({@part_id})
-          rest:     @all.rest.where({@part_id})
-          normal: @all.normal.where({@part_id})
-          extra:   @all.extra.where({@part_id})
-          solo:     @all.solo.where({@part_id})
+          title:  @all.pages @hide_potof_ids, 'title',  @part_id
+          memo:   @all.pages @hide_potof_ids, 'memo',   @part_id
+          full:   @all.pages @hide_potof_ids, 'full',   @part_id
+          rest:   @all.pages @hide_potof_ids, 'rest',   @part_id
+          normal: @all.pages @hide_potof_ids, 'normal', @part_id
+          extra:  @all.pages @hide_potof_ids, 'extra',  @part_id
+          solo:   @all.pages @hide_potof_ids, 'solo',   @part_id
         else
           @all
 

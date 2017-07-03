@@ -38,8 +38,8 @@
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
           td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
-          td.r(:class="o.live.role_id") {{ count("回", say(o.id).count) }}
-          td.r(:class="o.live.role_id") {{ count("字", say(o.id).all) }}
+          td.r(:class="o.live.role_id") {{ count("回", o.say(part.id).count) }}
+          td.r(:class="o.live.role_id") {{ count("字", o.say(part.id).all) }}
           td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) }}
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
@@ -98,15 +98,10 @@ module.exports =
       potof && @$parent.part
 
     potofs: ->
-      { book_id } = @$parent
-      { sort } = @
+      { book_id, part_id } = @$parent
+      { sort, order } = @
       if book_id
-        switch sort
-          when "say.count"
-            sort = (o)=> @say(o.id).count ? 0
-          when "say.all"
-            sort = (o)=> @say(o.id).all ? 0
-        Query.potofs.where({book_id}).sort(sort, @order).list
+        Query.potofs.catalog(book_id, part_id, sort, order).list
       else
         []
 
@@ -118,28 +113,18 @@ module.exports =
           (o)-> o.live.role_id
 
   methods:
-    say: (potof_id)->
-      { part_id } = @$parent
-      for idx in ["SS", "GS", "VS"]
-        q = Query.chats.where({ potof_id, phase_id: "#{part_id}-#{idx}"})
-        if q.list.length
-          return q.reduce?.say ? {}
-      return q.reduce?.say ? {}
-
     potof_ids: (f)->
       @potofs
       .filter f
       .map (o)-> o.id
+      .sort()
 
     reset: (as)->
-      @$emit 'input', as
+      @$emit 'input', as.sort()
 
     toggle: (o)->
       o.hide = ! o.hide
-      ids = @potofs
-      .filter (o)-> o.hide
-      .map (o)-> o.id
-      @$emit 'input', ids
+      @$emit 'input', @potof_ids (o)-> o.hide
 
     reverse: ->
       switch @order
@@ -151,7 +136,7 @@ module.exports =
     count: (unit, n)->
       switch n
         when 0, undefined, null, Infinity
-          ""
+          " "
         else
           "#{n}#{unit}"
 

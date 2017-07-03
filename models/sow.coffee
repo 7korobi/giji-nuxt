@@ -24,11 +24,23 @@ new Rule("sow_village").schema ->
     prologue: all.where(mode: "prologue").sort "timer.nextcommitdt", "desc"
     progress: all.where(mode: "progress").sort "timer.nextcommitdt", "desc"
 
+    mode: ( mode )->
+      all.where({ mode })
+    search: ( mode, query_in, query_where, order, asc )->
+      all.where({ mode }).in(query_in).where(query_where).sort(order, asc)
+
   Object.assign @model_property,
+    roles:
+      get: ->
+        @query.reduce ? []
     event_length:
       get: ->
-        Query.sow_villages.where({@id}).reduce.event?.length ? 0
+        @query.reduce.event?.length ? 0
 
+
+  sort = ['count', 'desc']
+  cmd =
+    count: 1
   class @model extends @model
     @deploy: ->
       { interval, hour, minute } = @upd
@@ -36,10 +48,11 @@ new Rule("sow_village").schema ->
       minute = "0#{minute}" if minute < 10
       updated_at = new Date @timer.updateddt
 
+      @query = Query.sow_villages.where({@id})
       @q =
         sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')
         folder_id: @folder.toUpperCase()
-        size: @vpl[0]
+        size: "x" + @vpl[0]
         say:  @type.say
         mob:  @type.mob
         game: @type.game
@@ -69,66 +82,42 @@ new Rule("sow_village").schema ->
           @mode = "prologue"
 
     @order: (o, emit)->
-      sort =
-        sort: ["count", "desc"]
-      emit "yeary", sort
-      emit "monthry", sort
-      emit "folder_id", sort
-      emit "upd_range", sort
-      emit "upd_at", sort
-      emit "sow_auth_id", sort
-      emit "rating", sort
-      emit "size", sort
-      emit "say", sort
-      emit "game", sort
-      emit "mob", sort
-      emit "option", sort
-      emit "event", sort
-      emit "discard", sort
-      emit "config", sort
+      emit "yeary",       { sort }
+      emit "monthry",     { sort }
+      emit "folder_id",   { sort }
+      emit "upd_range",   { sort }
+      emit "upd_at",      { sort }
+      emit "sow_auth_id", { sort }
+      emit "rating",      { sort }
+      emit "size",        { sort }
+      emit "say",         { sort, belongs_to: "says"    }
+      emit "game",        { sort, belongs_to: "games"   }
+      emit "mob",         { sort, belongs_to: "roles"   }
+      emit "option",      { sort, belongs_to: "options" }
+      emit "event",       { sort, belongs_to: "roles"   }
+      emit "discard",     { sort, belongs_to: "roles"   }
+      emit "config",      { sort, belongs_to: "roles"   }
 
     @map_reduce: (o, emit)->
-      emit "yeary", o.q.yeary,
-        count: 1
-      emit "monthry", o.q.monthry,
-        count: 1
-      emit "folder_id", o.q.folder_id,
-        count: 1
-      emit "upd_range", o.q.upd_range,
-        count: 1
-      emit "upd_at", o.q.upd_at,
-        count:1
-      emit "sow_auth_id", o.q.sow_auth_id,
-        count: 1
-      emit "rating", o.q.rating,
-        count: 1
-      emit "size", o.q.size,
-        count: 1
-      emit "say", o.q.say,
-        belongs_to: "says" 
-        count: 1
-      emit "game", o.q.game,
-        belongs_to: "games" 
-        count: 1
-      emit "mob", o.q.mob,
-        belongs_to: "roles"
-        count: 1
-      for opt_id in o.card.option
-        emit "option", opt_id,
-          belongs_to: "options"
-          count: 1
+      emit "yeary",       o.q.yeary,       cmd
+      emit "monthry",     o.q.monthry,     cmd
+      emit "folder_id",   o.q.folder_id,   cmd
+      emit "upd_range",   o.q.upd_range,   cmd
+      emit "upd_at",      o.q.upd_at,      cmd
+      emit "sow_auth_id", o.q.sow_auth_id, cmd
+      emit "rating",      o.q.rating,      cmd
+      emit "size",        o.q.size,        cmd
+      emit "say",         o.q.say,         cmd
+      emit "game",        o.q.game,        cmd
+      emit "mob",         o.q.mob,         cmd
+      for  opt_id in o.card.option
+        emit "option", opt_id,   cmd
       for card_id in o.card.event
-        emit "event", card_id,
-          belongs_to: "roles"
-          count: 1
+        emit "event", card_id,   cmd
       for card_id in o.card.discard
-        emit "discard", card_id,
-          belongs_to: "roles"
-          count: 1
+        emit "discard", card_id, cmd
       for card_id in o.card.config
-        emit "config", card_id,
-          belongs_to: "roles"
-          count: 1
+        emit "config", card_id,  cmd
 
 new Rule("folder").schema ->
   @scope (all)->
