@@ -229,6 +229,9 @@ module.exports = (app)->
     .then ([faces, sow_auths])->
       res.json { faces, sow_auths }
       next()
+    .catch (e)->
+      console.error req, e
+      next()
 
   app.get '/api/aggregate/faces/:id', (req, res, next)->
     { id } = req.params
@@ -243,6 +246,9 @@ module.exports = (app)->
     ]
     .then ([faces, mestypes, sow_auths, roles, lives])->
       res.json { faces, mestypes, sow_auths, roles, lives }
+      next()
+    .catch (e)->
+      console.error req, e
       next()
 
   app.get '/api/story/progress', (req, res, next)->
@@ -266,6 +272,9 @@ module.exports = (app)->
     .then ->
       res.json json
       next()
+    .catch (e)->
+      console.error req, e
+      next()
 
   app.get '/api/story/oldlog', (req, res, next)->
     q =
@@ -278,6 +287,9 @@ module.exports = (app)->
     .then (data)->
       res.json
         stories: data
+      next()
+    .catch (e)->
+      console.error req, e
       next()
 
   app.get '/api/story/oldlog/:story_id', (req, res, next)->
@@ -295,6 +307,9 @@ module.exports = (app)->
       unless stories.length
         messages = events = potofs = []
       res.json { stories, messages, events, potofs }
+      next()
+    .catch (e)->
+      console.error req, e
       next()
 
   return
