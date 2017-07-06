@@ -4,58 +4,60 @@
   .sideframe
     .inframe
       .icons
-        check.item(as="pin" v-model="menus")
-          i.fa.fa-pin
+        check.item(as="current" v-model="menus")
+          i.fa.fa-map-pin
         check.item(as="toc" v-model="menus")
           i.fa.fa-film
         check.item(as="potof" v-model="menus")
-          i.fa.fa-sitemap
-        check.item(as="current" v-model="menus")
-          i.fa.fa-user
+          i.fa.fa-users
   .summary
-    toc(:chats="chats", :parts="parts")
     mentions
+    toc(:chats="chats", :parts="parts")
     potofs(v-model="hide_potof_ids")
   .center-left
   .center-right
 
   .contentframe
     .inframe
-      report(handle="footer" key="finder")
-        span
-          btn(v-model="mode", as="title")
-            | タイトル
-            sup(v-if="part") {{ now.title.list.all }}
-          btn(v-model="mode", as="memo")
-            | メモ
-            sup(v-if="part") {{ now.memo.list.all }}
-        span
-          btn(v-model="mode", as="normal")
-            | 通常
-            sup(v-if="part") {{ now.normal.list.all }}
-        span
-          btn(v-model="mode", as="solo")
-            | 独り言
-            sup(v-if="part") {{ now.solo.list.all }}
-          btn(v-model="mode", as="extra")
-            | 非日常
-            sup(v-if="part") {{ now.extra.list.all }}
-          btn(v-model="mode", as="rest")
-            | 墓休み
-            sup(v-if="part") {{ now.rest.list.all }}
-        span
-          btn(v-model="mode", as="full")
-            | バレ
-            sup(v-if="part") {{ now.full.list.all }}
+      report.form( handle="footer" key="finder")
+        .center
+          span
+            btn(v-model="mode", as="title")
+              | タイトル
+              sup(v-if="part") {{ now.title.list.all }}
+            btn(v-model="mode", as="memo")
+              | メモ
+              sup(v-if="part") {{ now.memo.list.all }}
+          span
+            btn(v-model="mode", as="normal")
+              | 通常
+              sup(v-if="part") {{ now.normal.list.all }}
+          span
+            btn(v-model="mode", as="solo")
+              | 独り言
+              sup(v-if="part") {{ now.solo.list.all }}
+            btn(v-model="mode", as="extra")
+              | 非日常
+              sup(v-if="part") {{ now.extra.list.all }}
+            btn(v-model="mode", as="rest")
+              | 墓休み
+              sup(v-if="part") {{ now.rest.list.all }}
+          span
+            btn(v-model="mode", as="full")
+              | バレ
+              sup(v-if="part") {{ now.full.list.all }}
+        .center
+          a(@click="part_prev") 前の日へ
+          a(@click="part_next") 次の日へ
 
-      report(v-if="1 < page_ids.length" handle="footer" key="small")
-        btn(v-model="page_ids", :as="[page_here_id]") {{ page_here_id + 1 }} page へ巻き取る
       transition-group.inframe(name="list" tag="div")
         div(v-for="(chats, idx) in chats_pages", :key="idx")
           chat(v-for="o in chats", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次へ
-        a(v-else @click="part_next") 次の日へ
+        .center(v-else)
+          a(@click="part_prev") 前の日へ
+          a(@click="part_next") 次の日へ
 
 </template>
 
@@ -70,10 +72,14 @@ BrowserValue = require "~plugins/browser-value"
 q = new BrowserValue
 q.params
   book_id: ""
+watch = q.watch (_, key, val)->
+watch.mode = ->
+  window.scrollTo 0,0
+  @page_ids = [0]
 
 module.exports =
   default:
-    watch: q.watch (_, key, val)->
+    watch: watch
 
     data: ->
       q.data @,
@@ -94,10 +100,14 @@ module.exports =
 
     methods:
       page_add: (id)->
-        @page_ids = [id, @page_ids...].sort()
+        @page_ids = [id, @page_ids...].sort (a,b)-> a - b
+
+      part_prev: ->
+        @part_id = @part_prev_id ? @part_id
+        @page_ids = [0]
+
       part_next: ->
-        window.scrollTo 0, 0
-        @part_id = @part_next_id
+        @part_id = @part_next_id ? @part_id
         @page_ids = [0]
 
     computed:
@@ -109,8 +119,14 @@ module.exports =
         { read_at } = @$store.state.sow
         Query.parts.find @part_id
 
+      part_prev_id: ->
+        if @part && @book
+          ids = @book.parts.pluck('id')
+          idx = ids.indexOf @part_id
+          ids[idx - 1]
+
       part_next_id: ->
-        if @chat && @book
+        if @part && @book
           ids = @book.parts.pluck('id')
           idx = ids.indexOf @part_id
           ids[idx + 1]

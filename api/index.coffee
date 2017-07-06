@@ -7,11 +7,11 @@ module.exports = (app)->
     res.header "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
     next()
 
-  require("./agenda.coffee")(app)
-  require("./mongodb.coffee")(app)
-  require("./mongoose.coffee")(app)
-  require("./session.coffee")(app)
-  require("./passport.coffee")(app)
+  # require("./agenda.coffee")(app)
+  # require("./mongodb.coffee")(app)
+  # require("./mongoose.coffee")(app)
+  # require("./session.coffee")(app)
+  # require("./passport.coffee")(app)
   require("./test-data.coffee")(app)
   return
   

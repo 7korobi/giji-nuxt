@@ -33,9 +33,9 @@ module.exports =
         @$parent.page_ids = [0]
         @$parent.part_id = part_id
 
-    input_page: (part_id, page_ids)->
+    input_page: (part_id, page_id)->
       window.scrollTo 0, 0
-      @$parent.page_ids = page_ids
+      @$parent.page_ids = [page_id]
       @$parent.part_id = part_id
   
   computed:
@@ -59,9 +59,9 @@ module.exports =
               sup {{ chats(o.id).list.all }}
           td.l.form
             span(v-for="page in pages(o.id)", :key="page")
-              btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, [page])" @toggle="input_page(o.id, [page])", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
+              btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
                 | {{ page + 1 }}
-              btn.tooltip-bottom(v-else @input="input_page(o.id, [page])" @toggle="input_page(o.id, [page])", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
+              btn.tooltip-bottom(v-else @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
                 | {{ page + 1 }}
 
 </template>

@@ -1,7 +1,7 @@
 <template lang="pug">
 section.container
   img(src="../assets/images/logo.png")
-  nuxt-link.button(to="/" v-if="404 === error.statusCode").
+  nuxt-link.button(to="/" ).
     Homepage
 </template>
 
@@ -9,6 +9,7 @@ section.container
 module.export =
   default:
     props: ['error']
+    data: ->
 </script>
 
 <style scoped>

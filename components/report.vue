@@ -45,5 +45,5 @@ module.exports = require("~components/chat.vue").component_class()
   .text(:class="deco" v-if="$slots.default")
     slot
   .text(:class="deco" v-html="log_html" v-else)
-  chat-foot(v-if="full", :chat_id="id", :anker="anker", :write_at="write_at")
+  chat-foot(:chat_id="id", :anker="anker", :write_at="write_at")
 </template>

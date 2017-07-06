@@ -126,9 +126,11 @@ module.exports =
             potof_id = undefined
             show = "report"
           when "INFONOM"
-            handle = "dark"
+            handle = "public"
           when "INFOSP"
-            handle = "header"
+            handle = "private"
+          when "INFOWOLF"
+            handle = "WSAY"
           when "VSAY"
             handle = "VSSAY"
           when "SAY"
