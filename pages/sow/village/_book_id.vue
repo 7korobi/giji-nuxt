@@ -103,10 +103,12 @@ module.exports =
         @page_ids = [id, @page_ids...].sort (a,b)-> a - b
 
       part_prev: ->
+        window.scrollTo 0,0
         @part_id = @part_prev_id ? @part_id
         @page_ids = [0]
 
       part_next: ->
+        window.scrollTo 0,0
         @part_id = @part_next_id ? @part_id
         @page_ids = [0]
 
