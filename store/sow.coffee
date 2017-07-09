@@ -5,7 +5,7 @@ _ = require "lodash"
 module.exports =
   namespaced: true
   state: ->
-    read_at: Date.now()
+    read_at: 0
 
   mutations:
     join: (state, data)->
@@ -168,7 +168,8 @@ module.exports =
       state.read_at = Date.now()
 
   actions:
-    story: ({commit}, story_id)->
+    story: ({state, commit}, story_id)->
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
       axios.get "http://giji.check.jp/api/story/oldlog/#{story_id}"
       .then ({ status, data })->
         commit "join", data

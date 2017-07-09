@@ -21,11 +21,11 @@ titles =
   BA: ["BSAY", "念act（蝙蝠人間）"]
 
 state =
-  read_at: null
+  read_at: 0
   faces: []
 
 face_state = ->
-  read_at: null
+  read_at: 0
   sow_auths: []
   mestypes: []
   folders: []
@@ -99,20 +99,20 @@ module.exports =
 
   actions:
     faces: ({dispatch, state, commit})->
-      unless state.read_at
-        axios.get "http://giji.check.jp/api/aggregate/faces"
-        .then ({ status, data })->
-          commit "join",  { data, id: null }
-          commit "faces", { data, id: null }
-        .catch (err)->
-          console.log err
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
+      axios.get "http://giji.check.jp/api/aggregate/faces"
+      .then ({ status, data })->
+        commit "join",  { data, id: null }
+        commit "faces", { data, id: null }
+      .catch (err)->
+        console.log err
 
     face: ({state, commit}, id)->
-      unless state[id].read_at
-        axios.get "http://giji.check.jp/api/aggregate/faces/#{id}"
-        .then ({ status, data })->
-          commit "join", { data, id }
-          commit "face", { data, id }
-        .catch (err)->
-          console.log err
+      return if Date.now() - 10 * 60 * 1000 < state[id].read_at 
+      axios.get "http://giji.check.jp/api/aggregate/faces/#{id}"
+      .then ({ status, data })->
+        commit "join", { data, id }
+        commit "face", { data, id }
+      .catch (err)->
+        console.log err
 

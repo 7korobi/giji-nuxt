@@ -198,8 +198,7 @@ module.exports =
       drill: false
 
   mounted: ->
-    unless @all.length
-      @$store.dispatch "story/oldlog"
+    @$store.dispatch "story/oldlog"
 
   methods:
     reset: ->

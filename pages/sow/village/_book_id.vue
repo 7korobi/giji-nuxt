@@ -22,13 +22,17 @@
       report.form( handle="footer" key="finder")
         .center
           span
-            btn(v-model="mode", as="title")
-              | タイトル
-              sup(v-if="part") {{ now.title.list.all }}
             btn(v-model="mode", as="memo")
               | メモ
               sup(v-if="part") {{ now.memo.list.all }}
           span
+            btn(v-model="mode", as="title")
+              | タイトル
+              sup(v-if="part") {{ now.title.list.all }}
+          span
+            btn(v-model="mode", as="full")
+              | バレ
+              sup(v-if="part") {{ now.full.list.all }}
             btn(v-model="mode", as="normal")
               | 通常
               sup(v-if="part") {{ now.normal.list.all }}
@@ -43,9 +47,6 @@
               | 墓休み
               sup(v-if="part") {{ now.rest.list.all }}
           span
-            btn(v-model="mode", as="full")
-              | バレ
-              sup(v-if="part") {{ now.full.list.all }}
         .center
           a(@click="part_prev") 前の日へ
           a(@click="part_next") 次の日へ
@@ -163,13 +164,13 @@ module.exports =
 
       now: ->
         if @part
-          title:  @all.pages @hide_potof_ids, 'title',  @part_id
           memo:   @all.pages @hide_potof_ids, 'memo',   @part_id
+          title:  @all.pages @hide_potof_ids, 'title',  @part_id
           full:   @all.pages @hide_potof_ids, 'full',   @part_id
-          rest:   @all.pages @hide_potof_ids, 'rest',   @part_id
           normal: @all.pages @hide_potof_ids, 'normal', @part_id
-          extra:  @all.pages @hide_potof_ids, 'extra',  @part_id
           solo:   @all.pages @hide_potof_ids, 'solo',   @part_id
+          extra:  @all.pages @hide_potof_ids, 'extra',  @part_id
+          rest:   @all.pages @hide_potof_ids, 'rest',   @part_id
         else
           @all
 

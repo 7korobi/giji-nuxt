@@ -4,7 +4,7 @@ axios = require "axios"
 module.exports =
   namespaced: true
   state: ->
-    read_at: Date.now()
+    read_at: 0
 
     folder_id: ""
     book_id: ""
@@ -63,12 +63,14 @@ module.exports =
 
   actions:
     books: ({commit}, folder)->
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
       axios.get "/api/books", { folder }
       .then ({ status, data })->
         commit "data",  data
         commit "folder", folder
 
     book: ({commit}, id)->
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
       axios.get "/api/books/#{id}"
       .then ({ status, data })->
         console.log "HTTP :: /api/books/#{id}"
@@ -76,6 +78,7 @@ module.exports =
         commit "book", id
 
     part: ({commit}, id)->
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
       axios.get "/api/parts/#{id}"
       .then ({ status, data })->
         console.log "HTTP :: /api/parts/#{id}"
@@ -83,10 +86,9 @@ module.exports =
         commit "part", id
 
     section: ({commit}, id)->
+      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
       axios.get "/api/sections/#{id}"
       .then ({ status, data })->
         console.log "HTTP :: /api/sections/#{id}"
         commit "data", data
         commit "section", id
-
-

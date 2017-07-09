@@ -11,12 +11,14 @@ new Rule("chat").schema ->
     full = all.where("phase.group": ['S','A','I'])
 
     memo:   all.where("phase.group": ['M'])
+    title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','public']
+
     full:   full
-    title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','dark']
+    normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','public','private']
+
+    solo:   full.where (o)-> o.phase.handle in ['TSAY','private']
+    extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY','public'])
     rest:   full.where (o)-> o.phase.handle in ['GSAY']
-    normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark']
-    extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY'])
-    solo:   full.where (o)-> o.phase.handle in ['TSAY']
 
     parts: (hides, mode)-> all.pages.bind(all, hides, mode)
     pages: (hides, mode, part_id)->

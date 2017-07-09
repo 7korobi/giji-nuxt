@@ -1,8 +1,9 @@
 { Model, Query, Rule } = require "~plugins/memory-record"
 
 attrs =
-  TITLE:  { mark: 'T', label: '表題' }
-  header: { mark:  '', label: '活動' }
+  TITLE:   { mark: 'T', label: '表題' }
+  public:  {            label: '活動' }
+  private: {            label: '秘密' }
   SSAY:   { mark:  '', label: '会話' }
   TSAY:   { mark: '-', label: '独言' }
   MAKER:  { mark: '#', label: '村建' }
@@ -26,6 +27,8 @@ new Rule("phase").schema ->
     @deploy: ->
       if o = attrs[@handle]
         Object.assign @, o
+      if @group in ["A"]
+        @mark = null
     @map_reduce: (o, emit)->
       emit "group", o.group,
         count: 1

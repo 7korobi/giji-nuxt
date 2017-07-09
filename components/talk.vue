@@ -49,5 +49,5 @@ table.talk(:id="id", :key="id")
           .text(:class="deco" v-if="$slots.default")
             slot
           .text(:class="deco" v-html="log_html" v-else)
-          chat-foot(:chat_id="id", :anker="anker", :write_at="write_at")
+          chat-foot(v-if="anker", :chat_id="id", :anker="anker", :write_at="write_at")
 </template>
