@@ -25,12 +25,16 @@
         .card どこかの村で活躍したことのあるキャラクターはこちら。
 
       report(handle="footer" deco="center") 開始待ちの村／進行中の村
-      post(handle="EVIL", v-for="o in progress", :head="o.name", :write_at="o.timer.nextcommitdt", :key="o._id")
+      post(handle="EVIL", v-for="o in progress", :head="o.name", :key="o._id")
         a(:href="o.folder.href") {{ o.folder.nation }}{{ o.vid }}
         | は、進行中だ。
-      post(handle="MOB",  v-for="o in prologue", :head="o.name", :write_at="o.timer.nextcommitdt", :key="o._id")
+        .date
+          timeago(:since="o.timer.nextcommitdt")
+      post(handle="MOB",  v-for="o in prologue", :head="o.name", :key="o._id")
         a(:href="o.folder.href") {{ o.folder.nation }}{{ o.vid }}
         | は、開始が楽しみだ。
+        .date
+          timeago(:since="o.timer.nextcommitdt")
 
       report(handle="footer" deco="center")
         nuxt-link(to="/demo") 開発者用ページ
