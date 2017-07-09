@@ -18,13 +18,13 @@ book =
   ]
 part =
   phases: [
-    { _id: "demo-0-0-0", handle: "TITLE", idx:  2, update: true  }
-    { _id: "demo-0-0-1", handle: "SSAY",  idx: 26, update: false }
-    { _id: "demo-0-0-2", handle: "TSAY",  idx:  2, update: false }
-    { _id: "demo-0-0-3", handle: "MAKER", idx:  2, update: false }
-    { _id: "demo-0-0-4", handle: "ADMIN", idx:  2, update: false }
-    { _id: "demo-0-0-5", handle: "VSSAY", idx:  3, update: false }
-    { _id: "demo-0-0-6", handle: "WSAY",  idx:  3, update: false }
+    { _id: "demo-0-0-0", handle: "TITLE", idx:  2, guide: true, update: true  }
+    { _id: "demo-0-0-1", handle: "SSAY",  idx: 26, guide: true, update: false }
+    { _id: "demo-0-0-2", handle: "TSAY",  idx:  2, guide: true, update: false }
+    { _id: "demo-0-0-3", handle: "MAKER", idx:  2, guide: true, update: false }
+    { _id: "demo-0-0-4", handle: "ADMIN", idx:  2, guide: true, update: false }
+    { _id: "demo-0-0-5", handle: "VSSAY", idx:  3, guide: true, update: false }
+    { _id: "demo-0-0-6", handle: "WSAY",  idx:  3, guide: true, update: false }
   ]
   cards: [
     { _id: "demo-0-0-1-request",  role_id: "villager" }

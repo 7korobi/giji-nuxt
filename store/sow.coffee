@@ -78,6 +78,7 @@ module.exports =
         return if "*CAST*" == log
         log ?= "メモをはがした。"
 
+        guide = true
         handle = o.mestype
         phase_group = o.subid
         phase_type = o.subid + o.mestype
@@ -118,6 +119,7 @@ module.exports =
             potof_id = undefined
             show = "post"
             log = o.name + "は、" + log
+            guide = false
 
         switch handle
           when "DELETED"
@@ -145,6 +147,7 @@ module.exports =
 
         phases[phase_id] ?=
           handle: handle
+          guide: guide
           type:  phase_type
           group: phase_group
           update: false
