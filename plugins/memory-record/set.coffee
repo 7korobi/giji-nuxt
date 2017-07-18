@@ -6,16 +6,16 @@ OBJ = ->
   new Object null
 
 f_reset = (list, parent)->
-  @all._finder.reset @all, list, parent
   depends @$name
+  @all._finder.reset @all, list, parent
 
 f_merge = (list, parent)->
-  @all._finder.merge @all, list, parent
   depends @$name
+  @all._finder.merge @all, list, parent
 
 f_remove = (list)->
-  @all._finder.remove @all, list
   depends @$name
+  @all._finder.remove @all, list
 
 f_item = (cb)->
   (item, parent)->

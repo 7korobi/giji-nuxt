@@ -28,7 +28,6 @@ module.exports = class Rule
 
     @all = Query.build()
     @all.cache = {}
-    @all._write_at = Date.now()
     @all._finder = new Finder @$name
 
     @depend_on base

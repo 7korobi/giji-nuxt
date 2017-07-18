@@ -37,6 +37,7 @@ module.exports = class Query
       @_memory = OBJ()
 
   constructor: (base, tap)->
+    @_step = 0
     @_copy base
     tap.call @
 
@@ -127,13 +128,10 @@ module.exports = class Query
   pluck: -> @list.pluck arguments...
 
   Object.defineProperties @prototype,
-    write_at:
-      get: ->
-        @all._write_at
-
     reduce:
       get: ->
-        @all._finder.calculate(@, @all._memory) unless @_reduce?
+        if @_step < @all._finder.step
+          @all._finder.calculate(@, @all._memory)
         @_reduce
 
     list:
