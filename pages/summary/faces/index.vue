@@ -4,7 +4,7 @@
   .contentframe
     .inframe
       post(handle="SSAY")
-        | {{ faces.length }}人を表示しています。
+        | {{ faces.list.length }}人を表示しています。
         ul
           li 人気度
           li
@@ -21,7 +21,7 @@
 
   .fullframe
     transition-group.portrates(name="list" tag="div")
-      portrate(v-for="face in faces", :face_id="face.id", :key="face.id")
+      portrate(v-for="face in faces.list", :face_id="face.id", :key="face.id")
         p(v-if="'fav_count' == order")
           | ♥{{face.fav_count}}回
         p(v-else)
@@ -72,7 +72,8 @@ module.exports =
             else
               "desc"
         { read_at } = @$store.state.aggregate
-        Query.faces.tag(@tag_id).sort(@order, asc).list
+        Query.faces.tag(@tag_id).sort(@order, asc)
+
 
 </script>
 

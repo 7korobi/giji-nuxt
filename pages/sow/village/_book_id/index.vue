@@ -11,7 +11,7 @@
         check.item(as="potof" v-model="menus")
           i.fa.fa-users
   .summary
-    mentions
+    mentions(@anker="anker")
     toc(:chats="chats", :parts="parts")
     potofs(v-model="hide_potof_ids")
   .center-left
@@ -48,17 +48,17 @@
               sup(v-if="part") {{ now.rest.list.all }}
           span
         .center
-          a(@click="part_prev") 前の日へ
-          a(@click="part_next") 次の日へ
+          a(v-if="part_prev_id" @click="part_prev") 前の日へ
+          a(v-if="part_next_id" @click="part_next") 次の日へ
 
       transition-group.inframe(name="list" tag="div")
         div(v-for="(chats, idx) in chats_pages", :key="idx")
-          chat(v-for="o in chats", :id="o.id", :key="o.id")
+          chat(v-for="o in chats" @anker.capture="anker", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
-        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次へ
+        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
         .center(v-else)
-          a(@click="part_prev") 前の日へ
-          a(@click="part_next") 次の日へ
+          a(v-if="part_prev_id" @click="part_prev") 前の日へ
+          a(v-if="part_next_id" @click="part_next") 次の日へ
 
 </template>
 
@@ -100,6 +100,11 @@ module.exports =
         @page_ids = [0]
 
     methods:
+      anker: (ids)->
+        @$router.push
+          path: "/ankers"
+          query: { ids }
+
       page_add: (id)->
         @page_ids = [id, @page_ids...].sort (a,b)-> a - b
 

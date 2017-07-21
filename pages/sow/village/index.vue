@@ -126,7 +126,7 @@
             tbody
               tr
                 td(style="text-align: right" colspan="2")
-                  a(:href="'village/' + o.id") {{ o.id }}
+                  nuxt-link(:to="'village/' + o.id") {{ o.id }}
                   kbd(style="width: 40px")
                     img(:src="rating_img(o.q.rating)")
               tr
