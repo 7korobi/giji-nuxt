@@ -3,7 +3,7 @@
 .outframe
   .sideframe
     .inframe
-      .icons
+      .icons.form
         check.item(as="current" v-model="menus")
           i.fa.fa-map-pin
         check.item(as="toc" v-model="menus")

@@ -21,18 +21,23 @@ validate = (item, chklist)->
     return false
   true
 
+$step = 0
+
 module.exports = class Finder
   constructor: (@name)->
+    @step = ++$step
   calculate: (query, memory)->
     cache = _.cloneDeep @format
     @reduce @map, cache, query, memory
     return
 
   reduce: (map, cache, query, memory)->
+    query._step = ++$step
     paths =
       _reduce:
         list: []
         hash: {}
+    delete query._reduce
     for id in query._all_ids ? Object.keys memory
       continue unless o = memory[id]
       { item, $group } = o
@@ -50,10 +55,7 @@ module.exports = class Finder
       _.set query, path, o
 
   clear_cache: (all)->
-    delete all._reduce
-    all.cache = {}
-    all._write_at = Date.now()
-
+    @step = ++$step
     return
 
   remove: (all, from)->
