@@ -28,6 +28,7 @@
     "stylus": "latest",
     "stylus-loader": "latest",
     "tiny-cookie": "latest",
+    "uglify-es-webpack-plugin": "^0.0.3",
     "vee-validate": "latest",
     "vue-select": "latest",
     "webpack-bundle-analyzer": "latest",
