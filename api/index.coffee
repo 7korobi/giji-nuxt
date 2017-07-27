@@ -3,6 +3,7 @@ express = require 'express'
 config = require './nuxt.config.js'
 Nuxt = require 'nuxt'
 
+process.on 'unhandledRejection', console.dir
 
 host = process.env.HOST || '127.0.0.1'
 port = 4000 + parseInt process.env.pm_id ? 0
