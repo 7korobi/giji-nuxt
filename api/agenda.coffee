@@ -18,9 +18,18 @@ agenda.define "aggregate", (job, done)->
     else
       console.log stdout  
 
+agenda.define "process", (job, done)->
+  sh.exec 'ps uafxS | grep -v ^root', (err, stdout, stderr)->
+    if err
+      console.error err
+      console.error stderr
+    else
+      console.log stdout  
+
 agenda.on 'ready', ->
   unless pno 
     agenda.every '12 hours', 'aggregate'
+    agenda.every '2 minutes', 'process'
   agenda.start()
 
 agenda_ui = require "agenda-ui"
