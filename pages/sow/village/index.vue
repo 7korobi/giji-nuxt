@@ -126,7 +126,7 @@
             tbody
               tr
                 td(style="text-align: right" colspan="2")
-                  a(:href="'village/' + o.id") {{ o.id }}
+                  nuxt-link(:to="'village/' + o.id") {{ o.id }}
                   kbd(style="width: 40px")
                     img(:src="rating_img(o.q.rating)")
               tr
@@ -145,18 +145,18 @@
               a(v-for="role in o.roles.config", :class="role.win")
                .label
                  | {{ role.label }}
-                 sup(v-if="1 < role.length") {{ role.length }}
+                 sup(v-if="1 < role.count") {{ role.count }}
             hr
             p
               a(v-for="role in o.roles.event", :class="role.win")
                .label
                  | {{ role.label }}
-                 sup(v-if="1 < role.length") {{ role.length }}
+                 sup(v-if="1 < role.count") {{ role.count }}
             p
               a(v-for="role in o.roles.discard", :class="role.win")
                .label
                  | {{ role.label }}
-                 sup(v-if="1 < role.length") {{ role.length }}
+                 sup(v-if="1 < role.count") {{ role.count }}
       report(handle="btns" key="limitup")
         scroll-mine(key="add" v-model="limit", :as="limit_next") {{ limit_next }}件
 

@@ -11,7 +11,7 @@
         check.item(as="potof" v-model="menus")
           i.fa.fa-users
   .summary
-    mentions(@anker="anker")
+    mentions
     toc(:chats="chats", :parts="parts")
     potofs(v-model="hide_potof_ids")
   .center-left
@@ -48,17 +48,13 @@
               sup(v-if="part") {{ now.rest.list.all }}
           span
         .center
-          a(v-if="part_prev_id" @click="part_prev") 前の日へ
-          a(v-if="part_next_id" @click="part_next") 次の日へ
+          nuxt-link(to="..") ログ
 
       transition-group.inframe(name="list" tag="div")
         div(v-for="(chats, idx) in chats_pages", :key="idx")
-          chat(v-for="o in chats" @anker.capture="anker", :id="o.id", :key="o.id")
+          chat(v-for="o in chats", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
-        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
-        .center(v-else)
-          a(v-if="part_prev_id" @click="part_prev") 前の日へ
-          a(v-if="part_next_id" @click="part_next") 次の日へ
+        nuxt-link(to="..") ログ
 
 </template>
 
@@ -100,83 +96,15 @@ module.exports =
         @page_ids = [0]
 
     methods:
-      anker: (ids)->
-        @$router.push
-          path: "/ankers"
-          query: { ids }
-
-      page_add: (id)->
-        @page_ids = [id, @page_ids...].sort (a,b)-> a - b
-
-      part_prev: ->
-        window.scrollTo 0,0
-        @part_id = @part_prev_id ? @part_id
-        @page_ids = [0]
-
-      part_next: ->
-        window.scrollTo 0,0
-        @part_id = @part_next_id ? @part_id
-        @page_ids = [0]
+      xxx: ->
 
     computed:
       book: ->
         @$store.commit "menu/mode", @menus
         { read_at } = @$store.state.sow
         Query.books.find @book_id
-      part: ->
-        { read_at } = @$store.state.sow
-        Query.parts.find @part_id
-
-      part_prev_id: ->
-        if @part && @book
-          ids = @book.parts.pluck('id')
-          idx = ids.indexOf @part_id
-          ids[idx - 1]
-
-      part_next_id: ->
-        if @part && @book
-          ids = @book.parts.pluck('id')
-          idx = ids.indexOf @part_id
-          ids[idx + 1]
-
-      page_here_id: ->
-        [..., last] = @page_ids
-        last
-
-      page_next_id: ->
-        if @page_here_id? && @page_here_id + 1 < @chats_here.length
-          @page_here_id + 1
-
-      chat: ->
-        { read_at } = @$store.state.sow
-        { @chat_id, @part_id } = @$store.state.book
-        Query.chats.find @chat_id
 
       parts: ->
         @book?.parts.list ? []
-
-      chats: ->
-        Query.chats.parts @hide_potof_ids, @mode
-
-      chats_here: ->
-        @now[@mode].list
-
-      chats_pages: ->
-        @page_ids.map (page)=> @chats_here[page]
-
-      all: ->
-        Query.chats
-
-      now: ->
-        if @part
-          memo:   @all.pages @hide_potof_ids, 'memo',   @part_id
-          title:  @all.pages @hide_potof_ids, 'title',  @part_id
-          full:   @all.pages @hide_potof_ids, 'full',   @part_id
-          normal: @all.pages @hide_potof_ids, 'normal', @part_id
-          solo:   @all.pages @hide_potof_ids, 'solo',   @part_id
-          extra:  @all.pages @hide_potof_ids, 'extra',  @part_id
-          rest:   @all.pages @hide_potof_ids, 'rest',   @part_id
-        else
-          @all
 
 </script>

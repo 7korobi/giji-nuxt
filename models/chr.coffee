@@ -105,9 +105,6 @@ new Rule("chr_job").schema ->
   @belongs_to "chr_set"
   @belongs_to "face"
 
-  @scope (all)->
-    face: (face_id)-> all.where({ face_id }).sort "chr_set_idx"
-
   class @model extends @model
     @deploy: ->
       @_id = "#{@chr_set_id}_#{@face_id}"
@@ -130,7 +127,7 @@ list =
   for face in Query.faces.list
     chr_set_id = "all"
     face_id = face._id
-    job = Query.chr_jobs.face(face_id).list.first?.job
+    job = face.chr_jobs.list.sort("chr_set_idx")[0]?.job
     continue unless job?
     { chr_set_id, face_id, job }
 

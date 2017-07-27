@@ -16,6 +16,7 @@ module.exports =
     chat = Query.chats.find id
     return [] unless chat
 
+    key = id
     attrs =
       id: id
       write_at: chat.write_at
@@ -37,20 +38,21 @@ module.exports =
       Object.assign attrs,
         handle: chat.handle ? o.handle
 
-    m attrs.show, { attrs, key: id }
+    m attrs.show, { attrs, key, on: ctx.data.on }
 
   component_class: ->
     props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
 
     methods:
       click: ({ target })->
-        { chat_id, href } = target.attributes
-        if chat_id
-          chat = Query.chats.find chat_id.value
-          console.log chat
-        if href
-          url = href.value
-          console.log url
+        { chat_id, href, chk } = target.attributes
+        if chat_id && chat = Query.chats.find chat_id.value
+          ids = Array.from new Set [@id, chat.id]
+          @$emit "anker", ids
+          
+        if url = href?.value
+          if chk?.value == "confirm" && confirm "open?\n#{url}"
+            open url, "_blank"
 
       phase: (args...)->
         Query.phases.find args.join "-"
@@ -95,7 +97,7 @@ module.exports =
             ""
           [protocol, hostname] = url.split(///\://|/|\?|\#///g)
           title = [protocol, hostname].join("\n")
-          """<b href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""
+          """<b chk="confirm" href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""
         .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
 

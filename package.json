@@ -28,6 +28,7 @@
     "stylus": "latest",
     "stylus-loader": "latest",
     "tiny-cookie": "latest",
+    "uglify-es-webpack-plugin": "^0.0.3",
     "vee-validate": "latest",
     "vue-select": "latest",
     "webpack-bundle-analyzer": "latest",
@@ -35,7 +36,8 @@
   },
   "scripts": {
     "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
-    "dev": "coffee server.coffee",
+    "api": "webpack --config config/webpack/api.config.coffee",
+    "dev": "node server.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
