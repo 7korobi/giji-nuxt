@@ -1,7 +1,8 @@
-pno = process.env.NODE_APP_INSTANCE
+agenda = require "agenda"
 sh = require 'child_process'
+pno = process.env.NODE_APP_INSTANCE
 
-agenda = new require("agenda")
+agenda = new agenda
   db:
     address: "mongodb://localhost/giji"
     collection: "jobCollectionName"

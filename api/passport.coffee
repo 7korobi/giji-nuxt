@@ -1,4 +1,4 @@
-config = require '../nuxt.config.js'
+config = require './nuxt.config.js'
 passport = require "passport"
 
 auth =

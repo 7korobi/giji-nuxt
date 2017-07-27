@@ -36,7 +36,8 @@
   },
   "scripts": {
     "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
-    "dev": "coffee server.coffee",
+    "api": "webpack --config config/webpack/api.config.coffee",
+    "dev": "node server.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
