@@ -1,6 +1,6 @@
 agenda = require "agenda"
 sh = require 'child_process'
-pno = process.env.NODE_APP_INSTANCE
+pno = (process.env.pm_id - 1)
 
 agenda = new agenda
   db:
