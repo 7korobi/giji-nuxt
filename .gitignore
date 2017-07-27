@@ -5,7 +5,6 @@ prod.sh
 dev
 prod
 
-
 # mac
 .DS_Store
 
@@ -15,11 +14,10 @@ node_modules
 # logs
 npm-debug.log
 
-# Nuxt build
+# build & generate
 .nuxt
-
-# Nuxt generate
 dist
+server.js
 
-# 著作権管理
+# Copyright
 static/images/portrate
