@@ -1,8 +1,6 @@
 // 既定の設定とユーザー設定を上書きするには、このファイル内に設定を挿入します
 {
   "editor.tabSize": 2,
-  "editor.fontFamily": "'Mgen+ 1mn regular'",
-  "editor.fontWeight": "normal",
   "editor.renderWhitespace": "all",
   "editor.minimap.enabled": true,
   "editor.minimap.renderCharacters": true,
