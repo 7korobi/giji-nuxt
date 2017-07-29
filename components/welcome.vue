@@ -1,5 +1,4 @@
 <script lang="coffee">
-
 { Query } = require "~plugins/memory-record"
 
 module.exports =
@@ -7,7 +6,6 @@ module.exports =
     props: ["top", "show"]
 
     data: ->
-      env: env
       export_to: "progress"
 
     computed:
