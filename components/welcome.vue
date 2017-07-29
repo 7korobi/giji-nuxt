@@ -1,6 +1,4 @@
 <script lang="coffee">
-env =
-  file: "http://s3-ap-northeast-1.amazonaws.com/giji-assets"
 
 { Query } = require "~plugins/memory-record"
 
@@ -90,7 +88,7 @@ module.exports =
           btn(v-model="export_to" as="progress") 進行中の村
       tr
         th.btns(colspan=4)
-          a(href="http://giji.check.jp") 総合トップ
+          a(href="http://giji.f5.si") 総合トップ
 
   h2#title
     nuxt-link(to="/") 人狼議事

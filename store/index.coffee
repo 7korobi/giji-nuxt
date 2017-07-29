@@ -13,7 +13,7 @@ module.exports =
         if id = req.session?.passport?.user
           commit "login", id
 
-          axios.get "http://giji.check.jp/api/user/#{id}"
+          axios.get "http://giji.f5.si/api/user/#{id}"
           .then ({ status, data })->
             console.log "HTTP :: /api/books/#{id}"
             commit "profile", data

@@ -1,6 +1,8 @@
 agenda = require "agenda"
 sh = require 'child_process'
-pno = (process.env.pm_id - 1 || 0)
+
+{ pm_id, WEB_URL } = process.env
+pno = (pm_id - 1 || 0)
 
 agenda = new agenda
   db:
@@ -11,7 +13,7 @@ agenda = new agenda
         auto_reconnect: true
 
 agenda.define "aggregate", (job, done)->
-  sh.exec 'curl http://giji.check.jp/api/aggregate/job', (err, stdout, stderr)->
+  sh.exec "curl #{WEB_URL}/api/aggregate/job", (err, stdout, stderr)->
     if err
       console.error err
       console.error stderr

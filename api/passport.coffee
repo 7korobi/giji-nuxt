@@ -1,6 +1,8 @@
 config = require './nuxt.config.js'
 passport = require "passport"
 
+{ WEB_URL } = process.env
+
 auth =
   slack:
     module: require("passport-slack").Strategy
@@ -38,10 +40,7 @@ module.exports = (app)->
     res.redirect('/')
 
   for provider, { attr, module } of auth
-    if config.dev
-      attr.callbackURL = "http://lvh.me:4000/auth/#{provider}/callback"
-    else
-      attr.callbackURL = "http://giji.check.jp/auth/#{provider}/callback"
+    attr.callbackURL = "#{WEB_URL}/auth/#{provider}/callback"
     
 
     passport.use new module attr, (accessToken, refreshToken, { provider, id, displayName, emails, photos }, done)->

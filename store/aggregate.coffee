@@ -100,7 +100,7 @@ module.exports =
   actions:
     faces: ({dispatch, state, commit})->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.check.jp/api/aggregate/faces"
+      axios.get "http://giji.f5.si/api/aggregate/faces"
       .then ({ status, data })->
         commit "join",  { data, id: null }
         commit "faces", { data, id: null }
@@ -109,7 +109,7 @@ module.exports =
 
     face: ({state, commit}, id)->
       return if Date.now() - 10 * 60 * 1000 < state[id].read_at 
-      axios.get "http://giji.check.jp/api/aggregate/faces/#{id}"
+      axios.get "http://giji.f5.si/api/aggregate/faces/#{id}"
       .then ({ status, data })->
         commit "join", { data, id }
         commit "face", { data, id }

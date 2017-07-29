@@ -25,12 +25,12 @@ module.exports =
   actions:
     progress: ({state, commit})->
       return if  Date.now() - 10 * 60 * 1000 < state.index_at 
-      axios.get "http://giji.check.jp/api/story/progress"
+      axios.get "http://giji.f5.si/api/story/progress"
       .then ({ status, data })->
         commit "progress", data
 
     oldlog: ({ state, commit})->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.check.jp/api/story/oldlog"
+      axios.get "http://giji.f5.si/api/story/oldlog"
       .then ({ status, data })->
         commit "oldlog", data
