@@ -10,7 +10,7 @@ module.exports = (app)->
     resave: false
     saveUninitialized: false
     store: new MongoStore
-      url: 'mongodb://localhost/giji'
+      url: process.env.MONGO_URL
       ttl: interval
       autoRemove: 'native'
       collection: 'sessions'

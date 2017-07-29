@@ -5,7 +5,7 @@ ObjectId = false
 
 giji = {}
 
-mongo.connect "mongodb://192.168.0.249/giji"
+mongo.connect process.env.MONGO_URL_SOW
 .then (db)->
   end = (err, o)->
     console.log err, o

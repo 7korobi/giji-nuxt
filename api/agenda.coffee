@@ -1,10 +1,10 @@
 agenda = require "agenda"
 sh = require 'child_process'
-pno = (process.env.pm_id - 1)
+pno = (process.env.pm_id - 1 || 0)
 
 agenda = new agenda
   db:
-    address: "mongodb://localhost/giji"
+    address: process.env.MONGO_URL
     collection: "jobCollectionName"
     options:
       server:

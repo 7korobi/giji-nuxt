@@ -6,7 +6,7 @@ Nuxt = require 'nuxt'
 process.on 'unhandledRejection', console.dir
 
 host = process.env.HOST || '127.0.0.1'
-port = 4000 + (process.env.pm_id - 0)
+port = 4000 + (process.env.pm_id - 0 || 0)
 
 app = express()
 app.use bodyParser.json()
