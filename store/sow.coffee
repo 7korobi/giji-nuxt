@@ -173,6 +173,6 @@ module.exports =
   actions:
     story: ({state, commit}, story_id)->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.f5.si/api/story/oldlog/#{story_id}"
+      axios.get "http://giji.f5.si/sow/#{story_id}.json.gz"
       .then ({ status, data })->
         commit "join", data
