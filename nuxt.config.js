@@ -2,6 +2,7 @@ require('coffeescript/register')
 
 module.exports = {
   dev: (process.env.NODE_ENV != 'production'),
+  render: require("./config/webpack/render.coffee"),
   router: require("./config/webpack/router.coffee"),
   build:  require("./config/webpack/build.coffee"),
   /*
