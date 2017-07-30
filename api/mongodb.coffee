@@ -1,6 +1,8 @@
 mongo = require "mongodb-bluebird"
 sh = require 'child_process'
+fs = require 'fs'
 _ = require "lodash"
+
 
 ObjectId = false
 
@@ -136,11 +138,12 @@ mongo.connect process.env.MONGO_URL_SOW
           $addToSet: "$_id"
     ], {ObjectId}
     .then ([o])->
-      for id in o.story_ids
+      data = for id in o.story_ids
         path = "./static/sow/#{id}.json.gz"
         url = "http://giji.f5.si/api/story/oldlog/#{id}"
-        stdout = sh.execSync """ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}" """
-        console.log stdout.toString()
+        """  ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}"  """
+      fs.writeFile './static/sow.sh', data.join("\n") , (err)->
+        console.log err
       false
 
   giji.scan = ->
