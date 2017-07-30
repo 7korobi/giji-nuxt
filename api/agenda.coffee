@@ -14,11 +14,12 @@ agenda = new agenda
 
 agenda.define "aggregate", (job, done)->
   sh.exec "curl #{WEB_URL}/api/aggregate/job", (err, stdout, stderr)->
-    if err
-      console.error err
-      console.error stderr
-    else
-      console.log stdout  
+    sh.exec "./static/sow.sh", (err, stdout, stderr)->
+      if err
+        console.error err
+        console.error stderr
+      else
+        console.log stdout  
 
 agenda.define "process", (job, done)->
   sh.exec 'ps uafxS | grep -v ^root', (err, stdout, stderr)->

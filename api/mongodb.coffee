@@ -142,6 +142,10 @@ mongo.connect process.env.MONGO_URL_SOW
         path = "./static/sow/#{id}.json.gz"
         url = "http://giji.f5.si/api/story/oldlog/#{id}"
         """  ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}"  """
+
+      path = "./static/sow/index.json.gz"
+      url = "http://giji.f5.si/api/story/oldlog"
+      data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
       fs.writeFile './static/sow.sh', data.join("\n") , (err)->
         console.log err
       false
