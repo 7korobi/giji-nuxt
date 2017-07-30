@@ -1,6 +1,6 @@
 bodyParser = require 'body-parser'
 express = require 'express'
-config = require './nuxt.config.js'
+config = require '../config/webpack/index.coffee'
 Nuxt = require 'nuxt'
 
 process.on 'unhandledRejection', console.dir
