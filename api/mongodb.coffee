@@ -1,4 +1,5 @@
 mongo = require "mongodb-bluebird"
+sh = require 'child_process'
 _ = require "lodash"
 
 ObjectId = false
@@ -120,6 +121,30 @@ mongo.connect process.env.MONGO_URL_SOW
     .then (data)->
       db.collection("potof_for_face_sow_auth_max",{ObjectId}).insert data
 
+  giji.oldlog = ->
+    db.collection("stories",{ObjectId}).aggregate [
+      $match:
+        is_finish:
+          $eq: true
+    ,
+      $project:
+        _id: 1
+    ,
+      $group:
+        _id: null
+        story_ids:
+          $addToSet: "$_id"
+    ], {ObjectId}
+    .then ([o])->
+      for id in o.story_ids
+        path = "./static/sow/#{id}.json.gz"
+        url = "http://giji.f5.si/api/story/oldlog/#{id}"
+        sh.exec """ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}" """, (err, stdout, stderr)->
+          if err
+            console.error err
+            console.error stderr
+          else
+            console.log stdout
 
   giji.scan = ->
     db.collection("message_by_story_for_face",{ObjectId}).aggregate [
@@ -212,6 +237,8 @@ module.exports = (app)->
       giji.aggregate_potof()
     .then ->
       giji.aggregate_max()
+    .then ->
+      giji.oldlog()
     .then ->
       res.json
         started: true
