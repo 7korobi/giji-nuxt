@@ -31,6 +31,6 @@ module.exports =
 
     oldlog: ({ state, commit})->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.f5.si/api/story/oldlog"
+      axios.get "http://giji.f5.si/sow/index.json.gz"
       .then ({ status, data })->
         commit "oldlog", data
