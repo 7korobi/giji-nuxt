@@ -139,12 +139,8 @@ mongo.connect process.env.MONGO_URL_SOW
       for id in o.story_ids
         path = "./static/sow/#{id}.json.gz"
         url = "http://giji.f5.si/api/story/oldlog/#{id}"
-        sh.exec """ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}" """, (err, stdout, stderr)->
-          if err
-            console.error err
-            console.error stderr
-          else
-            console.log stdout
+        stdout = sh.execSync """ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}" """
+        console.log stdout.toString()
       false
 
   giji.scan = ->
