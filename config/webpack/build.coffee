@@ -1,11 +1,24 @@
 module.exports =
+  
   extend: (config, { isDev, isClient })->
     if isClient
       config.devtool = 'source-map'
 
+  babel:
+    presets: [
+      "vue-app"
+      [ "env"
+        targets:
+          browsers: [
+            "> 5%"
+          ]
+      ]
+    ]
+
   vendor: [
     'axios'
     'vee-validate'
+    '~components/vue.coffee'
     '~plugins/memory-record.coffee'
     '~plugins/browser-value'
   ]

@@ -1,6 +1,5 @@
 <template lang="pug">
 section.container
-  img(src="../assets/images/logo.png")
   nuxt-link.button(to="/" ).
     Homepage
 </template>

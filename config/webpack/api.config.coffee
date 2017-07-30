@@ -7,14 +7,16 @@ module.exports =
     else
       cb null, 'commonjs2 ' + req
 
+  entry:
+    server: './api/index.coffee'
+  #  "nuxt.config": './config/webpack/index.coffee'
+
   target: 'node'
-  entry: './api/index.coffee'
 
   # 出力の設定
   output:
-    # 出力するファイル名
     path: process.cwd()
-    filename: 'server.js'
+    filename: '[name].js'
   resolve:
     extensions: ['.js']
   module:
