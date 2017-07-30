@@ -145,6 +145,7 @@ mongo.connect process.env.MONGO_URL_SOW
             console.error stderr
           else
             console.log stdout
+      false
 
   giji.scan = ->
     db.collection("message_by_story_for_face",{ObjectId}).aggregate [
