@@ -64,7 +64,7 @@ export function getContext (context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {},
+    env: {"WEB_URL":"http://lvh.me:4000"},
     hotReload: context.hotReload || false
   }
   const next = context.next

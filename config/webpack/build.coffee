@@ -12,6 +12,7 @@ module.exports =
           browsers: [
             "> 5%"
           ]
+        forceAllTransforms: true
       ]
     ]
 

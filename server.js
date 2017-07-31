@@ -84,7 +84,7 @@ module.exports = require("passport");
 
 var WEB_URL, agenda, agenda_ui, pm_id, pno, sh;
 
-agenda = __webpack_require__(17);
+agenda = __webpack_require__(19);
 
 sh = __webpack_require__(0);
 
@@ -136,7 +136,7 @@ agenda.on('ready', function() {
   return agenda.start();
 });
 
-agenda_ui = __webpack_require__(18);
+agenda_ui = __webpack_require__(20);
 
 module.exports = function(app) {
   app.use('/agenda-ui', agenda_ui(agenda, {
@@ -151,13 +151,13 @@ module.exports = function(app) {
 
 var ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(23);
+mongo = __webpack_require__(25);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(21);
+fs = __webpack_require__(23);
 
-_ = __webpack_require__(22);
+_ = __webpack_require__(24);
 
 ObjectId = false;
 
@@ -601,7 +601,7 @@ module.exports = function(app) {
 
 var Passport, Schema, mongoose, passport;
 
-({Schema} = mongoose = __webpack_require__(24));
+({Schema} = mongoose = __webpack_require__(26));
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -653,7 +653,7 @@ module.exports = function(app) {
 
 var WEB_URL, auth, config, passport;
 
-config = __webpack_require__(16);
+config = __webpack_require__(18);
 
 passport = __webpack_require__(1);
 
@@ -661,14 +661,14 @@ passport = __webpack_require__(1);
 
 auth = {
   slack: {
-    module: __webpack_require__(28).Strategy,
+    module: __webpack_require__(30).Strategy,
     attr: {
       clientID: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET
     }
   },
   google: {
-    module: __webpack_require__(27).Strategy,
+    module: __webpack_require__(29).Strategy,
     attr: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -676,21 +676,21 @@ auth = {
     }
   },
   facebook: {
-    module: __webpack_require__(25).Strategy,
+    module: __webpack_require__(27).Strategy,
     attr: {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET
     }
   },
   github: {
-    module: __webpack_require__(26).Strategy,
+    module: __webpack_require__(28).Strategy,
     attr: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }
   },
   twitter: {
-    module: __webpack_require__(29).Strategy,
+    module: __webpack_require__(31).Strategy,
     attr: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
@@ -740,9 +740,9 @@ module.exports = function(app) {
 
 var MongoStore, day, interval, session;
 
-session = __webpack_require__(20);
+session = __webpack_require__(22);
 
-MongoStore = __webpack_require__(19)(session);
+MongoStore = __webpack_require__(21)(session);
 
 interval = 7 * 24 * 3600;
 
@@ -1393,49 +1393,11 @@ module.exports = function(app) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(14),
-  router: __webpack_require__(15),
+  render: __webpack_require__(16),
+  router: __webpack_require__(17),
   build: __webpack_require__(13),
-  head: {
-    meta: [
-      {
-        charset: 'utf-8'
-      }, {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
-      }, {
-        hid: 'description',
-        content: "Nuxt.js project"
-      }, {
-        href: "mailto:7korobi@gmail.com"
-      }
-    ],
-    link: [
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href: "https://use.fontawesome.com/6348868528.css"
-      }, {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href: "/css/index.css"
-      }, {
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
-      }, {
-        href: "mailto:7korobi@gmail.com"
-      }
-    ],
-    script: [
-      {
-        src: '/monaco-editor/vs/loader.js',
-        type: 'text/javascript',
-        charset: 'utf8'
-      }
-    ],
-    title: '人狼議事'
-  },
+  head: __webpack_require__(15),
+  env: __webpack_require__(14),
   css: [],
   loading: {
     color: '#3B8070'
@@ -1538,7 +1500,8 @@ module.exports = {
         "env", {
           targets: {
             browsers: ["> 5%"]
-          }
+          },
+          forceAllTransforms: true
         }
       ]
     ]
@@ -1571,6 +1534,63 @@ module.exports = {
 /* 14 */
 /***/ (function(module, exports) {
 
+var WEB_URL;
+
+({WEB_URL} = process.env);
+
+module.exports = {WEB_URL};
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  title: '人狼議事',
+  meta: [
+    {
+      charset: 'utf-8'
+    }, {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
+    }, {
+      hid: 'description',
+      content: "Nuxt.js project"
+    }, {
+      href: "mailto:7korobi@gmail.com"
+    }
+  ],
+  link: [
+    {
+      rel: 'stylesheet',
+      type: 'text/css',
+      href: "https://use.fontawesome.com/6348868528.css"
+    }, {
+      rel: 'stylesheet',
+      type: 'text/css',
+      href: "/css/index.css"
+    }, {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }, {
+      href: "mailto:7korobi@gmail.com"
+    }
+  ],
+  script: [
+    {
+      src: '/monaco-editor/vs/loader.js',
+      type: 'text/javascript',
+      charset: 'utf8'
+    }
+  ]
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
 module.exports = {
   static: {
     maxAge: '1y',
@@ -1594,7 +1614,7 @@ module.exports = {
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1622,88 +1642,89 @@ module.exports = {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("./nuxt.config.js");
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda-ui");
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mongo");
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-github2");
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth2");
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-slack");
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=server.js.map

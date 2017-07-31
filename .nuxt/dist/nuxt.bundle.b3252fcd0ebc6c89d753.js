@@ -2861,7 +2861,7 @@ var layouts = {
 //
 
 exports.default = {
-  head: { "meta": [{ "charset": "utf-8" }, { "name": "viewport", "content": "width=device-width, initial-scale=0.5, shrink-to-fit=no" }, { "hid": "description", "content": "Nuxt.js project" }, { "href": "mailto:7korobi@gmail.com" }], "link": [{ "rel": "stylesheet", "type": "text/css", "href": "https://use.fontawesome.com/6348868528.css" }, { "rel": "stylesheet", "type": "text/css", "href": "/css/index.css" }, { "rel": "icon", "type": "image/x-icon", "href": "/favicon.ico" }, { "href": "mailto:7korobi@gmail.com" }], "script": [{ "src": "/monaco-editor/vs/loader.js", "type": "text/javascript", "charset": "utf8" }], "title": "人狼議事", "style": [] },
+  head: { "title": "人狼議事", "meta": [{ "charset": "utf-8" }, { "name": "viewport", "content": "width=device-width, initial-scale=0.5, shrink-to-fit=no" }, { "hid": "description", "content": "Nuxt.js project" }, { "href": "mailto:7korobi@gmail.com" }], "link": [{ "rel": "stylesheet", "type": "text/css", "href": "https://use.fontawesome.com/6348868528.css" }, { "rel": "stylesheet", "type": "text/css", "href": "/css/index.css" }, { "rel": "icon", "type": "image/x-icon", "href": "/favicon.ico" }, { "href": "mailto:7korobi@gmail.com" }], "script": [{ "src": "/monaco-editor/vs/loader.js", "type": "text/javascript", "charset": "utf8" }], "style": [] },
   data: function data() {
     return {
       layout: null,
@@ -3614,7 +3614,7 @@ function getContext(context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {},
+    env: { "WEB_URL": "http://lvh.me:4000" },
     hotReload: context.hotReload || false
   };
   var next = context.next;
@@ -4283,4 +4283,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.e192c0926ee935459457.js.map
+//# sourceMappingURL=nuxt.bundle.b3252fcd0ebc6c89d753.js.map

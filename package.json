@@ -8,9 +8,7 @@
     "agenda": "latest",
     "agenda-ui": "latest",
     "axios": "latest",
-    "babel-preset-babili": "latest",
     "babel-preset-env": "latest",
-    "babel-preset-stage-0": "^6.24.1",
     "body-parser": "latest",
     "codemirror": "latest",
     "connect-mongo": "latest",
@@ -39,7 +37,7 @@
   },
   "scripts": {
     "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
-    "api": "webpack --config config/webpack/api.config.coffee",
+    "api": "webpack --config config/webpack/index-node.coffee",
     "dev": "node server.js",
     "build": "nuxt build",
     "analyze": "nuxt build --analyze",
