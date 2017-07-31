@@ -2543,63 +2543,63 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueRouter2.default);
 
-var _0bc4c6a4 = function _0bc4c6a4() {
+var _f1048964 = function _f1048964() {
 	return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 363));
 };
 
-var _90dbd578 = function _90dbd578() {
+var _3a53eb0b = function _3a53eb0b() {
 	return __webpack_require__.e/* import() */(12).then(__webpack_require__.bind(null, 359));
 };
 
-var _25e423ee = function _25e423ee() {
+var _f63558c2 = function _f63558c2() {
 	return __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, 364));
 };
 
-var _580b44c8 = function _580b44c8() {
+var _4b01ef72 = function _4b01ef72() {
 	return __webpack_require__.e/* import() */(14).then(__webpack_require__.bind(null, 356));
 };
 
-var _494ff80d = function _494ff80d() {
+var _67dc6458 = function _67dc6458() {
 	return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, 358));
 };
 
-var _6cc1bfa2 = function _6cc1bfa2() {
+var _2a3129fe = function _2a3129fe() {
 	return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 370));
 };
 
-var _edd81ae6 = function _edd81ae6() {
+var _1d9d7386 = function _1d9d7386() {
 	return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 368));
 };
 
-var _db7effe4 = function _db7effe4() {
+var _6be40015 = function _6be40015() {
 	return __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, 362));
 };
 
-var _616f631c = function _616f631c() {
+var _379d8e3a = function _379d8e3a() {
 	return __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 357));
 };
 
-var _324a98ba = function _324a98ba() {
+var _95e722fe = function _95e722fe() {
 	return __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, 360));
 };
 
-var _f282deee = function _f282deee() {
+var _09806650 = function _09806650() {
 	return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, 361));
 };
 
-var _386fde6c = function _386fde6c() {
+var _5cd48acb = function _5cd48acb() {
 	return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 366));
 };
 
-var _b0c17aec = function _b0c17aec() {
+var _5b5d93e6 = function _5b5d93e6() {
 	return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 369));
 };
 
-var _78f57200 = function _78f57200() {
+var _6c080d1f = function _6c080d1f() {
 	return __webpack_require__.e/* import() */(17).then(__webpack_require__.bind(null, 365));
 };
 
-var _6ca0c7cd = function _6ca0c7cd() {
+var _c25463e4 = function _c25463e4() {
 	return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 367));
 };
 
@@ -2633,63 +2633,63 @@ function createRouter() {
 		scrollBehavior: scrollBehavior,
 		routes: [{
 			path: "/",
-			component: _0bc4c6a4,
+			component: _f1048964,
 			name: "index"
 		}, {
 			path: "/demo",
-			component: _90dbd578,
+			component: _3a53eb0b,
 			name: "demo"
 		}, {
 			path: "/rule-guide",
-			component: _25e423ee,
+			component: _f63558c2,
 			name: "rule-guide"
 		}, {
 			path: "/character-tag",
-			component: _580b44c8,
+			component: _4b01ef72,
 			name: "character-tag"
 		}, {
 			path: "/demo/chats",
-			component: _494ff80d,
+			component: _67dc6458,
 			name: "demo-chats"
 		}, {
 			path: "/summary/faces",
-			component: _6cc1bfa2,
+			component: _2a3129fe,
 			name: "summary-faces"
 		}, {
 			path: "/sow/village",
-			component: _edd81ae6,
+			component: _1d9d7386,
 			name: "sow-village"
 		}, {
 			path: "/demo/timeago",
-			component: _db7effe4,
+			component: _6be40015,
 			name: "demo-timeago"
 		}, {
 			path: "/demo/books",
-			component: _616f631c,
+			component: _379d8e3a,
 			name: "demo-books"
 		}, {
 			path: "/demo/names",
-			component: _324a98ba,
+			component: _95e722fe,
 			name: "demo-names"
 		}, {
 			path: "/demo/oauth",
-			component: _f282deee,
+			component: _09806650,
 			name: "demo-oauth"
 		}, {
 			path: "/sow/village/:book_id",
-			component: _386fde6c,
+			component: _5cd48acb,
 			name: "sow-village-book_id"
 		}, {
 			path: "/summary/faces/:id",
-			component: _b0c17aec,
+			component: _5b5d93e6,
 			name: "summary-faces-id"
 		}, {
 			path: "/sow/village/:book_id/ankers",
-			component: _78f57200,
+			component: _6c080d1f,
 			name: "sow-village-book_id-ankers"
 		}, {
 			path: "/sow/village/:book_id/top",
-			component: _6ca0c7cd,
+			component: _c25463e4,
 			name: "sow-village-book_id-top"
 		}]
 	});
@@ -3111,7 +3111,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".title[data-v-aa7396f8]{margin-top:15px;font-size:5em}.info[data-v-aa7396f8]{font-weight:300;color:#9aabb1;margin:0}.button[data-v-aa7396f8]{margin-top:50px}", "", {"version":3,"sources":["/Users/7korobi/Dropbox/www/giji-nuxt/layouts/error.vue"],"names":[],"mappings":"AACA,wBAEE,gBAAiB,AACjB,aAAe,CAChB,AACD,uBAEE,gBAAiB,AACjB,cAAe,AACf,QAAU,CACX,AACD,yBAEE,eAAiB,CAClB","file":"error.vue","sourcesContent":["\n.title[data-v-aa7396f8]\n{\n  margin-top: 15px;\n  font-size: 5em;\n}\n.info[data-v-aa7396f8]\n{\n  font-weight: 300;\n  color: #9aabb1;\n  margin: 0;\n}\n.button[data-v-aa7396f8]\n{\n  margin-top: 50px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".title[data-v-aa7396f8]{margin-top:15px;font-size:5em}.info[data-v-aa7396f8]{font-weight:300;color:#9aabb1;margin:0}.button[data-v-aa7396f8]{margin-top:50px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/layouts/error.vue"],"names":[],"mappings":"AACA,wBAEE,gBAAiB,AACjB,aAAe,CAChB,AACD,uBAEE,gBAAiB,AACjB,cAAe,AACf,QAAU,CACX,AACD,yBAEE,eAAiB,CAClB","file":"error.vue","sourcesContent":["\n.title[data-v-aa7396f8]\n{\n  margin-top: 15px;\n  font-size: 5em;\n}\n.info[data-v-aa7396f8]\n{\n  font-weight: 300;\n  color: #9aabb1;\n  margin: 0;\n}\n.button[data-v-aa7396f8]\n{\n  margin-top: 50px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -3126,7 +3126,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".progress[data-v-efc4a222]{position:fixed;top:0;left:0;right:0;height:2px;width:0;-webkit-transition:width .2s,opacity .4s;-o-transition:width .2s,opacity .4s;transition:width .2s,opacity .4s;opacity:1;background-color:#efc14e;z-index:999999}", "", {"version":3,"sources":["/Users/7korobi/Dropbox/www/giji-nuxt/.nuxt/components/nuxt-loading.vue"],"names":[],"mappings":"AACA,2BACE,eAAgB,AAChB,MAAS,AACT,OAAU,AACV,QAAW,AACX,WAAY,AACZ,QAAU,AACV,yCAA6C,AAC7C,oCAAwC,AACxC,iCAAqC,AACrC,UAAW,AACX,yBAA0B,AAC1B,cAAgB,CACjB","file":"nuxt-loading.vue","sourcesContent":["\n.progress[data-v-efc4a222] {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  height: 2px;\n  width: 0%;\n  -webkit-transition: width 0.2s, opacity 0.4s;\n  -o-transition: width 0.2s, opacity 0.4s;\n  transition: width 0.2s, opacity 0.4s;\n  opacity: 1;\n  background-color: #efc14e;\n  z-index: 999999;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".progress[data-v-efc4a222]{position:fixed;top:0;left:0;right:0;height:2px;width:0;-webkit-transition:width .2s,opacity .4s;-o-transition:width .2s,opacity .4s;transition:width .2s,opacity .4s;opacity:1;background-color:#efc14e;z-index:999999}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/.nuxt/components/nuxt-loading.vue"],"names":[],"mappings":"AACA,2BACE,eAAgB,AAChB,MAAS,AACT,OAAU,AACV,QAAW,AACX,WAAY,AACZ,QAAU,AACV,yCAA6C,AAC7C,oCAAwC,AACxC,iCAAqC,AACrC,UAAW,AACX,yBAA0B,AAC1B,cAAgB,CACjB","file":"nuxt-loading.vue","sourcesContent":["\n.progress[data-v-efc4a222] {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  height: 2px;\n  width: 0%;\n  -webkit-transition: width 0.2s, opacity 0.4s;\n  -o-transition: width 0.2s, opacity 0.4s;\n  transition: width 0.2s, opacity 0.4s;\n  opacity: 1;\n  background-color: #efc14e;\n  z-index: 999999;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -4283,4 +4283,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.84625f5beda11b897209.js.map
+//# sourceMappingURL=nuxt.bundle.e192c0926ee935459457.js.map

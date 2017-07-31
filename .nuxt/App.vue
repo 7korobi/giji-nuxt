@@ -11,11 +11,11 @@ import NuxtLoading from './components/nuxt-loading.vue'
 
 let layouts = {
 
-  "_book": () => import('/Users/7korobi/Dropbox/www/giji-nuxt/layouts/book.vue'  /* webpackChunkName: "layouts/book" */),
+  "_book": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
 
-  "_default": () => import('/Users/7korobi/Dropbox/www/giji-nuxt/layouts/default.vue'  /* webpackChunkName: "layouts/default" */),
+  "_default": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */),
 
-  "_sow-log": () => import('/Users/7korobi/Dropbox/www/giji-nuxt/layouts/sow-log.vue'  /* webpackChunkName: "layouts/sow-log" */)
+  "_sow-log": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\sow-log.vue'  /* webpackChunkName: "layouts/sow-log" */)
 
 }
 
