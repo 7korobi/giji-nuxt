@@ -3620,7 +3620,7 @@ function getContext(context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: { "WEB_URL": "http://lvh.me:4000", "API_URL": "http://giji.f5.si/api", "SOW_URL": "http://giji.f5.si/sow", "STORE_URL": "http://s3-ap-northeast-1.amazonaws.com/giji-assets" },
+    env: { "WEB_URL": "http://giji.f5.si", "API_URL": "http://giji.f5.si/api", "SOW_URL": "http://giji.f5.si/sow", "STORE_URL": "http://s3-ap-northeast-1.amazonaws.com/giji-assets" },
     hotReload: context.hotReload || false
   };
   var next = context.next;
@@ -4289,4 +4289,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.a525168213ebc56795d8.js.map
+//# sourceMappingURL=nuxt.bundle.2ecbb4ea33ac8f684157.js.map
