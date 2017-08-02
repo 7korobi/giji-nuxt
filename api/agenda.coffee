@@ -1,10 +1,16 @@
-agenda = require "agenda"
-sh = require 'child_process'
+Agenda = require "agenda"
+agenda_ui = require "agenda-ui"
 
 { pm_id, WEB_URL, MONGO_URL } = process.env
 pno = (pm_id - 1 || 0)
 
-agenda = new agenda
+jobs = (cb)->
+  ctx = require.context "./jobs", true, ///(.+)\.coffee$///
+  for fname in ctx.keys()
+    name = fname[2..-8]
+    cb name, ctx fname
+
+agenda = new Agenda
   db:
     address: MONGO_URL
     collection: "jobCollectionName"
@@ -12,29 +18,15 @@ agenda = new agenda
       server:
         auto_reconnect: true
 
-agenda.define "aggregate", (job, done)->
-  sh.exec "curl #{API_URL}/aggregate/job", (err, stdout, stderr)->
-    sh.exec "./static/sow.sh", (err, stdout, stderr)->
-      if err
-        console.error err
-      else
-        console.log stderr
-
-agenda.define "process", (job, done)->
-  sh.exec 'ps uafxS | grep -v ^root', (err, stdout, stderr)->
-    if err
-      console.error err
-      console.error stderr
-    else
-      console.log stdout  
+jobs (name, ctx)->
+  agenda.define name, ctx.define
 
 agenda.on 'ready', ->
   unless pno 
-    agenda.every '12 hours', 'aggregate'
-    agenda.every '2 minutes', 'process'
+    jobs (name, ctx)->
+      if ctx.every
+        agenda.every ctx.every, name
   agenda.start()
-
-agenda_ui = require "agenda-ui"
 
 module.exports = (app)->
   app.use '/agenda-ui', agenda_ui agenda,

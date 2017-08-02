@@ -1,7 +1,12 @@
 { Schema } = mongoose = require "mongoose"
 { MONGO_URL } = process.env
 
-mongoose.connect MONGO_URL
+mongoose.connect MONGO_URL, (err)->
+  if err
+    console.error "no #{MONGO_URL}. disabled (passport, session)"
+  else
+    console.log "mongoose connected."
+
 
 Passport = mongoose.model 'Passport', new Schema
   _id: String

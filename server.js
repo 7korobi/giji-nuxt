@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -82,17 +82,30 @@ module.exports = require("passport");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MONGO_URL, WEB_URL, agenda, agenda_ui, pm_id, pno, sh;
+var Agenda, MONGO_URL, WEB_URL, agenda, agenda_ui, jobs, pm_id, pno;
 
-agenda = __webpack_require__(19);
+Agenda = __webpack_require__(22);
 
-sh = __webpack_require__(0);
+agenda_ui = __webpack_require__(23);
 
 ({pm_id, WEB_URL, MONGO_URL} = process.env);
 
 pno = pm_id - 1 || 0;
 
-agenda = new agenda({
+jobs = function(cb) {
+  var ctx, fname, i, len, name, ref, results;
+  ctx = __webpack_require__(12);
+  ref = ctx.keys();
+  results = [];
+  for (i = 0, len = ref.length; i < len; i++) {
+    fname = ref[i];
+    name = fname.slice(2, -7);
+    results.push(cb(name, ctx(fname)));
+  }
+  return results;
+};
+
+agenda = new Agenda({
   db: {
     address: MONGO_URL,
     collection: "jobCollectionName",
@@ -104,38 +117,20 @@ agenda = new agenda({
   }
 });
 
-agenda.define("aggregate", function(job, done) {
-  return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
-    return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
-      if (err) {
-        return console.error(err);
-      } else {
-        return console.log(stderr);
-      }
-    });
-  });
-});
-
-agenda.define("process", function(job, done) {
-  return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
-    if (err) {
-      console.error(err);
-      return console.error(stderr);
-    } else {
-      return console.log(stdout);
-    }
-  });
+jobs(function(name, ctx) {
+  return agenda.define(name, ctx.define);
 });
 
 agenda.on('ready', function() {
   if (!pno) {
-    agenda.every('12 hours', 'aggregate');
-    agenda.every('2 minutes', 'process');
+    jobs(function(name, ctx) {
+      if (ctx.every) {
+        return agenda.every(ctx.every, name);
+      }
+    });
   }
   return agenda.start();
 });
-
-agenda_ui = __webpack_require__(20);
 
 module.exports = function(app) {
   app.use('/agenda-ui', agenda_ui(agenda, {
@@ -150,13 +145,13 @@ module.exports = function(app) {
 
 var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(25);
+mongo = __webpack_require__(28);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(23);
+fs = __webpack_require__(26);
 
-_ = __webpack_require__(24);
+_ = __webpack_require__(27);
 
 ({MONGO_URL_SOW, API_URL} = process.env);
 
@@ -602,11 +597,17 @@ module.exports = function(app) {
 
 var MONGO_URL, Passport, Schema, mongoose, passport;
 
-({Schema} = mongoose = __webpack_require__(26));
+({Schema} = mongoose = __webpack_require__(29));
 
 ({MONGO_URL} = process.env);
 
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGO_URL, function(err) {
+  if (err) {
+    return console.error(`no ${MONGO_URL}. disabled (passport, session)`);
+  } else {
+    return console.log("mongoose connected.");
+  }
+});
 
 Passport = mongoose.model('Passport', new Schema({
   _id: String,
@@ -656,7 +657,7 @@ module.exports = function(app) {
 
 var WEB_URL, auth, config, passport;
 
-config = __webpack_require__(18);
+config = __webpack_require__(21);
 
 passport = __webpack_require__(1);
 
@@ -664,14 +665,14 @@ passport = __webpack_require__(1);
 
 auth = {
   slack: {
-    module: __webpack_require__(30).Strategy,
+    module: __webpack_require__(33).Strategy,
     attr: {
       clientID: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET
     }
   },
   google: {
-    module: __webpack_require__(29).Strategy,
+    module: __webpack_require__(32).Strategy,
     attr: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -679,21 +680,21 @@ auth = {
     }
   },
   facebook: {
-    module: __webpack_require__(27).Strategy,
+    module: __webpack_require__(30).Strategy,
     attr: {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET
     }
   },
   github: {
-    module: __webpack_require__(28).Strategy,
+    module: __webpack_require__(31).Strategy,
     attr: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }
   },
   twitter: {
-    module: __webpack_require__(31).Strategy,
+    module: __webpack_require__(34).Strategy,
     attr: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
@@ -743,9 +744,9 @@ module.exports = function(app) {
 
 var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
 
-session = __webpack_require__(22);
+session = __webpack_require__(25);
 
-MongoStore = __webpack_require__(21)(session);
+MongoStore = __webpack_require__(24)(session);
 
 ({MONGO_URL, SECRET_KEY_BASE} = process.env);
 
@@ -1398,11 +1399,11 @@ module.exports = function(app) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(16),
-  router: __webpack_require__(17),
-  build: __webpack_require__(13),
-  head: __webpack_require__(15),
-  env: __webpack_require__(14),
+  render: __webpack_require__(19),
+  router: __webpack_require__(20),
+  build: __webpack_require__(16),
+  head: __webpack_require__(18),
+  env: __webpack_require__(17),
   css: [],
   loading: {
     color: '#3B8070'
@@ -1430,6 +1431,30 @@ module.exports = require("nuxt");
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./aggregate.coffee": 14,
+	"./process.coffee": 15
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 12;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var HOST, Nuxt, app, bodyParser, config, express, host, pm_id, port;
@@ -1492,7 +1517,58 @@ __webpack_require__(7)(app);
 
 
 /***/ }),
-/* 13 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var API_URL, sh;
+
+sh = __webpack_require__(0);
+
+({API_URL} = process.env);
+
+module.exports = {
+  every: '12 hours',
+  define: function(job, done) {
+    return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
+      return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
+        if (err) {
+          return console.error(err);
+        } else {
+          return console.log(stderr);
+        }
+      });
+    });
+  }
+};
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var API_URL, sh;
+
+sh = __webpack_require__(0);
+
+({API_URL} = process.env);
+
+module.exports = {
+  every: '2 minutes',
+  define: function(job, done) {
+    return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
+      if (err) {
+        console.error(err);
+        return console.error(stderr);
+      } else {
+        return console.log(stdout);
+      }
+    });
+  }
+};
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1538,7 +1614,7 @@ module.exports = {
 
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var API_URL, SOW_URL, STORE_URL, WEB_URL;
@@ -1549,7 +1625,7 @@ module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1595,7 +1671,7 @@ module.exports = {
 
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1621,7 +1697,7 @@ module.exports = {
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1649,85 +1725,85 @@ module.exports = {
 
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("./nuxt.config.js");
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda-ui");
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mongo");
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-github2");
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth2");
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-slack");
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");

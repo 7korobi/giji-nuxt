@@ -2549,63 +2549,63 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueRouter2.default);
 
-var _f1048964 = function _f1048964() {
+var _26460e66 = function _26460e66() {
 	return __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 363));
 };
 
-var _3a53eb0b = function _3a53eb0b() {
+var _126e656c = function _126e656c() {
 	return __webpack_require__.e/* import() */(12).then(__webpack_require__.bind(null, 359));
 };
 
-var _f63558c2 = function _f63558c2() {
+var _d988a500 = function _d988a500() {
 	return __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, 364));
 };
 
-var _4b01ef72 = function _4b01ef72() {
+var _8471841e = function _8471841e() {
 	return __webpack_require__.e/* import() */(14).then(__webpack_require__.bind(null, 356));
 };
 
-var _67dc6458 = function _67dc6458() {
+var _eef29fda = function _eef29fda() {
 	return __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, 358));
 };
 
-var _2a3129fe = function _2a3129fe() {
+var _6fbb897d = function _6fbb897d() {
 	return __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 370));
 };
 
-var _1d9d7386 = function _1d9d7386() {
+var _3f090d08 = function _3f090d08() {
 	return __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 368));
 };
 
-var _6be40015 = function _6be40015() {
+var _42ad62d8 = function _42ad62d8() {
 	return __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, 362));
 };
 
-var _379d8e3a = function _379d8e3a() {
+var _beb3c9bc = function _beb3c9bc() {
 	return __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 357));
 };
 
-var _95e722fe = function _95e722fe() {
+var _718150c0 = function _718150c0() {
 	return __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, 360));
 };
 
-var _09806650 = function _09806650() {
+var _74156ee2 = function _74156ee2() {
 	return __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, 361));
 };
 
-var _5cd48acb = function _5cd48acb() {
+var _6b82fb4a = function _6b82fb4a() {
 	return __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 366));
 };
 
-var _5b5d93e6 = function _5b5d93e6() {
+var _4aa7c725 = function _4aa7c725() {
 	return __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 369));
 };
 
-var _6c080d1f = function _6c080d1f() {
+var _3327ac80 = function _3327ac80() {
 	return __webpack_require__.e/* import() */(17).then(__webpack_require__.bind(null, 365));
 };
 
-var _c25463e4 = function _c25463e4() {
+var _79d75b66 = function _79d75b66() {
 	return __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 367));
 };
 
@@ -2639,63 +2639,63 @@ function createRouter() {
 		scrollBehavior: scrollBehavior,
 		routes: [{
 			path: "/",
-			component: _f1048964,
+			component: _26460e66,
 			name: "index"
 		}, {
 			path: "/demo",
-			component: _3a53eb0b,
+			component: _126e656c,
 			name: "demo"
 		}, {
 			path: "/rule-guide",
-			component: _f63558c2,
+			component: _d988a500,
 			name: "rule-guide"
 		}, {
 			path: "/character-tag",
-			component: _4b01ef72,
+			component: _8471841e,
 			name: "character-tag"
 		}, {
 			path: "/demo/chats",
-			component: _67dc6458,
+			component: _eef29fda,
 			name: "demo-chats"
 		}, {
 			path: "/summary/faces",
-			component: _2a3129fe,
+			component: _6fbb897d,
 			name: "summary-faces"
 		}, {
 			path: "/sow/village",
-			component: _1d9d7386,
+			component: _3f090d08,
 			name: "sow-village"
 		}, {
 			path: "/demo/timeago",
-			component: _6be40015,
+			component: _42ad62d8,
 			name: "demo-timeago"
 		}, {
 			path: "/demo/books",
-			component: _379d8e3a,
+			component: _beb3c9bc,
 			name: "demo-books"
 		}, {
 			path: "/demo/names",
-			component: _95e722fe,
+			component: _718150c0,
 			name: "demo-names"
 		}, {
 			path: "/demo/oauth",
-			component: _09806650,
+			component: _74156ee2,
 			name: "demo-oauth"
 		}, {
 			path: "/sow/village/:book_id",
-			component: _5cd48acb,
+			component: _6b82fb4a,
 			name: "sow-village-book_id"
 		}, {
 			path: "/summary/faces/:id",
-			component: _5b5d93e6,
+			component: _4aa7c725,
 			name: "summary-faces-id"
 		}, {
 			path: "/sow/village/:book_id/ankers",
-			component: _6c080d1f,
+			component: _3327ac80,
 			name: "sow-village-book_id-ankers"
 		}, {
 			path: "/sow/village/:book_id/top",
-			component: _c25463e4,
+			component: _79d75b66,
 			name: "sow-village-book_id-top"
 		}]
 	});
@@ -3117,7 +3117,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".title[data-v-aa7396f8]{margin-top:15px;font-size:5em}.info[data-v-aa7396f8]{font-weight:300;color:#9aabb1;margin:0}.button[data-v-aa7396f8]{margin-top:50px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/layouts/error.vue"],"names":[],"mappings":"AACA,wBAEE,gBAAiB,AACjB,aAAe,CAChB,AACD,uBAEE,gBAAiB,AACjB,cAAe,AACf,QAAU,CACX,AACD,yBAEE,eAAiB,CAClB","file":"error.vue","sourcesContent":["\n.title[data-v-aa7396f8]\n{\n  margin-top: 15px;\n  font-size: 5em;\n}\n.info[data-v-aa7396f8]\n{\n  font-weight: 300;\n  color: #9aabb1;\n  margin: 0;\n}\n.button[data-v-aa7396f8]\n{\n  margin-top: 50px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".title[data-v-aa7396f8]{margin-top:15px;font-size:5em}.info[data-v-aa7396f8]{font-weight:300;color:#9aabb1;margin:0}.button[data-v-aa7396f8]{margin-top:50px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/layouts/error.vue"],"names":[],"mappings":"AACA,wBAEE,gBAAiB,AACjB,aAAe,CAChB,AACD,uBAEE,gBAAiB,AACjB,cAAe,AACf,QAAU,CACX,AACD,yBAEE,eAAiB,CAClB","file":"error.vue","sourcesContent":["\n.title[data-v-aa7396f8]\n{\n  margin-top: 15px;\n  font-size: 5em;\n}\n.info[data-v-aa7396f8]\n{\n  font-weight: 300;\n  color: #9aabb1;\n  margin: 0;\n}\n.button[data-v-aa7396f8]\n{\n  margin-top: 50px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -3132,7 +3132,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".progress[data-v-efc4a222]{position:fixed;top:0;left:0;right:0;height:2px;width:0;-webkit-transition:width .2s,opacity .4s;-o-transition:width .2s,opacity .4s;transition:width .2s,opacity .4s;opacity:1;background-color:#efc14e;z-index:999999}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/.nuxt/components/nuxt-loading.vue"],"names":[],"mappings":"AACA,2BACE,eAAgB,AAChB,MAAS,AACT,OAAU,AACV,QAAW,AACX,WAAY,AACZ,QAAU,AACV,yCAA6C,AAC7C,oCAAwC,AACxC,iCAAqC,AACrC,UAAW,AACX,yBAA0B,AAC1B,cAAgB,CACjB","file":"nuxt-loading.vue","sourcesContent":["\n.progress[data-v-efc4a222] {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  height: 2px;\n  width: 0%;\n  -webkit-transition: width 0.2s, opacity 0.4s;\n  -o-transition: width 0.2s, opacity 0.4s;\n  transition: width 0.2s, opacity 0.4s;\n  opacity: 1;\n  background-color: #efc14e;\n  z-index: 999999;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".progress[data-v-efc4a222]{position:fixed;top:0;left:0;right:0;height:2px;width:0;-webkit-transition:width .2s,opacity .4s;-o-transition:width .2s,opacity .4s;transition:width .2s,opacity .4s;opacity:1;background-color:#efc14e;z-index:999999}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/.nuxt/components/nuxt-loading.vue"],"names":[],"mappings":"AACA,2BACE,eAAgB,AAChB,MAAS,AACT,OAAU,AACV,QAAW,AACX,WAAY,AACZ,QAAU,AACV,yCAA6C,AAC7C,oCAAwC,AACxC,iCAAqC,AACrC,UAAW,AACX,yBAA0B,AAC1B,cAAgB,CACjB","file":"nuxt-loading.vue","sourcesContent":["\n.progress[data-v-efc4a222] {\n  position: fixed;\n  top: 0px;\n  left: 0px;\n  right: 0px;\n  height: 2px;\n  width: 0%;\n  -webkit-transition: width 0.2s, opacity 0.4s;\n  -o-transition: width 0.2s, opacity 0.4s;\n  transition: width 0.2s, opacity 0.4s;\n  opacity: 1;\n  background-color: #efc14e;\n  z-index: 999999;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -4289,4 +4289,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.985ba1dc31be98b93e49.js.map
+//# sourceMappingURL=nuxt.bundle.a525168213ebc56795d8.js.map
