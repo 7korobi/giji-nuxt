@@ -82,19 +82,19 @@ module.exports = require("passport");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var WEB_URL, agenda, agenda_ui, pm_id, pno, sh;
+var MONGO_URL, WEB_URL, agenda, agenda_ui, pm_id, pno, sh;
 
 agenda = __webpack_require__(19);
 
 sh = __webpack_require__(0);
 
-({pm_id, WEB_URL} = process.env);
+({pm_id, WEB_URL, MONGO_URL} = process.env);
 
 pno = pm_id - 1 || 0;
 
 agenda = new agenda({
   db: {
-    address: process.env.MONGO_URL,
+    address: MONGO_URL,
     collection: "jobCollectionName",
     options: {
       server: {
@@ -105,13 +105,12 @@ agenda = new agenda({
 });
 
 agenda.define("aggregate", function(job, done) {
-  return sh.exec(`curl ${WEB_URL}/api/aggregate/job`, function(err, stdout, stderr) {
+  return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
     return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
       if (err) {
-        console.error(err);
-        return console.error(stderr);
+        return console.error(err);
       } else {
-        return console.log(stdout);
+        return console.log(stderr);
       }
     });
   });
@@ -149,7 +148,7 @@ module.exports = function(app) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ObjectId, _, fs, giji, mongo, sh;
+var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
 mongo = __webpack_require__(25);
 
@@ -159,11 +158,13 @@ fs = __webpack_require__(23);
 
 _ = __webpack_require__(24);
 
+({MONGO_URL_SOW, API_URL} = process.env);
+
 ObjectId = false;
 
 giji = {};
 
-mongo.connect(process.env.MONGO_URL_SOW).then(function(db) {
+mongo.connect(MONGO_URL_SOW).then(function(db) {
   var end;
   end = function(err, o) {
     return console.log(err, o);
@@ -336,13 +337,13 @@ mongo.connect(process.env.MONGO_URL_SOW).then(function(db) {
         for (i = 0, len = ref.length; i < len; i++) {
           id = ref[i];
           path = `./static/sow/${id}.json.gz`;
-          url = `http://giji.f5.si/api/story/oldlog/${id}`;
+          url = `${API_URL}/story/oldlog/${id}`;
           results.push(`  ls \"${path}\" || curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
         }
         return results;
       })();
       path = "./static/sow/index.json.gz";
-      url = "http://giji.f5.si/api/story/oldlog";
+      url = `${API_URL}/story/oldlog`;
       data.push(` curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
       fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
         return console.log(err);
@@ -599,11 +600,13 @@ module.exports = function(app) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Passport, Schema, mongoose, passport;
+var MONGO_URL, Passport, Schema, mongoose, passport;
 
 ({Schema} = mongoose = __webpack_require__(26));
 
-mongoose.connect(process.env.MONGO_URL);
+({MONGO_URL} = process.env);
+
+mongoose.connect(MONGO_URL);
 
 Passport = mongoose.model('Passport', new Schema({
   _id: String,
@@ -738,11 +741,13 @@ module.exports = function(app) {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MongoStore, day, interval, session;
+var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
 
 session = __webpack_require__(22);
 
 MongoStore = __webpack_require__(21)(session);
+
+({MONGO_URL, SECRET_KEY_BASE} = process.env);
 
 interval = 7 * 24 * 3600;
 
@@ -750,11 +755,11 @@ day = 24 * 3600;
 
 module.exports = function(app) {
   app.use(session({
-    secret: process.env.SECRET_KEY_BASE,
+    secret: SECRET_KEY_BASE,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-      url: process.env.MONGO_URL,
+      url: MONGO_URL,
       ttl: interval,
       autoRemove: 'native',
       collection: 'sessions',
@@ -1427,7 +1432,7 @@ module.exports = require("nuxt");
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Nuxt, app, bodyParser, config, express, host, port;
+var HOST, Nuxt, app, bodyParser, config, express, host, pm_id, port;
 
 bodyParser = __webpack_require__(9);
 
@@ -1437,11 +1442,13 @@ config = __webpack_require__(8);
 
 Nuxt = __webpack_require__(11);
 
+({pm_id, HOST} = process.env);
+
 process.on('unhandledRejection', console.dir);
 
-host = process.env.HOST || '127.0.0.1';
+host = HOST || '127.0.0.1';
 
-port = 4000 + (process.env.pm_id - 0 || 0);
+port = 4000 + (pm_id - 0 || 0);
 
 app = express();
 
@@ -1534,11 +1541,11 @@ module.exports = {
 /* 14 */
 /***/ (function(module, exports) {
 
-var WEB_URL;
+var API_URL, SOW_URL, STORE_URL, WEB_URL;
 
-({WEB_URL} = process.env);
+({WEB_URL, API_URL, SOW_URL, STORE_URL} = process.env);
 
-module.exports = {WEB_URL};
+module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
 
 
 /***/ }),

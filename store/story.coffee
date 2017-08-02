@@ -23,14 +23,14 @@ module.exports =
       state.read_at = Date.now()
 
   actions:
-    progress: ({state, commit})->
+    progress: ({state, commit, rootState })->
       return if  Date.now() - 10 * 60 * 1000 < state.index_at 
-      axios.get "http://giji.f5.si/api/story/progress"
+      axios.get "#{env.API_URL}/story/progress"
       .then ({ status, data })->
         commit "progress", data
 
-    oldlog: ({ state, commit})->
+    oldlog: ({ state, commit, rootState })->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.f5.si/sow/index.json.gz"
+      axios.get "#{env.SOW_URL}/index.json.gz"
       .then ({ status, data })->
         commit "oldlog", data

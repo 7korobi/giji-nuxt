@@ -206,7 +206,7 @@ module.exports =
       Object.assign @, q.base.query
 
     rating_img: (rating)->
-      "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_#{rating}.png"
+      "#{env.STORE_URL}/images/icon/cd_#{rating}.png"
 
     submenu: (as)->
       @drill = ! @drill

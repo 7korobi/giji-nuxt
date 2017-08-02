@@ -1,3 +1,6 @@
+if window?
+  window.env = __NUXT__.state.env
+
 module.exports =
   adjust: ->
     { top, horizon, height } = @$store.state.menu

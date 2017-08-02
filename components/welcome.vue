@@ -9,7 +9,10 @@ module.exports =
       export_to: "progress"
 
     computed:
+      root_path: ->
+        env.WEB_URL
       welcome_style: ->
+        backgroundImage: "url(#{env.STORE_URL}/images/bg/fhd-giji.png)"
         backgroundPosition: "left 50% top #{ @top }px"
 
     methods:
@@ -86,7 +89,7 @@ module.exports =
           btn(v-model="export_to" as="progress") 進行中の村
       tr
         th.btns(colspan=4)
-          a(href="http://giji.f5.si") 総合トップ
+          a(:href="root_path") 総合トップ
 
   h2#title
     nuxt-link(to="/") 人狼議事
@@ -112,7 +115,6 @@ module.exports =
 
 #welcome
   background-size:  cover
-  background-image: url(http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/fhd-giji.png)
   .btns
     background-color: rgba(77, 78, 70, 0.9)
 

@@ -66,7 +66,7 @@ module.exports = {
     },
     methods: {
       log_url: function([folder, id]) {
-        return `http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/${folder}-${id}`;
+        return `${env.STORE_URL}/stories/${folder}-${id}`;
       },
       label_size: function(str) {
         var ref, ref1, ref2, ref3, width;
@@ -356,4 +356,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.bb4d77b757735afa2abf.js.map
+//# sourceMappingURL=1.nuxt.bundle.2254c67ba1d4d70e4899.js.map

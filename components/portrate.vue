@@ -16,7 +16,9 @@ module.exports =
     has_html: ->
       !! @$slots.default
     face_url: ->
-      Query.faces.find(@face_id, "all")?.path
+      face = Query.faces.find(@face_id, "all")
+      "#{env.STORE_URL}/images/portrate/#{ face.id }.jpg"
+
   methods:
     click: ->
       @$emit 'click', @face_id

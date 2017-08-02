@@ -73,7 +73,7 @@ new Rule("sow_village").schema ->
 
       @folder = Query.folders.find @q.folder_id
       if @is_epilogue && @is_finish
-        @href = "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{@_id}"
+        @href = "#{env.STORE_URL}/stories/#{@_id}"
         @mode = "oldlog"
       else
         if @turns.list.first

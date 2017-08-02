@@ -1,5 +1,7 @@
 { Schema } = mongoose = require "mongoose"
-mongoose.connect process.env.MONGO_URL
+{ MONGO_URL } = process.env
+
+mongoose.connect MONGO_URL
 
 Passport = mongoose.model 'Passport', new Schema
   _id: String

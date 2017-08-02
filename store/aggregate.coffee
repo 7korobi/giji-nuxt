@@ -98,18 +98,18 @@ module.exports =
       state[id].folders = _.sortBy folders, (list, key)-> - list.length
 
   actions:
-    faces: ({dispatch, state, commit})->
+    faces: ({ dispatch, state, commit, rootState })->
       return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "http://giji.f5.si/api/aggregate/faces"
+      axios.get "#{env.API_URL}/aggregate/faces"
       .then ({ status, data })->
         commit "join",  { data, id: null }
         commit "faces", { data, id: null }
       .catch (err)->
         console.log err
 
-    face: ({state, commit}, id)->
+    face: ({ state, commit, rootState }, id)->
       return if Date.now() - 10 * 60 * 1000 < state[id].read_at 
-      axios.get "http://giji.f5.si/api/aggregate/faces/#{id}"
+      axios.get "#{env.API_URL}/aggregate/faces/#{id}"
       .then ({ status, data })->
         commit "join", { data, id }
         commit "face", { data, id }

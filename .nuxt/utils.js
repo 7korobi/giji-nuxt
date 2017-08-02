@@ -64,7 +64,7 @@ export function getContext (context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {"WEB_URL":"http://lvh.me:4000"},
+    env: {"WEB_URL":"http://lvh.me:4000","API_URL":"http://giji.f5.si/api","SOW_URL":"http://giji.f5.si/sow","STORE_URL":"http://s3-ap-northeast-1.amazonaws.com/giji-assets"},
     hotReload: context.hotReload || false
   }
   const next = context.next

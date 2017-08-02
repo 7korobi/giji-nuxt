@@ -344,8 +344,7 @@ new Rule("face").schema(function () {
 
     static deploy() {
       this.aggregate = {};
-      this.summary_url = `/summary/faces/${this._id}`;
-      return this.path = `http://giji-assets.s3-website-ap-northeast-1.amazonaws.com/images/portrate/${this._id}.jpg`;
+      return this.summary_url = `/summary/faces/${this._id}`;
     }
 
   };
@@ -917,7 +916,7 @@ new Rule("sow_village").schema(function () {
       this.card.option = this.options;
       this.folder = Query.folders.find(this.q.folder_id);
       if (this.is_epilogue && this.is_finish) {
-        this.href = `http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/${this._id}`;
+        this.href = `${env.STORE_URL}/stories/${this._id}`;
         return this.mode = "oldlog";
       } else {
         if (this.turns.list.first) {
@@ -1308,11 +1307,11 @@ module.exports = {
     }
   },
   actions: {
-    faces: function ({ dispatch, state, commit }) {
+    faces: function ({ dispatch, state, commit, rootState }) {
       if (Date.now() - 10 * 60 * 1000 < state.read_at) {
         return;
       }
-      return axios.get("http://giji.f5.si/api/aggregate/faces").then(function ({ status, data }) {
+      return axios.get(`${env.API_URL}/aggregate/faces`).then(function ({ status, data }) {
         commit("join", {
           data,
           id: null
@@ -1325,11 +1324,11 @@ module.exports = {
         return console.log(err);
       });
     },
-    face: function ({ state, commit }, id) {
+    face: function ({ state, commit, rootState }, id) {
       if (Date.now() - 10 * 60 * 1000 < state[id].read_at) {
         return;
       }
-      return axios.get(`http://giji.f5.si/api/aggregate/faces/${id}`).then(function ({ status, data }) {
+      return axios.get(`${env.API_URL}/aggregate/faces/${id}`).then(function ({ status, data }) {
         commit("join", { data, id });
         return commit("face", { data, id });
       }).catch(function (err) {
@@ -1459,7 +1458,7 @@ module.exports = {
 /***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
-var axios;
+/* WEBPACK VAR INJECTION */(function(global) {var axios;
 
 __webpack_require__(117);
 
@@ -1470,15 +1469,18 @@ module.exports = {
     state: function () {
       return {
         user: null,
-        profile: {}
+        profile: {},
+        env: {}
       };
     },
     actions: {
-      nuxtServerInit: function ({ commit }, { req }) {
+      nuxtServerInit: function ({ commit }, { req, env }) {
         var id, ref, ref1;
+        global.env = env;
+        commit("public_env", env);
         if (id = (ref = req.session) != null ? (ref1 = ref.passport) != null ? ref1.user : void 0 : void 0) {
           commit("login", id);
-          return axios.get(`http://giji.f5.si/api/user/${id}`).then(function ({ status, data }) {
+          return axios.get(`${env.API_URL}/user/${id}`).then(function ({ status, data }) {
             console.log(`HTTP :: /api/books/${id}`);
             return commit("profile", data);
           });
@@ -1486,6 +1488,9 @@ module.exports = {
       }
     },
     mutations: {
+      public_env: function (state, public_env) {
+        return state.env = public_env;
+      },
       login: function (state, id) {
         return state.user = id;
       },
@@ -1495,6 +1500,7 @@ module.exports = {
     }
   }
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
 
@@ -1814,11 +1820,11 @@ module.exports = {
     }
   },
   actions: {
-    story: function ({ state, commit }, story_id) {
+    story: function ({ state, commit, rootState }, story_id) {
       if (Date.now() - 10 * 60 * 1000 < state.read_at) {
         return;
       }
-      return axios.get(`http://giji.f5.si/sow/${story_id}.json.gz`).then(function ({ status, data }) {
+      return axios.get(`${env.SOW_URL}/${story_id}.json.gz`).then(function ({ status, data }) {
         return commit("join", data);
       });
     }
@@ -1862,19 +1868,19 @@ module.exports = {
     }
   },
   actions: {
-    progress: function ({ state, commit }) {
+    progress: function ({ state, commit, rootState }) {
       if (Date.now() - 10 * 60 * 1000 < state.index_at) {
         return;
       }
-      return axios.get("http://giji.f5.si/api/story/progress").then(function ({ status, data }) {
+      return axios.get(`${env.API_URL}/story/progress`).then(function ({ status, data }) {
         return commit("progress", data);
       });
     },
-    oldlog: function ({ state, commit }) {
+    oldlog: function ({ state, commit, rootState }) {
       if (Date.now() - 10 * 60 * 1000 < state.read_at) {
         return;
       }
-      return axios.get("http://giji.f5.si/sow/index.json.gz").then(function ({ status, data }) {
+      return axios.get(`${env.SOW_URL}/index.json.gz`).then(function ({ status, data }) {
         return commit("oldlog", data);
       });
     }
@@ -1901,7 +1907,7 @@ var _asyncToGenerator2 = __webpack_require__(53);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _promise = __webpack_require__(22);
+var _promise = __webpack_require__(23);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -2828,7 +2834,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(22);
+var _promise = __webpack_require__(23);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -3513,7 +3519,7 @@ var _stringify = __webpack_require__(137);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _promise = __webpack_require__(22);
+var _promise = __webpack_require__(23);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -3614,7 +3620,7 @@ function getContext(context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: { "WEB_URL": "http://lvh.me:4000" },
+    env: { "WEB_URL": "http://lvh.me:4000", "API_URL": "http://giji.f5.si/api", "SOW_URL": "http://giji.f5.si/sow", "STORE_URL": "http://s3-ap-northeast-1.amazonaws.com/giji-assets" },
     hotReload: context.hotReload || false
   };
   var next = context.next;
@@ -4024,7 +4030,7 @@ var _extends2 = __webpack_require__(72);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _promise = __webpack_require__(22);
+var _promise = __webpack_require__(23);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -4283,4 +4289,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.b3252fcd0ebc6c89d753.js.map
+//# sourceMappingURL=nuxt.bundle.985ba1dc31be98b93e49.js.map

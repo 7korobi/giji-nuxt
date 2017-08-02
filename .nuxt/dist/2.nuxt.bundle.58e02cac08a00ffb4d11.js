@@ -81,7 +81,7 @@ module.exports = {
       return Object.assign(this, q.base.query);
     },
     rating_img: function(rating) {
-      return `http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/icon/cd_${rating}.png`;
+      return `${env.STORE_URL}/images/icon/cd_${rating}.png`;
     },
     submenu: function(as) {
       return this.drill = !this.drill;
@@ -690,4 +690,4 @@ var update = __webpack_require__(3)("6b02251f", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=2.nuxt.bundle.d5c61014607346feaf31.js.map
+//# sourceMappingURL=2.nuxt.bundle.58e02cac08a00ffb4d11.js.map

@@ -65,7 +65,6 @@ new Rule("face").schema ->
     @deploy: ->
       @aggregate = {}
       @summary_url = "/summary/faces/#{@_id}"
-      @path = "http://giji-assets.s3-website-ap-northeast-1.amazonaws.com/images/portrate/#{ @_id }.jpg"
   Object.assign @model_property,
     story_length:
       get: ->

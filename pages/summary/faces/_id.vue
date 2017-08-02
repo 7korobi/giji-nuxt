@@ -113,7 +113,7 @@ module.exports =
 
     methods:
       log_url: ([folder, id])->
-        "http://s3-ap-northeast-1.amazonaws.com/giji-assets/stories/#{folder}-#{id}"
+        "#{env.STORE_URL}/stories/#{folder}-#{id}"
 
       label_size: (str)->
         width  = 0.8 * (str.match(/[iIjl]/g) ? []).length

@@ -3,10 +3,11 @@ express = require 'express'
 config = require '../config/webpack/index.coffee'
 Nuxt = require 'nuxt'
 
+{ pm_id, HOST } = process.env
 process.on 'unhandledRejection', console.dir
 
-host = process.env.HOST || '127.0.0.1'
-port = 4000 + (process.env.pm_id - 0 || 0)
+host = HOST || '127.0.0.1'
+port = 4000 + (pm_id - 0 || 0)
 
 app = express()
 app.use bodyParser.json()
