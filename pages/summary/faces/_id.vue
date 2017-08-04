@@ -99,7 +99,7 @@ module.exports =
   default:
     watch: q.watch ->
     data: ->
-      q.data @, read_at
+      q.data @, { read_at }
 
     mounted: ->
       @$store.dispatch "aggregate/face", @id

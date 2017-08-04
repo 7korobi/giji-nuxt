@@ -21,9 +21,9 @@
     "17.nuxt.bundle.164923b7fca9fea52b31.js",
     "vendor.bundle.2e5222fa464670244dab.js",
     "nuxt.bundle.a97c31e6e13265659a02.js",
-    "manifest.88939aab558783f5af49.js",
-    "1.nuxt.bundle.39ab69cdccefb97b289f.js",
-    "1.nuxt.bundle.39ab69cdccefb97b289f.js.map",
+    "manifest.a84a44845aad926e8d0f.js",
+    "1.nuxt.bundle.3c4f38b80016f29b46f6.js",
+    "1.nuxt.bundle.3c4f38b80016f29b46f6.js.map",
     "2.nuxt.bundle.8606ff2fac5f7990f543.js.map",
     "3.nuxt.bundle.da711a1bbbbd7c5870b8.js.map",
     "4.nuxt.bundle.88893a7d174d17311177.js.map",
@@ -42,11 +42,11 @@
     "17.nuxt.bundle.164923b7fca9fea52b31.js.map",
     "vendor.bundle.2e5222fa464670244dab.js.map",
     "nuxt.bundle.a97c31e6e13265659a02.js.map",
-    "manifest.88939aab558783f5af49.js.map",
+    "manifest.a84a44845aad926e8d0f.js.map",
     "index.html"
   ],
   "initial": [
-    "manifest.88939aab558783f5af49.js",
+    "manifest.a84a44845aad926e8d0f.js",
     "vendor.bundle.2e5222fa464670244dab.js",
     "nuxt.bundle.a97c31e6e13265659a02.js"
   ],
@@ -68,7 +68,7 @@
     "15.nuxt.bundle.7f99433d0199d54fc314.js",
     "16.nuxt.bundle.f059a1df1b9c6ddcd44a.js",
     "17.nuxt.bundle.164923b7fca9fea52b31.js",
-    "1.nuxt.bundle.39ab69cdccefb97b289f.js"
+    "1.nuxt.bundle.3c4f38b80016f29b46f6.js"
   ],
   "modules": {
     "18260218": [

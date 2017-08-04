@@ -49,7 +49,7 @@ module.exports = {
   default: {
     watch: q.watch(function() {}),
     data: function() {
-      return q.data(this, read_at);
+      return q.data(this, {read_at});
     },
     mounted: function() {
       return this.$store.dispatch("aggregate/face", this.id);
@@ -362,4 +362,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.39ab69cdccefb97b289f.js.map
+//# sourceMappingURL=1.nuxt.bundle.3c4f38b80016f29b46f6.js.map
