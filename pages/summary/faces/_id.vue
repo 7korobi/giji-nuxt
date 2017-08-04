@@ -134,15 +134,15 @@ module.exports =
 
     computed:
       roles: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         @$store.state.aggregate[@id].roles
 
       lives: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         @$store.state.aggregate[@id].lives
 
       sow_auths: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         asc =
           switch @order
             when "date_min"
@@ -152,15 +152,15 @@ module.exports =
         _.orderBy @$store.state.aggregate[@id].sow_auths, @order, asc
 
       mestypes: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         @$store.state.aggregate[@id].mestypes
 
       folders: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         @$store.state.aggregate[@id].folders
 
       face: ->
-        @read_at["aggregate_face#{@id}"]
+        @read_at["aggregate_face.#{@id}"]
         Query.faces.find @id
 
 </script>
