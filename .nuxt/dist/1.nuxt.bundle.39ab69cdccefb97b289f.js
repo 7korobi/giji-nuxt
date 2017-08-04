@@ -86,16 +86,16 @@ module.exports = {
     },
     computed: {
       roles: function() {
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         return this.$store.state.aggregate[this.id].roles;
       },
       lives: function() {
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         return this.$store.state.aggregate[this.id].lives;
       },
       sow_auths: function() {
         var asc;
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         asc = (function() {
           switch (this.order) {
             case "date_min":
@@ -107,15 +107,15 @@ module.exports = {
         return _.orderBy(this.$store.state.aggregate[this.id].sow_auths, this.order, asc);
       },
       mestypes: function() {
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         return this.$store.state.aggregate[this.id].mestypes;
       },
       folders: function() {
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         return this.$store.state.aggregate[this.id].folders;
       },
       face: function() {
-        this.read_at[`aggregate_face${this.id}`];
+        this.read_at[`aggregate_face.${this.id}`];
         return Query.faces.find(this.id);
       }
     }
@@ -362,4 +362,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.8843b6d998ce22dbcd21.js.map
+//# sourceMappingURL=1.nuxt.bundle.39ab69cdccefb97b289f.js.map
