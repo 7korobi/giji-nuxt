@@ -1,9 +1,11 @@
 require "../models/index"
 axios = require "axios"
+Mem = require "~plugins/memory-record"
 
 module.exports =
   default:
     state: ->
+      read_at = Mem.read_at
       user: null
       profile: {}
       env: {}

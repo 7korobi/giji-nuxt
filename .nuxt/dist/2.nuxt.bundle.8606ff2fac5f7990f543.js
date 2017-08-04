@@ -27,11 +27,11 @@ module.exports = Component.exports
 /***/ 385:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BrowserValue, Query, _, el, q;
+var BrowserValue, Query, _, el, q, read_at;
 
 _ = __webpack_require__(4);
 
-({Query} = __webpack_require__(1));
+({Query, read_at} = __webpack_require__(1));
 
 BrowserValue = __webpack_require__(34);
 
@@ -67,7 +67,8 @@ module.exports = {
       mode: "oldlog",
       limit: 25,
       asc: "desc",
-      drill: false
+      drill: false,
+      read_at: read_at
     });
   },
   mounted: function() {
@@ -119,15 +120,15 @@ module.exports = {
       return obj;
     },
     limit_next: function() {
-      this.$store.state.story.read_at;
+      this.read_at.story_oldlog;
       return Math.min(this.villages_all.list.length, this.limit + 25);
     },
     all: function() {
-      this.$store.state.story.read_at;
+      this.read_at.story_oldlog;
       return Query.sow_villages.mode(this.mode);
     },
     villages_all: function() {
-      this.$store.state.story.read_at;
+      this.read_at.story_oldlog;
       return Query.sow_villages.search(this.mode, this.query_in, this.query_where, this.order, this.asc);
     },
     villages: function() {
@@ -690,4 +691,4 @@ var update = __webpack_require__(3)("6b02251f", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=2.nuxt.bundle.b5d7fa3bdc87b6cb6f73.js.map
+//# sourceMappingURL=2.nuxt.bundle.8606ff2fac5f7990f543.js.map

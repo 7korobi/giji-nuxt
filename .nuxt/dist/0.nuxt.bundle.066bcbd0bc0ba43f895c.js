@@ -27,9 +27,9 @@ module.exports = Component.exports
 /***/ 387:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BrowserValue, Query, _, q;
+var BrowserValue, Query, _, q, read_at;
 
-({Query} = __webpack_require__(1));
+({Query, read_at} = __webpack_require__(1));
 
 BrowserValue = __webpack_require__(34);
 
@@ -46,14 +46,14 @@ module.exports = {
   default: {
     watch: q.watch(function() {}),
     data: function() {
-      return q.data(this);
+      return q.data(this, {read_at});
     },
     mounted: function() {
       return this.$store.dispatch("aggregate/faces");
     },
     computed: {
       faces: function() {
-        var asc, read_at;
+        var asc;
         asc = (function() {
           switch (this.order) {
             case "order":
@@ -63,7 +63,7 @@ module.exports = {
               return "desc";
           }
         }).call(this);
-        ({read_at} = this.$store.state.aggregate);
+        this.read_at.aggregate_faces;
         return Query.faces.tag(this.tag_id).sort(this.order, asc);
       }
     }
@@ -237,4 +237,4 @@ var update = __webpack_require__(3)("03836546", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=0.nuxt.bundle.7e66b1d37a642f905d06.js.map
+//# sourceMappingURL=0.nuxt.bundle.066bcbd0bc0ba43f895c.js.map

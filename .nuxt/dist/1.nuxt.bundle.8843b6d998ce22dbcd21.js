@@ -27,9 +27,9 @@ module.exports = Component.exports
 /***/ 386:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BrowserValue, Query, _, q;
+var BrowserValue, Query, _, q, read_at;
 
-({Query} = __webpack_require__(1));
+({Query, read_at} = __webpack_require__(1));
 
 BrowserValue = __webpack_require__(34);
 
@@ -49,7 +49,7 @@ module.exports = {
   default: {
     watch: q.watch(function() {}),
     data: function() {
-      return q.data(this);
+      return q.data(this, read_at);
     },
     mounted: function() {
       return this.$store.dispatch("aggregate/face", this.id);
@@ -86,13 +86,16 @@ module.exports = {
     },
     computed: {
       roles: function() {
+        this.read_at[`aggregate_face${this.id}`];
         return this.$store.state.aggregate[this.id].roles;
       },
       lives: function() {
+        this.read_at[`aggregate_face${this.id}`];
         return this.$store.state.aggregate[this.id].lives;
       },
       sow_auths: function() {
         var asc;
+        this.read_at[`aggregate_face${this.id}`];
         asc = (function() {
           switch (this.order) {
             case "date_min":
@@ -104,12 +107,15 @@ module.exports = {
         return _.orderBy(this.$store.state.aggregate[this.id].sow_auths, this.order, asc);
       },
       mestypes: function() {
+        this.read_at[`aggregate_face${this.id}`];
         return this.$store.state.aggregate[this.id].mestypes;
       },
       folders: function() {
+        this.read_at[`aggregate_face${this.id}`];
         return this.$store.state.aggregate[this.id].folders;
       },
       face: function() {
+        this.read_at[`aggregate_face${this.id}`];
         return Query.faces.find(this.id);
       }
     }
@@ -356,4 +362,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.cbbbfd24b84600e02280.js.map
+//# sourceMappingURL=1.nuxt.bundle.8843b6d998ce22dbcd21.js.map

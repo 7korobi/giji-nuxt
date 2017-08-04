@@ -40,17 +40,19 @@
         nuxt-link(to="/demo") 開発者用ページ
 </template>
 <script lang="coffee">
+{ Query, read_at } = require "~plugins/memory-record"
 
 module.exports =
-  data: ->
-    a: 1
+  data: -> { read_at }
   mounted: ->
     @$store.dispatch "story/progress"
   computed:
     prologue: ->
-      @$store.state.story.prologue
+      @read_at.story_progress
+      Query.sow_villages.prologue.list
     progress: ->
-      @$store.state.story.progress
+      @read_at.story_progress
+      Query.sow_villages.progress.list
 
 </script>
 <style lang="stylus" scoped>

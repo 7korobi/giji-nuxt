@@ -4,8 +4,6 @@ axios = require "axios"
 module.exports =
   namespaced: true
   state: ->
-    read_at: 0
-
     folder_id: ""
     book_id: ""
     part_id: ""
@@ -27,7 +25,6 @@ module.exports =
       Set.potof.merge   o.potofs
 
       Set.chat.merge    o.chats
-      state.read_at = Date.now()
 
     folder: (state, folder_id)->
       state.folder_id = folder_id

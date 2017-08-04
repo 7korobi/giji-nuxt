@@ -457,6 +457,31 @@ Set.chr_job.merge(list);
 /***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
+var Mem, Vue;
+
+Vue = __webpack_require__(5);
+
+if (typeof window !== "undefined" && window !== null) {
+  Vue = Vue.default;
+}
+
+Mem = __webpack_require__(1);
+
+Mem.vm = new Vue({
+  data: {
+    read_at: Mem.read_at = {}
+  }
+});
+
+Mem.read_at_gate = function (name, cb) {
+  if (Date.now() - 10 * 60 * 1000 < Mem.read_at[name]) {
+    return;
+  }
+  return cb().then(function () {
+    return Vue.set(Mem.read_at, name, Date.now());
+  });
+};
+
 __webpack_require__(116);
 
 __webpack_require__(120);
@@ -1134,9 +1159,9 @@ Set.chat.merge({
 /***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Model, Query, Rule, _, _id, axios, face_state, i, len, ref, state, titles;
+var Mem, Model, Query, Rule, _, _id, axios, face_state, i, len, ref, state, titles;
 
-({ Model, Query, Rule } = __webpack_require__(1));
+({ Model, Query, Rule } = Mem = __webpack_require__(1));
 
 axios = __webpack_require__(19);
 
@@ -1162,13 +1187,11 @@ titles = {
 };
 
 state = {
-  read_at: 0,
   faces: []
 };
 
 face_state = function () {
   return {
-    read_at: 0,
     sow_auths: [],
     mestypes: [],
     folders: [],
@@ -1192,7 +1215,6 @@ module.exports = {
   mutations: {
     join: function (state, { id, data }) {
       var face, j, len1, o, ref1, results;
-      state.read_at = Date.now();
       ref1 = data.faces;
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
@@ -1205,7 +1227,6 @@ module.exports = {
     },
     faces: function (state, { id, data }) {
       var face, j, len1, o, ref1, results;
-      state.read_at = Date.now();
       ref1 = data.sow_auths;
       results = [];
       for (j = 0, len1 = ref1.length; j < len1; j++) {
@@ -1218,7 +1239,6 @@ module.exports = {
     },
     face: function (state, { id, data }) {
       var folders, handle, key, keys, list, loghd, mestypes, o, per, sum, title;
-      state[id].read_at = Date.now();
       state[id].face = data.faces[0];
       state[id].sow_auths = _.sortBy(data.sow_auths, function (o) {
         return -o.story_ids.length;
@@ -1308,31 +1328,29 @@ module.exports = {
   },
   actions: {
     faces: function ({ dispatch, state, commit, rootState }) {
-      if (Date.now() - 10 * 60 * 1000 < state.read_at) {
-        return;
-      }
-      return axios.get(`${env.API_URL}/aggregate/faces`).then(function ({ status, data }) {
-        commit("join", {
-          data,
-          id: null
+      return Mem.read_at_gate("aggregate_faces", function () {
+        return axios.get(`${env.API_URL}/aggregate/faces`).then(function ({ status, data }) {
+          commit("join", {
+            data,
+            id: null
+          });
+          return commit("faces", {
+            data,
+            id: null
+          });
+        }).catch(function (err) {
+          return console.log(err);
         });
-        return commit("faces", {
-          data,
-          id: null
-        });
-      }).catch(function (err) {
-        return console.log(err);
       });
     },
     face: function ({ state, commit, rootState }, id) {
-      if (Date.now() - 10 * 60 * 1000 < state[id].read_at) {
-        return;
-      }
-      return axios.get(`${env.API_URL}/aggregate/faces/${id}`).then(function ({ status, data }) {
-        commit("join", { data, id });
-        return commit("face", { data, id });
-      }).catch(function (err) {
-        return console.log(err);
+      return Mem.read_at_gate(`aggregate_face.${id}`, function () {
+        return axios.get(`${env.API_URL}/aggregate/faces/${id}`).then(function ({ status, data }) {
+          commit("join", { data, id });
+          return commit("face", { data, id });
+        }).catch(function (err) {
+          return console.log(err);
+        });
       });
     }
   }
@@ -1353,7 +1371,6 @@ module.exports = {
   namespaced: true,
   state: function () {
     return {
-      read_at: 0,
       folder_id: "",
       book_id: "",
       part_id: "",
@@ -1371,8 +1388,7 @@ module.exports = {
       Set.stat.merge(o.stats);
       Set.card.merge(o.cards);
       Set.potof.merge(o.potofs);
-      Set.chat.merge(o.chats);
-      return state.read_at = Date.now();
+      return Set.chat.merge(o.chats);
     },
     folder: function (state, folder_id) {
       return state.folder_id = folder_id;
@@ -1458,15 +1474,19 @@ module.exports = {
 /***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var axios;
+/* WEBPACK VAR INJECTION */(function(global) {var Mem, axios;
 
 __webpack_require__(117);
 
 axios = __webpack_require__(19);
 
+Mem = __webpack_require__(1);
+
 module.exports = {
   default: {
     state: function () {
+      var read_at;
+      read_at = Mem.read_at;
       return {
         user: null,
         profile: {},
@@ -1595,9 +1615,9 @@ module.exports = {
 /***/ 128:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Model, Query, Rule, Set, _, axios;
+var Mem, Model, Query, Rule, Set, _, axios;
 
-({ Model, Query, Rule, Set } = __webpack_require__(1));
+({ Model, Query, Rule, Set } = Mem = __webpack_require__(1));
 
 axios = __webpack_require__(19);
 
@@ -1606,9 +1626,7 @@ _ = __webpack_require__(4);
 module.exports = {
   namespaced: true,
   state: function () {
-    return {
-      read_at: 0
-    };
+    return {};
   },
   mutations: {
     join: function (state, data) {
@@ -1809,23 +1827,21 @@ module.exports = {
         };
       }));
       o = data.stories[0];
-      Set.book.add({
+      return Set.book.add({
         _id: o._id,
         label: o.name,
         winner_id: data.events.slice(-1)[0].winner.slice(4),
         potof_size: Query.potofs.where({ book_id }).list.length,
         write_at: chat.write_at
       });
-      return state.read_at = Date.now();
     }
   },
   actions: {
     story: function ({ state, commit, rootState }, story_id) {
-      if (Date.now() - 10 * 60 * 1000 < state.read_at) {
-        return;
-      }
-      return axios.get(`${env.SOW_URL}/${story_id}.json.gz`).then(function ({ status, data }) {
-        return commit("join", data);
+      return Mem.read_at_gate(`sow_story.${story_id}`, function () {
+        return axios.get(`${env.SOW_URL}/${story_id}.json.gz`).then(function ({ status, data }) {
+          return commit("join", data);
+        });
       });
     }
   }
@@ -1836,9 +1852,9 @@ module.exports = {
 /***/ 129:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Model, Query, Rule, Set, _, axios;
+var Mem, Model, Query, Rule, Set, _, axios;
 
-({ Model, Query, Rule, Set } = __webpack_require__(1));
+({ Model, Query, Rule, Set } = Mem = __webpack_require__(1));
 
 axios = __webpack_require__(19);
 
@@ -1847,41 +1863,30 @@ _ = __webpack_require__(4);
 module.exports = {
   namespaced: true,
   state: function () {
-    return {
-      read_at: 0,
-      index_at: 0,
-      prologue: [],
-      progress: []
-    };
+    return {};
   },
   mutations: {
     progress: function (state, data) {
       Set.sow_turn.merge(data.events);
-      Set.sow_village.merge(data.stories);
-      state.prologue = Query.sow_villages.prologue.list;
-      state.progress = Query.sow_villages.progress.list;
-      return state.index_at = Date.now();
+      return Set.sow_village.merge(data.stories);
     },
     oldlog: function (state, data) {
-      Set.sow_village.merge(data.stories);
-      return state.read_at = Date.now();
+      return Set.sow_village.merge(data.stories);
     }
   },
   actions: {
     progress: function ({ state, commit, rootState }) {
-      if (Date.now() - 10 * 60 * 1000 < state.index_at) {
-        return;
-      }
-      return axios.get(`${env.API_URL}/story/progress`).then(function ({ status, data }) {
-        return commit("progress", data);
+      return Mem.read_at_gate("story_progress", function () {
+        return axios.get(`${env.API_URL}/story/progress`).then(function ({ status, data }) {
+          return commit("progress", data);
+        });
       });
     },
     oldlog: function ({ state, commit, rootState }) {
-      if (Date.now() - 10 * 60 * 1000 < state.read_at) {
-        return;
-      }
-      return axios.get(`${env.SOW_URL}/index.json.gz`).then(function ({ status, data }) {
-        return commit("oldlog", data);
+      return Mem.read_at_gate("story_oldlog", function () {
+        return axios.get(`${env.SOW_URL}/index.json.gz`).then(function ({ status, data }) {
+          return commit("oldlog", data);
+        });
       });
     }
   }
@@ -2121,7 +2126,7 @@ var render = function () {
 // Fix components format in matched, it's due to code-splitting of vue-router
 
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -2507,7 +2512,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -2537,7 +2542,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createRouter = createRouter;
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -2722,7 +2727,7 @@ var _getIterator2 = __webpack_require__(71);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -2925,7 +2930,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -3032,7 +3037,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -3547,7 +3552,7 @@ exports.getLocation = getLocation;
 exports.urlJoin = urlJoin;
 exports.compile = compile;
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -3933,7 +3938,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -4138,7 +4143,7 @@ var createApp = function () {
   };
 }();
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -4289,4 +4294,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.2ecbb4ea33ac8f684157.js.map
+//# sourceMappingURL=nuxt.bundle.a97c31e6e13265659a02.js.map

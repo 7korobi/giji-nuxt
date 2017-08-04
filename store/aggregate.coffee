@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "~plugins/memory-record"
+{ Model, Query, Rule } = Mem = require "~plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 
@@ -21,11 +21,9 @@ titles =
   BA: ["BSAY", "念act（蝙蝠人間）"]
 
 state =
-  read_at: 0
   faces: []
 
 face_state = ->
-  read_at: 0
   sow_auths: []
   mestypes: []
   folders: []
@@ -42,17 +40,14 @@ module.exports =
     state
   mutations:
     join: (state,{ id, data })->
-      state.read_at = Date.now()
       for o in data.faces when face = Query.faces.find o._id.face_id
         face.aggregate.log = o
 
     faces: (state,{ id, data })->
-      state.read_at = Date.now()
       for o in data.sow_auths when face = Query.faces.find o._id.face_id
         face.aggregate.fav = o
 
     face: (state,{ id, data })->
-      state[id].read_at = Date.now()
       state[id].face = data.faces[0]
       state[id].sow_auths = _.sortBy data.sow_auths, (o)-> - o.story_ids.length
 
@@ -99,20 +94,20 @@ module.exports =
 
   actions:
     faces: ({ dispatch, state, commit, rootState })->
-      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "#{env.API_URL}/aggregate/faces"
-      .then ({ status, data })->
-        commit "join",  { data, id: null }
-        commit "faces", { data, id: null }
-      .catch (err)->
-        console.log err
+      Mem.read_at_gate "aggregate_faces", ->
+        axios.get "#{env.API_URL}/aggregate/faces"
+        .then ({ status, data })->
+          commit "join",  { data, id: null }
+          commit "faces", { data, id: null }
+        .catch (err)->
+          console.log err
 
     face: ({ state, commit, rootState }, id)->
-      return if Date.now() - 10 * 60 * 1000 < state[id].read_at 
-      axios.get "#{env.API_URL}/aggregate/faces/#{id}"
-      .then ({ status, data })->
-        commit "join", { data, id }
-        commit "face", { data, id }
-      .catch (err)->
-        console.log err
+      Mem.read_at_gate "aggregate_face.#{id}", ->
+        axios.get "#{env.API_URL}/aggregate/faces/#{id}"
+        .then ({ status, data })->
+          commit "join", { data, id }
+          commit "face", { data, id }
+        .catch (err)->
+          console.log err
 

@@ -1,36 +1,28 @@
-{ Model, Query, Rule, Set } = require "~plugins/memory-record"
+{ Model, Query, Rule, Set } = Mem = require "~plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 
 module.exports =
   namespaced: true
-  state: ->
-    read_at:   0
-    index_at:  0
-    prologue: []
-    progress: []
+  state: -> {}
 
   mutations:
     progress: (state, data)->
       Set.sow_turn.merge    data.events
       Set.sow_village.merge data.stories
-      state.prologue = Query.sow_villages.prologue.list
-      state.progress = Query.sow_villages.progress.list
-      state.index_at = Date.now()
 
     oldlog: (state, data)->
       Set.sow_village.merge data.stories
-      state.read_at = Date.now()
 
   actions:
     progress: ({state, commit, rootState })->
-      return if  Date.now() - 10 * 60 * 1000 < state.index_at 
-      axios.get "#{env.API_URL}/story/progress"
-      .then ({ status, data })->
-        commit "progress", data
+      Mem.read_at_gate "story_progress", ->
+        axios.get "#{env.API_URL}/story/progress"
+        .then ({ status, data })->
+          commit "progress", data
 
     oldlog: ({ state, commit, rootState })->
-      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "#{env.SOW_URL}/index.json.gz"
-      .then ({ status, data })->
-        commit "oldlog", data
+      Mem.read_at_gate "story_oldlog", ->
+        axios.get "#{env.SOW_URL}/index.json.gz"
+        .then ({ status, data })->
+          commit "oldlog", data

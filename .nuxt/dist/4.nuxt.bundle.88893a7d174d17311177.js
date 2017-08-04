@@ -27,9 +27,9 @@ module.exports = Component.exports
 /***/ 383:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BrowserValue, Query, q, watch;
+var BrowserValue, Query, q, read_at, watch;
 
-({Query} = __webpack_require__(1));
+({Query, read_at} = __webpack_require__(1));
 
 BrowserValue = __webpack_require__(34);
 
@@ -57,7 +57,8 @@ module.exports = {
         menus: [],
         chat_id: "",
         part_id: "",
-        mode: "full"
+        mode: "full",
+        read_at: read_at
       });
     },
     mounted: function() {
@@ -95,14 +96,12 @@ module.exports = {
     },
     computed: {
       book: function() {
-        var read_at;
         this.$store.commit("menu/mode", this.menus);
-        ({read_at} = this.$store.state.sow);
+        this.read_at[`sow_story.${this.book_id}`];
         return Query.books.find(this.book_id);
       },
       part: function() {
-        var read_at;
-        ({read_at} = this.$store.state.sow);
+        this.read_at[`sow_story.${this.book_id}`];
         return Query.parts.find(this.part_id);
       },
       part_prev_id: function() {
@@ -132,8 +131,7 @@ module.exports = {
         }
       },
       chat: function() {
-        var read_at;
-        ({read_at} = this.$store.state.sow);
+        this.read_at[`sow_story.${this.book_id}`];
         ({chat_id: this.chat_id, part_id: this.part_id} = this.$store.state.book);
         return Query.chats.find(this.chat_id);
       },
@@ -432,4 +430,4 @@ var update = __webpack_require__(3)("bf78b852", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=4.nuxt.bundle.74ae29b317b6785bdda6.js.map
+//# sourceMappingURL=4.nuxt.bundle.88893a7d174d17311177.js.map

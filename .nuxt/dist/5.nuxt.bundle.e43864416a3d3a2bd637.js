@@ -25,23 +25,27 @@ module.exports = Component.exports
 /***/ }),
 
 /***/ 381:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var Query, read_at;
+
+({Query, read_at} = __webpack_require__(1));
 
 module.exports = {
   data: function() {
-    return {
-      a: 1
-    };
+    return {read_at};
   },
   mounted: function() {
     return this.$store.dispatch("story/progress");
   },
   computed: {
     prologue: function() {
-      return this.$store.state.story.prologue;
+      this.read_at.story_progress;
+      return Query.sow_villages.prologue.list;
     },
     progress: function() {
-      return this.$store.state.story.progress;
+      this.read_at.story_progress;
+      return Query.sow_villages.progress.list;
     }
   }
 };
@@ -202,4 +206,4 @@ var update = __webpack_require__(3)("29075bcd", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=5.nuxt.bundle.82463e7a57dcde52075a.js.map
+//# sourceMappingURL=5.nuxt.bundle.e43864416a3d3a2bd637.js.map

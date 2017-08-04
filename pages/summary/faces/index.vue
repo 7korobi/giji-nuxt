@@ -45,7 +45,7 @@
 </template>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
 BrowserValue = require "~plugins/browser-value"
 _ = require "lodash"
 
@@ -58,7 +58,7 @@ module.exports =
   default:
     watch: q.watch ->
     data: ->
-      q.data @
+      q.data @, { read_at }
 
     mounted: ->
       @$store.dispatch "aggregate/faces"
@@ -71,7 +71,8 @@ module.exports =
               "asc"
             else
               "desc"
-        { read_at } = @$store.state.aggregate
+
+        @read_at.aggregate_faces
         Query.faces.tag(@tag_id).sort(@order, asc)
 
 

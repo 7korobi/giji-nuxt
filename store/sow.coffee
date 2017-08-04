@@ -1,11 +1,10 @@
-{ Model, Query, Rule, Set } = require "~plugins/memory-record"
+{ Model, Query, Rule, Set } = Mem = require "~plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 
 module.exports =
   namespaced: true
-  state: ->
-    read_at: 0
+  state: -> {}
 
   mutations:
     join: (state, data)->
@@ -168,11 +167,10 @@ module.exports =
         winner_id: data.events[-1..][0].winner[4..]
         potof_size: Query.potofs.where({book_id}).list.length
         write_at: chat.write_at
-      state.read_at = Date.now()
 
   actions:
     story: ({ state, commit, rootState }, story_id)->
-      return if  Date.now() - 10 * 60 * 1000 < state.read_at 
-      axios.get "#{env.SOW_URL}/#{story_id}.json.gz"
-      .then ({ status, data })->
-        commit "join", data
+      Mem.read_at_gate "sow_story.#{story_id}", ->
+        axios.get "#{env.SOW_URL}/#{story_id}.json.gz"
+        .then ({ status, data })->
+          commit "join", data

@@ -67,7 +67,7 @@
 </style>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
 BrowserValue = require "~plugins/browser-value"
 
 q = new BrowserValue
@@ -91,6 +91,7 @@ module.exports =
         chat_id: ""
         part_id: ""
         mode: "full"
+        read_at: read_at
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
@@ -121,10 +122,10 @@ module.exports =
     computed:
       book: ->
         @$store.commit "menu/mode", @menus
-        { read_at } = @$store.state.sow
+        @read_at["sow_story.#{@book_id}"]
         Query.books.find @book_id
       part: ->
-        { read_at } = @$store.state.sow
+        @read_at["sow_story.#{@book_id}"]
         Query.parts.find @part_id
 
       part_prev_id: ->
@@ -148,7 +149,7 @@ module.exports =
           @page_here_id + 1
 
       chat: ->
-        { read_at } = @$store.state.sow
+        @read_at["sow_story.#{@book_id}"]
         { @chat_id, @part_id } = @$store.state.book
         Query.chats.find @chat_id
 

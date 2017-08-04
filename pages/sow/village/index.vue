@@ -163,7 +163,7 @@
 </template>
 <script lang="coffee">
 _ = require "lodash"
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
 BrowserValue = require "~plugins/browser-value"
 el = require "~plugins/dom"
 
@@ -196,6 +196,7 @@ module.exports =
       limit: 25
       asc: "desc"
       drill: false
+      read_at: read_at
 
   mounted: ->
     @$store.dispatch "story/oldlog"
@@ -230,15 +231,15 @@ module.exports =
       obj
 
     limit_next: ->
-      @$store.state.story.read_at
+      @read_at.story_oldlog
       Math.min @villages_all.list.length, @limit + 25
 
     all: ->
-      @$store.state.story.read_at
+      @read_at.story_oldlog
       Query.sow_villages.mode @mode
 
     villages_all: ->
-      @$store.state.story.read_at
+      @read_at.story_oldlog
       Query.sow_villages.search @mode, @query_in, @query_where, @order, @asc
 
     villages: ->
