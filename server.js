@@ -488,8 +488,8 @@ module.exports = function(app) {
   app.get('/api/aggregate/faces', function(req, res, next) {
     var q;
     q = {};
-    return Promise.all([giji.find("potof_for_face", q), giji.find("potof_for_face_sow_auth_max", q)]).then(function([faces, sow_auths]) {
-      res.json({faces, sow_auths});
+    return Promise.all([giji.find("message_for_face", q), giji.find("potof_for_face", q), giji.find("potof_for_face_sow_auth_max", q)]).then(function([m_faces, faces, sow_auths]) {
+      res.json({m_faces, faces, sow_auths});
       return next();
     }).catch(function(e) {
       console.error(req, e);
@@ -502,8 +502,8 @@ module.exports = function(app) {
     q = {
       "_id.face_id": id
     };
-    return Promise.all([giji.find("message_for_face", q), giji.find("message_for_face_mestype", q), giji.find("message_for_face_sow_auth", q), giji.find("potof_for_face_role", q), giji.find("potof_for_face_live", q)]).then(function([faces, mestypes, sow_auths, roles, lives]) {
-      res.json({faces, mestypes, sow_auths, roles, lives});
+    return Promise.all([giji.find("message_for_face", q), giji.find("message_for_face_mestype", q), giji.find("message_for_face_sow_auth", q), giji.find("potof_for_face", q), giji.find("potof_for_face_role", q), giji.find("potof_for_face_live", q)]).then(function([m_faces, mestypes, sow_auths, faces, roles, lives]) {
+      res.json({m_faces, mestypes, sow_auths, faces, roles, lives});
       return next();
     }).catch(function(e) {
       console.error(req, e);
