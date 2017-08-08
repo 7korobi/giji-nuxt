@@ -1286,9 +1286,8 @@ module.exports = {
     return {};
   },
   mutations: {
-    join: function (state, { data }) {},
     faces: function (state, { data }) {
-      var face, i, j, len, len1, o, ref, ref1;
+      var face, i, j, k, len, len1, len2, o, ref, ref1, ref2;
       ref = data.faces;
       for (i = 0, len = ref.length; i < len; i++) {
         o = ref[i];
@@ -1296,9 +1295,16 @@ module.exports = {
           face.aggregate.log = o;
         }
       }
-      ref1 = data.sow_auths;
+      ref1 = data.m_faces;
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         o = ref1[j];
+        if (face = Query.faces.find(o._id.face_id)) {
+          face.aggregate.log.date_min = o.date_min;
+        }
+      }
+      ref2 = data.sow_auths;
+      for (k = 0, len2 = ref2.length; k < len2; k++) {
+        o = ref2[k];
         if (face = Query.faces.find(o._id.face_id)) {
           face.aggregate.fav = o;
         }
@@ -1308,7 +1314,8 @@ module.exports = {
     face: function (state, { id, data }) {
       var face, folders, handle, key, keys, list, loghd, mestypes, o, per, sum, title;
       face = Query.faces.find(id);
-      face.aggregate.face = data.faces[0];
+      face.aggregate.log = data.faces[0];
+      face.aggregate.log.date_min = data.m_faces[0].date_min;
       face.aggregate.sow_auths = _.sortBy(data.sow_auths, function (o) {
         return -o.story_ids.length;
       });
@@ -1353,7 +1360,7 @@ module.exports = {
       sum = {
         handle: "dark",
         title: "－合計－",
-        per: face.aggregate.face.story_ids.length,
+        per: face.story_length,
         all: 0,
         max: 0,
         count: 0
@@ -1377,7 +1384,7 @@ module.exports = {
         return results;
       }();
       face.aggregate.mestypes.push(sum);
-      keys = face.aggregate.face.story_ids.map(function (key) {
+      keys = face.aggregate.log.story_ids.map(function (key) {
         return key.split("-");
       });
       folders = _.groupBy(keys, function (o) {
@@ -4357,4 +4364,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.0508a75bad7d90b03ca2.js.map
+//# sourceMappingURL=nuxt.bundle.a76bafe610322c148230.js.map

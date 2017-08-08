@@ -25,18 +25,19 @@ module.exports =
   state: ->
     {}
   mutations:
-    join: (state,{ data })->
-
     faces: (state,{ data })->
       for o in data.faces when face = Query.faces.find o._id.face_id
         face.aggregate.log = o
+      for o in data.m_faces when face = Query.faces.find o._id.face_id
+        face.aggregate.log.date_min = o.date_min
       for o in data.sow_auths when face = Query.faces.find o._id.face_id
         face.aggregate.fav = o
       Mem.Finder.face.clear_cache()
 
     face: (state,{ id, data })->
       face = Query.faces.find id
-      face.aggregate.face = data.faces[0]
+      face.aggregate.log = data.faces[0]
+      face.aggregate.log.date_min = data.m_faces[0].date_min
       face.aggregate.sow_auths = _.sortBy data.sow_auths, (o)-> - o.story_ids.length
 
       face.aggregate.lives = _.sortBy data.lives, (o)-> - o.story_ids.length
@@ -60,7 +61,7 @@ module.exports =
       sum =
         handle: "dark"
         title: "－合計－"
-        per: face.aggregate.face.story_ids.length
+        per: face.story_length
         all: 0
         max: 0
         count: 0
@@ -73,7 +74,7 @@ module.exports =
           _.merge { handle, title, per }, o
       face.aggregate.mestypes.push sum
 
-      keys = face.aggregate.face.story_ids.map (key)-> key.split("-")
+      keys = face.aggregate.log.story_ids.map (key)-> key.split("-")
       folders = _.groupBy keys, (o)-> o[0]
       for key, list of folders
         folders[key] = _.sortBy list, (o)-> o[1] - 0

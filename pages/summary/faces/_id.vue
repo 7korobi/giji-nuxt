@@ -2,7 +2,7 @@
 <template lang="pug">
 .outframe
   .contentframe
-    .inframe
+    .inframe(v-if="face.story_length")
       report(handle="footer" deco="center")
         h1 {{ face.name }}の活躍
         .date

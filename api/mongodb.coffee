@@ -254,11 +254,12 @@ module.exports = (app)->
   app.get '/api/aggregate/faces', (req, res, next)->
     q = {}
     Promise.all [
+      giji.find "message_for_face", q
       giji.find "potof_for_face", q
       giji.find "potof_for_face_sow_auth_max", q
     ]
-    .then ([faces, sow_auths])->
-      res.json { faces, sow_auths }
+    .then ([m_faces, faces, sow_auths])->
+      res.json { m_faces, faces, sow_auths }
       next()
     .catch (e)->
       console.error req, e
@@ -272,11 +273,12 @@ module.exports = (app)->
       giji.find "message_for_face", q
       giji.find "message_for_face_mestype", q
       giji.find "message_for_face_sow_auth", q
+      giji.find "potof_for_face", q
       giji.find "potof_for_face_role", q
       giji.find "potof_for_face_live", q
     ]
-    .then ([faces, mestypes, sow_auths, roles, lives])->
-      res.json { faces, mestypes, sow_auths, roles, lives }
+    .then ([m_faces, mestypes, sow_auths, faces, roles, lives])->
+      res.json { m_faces, mestypes, sow_auths, faces, roles, lives }
       next()
     .catch (e)->
       console.error req, e

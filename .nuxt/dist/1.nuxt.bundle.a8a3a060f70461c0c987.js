@@ -131,7 +131,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "outframe"
   }, [_c('div', {
     staticClass: "contentframe"
-  }, [_c('div', {
+  }, [(_vm.face.story_length) ? _c('div', {
     staticClass: "inframe"
   }, [_c('report', {
     attrs: {
@@ -325,7 +325,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "to": "."
     }
-  }, [_vm._v("戻る")])], 1)], 2)])])
+  }, [_vm._v("戻る")])], 1)], 2) : _vm._e()])])
 },staticRenderFns: []}
 
 /***/ }),
@@ -345,4 +345,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.061a2ff7224f6549a17d.js.map
+//# sourceMappingURL=1.nuxt.bundle.a8a3a060f70461c0c987.js.map
