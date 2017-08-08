@@ -4,13 +4,12 @@
 module.exports =
   computed:
     chat: ->
-      { read_at, chat_id } = @$store.state.book
+      { chat_id } = @$store.state.book
       Query.chats.find chat_id
     current: ->
       @$store.state.menu.set.current
     mentions: ->
-      console.log @
-      { read_at, chat_id } = @$store.state.book
+      { chat_id } = @$store.state.book
       Query.chats.reduce?.mention_to?[chat_id]
 </script>
 

@@ -5,25 +5,31 @@ new Rule("chat").schema ->
   @belongs_to "section"
   @belongs_to "potof"
 
-  # props: ["id", "write_at", "handle", "style", "log", "face", "head", "sign"]
-
+  blank = []
+  blank.all = 0
+  pages = (group, q)-> (hides, part_id)->
+    q.where (o)=> part_id == o.part_id && !(o.potof_id in hides) && o.phase.group in group
   @scope (all)->
-    full = all.where("phase.group": ['S','A','I'])
+    memo:   pages 'M',   all
+    title:  pages 'SAI', all.where (o)-> o.phase.handle in ['MAKER','ADMIN','public']
 
-    memo:   all.where("phase.group": ['M'])
-    title:  full.where (o)-> o.phase.handle in ['MAKER', 'ADMIN','public']
+    full:   pages 'SAI', all
+    normal: pages 'SAI', all.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','public','private']
 
-    full:   full
-    normal: full.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','public','private']
+    solo:   pages 'SAI', all.where (o)-> o.phase.handle in ['TSAY','private']
+    extra:  pages 'SAI', all.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY','public'])
+    rest:   pages 'SAI', all.where (o)-> o.phase.handle in ['GSAY']
 
-    solo:   full.where (o)-> o.phase.handle in ['TSAY','private']
-    extra:  full.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY','public'])
-    rest:   full.where (o)-> o.phase.handle in ['GSAY']
-
-    parts: (hides, mode)-> all.pages.bind(all, hides, mode)
-    pages: (hides, mode, part_id)->
-      all[mode]
-      .where (o)=> part_id == o.part_id && !(o.potof_id in hides)
+    ankers: (ids)-> all.where(_id: ids).sort("write_at", "desc").list
+    now: (hides)->
+      memo:   (part_id)-> all.memo(  hides, part_id).reduce.last ? blank
+      memos:  (part_id)-> all.memo(  hides, part_id).reduce.list ? blank
+      title:  (part_id)-> all.title( hides, part_id).reduce.list ? blank
+      full:   (part_id)-> all.full(  hides, part_id).reduce.list ? blank
+      normal: (part_id)-> all.normal(hides, part_id).reduce.list ? blank
+      solo:   (part_id)-> all.solo(  hides, part_id).reduce.list ? blank
+      extra:  (part_id)-> all.extra( hides, part_id).reduce.list ? blank
+      rest:   (part_id)-> all.rest(  hides, part_id).reduce.list ? blank
 
   anker =
     belongs_to: 'chats'
@@ -41,17 +47,21 @@ new Rule("chat").schema ->
         """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
 
     @map_reduce: (o, emit)->
-      if o.phase_id in ["#{o.part_id}-SS", "#{o.part_id}-GS", "#{o.part_id}-VS"]
-        emit "potof", o.phase_id, o.potof_id,
-          count: 1
-          all: o.log.length
-          max: o.write_at
-          min: o.write_at
+      emit "last", [o.potof_id,o.phase_id].join('+'),
+        max: o.write_at
+
       emit "say",
         max: o.write_at
         min: o.write_at
         count: 1
         all: o.log.length
+
+      if o.phase_id.match(/-[SGV]S$/)
+        emit "potof", o.phase_id, o.potof_id,
+          count: 1
+          all: o.log.length
+          max: o.write_at
+          min: o.write_at
 
       for mention_id in o.q.mention_ids
         emit "mention", mention_id,
@@ -61,6 +71,10 @@ new Rule("chat").schema ->
           count: 1
 
     @order: (o, emit)->
+      emit "last",
+        get: "max_is"
+        sort: ["max_is.write_at", "desc"]
+        page_by: 50
       emit "list",
         sort: ["write_at"]
         page_by: 50

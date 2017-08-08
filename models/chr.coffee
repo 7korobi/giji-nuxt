@@ -27,6 +27,15 @@ new Rule("face").schema ->
   @has_many "chr_npcs"
 
   @scope (all)->
+    aggregate: (tag_id, order)->
+      asc =
+        switch order
+          when "order", "date_min"
+            "asc"
+          else
+            "desc"
+      all.tag(tag_id).sort(order, asc)
+
     tag: (tag_id)->
       switch tag_id
         when "all"
@@ -63,24 +72,53 @@ new Rule("face").schema ->
         emit "tag", tag, map
 
     @deploy: ->
-      @aggregate = {}
+      @aggregate =
+        sow_auths: []
+        mestypes: []
+        folders: []
+        roles: []
+        lives: []
+        log:
+          date_min:   0xfffffffffffff
+          date_max: - 0xfffffffffffff
+          story_ids: []
+        fav:
+          _id:
+            sow_auth_id: null
+          count: 0
       @summary_url = "/summary/faces/#{@_id}"
+
   Object.assign @model_property,
+    roles:
+      get: ->
+        @aggregate.roles
+    lives:
+      get: ->
+        @aggregate.lives
+    sow_auths:
+      get: ->
+        @aggregate.sow_auths
+    mestypes:
+      get: ->
+        @aggregate.mestypes
+    folders:
+      get: ->
+        @aggregate.folders
     story_length:
       get: ->
-        @aggregate.log?.story_ids.length ? 0
+        @aggregate.log.story_ids.length
     sow_auth_id:
       get: ->
-        @aggregate.fav?._id.sow_auth_id ? null
+        @aggregate.fav._id.sow_auth_id
     fav_count:
       get: ->
-        @aggregate.fav?.count ? 0
+        @aggregate.fav.count
     date_max:
       get: ->
-        new Date(@aggregate.log?.date_max ? 0) - 0
+        new Date(@aggregate.log.date_max) - 0
     date_min:
       get: ->
-        new Date(@aggregate.log?.date_min ? undefined) - 0
+        new Date(@aggregate.log.date_min) - 0
     date_range:
       get: ->
         @date_max - @date_min

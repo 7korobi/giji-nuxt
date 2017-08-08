@@ -75,7 +75,6 @@ module.exports =
         csid = 'sf' if csid == 'SF'
         face_id = undefined if face_id in ["maker", "admin","c06"]
         return if "*CAST*" == log
-        log ?= "メモをはがした。"
 
         guide = true
         handle = o.mestype
@@ -139,6 +138,10 @@ module.exports =
         if to
           phase_idx = "AIM"
           handle = "AIM"
+
+        unless log
+          log = "メモをはがした。"
+          show = "post"
 
         phase_id = "#{o.event_id}-#{phase_idx}"
         _id = "#{phase_id}-#{idx}"

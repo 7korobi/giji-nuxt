@@ -8,14 +8,14 @@
         .date
           | #[timeago(:since="face.date_min")] ～ #[timeago(:since="face.date_max")]
       talk(handle="TSAY" deco="", :face_id="face.id", :head="face.name")
-        | #[b {{ lives.sum }}]人が村にいました。
+        | #[b {{ face.lives.sum }}]人が村にいました。
         .flex
-          a.label3(v-for="o in lives", :class="o._id.live")
+          a.label3(v-for="o in face.lives", :class="o._id.live")
             .label {{ o.role.label }}
             .count {{ o.story_ids.length }}回
-        | 全部で#[b {{ roles.length }}]種類、のべ#[b {{ roles.sum }}]の能力を持ちました。
+        | 全部で#[b {{ face.roles.length }}]種類、のべ#[b {{ face.roles.sum }}]の能力を持ちました。
         .flex
-          a.label3(v-for="o in roles", :class="o.role.win")
+          a.label3(v-for="o in face.roles", :class="o.role.win")
             .label {{ o.role.label }}
             .count {{ o.story_ids.length }}回
 
@@ -28,7 +28,7 @@
               th 一番長い発言
               th 総文字数
               th 総発言回数
-          tbody.calc(v-for="o in mestypes")
+          tbody.calc(v-for="o in face.mestypes")
             tr(:class="o.handle", :key="o.handle")
               th {{ o.title }}
               td {{ o.max | currency }} 字
@@ -44,14 +44,14 @@
               th /村数
               th 文字数
               th 発言回数
-          tbody.calc(v-for="o in mestypes")
+          tbody.calc(v-for="o in face.mestypes")
             tr(:class="o.handle", :key="o.handle")
               th {{ o.title }}
               td {{ o.per | currency }} 村
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder.nation")
+      talk(v-for="folder in face.folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder.nation")
         | {{ folder.length }}回登場しました
         .flex
           a.label-mini(v-for="id in folder", :href="log_url(id)") {{ id[1] }}
@@ -133,31 +133,14 @@ module.exports =
             "label6"
 
     computed:
-      roles: ->
-        @read_at["aggregate_face.#{@id}"]
-        @$store.state.aggregate[@id].roles
-
-      lives: ->
-        @read_at["aggregate_face.#{@id}"]
-        @$store.state.aggregate[@id].lives
-
       sow_auths: ->
-        @read_at["aggregate_face.#{@id}"]
         asc =
           switch @order
             when "date_min"
               "asc"
             else
               "desc"
-        _.orderBy @$store.state.aggregate[@id].sow_auths, @order, asc
-
-      mestypes: ->
-        @read_at["aggregate_face.#{@id}"]
-        @$store.state.aggregate[@id].mestypes
-
-      folders: ->
-        @read_at["aggregate_face.#{@id}"]
-        @$store.state.aggregate[@id].folders
+        _.orderBy @face.sow_auths, @order, asc
 
       face: ->
         @read_at["aggregate_face.#{@id}"]

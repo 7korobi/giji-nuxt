@@ -1,5 +1,5 @@
 Agenda = require "agenda"
-agenda_ui = require "agenda-ui"
+Agendash = require 'agendash'
 
 { pm_id, WEB_URL, MONGO_URL } = process.env
 pno = (pm_id - 1 || 0)
@@ -29,6 +29,5 @@ agenda.on 'ready', ->
   agenda.start()
 
 module.exports = (app)->
-  app.use '/agenda-ui', agenda_ui agenda,
-    poll: 5000
+  app.use '/agendash', Agendash agenda
   return

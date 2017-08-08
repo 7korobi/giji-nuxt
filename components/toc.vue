@@ -12,11 +12,11 @@ module.exports =
   props: ["chats", "parts"]
   methods:
     pages: (part_id)->
-      last = @chats(part_id).list.length
+      last = @chats(part_id).length
       [0 ... last]
 
     page_label: (part_id, page_id)->
-      [ first,..., last ] = @chats(part_id).list[page_id]
+      [ first,..., last ] = @chats(part_id)[page_id]
       begin = format.head.format first.write_at
       write = format.head.format last.write_at
       if begin == write
@@ -56,7 +56,7 @@ module.exports =
           th.r.form
             btn(@input="input_part", :value="$parent.part_id", :as="o.id")
               | {{o.label}}
-              sup {{ chats(o.id).list.all }}
+              sup {{ chats(o.id).all }}
           td.l.form
             span(v-for="page in pages(o.id)", :key="page")
               btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
@@ -67,6 +67,8 @@ module.exports =
 </template>
 
 <style lang="stylus" scoped>
+.header
+  padding-left: 20px
 .r
   text-align: right
 .l

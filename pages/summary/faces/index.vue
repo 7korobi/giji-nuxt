@@ -65,16 +65,8 @@ module.exports =
 
     computed:
       faces: ->
-        asc =
-          switch @order
-            when "order", "date_min"
-              "asc"
-            else
-              "desc"
-
         @read_at.aggregate_faces
-        Query.faces.tag(@tag_id).sort(@order, asc)
-
+        Query.faces.aggregate(@tag_id, @order)
 
 </script>
 

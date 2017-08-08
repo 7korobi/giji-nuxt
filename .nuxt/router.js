@@ -8,9 +8,11 @@ Vue.use(Router)
 
 const _26460e66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */)
 
+const _d988a500 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
+
 const _126e656c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
 
-const _d988a500 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
+const _45e54146 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\ankers.vue' /* webpackChunkName: "pages/ankers" */)
 
 const _8471841e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
 
@@ -20,19 +22,17 @@ const _6fbb897d = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\fac
 
 const _3f090d08 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
 
-const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
+const _718150c0 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
 
 const _beb3c9bc = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
 
-const _718150c0 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
+const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
 
 const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
 
 const _6b82fb4a = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_book_id\\index.vue' /* webpackChunkName: "pages/sow-village-book_id" */)
 
 const _4aa7c725 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
-
-const _3327ac80 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_book_id\\ankers.vue' /* webpackChunkName: "pages/sow-village-book_id-ankers" */)
 
 const _79d75b66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_book_id\\top.vue' /* webpackChunkName: "pages/sow-village-book_id-top" */)
 
@@ -74,14 +74,19 @@ export function createRouter () {
 			name: "index"
 		},
 		{
+			path: "/rule-guide",
+			component: _d988a500,
+			name: "rule-guide"
+		},
+		{
 			path: "/demo",
 			component: _126e656c,
 			name: "demo"
 		},
 		{
-			path: "/rule-guide",
-			component: _d988a500,
-			name: "rule-guide"
+			path: "/ankers",
+			component: _45e54146,
+			name: "ankers"
 		},
 		{
 			path: "/character-tag",
@@ -104,9 +109,9 @@ export function createRouter () {
 			name: "sow-village"
 		},
 		{
-			path: "/demo/timeago",
-			component: _42ad62d8,
-			name: "demo-timeago"
+			path: "/demo/names",
+			component: _718150c0,
+			name: "demo-names"
 		},
 		{
 			path: "/demo/books",
@@ -114,9 +119,9 @@ export function createRouter () {
 			name: "demo-books"
 		},
 		{
-			path: "/demo/names",
-			component: _718150c0,
-			name: "demo-names"
+			path: "/demo/timeago",
+			component: _42ad62d8,
+			name: "demo-timeago"
 		},
 		{
 			path: "/demo/oauth",
@@ -132,11 +137,6 @@ export function createRouter () {
 			path: "/summary/faces/:id",
 			component: _4aa7c725,
 			name: "summary-faces-id"
-		},
-		{
-			path: "/sow/village/:book_id/ankers",
-			component: _3327ac80,
-			name: "sow-village-book_id-ankers"
 		},
 		{
 			path: "/sow/village/:book_id/top",

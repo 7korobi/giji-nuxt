@@ -39,8 +39,8 @@ module.exports = class Map
     if map.set
       o.hash = {}
 
-  @order: (o, map, set)->
-    from = o
+  @order: (from, map, set)->
+    o = from
     if Object == from.constructor
       if map.belongs_to
         for id, val of from
@@ -49,11 +49,17 @@ module.exports = class Map
         for id, val of from
           val.id = id
 
+    else
+      if map.belongs_to
+        o = from.map (val)->
+          Query[map.belongs_to].find val.id
+
     if map.sort
       o = _.orderBy o, map.sort...
-
-    if map.belongs_to
-      o.map (a)-> Query[map.belongs_to].find a.id
+    
+    if map.get
+      o = o.map (val)->
+        _.get val, map.get
 
     if per = map.page_by
       idx = 0

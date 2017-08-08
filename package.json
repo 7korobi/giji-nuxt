@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "agenda": "latest",
-    "agenda-ui": "latest",
+    "agendash": "^0.4.0",
     "axios": "latest",
     "babel-preset-env": "latest",
     "body-parser": "latest",
@@ -23,6 +23,7 @@
     "passport-mixi": "latest",
     "passport-slack": "latest",
     "passport-twitter": "latest",
+    "pidusage": "^1.1.6",
     "pug": "latest",
     "pug-html-loader": "latest",
     "style-loader": "latest",

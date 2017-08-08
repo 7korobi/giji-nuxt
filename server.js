@@ -63,719 +63,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-module.exports = require("child_process");
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Agenda, MONGO_URL, WEB_URL, agenda, agenda_ui, jobs, pm_id, pno;
-
-Agenda = __webpack_require__(22);
-
-agenda_ui = __webpack_require__(23);
-
-({pm_id, WEB_URL, MONGO_URL} = process.env);
-
-pno = pm_id - 1 || 0;
-
-jobs = function(cb) {
-  var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(12);
-  ref = ctx.keys();
-  results = [];
-  for (i = 0, len = ref.length; i < len; i++) {
-    fname = ref[i];
-    name = fname.slice(2, -7);
-    results.push(cb(name, ctx(fname)));
-  }
-  return results;
-};
-
-agenda = new Agenda({
-  db: {
-    address: MONGO_URL,
-    collection: "jobCollectionName",
-    options: {
-      server: {
-        auto_reconnect: true
-      }
-    }
-  }
-});
-
-jobs(function(name, ctx) {
-  return agenda.define(name, ctx.define);
-});
-
-agenda.on('ready', function() {
-  if (!pno) {
-    jobs(function(name, ctx) {
-      if (ctx.every) {
-        return agenda.every(ctx.every, name);
-      }
-    });
-  }
-  return agenda.start();
-});
-
-module.exports = function(app) {
-  app.use('/agenda-ui', agenda_ui(agenda, {
-    poll: 5000
-  }));
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
-
-mongo = __webpack_require__(28);
-
-sh = __webpack_require__(0);
-
-fs = __webpack_require__(26);
-
-_ = __webpack_require__(27);
-
-({MONGO_URL_SOW, API_URL} = process.env);
-
-ObjectId = false;
-
-giji = {};
-
-mongo.connect(MONGO_URL_SOW).then(function(db) {
-  var end;
-  end = function(err, o) {
-    return console.log(err, o);
-  };
-  giji.find = function(id, query, projection) {
-    return db.collection(id, {ObjectId}).find(query, projection);
-  };
-  giji.aggregate_message = function() {
-    var cmd;
-    cmd = function(out, keys, ...ext) {
-      return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
-        ...ext, {
-          $group: {
-            _id: keys,
-            date_min: {
-              $min: "$date_min"
-            },
-            date_max: {
-              $max: "$date_max"
-            },
-            max: {
-              $max: "$max"
-            },
-            all: {
-              $sum: "$all"
-            },
-            count: {
-              $sum: "$count"
-            },
-            story_ids: {
-              $addToSet: "$_id.story_id"
-            }
-          }
-        }, {
-          $out: out
-        }
-      ], {ObjectId});
-    };
-    return Promise.all([
-      cmd("message_for_face", {
-        face_id: "$_id.face_id"
-      }), cmd("message_for_face_sow_auth", {
-        face_id: "$_id.face_id",
-        sow_auth_id: "$_id.sow_auth_id"
-      }), cmd("message_for_face_mestype", {
-        face_id: "$_id.face_id",
-        mestype: "$_id.mestype"
-      })
-    ]);
-  };
-  giji.aggregate_potof = function() {
-    var cmd;
-    cmd = function(out, keys, ...ext) {
-      return db.collection("potofs", {ObjectId}).aggregate([
-        ...ext, {
-          $match: {
-            sow_auth_id: {
-              $exists: 1,
-              $nin: [null, "master", "admin"]
-            },
-            face_id: {
-              $exists: 1,
-              $ne: null
-            }
-          }
-        }, {
-          $group: {
-            _id: keys,
-            date_min: {
-              $min: "$timer.entrieddt"
-            },
-            date_max: {
-              $max: "$timer.entrieddt"
-            },
-            story_ids: {
-              $addToSet: "$story_id"
-            }
-          }
-        }, {
-          $out: out
-        }
-      ], {ObjectId});
-    };
-    return Promise.all([
-      cmd("potof_for_face", {
-        face_id: "$face_id"
-      }), cmd("potof_for_face_live", {
-        face_id: "$face_id",
-        live: "$live"
-      }), cmd("potof_for_face_sow_auth", {
-        face_id: "$face_id",
-        sow_auth_id: "$sow_auth_id"
-      }), cmd("potof_for_face_role", {
-        face_id: "$face_id",
-        role_id: "$role"
-      }, {
-        $unwind: "$role"
-      })
-    ]);
-  };
-  giji.aggregate_max = function() {
-    return db.collection("potof_for_face_sow_auth_max", {ObjectId}).remove({}).then(function() {
-      return db.collection("potof_for_face_sow_auth", {ObjectId}).aggregate([
-        {
-          $project: {
-            _id: 1,
-            count: {
-              $size: "$story_ids"
-            }
-          }
-        }, {
-          $group: {
-            _id: {
-              face_id: "$_id.face_id"
-            },
-            count: {
-              $max: "$count"
-            }
-          }
-        }
-      ], {ObjectId});
-    }).then(function(data) {
-      return Promise.all(data.map(function(o) {
-        return giji.find("potof_for_face_sow_auth", {
-          "_id.face_id": o._id.face_id,
-          story_ids: {
-            $size: o.count
-          }
-        }).then(function(list) {
-          var top;
-          [top] = _.sortBy(list, function(a) {
-            return a.date_min;
-          });
-          o.date_min = top.date_min;
-          o.date_max = top.date_max;
-          o._id = top._id;
-          return o;
-        });
-      }));
-    }).then(function(data) {
-      return db.collection("potof_for_face_sow_auth_max", {ObjectId}).insert(data);
-    });
-  };
-  giji.oldlog = function() {
-    return db.collection("stories", {ObjectId}).aggregate([
-      {
-        $match: {
-          is_finish: {
-            $eq: true
-          }
-        }
-      }, {
-        $project: {
-          _id: 1
-        }
-      }, {
-        $group: {
-          _id: null,
-          story_ids: {
-            $addToSet: "$_id"
-          }
-        }
-      }
-    ], {ObjectId}).then(function([o]) {
-      var data, id, path, url;
-      data = (function() {
-        var i, len, ref, results;
-        ref = o.story_ids;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          id = ref[i];
-          path = `./static/sow/${id}.json.gz`;
-          url = `${API_URL}/story/oldlog/${id}`;
-          results.push(`  ls \"${path}\" || curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
-        }
-        return results;
-      })();
-      path = "./static/sow/index.json.gz";
-      url = `${API_URL}/story/oldlog`;
-      data.push(` curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
-      fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
-        return console.log(err);
-      });
-      return false;
-    });
-  };
-  giji.scan = function() {
-    return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
-      {
-        $group: {
-          _id: null,
-          story_ids: {
-            $addToSet: "$_id.story_id"
-          }
-        }
-      }
-    ], {ObjectId}).then(function([o]) {
-      var list, ref;
-      list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
-      return db.collection("stories", {ObjectId}).aggregate([
-        {
-          $match: {
-            _id: {
-              $nin: list
-            },
-            is_finish: {
-              $eq: true
-            }
-          }
-        }, {
-          $project: {
-            _id: 1
-          }
-        }, {
-          $group: {
-            _id: null,
-            story_ids: {
-              $addToSet: "$_id"
-            }
-          }
-        }
-      ], {ObjectId});
-    }).then(function([o]) {
-      var id, list, ref, set_bases;
-      list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
-      console.log("step B");
-      console.log(list);
-      set_bases = (function() {
-        var i, len, results;
-        results = [];
-        for (i = 0, len = list.length; i < len; i++) {
-          id = list[i];
-          results.push(giji.set_base(id));
-        }
-        return results;
-      })();
-      return Promise.all(set_bases);
-    });
-  };
-  return giji.set_base = function(story_id) {
-    return db.collection("messages", {ObjectId}).aggregate([
-      {
-        $match: {
-          story_id: story_id,
-          sow_auth_id: {
-            $exists: 1,
-            $ne: null
-          },
-          face_id: {
-            $exists: 1,
-            $ne: null
-          },
-          logid: {
-            $exists: 1,
-            $ne: null
-          },
-          log: {
-            $exists: 1,
-            $ne: null
-          }
-        }
-      }, {
-        $project: {
-          sow_auth_id: 1,
-          story_id: 1,
-          face_id: 1,
-          logid: 1,
-          date: 1,
-          size: {
-            $strLenCP: "$log"
-          }
-        }
-      }, {
-        $group: {
-          _id: {
-            sow_auth_id: "$sow_auth_id",
-            story_id: "$story_id",
-            face_id: "$face_id",
-            mestype: {
-              $substr: ["$logid", 0, 2]
-            }
-          },
-          date_min: {
-            $min: "$date"
-          },
-          date_max: {
-            $max: "$date"
-          },
-          max: {
-            $max: "$size"
-          },
-          all: {
-            $sum: "$size"
-          },
-          count: {
-            $sum: 1
-          }
-        }
-      }
-    ], {ObjectId}).then(function(data) {
-      return db.collection("message_by_story_for_face").insert(data);
-    });
-  };
-}).catch(function() {
-  return console.log("!!! mongodb connect error !!!");
-});
-
-module.exports = function(app) {
-  app.get('/api/aggregate/job', function(req, res, next) {
-    return giji.scan().then(function() {
-      return giji.aggregate_message();
-    }).then(function() {
-      return giji.aggregate_potof();
-    }).then(function() {
-      return giji.aggregate_max();
-    }).then(function() {
-      return giji.oldlog();
-    }).then(function() {
-      res.json({
-        started: true
-      });
-      return next();
-    }).catch(function(e) {
-      res.json(e);
-      return next();
-    });
-  });
-  app.get('/api/aggregate/faces', function(req, res, next) {
-    var q;
-    q = {};
-    return Promise.all([giji.find("potof_for_face", q), giji.find("potof_for_face_sow_auth_max", q)]).then(function([faces, sow_auths]) {
-      res.json({faces, sow_auths});
-      return next();
-    }).catch(function(e) {
-      console.error(req, e);
-      return next();
-    });
-  });
-  app.get('/api/aggregate/faces/:id', function(req, res, next) {
-    var id, q;
-    ({id} = req.params);
-    q = {
-      "_id.face_id": id
-    };
-    return Promise.all([giji.find("message_for_face", q), giji.find("message_for_face_mestype", q), giji.find("message_for_face_sow_auth", q), giji.find("potof_for_face_role", q), giji.find("potof_for_face_live", q)]).then(function([faces, mestypes, sow_auths, roles, lives]) {
-      res.json({faces, mestypes, sow_auths, roles, lives});
-      return next();
-    }).catch(function(e) {
-      console.error(req, e);
-      return next();
-    });
-  });
-  app.get('/api/story/progress', function(req, res, next) {
-    var fields, json, q;
-    q = {
-      is_epilogue: false,
-      is_finish: false
-    };
-    fields = {
-      comment: 0,
-      password: 0
-    };
-    json = {};
-    return giji.find("stories", q, fields).then(function(data) {
-      json.stories = data;
-      return data.map(function(o) {
-        return `${o._id}-0`;
-      });
-    }).then(function(ids) {
-      return giji.find("events", {
-        _id: {
-          $in: ids
-        }
-      });
-    }).then(function(data) {
-      return json.events = data;
-    }).then(function() {
-      res.json(json);
-      return next();
-    }).catch(function(e) {
-      console.error(req, e);
-      return next();
-    });
-  });
-  app.get('/api/story/oldlog', function(req, res, next) {
-    var fields, q;
-    q = {
-      is_epilogue: true,
-      is_finish: true
-    };
-    fields = {
-      comment: 0,
-      password: 0
-    };
-    return giji.find("stories", q, fields).then(function(data) {
-      res.json({
-        stories: data
-      });
-      return next();
-    }).catch(function(e) {
-      console.error(req, e);
-      return next();
-    });
-  });
-  app.get('/api/story/oldlog/:story_id', function(req, res, next) {
-    var fields, story_id;
-    ({story_id} = req.params);
-    fields = {
-      comment: 0,
-      password: 0
-    };
-    return Promise.all([
-      giji.find("stories", {
-        _id: story_id,
-        is_epilogue: true,
-        is_finish: true
-      }, fields), giji.find("messages", {story_id}), giji.find("events", {story_id}), giji.find("potofs", {story_id})
-    ]).then(function([stories, messages, events, potofs]) {
-      if (!stories.length) {
-        messages = events = potofs = [];
-      }
-      res.json({stories, messages, events, potofs});
-      return next();
-    }).catch(function(e) {
-      console.error(req, e);
-      return next();
-    });
-  });
-};
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var MONGO_URL, Passport, Schema, mongoose, passport;
-
-({Schema} = mongoose = __webpack_require__(29));
-
-({MONGO_URL} = process.env);
-
-mongoose.connect(MONGO_URL, function(err) {
-  if (err) {
-    return console.error(`no ${MONGO_URL}. disabled (passport, session)`);
-  } else {
-    return console.log("mongoose connected.");
-  }
-});
-
-Passport = mongoose.model('Passport', new Schema({
-  _id: String,
-  nick: String,
-  icon: String,
-  mail: String,
-  write_at: Number,
-  provider: String,
-  account: String,
-  token: String
-}));
-
-passport = __webpack_require__(1);
-
-passport.serializeUser(function(o, done) {
-  var id;
-  id = [o.provider, o.account].join("-");
-  return Passport.findByIdAndUpdate(id, o, {
-    upsert: true
-  }).exec(function(err, doc) {
-    if (err) {
-      console.error(err);
-    }
-    return done(err, id);
-  });
-});
-
-passport.deserializeUser(function(id, done) {
-  return done(null, id);
-});
-
-module.exports = function(app) {
-  app.get('/api/user/:id', function(req, res, next) {
-    var id;
-    ({id} = req.params);
-    return Passport.findById(id, function(err, doc) {
-      res.json(doc);
-      return next();
-    });
-  });
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var WEB_URL, auth, config, passport;
-
-config = __webpack_require__(21);
-
-passport = __webpack_require__(1);
-
-({WEB_URL} = process.env);
-
-auth = {
-  slack: {
-    module: __webpack_require__(33).Strategy,
-    attr: {
-      clientID: process.env.SLACK_CLIENT_ID,
-      clientSecret: process.env.SLACK_CLIENT_SECRET
-    }
-  },
-  google: {
-    module: __webpack_require__(32).Strategy,
-    attr: {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      passReqToCallback: true
-    }
-  },
-  facebook: {
-    module: __webpack_require__(30).Strategy,
-    attr: {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET
-    }
-  },
-  github: {
-    module: __webpack_require__(31).Strategy,
-    attr: {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET
-    }
-  },
-  twitter: {
-    module: __webpack_require__(34).Strategy,
-    attr: {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET
-    }
-  }
-};
-
-module.exports = function(app) {
-  var attr, module, provider;
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.get("/logout", function(req, res) {
-    req.logout();
-    return res.redirect('/');
-  });
-  for (provider in auth) {
-    ({attr, module} = auth[provider]);
-    attr.callbackURL = `${WEB_URL}/auth/${provider}/callback`;
-    passport.use(new module(attr, function(accessToken, refreshToken, {provider, id, displayName, emails, photos}, done) {
-      var profile;
-      profile = {
-        icon: photos != null ? photos[0].value : void 0,
-        mail: emails != null ? emails[0].value : void 0,
-        nick: displayName,
-        write_at: new Date - 0,
-        provider: provider,
-        account: id,
-        token: accessToken
-      };
-      return process.nextTick(function() {
-        return done(null, profile);
-      });
-    }));
-    console.log(`${provider} authenticate set.`);
-    app.get(`/auth/${provider}`, passport.authenticate(provider));
-    app.get(`/auth/${provider}/callback`, passport.authenticate(provider, {
-      failureRedirect: '/',
-      successRedirect: '/'
-    }));
-  }
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
-
-session = __webpack_require__(25);
-
-MongoStore = __webpack_require__(24)(session);
-
-({MONGO_URL, SECRET_KEY_BASE} = process.env);
-
-interval = 7 * 24 * 3600;
-
-day = 24 * 3600;
-
-module.exports = function(app) {
-  app.use(session({
-    secret: SECRET_KEY_BASE,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      url: MONGO_URL,
-      ttl: interval,
-      autoRemove: 'native',
-      collection: 'sessions',
-      touchAfter: day,
-      stringify: false
-    }),
-    cookie: {
-      maxAge: interval * 1000
-    }
-  }));
-};
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 var book, folder, part, section;
@@ -1394,16 +686,16 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 8 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(19),
-  router: __webpack_require__(20),
-  build: __webpack_require__(16),
-  head: __webpack_require__(18),
-  env: __webpack_require__(17),
+  render: __webpack_require__(9),
+  router: __webpack_require__(10),
+  build: __webpack_require__(6),
+  head: __webpack_require__(8),
+  env: __webpack_require__(7),
   css: [],
   loading: {
     color: '#3B8070'
@@ -1412,60 +704,36 @@ module.exports = {
 
 
 /***/ }),
-/* 9 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = require("body-parser");
 
 /***/ }),
-/* 10 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 11 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = require("nuxt");
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./aggregate.coffee": 14,
-	"./process.coffee": 15
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 12;
-
-/***/ }),
-/* 13 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var HOST, Nuxt, app, bodyParser, config, express, host, pm_id, port;
 
-bodyParser = __webpack_require__(9);
+bodyParser = __webpack_require__(2);
 
-express = __webpack_require__(10);
+express = __webpack_require__(3);
 
-config = __webpack_require__(8);
+config = __webpack_require__(1);
 
-Nuxt = __webpack_require__(11);
+Nuxt = __webpack_require__(4);
 
 ({pm_id, HOST} = process.env);
 
@@ -1485,17 +753,7 @@ app.use(function(req, res, next) {
   return next();
 });
 
-__webpack_require__(2)(app);
-
-__webpack_require__(3)(app);
-
-__webpack_require__(4)(app);
-
-__webpack_require__(6)(app);
-
-__webpack_require__(5)(app);
-
-__webpack_require__(7)(app);
+__webpack_require__(0)(app);
 
 (async function() {
   var err, nuxt;
@@ -1517,58 +775,7 @@ __webpack_require__(7)(app);
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(0);
-
-({API_URL} = process.env);
-
-module.exports = {
-  every: '12 hours',
-  define: function(job, done) {
-    return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
-      return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
-        if (err) {
-          return console.error(err);
-        } else {
-          return console.log(stderr);
-        }
-      });
-    });
-  }
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(0);
-
-({API_URL} = process.env);
-
-module.exports = {
-  every: '2 minutes',
-  define: function(job, done) {
-    return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
-      if (err) {
-        console.error(err);
-        return console.error(stderr);
-      } else {
-        return console.log(stdout);
-      }
-    });
-  }
-};
-
-
-/***/ }),
-/* 16 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1614,7 +821,7 @@ module.exports = {
 
 
 /***/ }),
-/* 17 */
+/* 7 */
 /***/ (function(module, exports) {
 
 var API_URL, SOW_URL, STORE_URL, WEB_URL;
@@ -1625,7 +832,7 @@ module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
 
 
 /***/ }),
-/* 18 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1671,7 +878,7 @@ module.exports = {
 
 
 /***/ }),
-/* 19 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1697,7 +904,7 @@ module.exports = {
 
 
 /***/ }),
-/* 20 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1723,90 +930,6 @@ module.exports = {
   }
 };
 
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = require("./nuxt.config.js");
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("agenda");
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-module.exports = require("agenda-ui");
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-module.exports = require("connect-mongo");
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = require("express-session");
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-module.exports = require("mongodb-bluebird");
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-module.exports = require("mongoose");
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-facebook");
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-github2");
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-google-oauth2");
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-slack");
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-twitter");
 
 /***/ })
 /******/ ]);
