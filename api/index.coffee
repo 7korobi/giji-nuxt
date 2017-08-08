@@ -3,7 +3,7 @@ express = require 'express'
 config = require '../config/webpack/index.coffee'
 Nuxt = require 'nuxt'
 
-{ pm_id, HOST } = process.env
+{ pm_id, HOST, ONLY_VUE } = process.env
 process.on 'unhandledRejection', console.dir
 
 host = HOST || '127.0.0.1'
@@ -17,11 +17,12 @@ app.use (req,res,next)->
   next()
 
 
-#require("./agenda.coffee")(app)
-#require("./mongodb.coffee")(app)
-#require("./mongoose.coffee")(app)
-#require("./session.coffee")(app)
-#require("./passport.coffee")(app)
+unless ONLY_VUE
+  require("./agenda.coffee")(app)
+  require("./mongodb.coffee")(app)
+  require("./mongoose.coffee")(app)
+  require("./session.coffee")(app)
+  require("./passport.coffee")(app)
 require("./test-data.coffee")(app)
 
 
