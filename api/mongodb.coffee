@@ -316,10 +316,12 @@ module.exports = (app)->
     fields =
       comment:  0
       password: 0
-    giji.find "stories", q, fields
-    .then (data)->
-      res.json
-        stories: data
+    Promose.all [
+      giji.find "stories", q, fields
+      giji.find "potof_for_face", {}
+    ]
+    .then ([stories, faces])->
+      res.json { stories, faces }
       next()
     .catch (e)->
       console.error req, e

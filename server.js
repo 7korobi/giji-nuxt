@@ -552,10 +552,8 @@ module.exports = function(app) {
       comment: 0,
       password: 0
     };
-    return giji.find("stories", q, fields).then(function(data) {
-      res.json({
-        stories: data
-      });
+    return Promose.all([giji.find("stories", q, fields), giji.find("potof_for_face", {})]).then(function([stories, faces]) {
+      res.json({stories, faces});
       return next();
     }).catch(function(e) {
       console.error(req, e);

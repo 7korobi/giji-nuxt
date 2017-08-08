@@ -80,6 +80,8 @@ new Rule("sow_village").schema ->
           @mode = "progress"
         else
           @mode = "prologue"
+      
+      @aggregate = {}
 
     @order: (o, emit)->
       emit "yeary",       { sort }

@@ -1036,14 +1036,15 @@ new Rule("sow_village").schema(function () {
       this.folder = Query.folders.find(this.q.folder_id);
       if (this.is_epilogue && this.is_finish) {
         this.href = `${env.STORE_URL}/stories/${this._id}`;
-        return this.mode = "oldlog";
+        this.mode = "oldlog";
       } else {
         if (this.turns.list.first) {
-          return this.mode = "progress";
+          this.mode = "progress";
         } else {
-          return this.mode = "prologue";
+          this.mode = "prologue";
         }
       }
+      return this.aggregate = {};
     }
 
     static order(o, emit) {
@@ -4364,4 +4365,4 @@ webpackContext.id = 94;
 /***/ })
 
 },[130]);
-//# sourceMappingURL=nuxt.bundle.a76bafe610322c148230.js.map
+//# sourceMappingURL=nuxt.bundle.b65308750932da5f39fe.js.map
