@@ -316,7 +316,7 @@ module.exports = (app)->
     fields =
       comment:  0
       password: 0
-    Promose.all [
+    Promise.all [
       giji.find "stories", q, fields
       giji.find "potof_for_face", {}
     ]

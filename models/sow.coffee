@@ -81,7 +81,8 @@ new Rule("sow_village").schema ->
         else
           @mode = "prologue"
       
-      @aggregate = {}
+      @aggregate =
+        face_ids: []
 
     @order: (o, emit)->
       emit "yeary",       { sort }

@@ -552,7 +552,7 @@ module.exports = function(app) {
       comment: 0,
       password: 0
     };
-    return Promose.all([giji.find("stories", q, fields), giji.find("potof_for_face", {})]).then(function([stories, faces]) {
+    return Promise.all([giji.find("stories", q, fields), giji.find("potof_for_face", {})]).then(function([stories, faces]) {
       res.json({stories, faces});
       return next();
     }).catch(function(e) {
@@ -1400,7 +1400,8 @@ module.exports = {
   build: __webpack_require__(16),
   head: __webpack_require__(18),
   env: __webpack_require__(17),
-  css: [],
+  plugins: ['node_modules/element-ui'],
+  css: ['element-ui/lib/theme-default/index.css'],
   loading: {
     color: '#3B8070'
   }

@@ -5,10 +5,13 @@ module.exports =
   build:  require("./build.coffee")
   head: require("./head.coffee")
   env: require("./env.coffee")
-  #####
-  # Global CSS
-  #
-  css: [],
+
+  plugins: [
+    'node_modules/element-ui'
+  ]
+  css: [
+    'element-ui/lib/theme-default/index.css'
+  ]
   #####
   # Customize the progress-bar color
   #

@@ -8,6 +8,8 @@
 <script>
 import NuxtLoading from './components/nuxt-loading.vue'
 
+import 'element-ui/lib/theme-default/index.css'
+
 
 let layouts = {
 
