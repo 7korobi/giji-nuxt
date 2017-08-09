@@ -6,6 +6,8 @@ prod.sh
 dev
 prod
 
+spec
+
 # mac
 .DS_Store
 
