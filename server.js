@@ -169,7 +169,8 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
     var cmd;
     cmd = function(out, keys, ...ext) {
       return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
-        ...ext, {
+        ...ext,
+        {
           $group: {
             _id: keys,
             date_min: {
@@ -191,18 +192,24 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
               $addToSet: "$_id.story_id"
             }
           }
-        }, {
+        },
+        {
           $out: out
         }
       ], {ObjectId});
     };
     return Promise.all([
-      cmd("message_for_face", {
+      cmd("message_for_face",
+      {
         face_id: "$_id.face_id"
-      }), cmd("message_for_face_sow_auth", {
+      }),
+      cmd("message_for_face_sow_auth",
+      {
         face_id: "$_id.face_id",
         sow_auth_id: "$_id.sow_auth_id"
-      }), cmd("message_for_face_mestype", {
+      }),
+      cmd("message_for_face_mestype",
+      {
         face_id: "$_id.face_id",
         mestype: "$_id.mestype"
       })
@@ -212,18 +219,22 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
     var cmd;
     cmd = function(out, keys, ...ext) {
       return db.collection("potofs", {ObjectId}).aggregate([
-        ...ext, {
+        ...ext,
+        {
           $match: {
             sow_auth_id: {
               $exists: 1,
-              $nin: [null, "master", "admin"]
+              $nin: [null,
+        "master",
+        "admin"]
             },
             face_id: {
               $exists: 1,
               $ne: null
             }
           }
-        }, {
+        },
+        {
           $group: {
             _id: keys,
             date_min: {
@@ -236,24 +247,33 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
               $addToSet: "$story_id"
             }
           }
-        }, {
+        },
+        {
           $out: out
         }
       ], {ObjectId});
     };
     return Promise.all([
-      cmd("potof_for_face", {
+      cmd("potof_for_face",
+      {
         face_id: "$face_id"
-      }), cmd("potof_for_face_live", {
+      }),
+      cmd("potof_for_face_live",
+      {
         face_id: "$face_id",
         live: "$live"
-      }), cmd("potof_for_face_sow_auth", {
+      }),
+      cmd("potof_for_face_sow_auth",
+      {
         face_id: "$face_id",
         sow_auth_id: "$sow_auth_id"
-      }), cmd("potof_for_face_role", {
+      }),
+      cmd("potof_for_face_role",
+      {
         face_id: "$face_id",
         role_id: "$role"
-      }, {
+      },
+      {
         $unwind: "$role"
       })
     ]);
@@ -268,7 +288,8 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
               $size: "$story_ids"
             }
           }
-        }, {
+        },
+        {
           $group: {
             _id: {
               face_id: "$_id.face_id"
@@ -309,11 +330,13 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
             $eq: true
           }
         }
-      }, {
+      },
+      {
         $project: {
           _id: 1
         }
-      }, {
+      },
+      {
         $group: {
           _id: null,
           story_ids: {
@@ -367,11 +390,13 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
               $eq: true
             }
           }
-        }, {
+        },
+        {
           $project: {
             _id: 1
           }
-        }, {
+        },
+        {
           $group: {
             _id: null,
             story_ids: {
@@ -419,7 +444,8 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
             $ne: null
           }
         }
-      }, {
+      },
+      {
         $project: {
           sow_auth_id: 1,
           story_id: 1,
@@ -430,14 +456,17 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
             $strLenCP: "$log"
           }
         }
-      }, {
+      },
+      {
         $group: {
           _id: {
             sow_auth_id: "$sow_auth_id",
             story_id: "$story_id",
             face_id: "$face_id",
             mestype: {
-              $substr: ["$logid", 0, 2]
+              $substr: ["$logid",
+      0,
+      2]
             }
           },
           date_min: {
@@ -568,11 +597,19 @@ module.exports = function(app) {
       password: 0
     };
     return Promise.all([
-      giji.find("stories", {
+      giji.find("stories",
+      {
         _id: story_id,
         is_epilogue: true,
         is_finish: true
-      }, fields), giji.find("messages", {story_id}), giji.find("events", {story_id}), giji.find("potofs", {story_id})
+      },
+      fields),
+      giji.find("messages",
+      {story_id}),
+      giji.find("events",
+      {story_id}),
+      giji.find("potofs",
+      {story_id})
     ]).then(function([stories, messages, events, potofs]) {
       if (!stories.length) {
         messages = events = potofs = [];
@@ -800,10 +837,12 @@ book = {
     {
       _id: "demo-0-0",
       label: "プロローグ"
-    }, {
+    },
+    {
       _id: "demo-0-1",
       label: "一日目"
-    }, {
+    },
+    {
       _id: "demo-0-2",
       label: "エピローグ"
     }
@@ -811,11 +850,14 @@ book = {
   sections: [
     {
       _id: "demo-0-0-1"
-    }, {
+    },
+    {
       _id: "demo-0-0-2"
-    }, {
+    },
+    {
       _id: "demo-0-1-1"
-    }, {
+    },
+    {
       _id: "demo-0-2-1"
     }
   ]
@@ -829,37 +871,43 @@ part = {
       idx: 2,
       guide: true,
       update: true
-    }, {
+    },
+    {
       _id: "demo-0-0-1",
       handle: "SSAY",
       idx: 26,
       guide: true,
       update: false
-    }, {
+    },
+    {
       _id: "demo-0-0-2",
       handle: "TSAY",
       idx: 2,
       guide: true,
       update: false
-    }, {
+    },
+    {
       _id: "demo-0-0-3",
       handle: "MAKER",
       idx: 2,
       guide: true,
       update: false
-    }, {
+    },
+    {
       _id: "demo-0-0-4",
       handle: "ADMIN",
       idx: 2,
       guide: true,
       update: false
-    }, {
+    },
+    {
       _id: "demo-0-0-5",
       handle: "VSSAY",
       idx: 3,
       guide: true,
       update: false
-    }, {
+    },
+    {
       _id: "demo-0-0-6",
       handle: "WSAY",
       idx: 3,
@@ -871,113 +919,146 @@ part = {
     {
       _id: "demo-0-0-1-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-2-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-3-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-4-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-5-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-6-request",
       role_id: "headless"
-    }, {
+    },
+    {
       _id: "demo-0-0-7-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-10-request",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-1-live",
       role_id: "juror",
       date: 2e308
-    }, {
+    },
+    {
       _id: "demo-0-0-1-role",
       role_id: "juror"
-    }, {
+    },
+    {
       _id: "demo-0-0-2-live",
       role_id: "suddendead",
       date: 3
-    }, {
+    },
+    {
       _id: "demo-0-0-2-role",
       role_id: "stigma"
-    }, {
+    },
+    {
       _id: "demo-0-0-3-live",
       role_id: "executed",
       date: 4
-    }, {
+    },
+    {
       _id: "demo-0-0-3-role",
       role_id: "possess"
-    }, {
+    },
+    {
       _id: "demo-0-0-4-live",
       role_id: "live",
       date: 2e308
-    }, {
+    },
+    {
       _id: "demo-0-0-4-role",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-5-live",
       role_id: "victim",
       date: 6
-    }, {
+    },
+    {
       _id: "demo-0-0-5-role",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-6-live",
       role_id: "executed",
       date: 5
-    }, {
+    },
+    {
       _id: "demo-0-0-6-role",
       role_id: "headless"
-    }, {
+    },
+    {
       _id: "demo-0-0-7-live",
       role_id: "live",
       date: 2e308
-    }, {
+    },
+    {
       _id: "demo-0-0-7-role",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-live",
       role_id: "live",
       date: 2e308
-    }, {
+    },
+    {
       _id: "demo-0-0-8-role",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-gift",
       role_id: "ogre"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-bond",
       role_id: "hate"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-book",
       role_id: "master"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-live",
       role_id: "live",
       date: 2e308
-    }, {
+    },
+    {
       _id: "demo-0-0-9-role",
       role_id: "guru"
-    }, {
+    },
+    {
       _id: "demo-0-0-10-live",
       role_id: "executed",
       date: 2
-    }, {
+    },
+    {
       _id: "demo-0-0-10-role",
       role_id: "villager"
-    }, {
+    },
+    {
       _id: "demo-0-0-10-bond",
       role_id: "love"
     }
@@ -986,234 +1067,311 @@ part = {
     {
       _id: "demo-0-0-1-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-1-VSSAY",
       pt: 2e308,
       said: 13
-    }, {
+    },
+    {
       _id: "demo-0-0-1-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-1-vote",
       cmd: "vote",
       target: "demo-0-0-1"
-    }, {
+    },
+    {
       _id: "demo-0-0-1-entrust",
       target: null
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-1-commit", sw: true }
       _id: "demo-0-0-2-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-2-GSAY",
       pt: 2e308,
       said: 14
-    }, {
+    },
+    {
       _id: "demo-0-0-2-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-2-aura"
-    }, {
+    },
+    {
       _id: "demo-0-0-2-stigma",
       label: "青い"
-    }, {
+    },
+    {
       _id: "demo-0-0-2-human"
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-2-commit", sw: true }
       _id: "demo-0-0-3-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-3-GSAY",
       pt: 2e308,
       said: 15
-    }, {
+    },
+    {
       _id: "demo-0-0-3-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-3-aura"
-    }, {
+    },
+    {
       _id: "demo-0-0-3-human"
-    }, {
+    },
+    {
       _id: "demo-0-0-3-evil"
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-3-commit", sw: true }
       _id: "demo-0-0-4-give",
       give: 0
-    }, {
+    },
+    {
       _id: "demo-0-0-4-SSAY",
       pt: 2e308,
       said: 16
-    }, {
+    },
+    {
       _id: "demo-0-0-4-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-4-AIM",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-4-human"
-    }, {
+    },
+    {
       _id: "demo-0-0-4-commit",
       sw: true
-    }, {
+    },
+    {
       _id: "demo-0-0-4-vote",
       cmd: "vote",
       target: "demo-0-0-4"
-    }, {
+    },
+    {
       _id: "demo-0-0-4-entrust",
       cmd: "entrust",
       target: null
-    }, {
+    },
+    {
       _id: "demo-0-0-5-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-5-GSAY",
       pt: 2e308,
       said: 17
-    }, {
+    },
+    {
       _id: "demo-0-0-5-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-5-human"
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-5-commit", sw: true }
       _id: "demo-0-0-6-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-6-GSAY",
       pt: 2e308,
       said: 18
-    }, {
+    },
+    {
       _id: "demo-0-0-6-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-6-aura"
-    }, {
+    },
+    {
       _id: "demo-0-0-6-wolf"
-    }, {
+    },
+    {
       _id: "demo-0-0-6-hunt",
       cmd: "role",
       target: null
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-6-commit", sw: true }
+      // { _id: "demo-0-0-6-WSAY", pt: Infinity, said: 1 }
       _id: "demo-0-0-7-give",
       give: 0
-    }, {
+    },
+    {
       _id: "demo-0-0-7-SSAY",
       pt: 2000,
       said: 19
-    }, {
+    },
+    {
       _id: "demo-0-0-7-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-7-AIM",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-7-human"
-    }, {
+    },
+    {
       _id: "demo-0-0-7-commit",
       sw: true
-    }, {
+    },
+    {
       _id: "demo-0-0-7-vote",
       cmd: "vote",
       target: "demo-0-0-7"
-    }, {
+    },
+    {
       _id: "demo-0-0-7-entrust",
       cmd: "entrust",
       target: null
-    }, {
+    },
+    {
       _id: "demo-0-0-8-give",
       give: 0
-    }, {
+    },
+    {
       _id: "demo-0-0-8-SSAY",
       pt: 2e308,
       said: 20
-    }, {
+    },
+    {
       _id: "demo-0-0-8-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-8-AIM",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-8-human"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-commit",
       sw: true
-    }, {
+    },
+    {
       _id: "demo-0-0-8-vote",
       cmd: "vote",
       target: "demo-0-0-8"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-entrust",
       cmd: "entrust",
       target: null
-    }, {
+    },
+    {
       _id: "demo-0-0-8-hate",
       cmd: "bond",
       target: "demo-0-10"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-wolf"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-hunt",
       cmd: "role",
       target: null
-    }, {
+    },
+    {
       _id: "demo-0-0-8-friend"
-    }, {
+    },
+    {
       _id: "demo-0-0-8-WSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-9-give",
       give: 0
-    }, {
+    },
+    {
       _id: "demo-0-0-9-SSAY",
       pt: 2e308,
       said: 21
-    }, {
+    },
+    {
       _id: "demo-0-0-9-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-9-AIM",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-9-aura"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-human"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-guru"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-commit",
       sw: true
-    }, {
+    },
+    {
       _id: "demo-0-0-9-vote",
       cmd: "vote",
       target: "demo-0-0-9"
-    }, {
+    },
+    {
       _id: "demo-0-0-9-entrust",
       cmd: "entrust",
       target: null
-    }, {
+    },
+    {
       _id: "demo-0-0-10-give",
       give: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-10-GSAY",
       pt: 2e308,
       said: 22
-    }, {
+    },
+    {
       _id: "demo-0-0-10-TSAY",
       pt: 2e308,
       said: 1
-    }, {
+    },
+    {
       _id: "demo-0-0-10-human"
-    }, {
+    },
+    {
+      // { _id: "demo-0-0-10-commit", sw: true }
       _id: "demo-0-0-10-love",
       cmd: "bond",
       target: "demo-0-0-10"
@@ -1226,55 +1384,64 @@ part = {
       winner_id: "HATER",
       job: "R-",
       sign: "七転び"
-    }, {
+    },
+    {
       _id: "demo-0-0-9",
       face_id: "c40",
       winner_id: "GURU",
       job: "R-",
       sign: "七転び"
-    }, {
+    },
+    {
       _id: "demo-0-0-8",
       face_id: "c50",
       winner_id: "LOVER",
       job: "R-",
       sign: "ななころ"
-    }, {
+    },
+    {
       _id: "demo-0-0-7",
       face_id: "c87",
       winner_id: "HUMAN",
       job: "病人",
       sign: "七転び"
-    }, {
+    },
+    {
       _id: "demo-0-0-6",
       face_id: "t05",
       winner_id: "HUMAN",
       job: "開放的市民",
       sign: "noko"
-    }, {
+    },
+    {
       _id: "demo-0-0-5",
       face_id: "c29",
       winner_id: "HUMAN",
       job: "記者",
       sign: "うに"
-    }, {
+    },
+    {
       _id: "demo-0-0-4",
       face_id: "c90",
       winner_id: "WOLF",
       job: "粉ひき",
       sign: "魚屋"
-    }, {
+    },
+    {
       _id: "demo-0-0-3",
       face_id: "c70",
       winner_id: "EVIL",
       job: "腐女子",
       sign: "namba"
-    }, {
+    },
+    {
       _id: "demo-0-0-2",
       face_id: "c80",
       winner_id: "HUMAN",
       job: "少年",
       sign: "ななころ"
-    }, {
+    },
+    {
       _id: "demo-0-0-1",
       face_id: "c60",
       winner_id: "NONE",
@@ -1402,6 +1569,9 @@ module.exports = {
   env: __webpack_require__(17),
   plugins: ['node_modules/element-ui'],
   css: ['element-ui/lib/theme-default/index.css'],
+  //####
+  // Customize the progress-bar color
+
   loading: {
     color: '#3B8070'
   }
@@ -1574,8 +1744,10 @@ module.exports = {
   },
   babel: {
     presets: [
-      "vue-app", [
-        "env", {
+      "vue-app",
+      [
+        "env",
+        {
           targets: {
             browsers: ["> 5%"]
           },
@@ -1590,17 +1762,19 @@ module.exports = {
       test: /\.(png|jpe?g|gif|svg)$/,
       loader: 'url-loader',
       query: {
-        limit: 1000,
+        limit: 1000, // 1KO
         name: 'img/[name].[hash:7].[ext]'
       }
-    }, {
+    },
+    {
       test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
       loader: 'url-loader',
       query: {
-        limit: 1000,
+        limit: 1000, // 1KO
         name: 'fonts/[name].[hash:7].[ext]'
       }
-    }, {
+    },
+    {
       test: /\.styl\.use$/,
       loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
     }
@@ -1623,18 +1797,24 @@ module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
 /* 18 */
 /***/ (function(module, exports) {
 
+//####
+// Headers of the page
+
 module.exports = {
   title: '人狼議事',
   meta: [
     {
       charset: 'utf-8'
-    }, {
+    },
+    {
       name: 'viewport',
       content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
-    }, {
+    },
+    {
       hid: 'description',
       content: "Nuxt.js project"
-    }, {
+    },
+    {
       href: "mailto:7korobi@gmail.com"
     }
   ],
@@ -1643,20 +1823,24 @@ module.exports = {
       rel: 'stylesheet',
       type: 'text/css',
       href: "https://use.fontawesome.com/6348868528.css"
-    }, {
+    },
+    {
       rel: 'stylesheet',
       type: 'text/css',
       href: "/css/index.css"
-    }, {
+    },
+    {
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'
-    }, {
+    },
+    {
       href: "mailto:7korobi@gmail.com"
     }
   ],
   script: [
     {
+      // { src: '/ace/ace.js', type: 'text/javascript', charset: 'utf8' }
       src: '/monaco-editor/vs/loader.js',
       type: 'text/javascript',
       charset: 'utf8'
