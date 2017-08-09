@@ -2239,9 +2239,9 @@ module.exports = {
 /***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mem, Model, Query, Rule, Set, _, axios;
+var Finder, Mem, Model, Query, Rule, Set, _, axios;
 
-({ Model, Query, Rule, Set } = Mem = __webpack_require__(1));
+({ Model, Query, Rule, Set, Finder } = Mem = __webpack_require__(1));
 
 axios = __webpack_require__(22);
 
@@ -2258,26 +2258,21 @@ module.exports = {
       return Set.sow_village.merge(data.stories);
     },
     oldlog: function (state, data) {
-      var _id, i, len, ref, ref1, results, story_id, story_ids, vil;
+      var _id, i, j, len, len1, ref, ref1, story_id, story_ids, vil;
       Set.sow_village.merge(data.stories);
       if ((ref = data.faces) != null ? ref.length : void 0) {
         ref1 = data.faces;
-        results = [];
         for (i = 0, len = ref1.length; i < len; i++) {
           ({ _id, story_ids } = ref1[i]);
-          results.push(function () {
-            var j, len1, results1;
-            results1 = [];
-            for (j = 0, len1 = story_ids.length; j < len1; j++) {
-              story_id = story_ids[j];
-              vil = Query.sow_villages.find(story_id);
-              results1.push(vil.aggregate.face_ids.push(_id.face_id));
+          for (j = 0, len1 = story_ids.length; j < len1; j++) {
+            story_id = story_ids[j];
+            if (vil = Query.sow_villages.find(story_id)) {
+              vil.aggregate.face_ids.push(_id.face_id);
             }
-            return results1;
-          }());
+          }
         }
-        return results;
       }
+      return Finder.sow_village.clear_cache();
     }
   },
   actions: {
@@ -4428,4 +4423,4 @@ exports.default = {
 /***/ })
 
 },[174]);
-//# sourceMappingURL=nuxt.bundle.e7974811349bdba369a2.js.map
+//# sourceMappingURL=nuxt.bundle.a0b1f44e6b24a6f768be.js.map
