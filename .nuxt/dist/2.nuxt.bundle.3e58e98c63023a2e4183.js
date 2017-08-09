@@ -662,7 +662,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('scroll-mine', {
     key: "add",
     attrs: {
-      "as": _vm.limit_next
+      "as": _vm.limit + 25
     },
     model: {
       value: (_vm.limit),
@@ -691,4 +691,4 @@ var update = __webpack_require__(5)("6b02251f", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=2.nuxt.bundle.69fe76b09b7811f8df77.js.map
+//# sourceMappingURL=2.nuxt.bundle.3e58e98c63023a2e4183.js.map

@@ -158,7 +158,7 @@
                  | {{ role.label }}
                  sup(v-if="1 < role.count") {{ role.count }}
       report(handle="btns" key="limitup")
-        scroll-mine(key="add" v-model="limit", :as="limit_next") {{ limit_next }}件
+        scroll-mine(key="add" v-model="limit", :as="limit + 25") {{ limit_next }}件
 
 </template>
 <script lang="coffee">
