@@ -1,6 +1,5 @@
 Vue = require "vue"
-if window?
-  Vue = Vue.default
+Vue = Vue.default if window?
 
 Mem = require "~plugins/memory-record"
 Mem.vm = new Vue

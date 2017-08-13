@@ -1,5 +1,6 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+{ see } = require "~plugins/book"
 
 format =
   head: new Intl.DateTimeFormat 'ja-JP',
@@ -9,7 +10,7 @@ format =
     hour:    "2-digit"
 
 module.exports =
-  props: ["chats", "parts"]
+  props: ["chats"]
   methods:
     pages: (part_id)->
       last = @chats(part_id).length
@@ -27,41 +28,40 @@ module.exports =
         .replace "時", "-" + write
       
     input_part: (part_id)->
-      part = Query.parts.find part_id
-      if part
-        window.scrollTo 0, 0
-        @$parent.page_ids = [0]
-        @$parent.part_id = part_id
+      @book =
+        part_id: part_id
+        page_idxs: [0]
 
     input_page: (part_id, page_id)->
-      window.scrollTo 0, 0
-      @$parent.page_ids = [page_id]
-      @$parent.part_id = part_id
-  
-  computed:
-    page_keys: ->
-      @$parent.page_ids.map (id)=>
-        "#{@$parent.part_id}-#{id}"
-    toc: ->
+      @book =
+        part_id: part_id
+        page_idxs: [page_id]
+    tooltip: (line)->
+      if 1 < line
+        "tooltip-top"
+      else
+        "tooltip-bottom"
+  computed: {
+    see...
+    show: ->
       @$store.state.menu.set.toc
+  }
 </script>
 
 <template lang="pug">
-.inframe(v-if="toc")
+.inframe(v-if="show")
   h6 栞
   .swipe.header
     table
       tbody
-        tr(v-for="(o, line) in parts", :key="o.id")
+        tr(v-for="(o, line) in book.parts.list", :key="o.id")
           th.r.form
-            btn(@input="input_part", :value="$parent.part_id", :as="o.id")
+            btn(@input="input_part", :value="part_id", :as="o.id")
               | {{o.label}}
               sup {{ chats(o.id).all }}
           td.l.form
             span(v-for="page in pages(o.id)", :key="page")
-              btn.tooltip-top(v-if="1 < line" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
-                | {{ page + 1 }}
-              btn.tooltip-bottom(v-else @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_keys", :as="[o.id + '-' + page]", bool="include")
+              btn(bool="include" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_ids", :as="[o.id + '-' + page]", :class="tooltip(line)")
                 | {{ page + 1 }}
 
 </template>

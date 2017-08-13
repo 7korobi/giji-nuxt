@@ -1,21 +1,28 @@
 .expand-transition
   transition: all .3s ease
 
-.list-move
-  transition: transform 0.3s
 
-.list-enter-to
-  transition: all 0.2s ease 0.1s
 
-.list-enter,
-.list-leave-to
-  opacity: 0
+.icons,
+.list
+  &-move
+    transition: transform 0.3s
+  &-enter-to
+    transition: all 0.2s ease 0.1s
+  &-enter, &-leave-to
+    opacity: 0
+  &-leave-to
+    position: absolute
 
-.posts
-  .list-enter,
-  .list-leave-to
-    transform: translateX(30px)
 
+.timeline
+  &-move
+    transition: transform 0.3s
+  &-enter-to
+    transition: all 0.2s ease 0.1s
+  &-enter, &-leave-to
+    height: 0
+    overflow: hidden
 
 .portrates
   background: #000

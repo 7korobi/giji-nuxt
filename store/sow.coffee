@@ -124,7 +124,7 @@ module.exports =
             return
           when "MAKER", "ADMIN"
             potof_id = undefined
-            show = "report"
+            show = "report" if show == "talk"
           when "INFONOM"
             handle = "public"
           when "INFOSP"
@@ -173,7 +173,7 @@ module.exports =
 
   actions:
     story: ({ state, commit, rootState }, story_id)->
-      Mem.read_at_gate "sow_story.#{story_id}", ->
+      Mem.read_at_gate "book.#{story_id}", ->
         axios.get "#{env.SOW_URL}/#{story_id}.json.gz"
         .then ({ status, data })->
           commit "join", data

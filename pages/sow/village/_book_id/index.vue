@@ -4,16 +4,16 @@
   .sideframe
     .inframe
       .icons.form
-        check.item(as="current" v-model="menus")
+        check.item(v-model="menus" as="current")
           i.fa.fa-map-pin
-        check.item(as="toc" v-model="menus")
+        check.item(v-model="menus" as="toc")
           i.fa.fa-film
-        check.item(as="potof" v-model="menus")
+        check.item(v-model="menus" as="potof")
           i.fa.fa-users
-  .summary
-    mentions(@anker="anker")
-    toc(:chats="chats", :parts="parts")
-    potofs(v-model="hide_potof_ids")
+  .summary(name="list" tag="div" key="summary")
+    mentions(key="1" @anker="anker")
+    toc(key="2", :chats="chats")
+    potofs(key="3")
   .center-left
   .center-right
 
@@ -70,37 +70,25 @@
 
 <script lang="coffee">
 { Query, read_at } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
-
-q = new BrowserValue
-q.params
-  book_id: ""
-watch = q.watch (_, key, val)->
-watch.mode = ->
-  window.scrollTo 0,0
-  @page_ids = [0]
+{ see } = require "~plugins/book"
 
 module.exports =
   default:
-    watch: watch
+    watch:
+      mode: ->
+        @book = { @mode, @part_id, page_idxs: [0] }
 
     data: ->
-      q.data @,
-        hide_potof_ids: []
-        phase_ids: []
-        page_ids: []
-        menus: []
-        chat_id: ""
-        part_id: ""
-        mode: "full"
-        read_at: read_at
+      menus: []
+      mode: "full"
+      read_at: read_at
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
       .then =>
-        part = @book.parts.list.first
-        @part_id  = part.id
-        @page_ids = [0]
+        @book =
+          part: @book.parts.list[0]
+          page_idxs: [0]
 
     methods:
       anker: (ids)->
@@ -109,27 +97,21 @@ module.exports =
           query: { ids }
 
       page_add: (id)->
-        @page_ids = [id, @page_ids...].sort (a,b)-> a - b
+        page_idxs = [id, @page_idxs...].sort (a,b)-> a - b
+        @book = { @part_id, page_idxs }
 
       part_prev: ->
-        window.scrollTo 0,0
-        @part_id = @part_prev_id ? @part_id
-        @page_ids = [0]
+        @book =
+          part_id: @part_prev_id ? @part_id
+          page_idxs: [0]
 
       part_next: ->
-        window.scrollTo 0,0
-        @part_id = @part_next_id ? @part_id
-        @page_ids = [0]
+        @book =
+          part_id: @part_next_id ? @part_id
+          page_idxs: [0]
 
-    computed:
-      book: ->
-        @$store.commit "menu/mode", @menus
-        @read_at["sow_story.#{@book_id}"]
-        Query.books.find @book_id
-      part: ->
-        @read_at["sow_story.#{@book_id}"]
-        Query.parts.find @part_id
-
+    computed: {
+      see...
       part_prev_id: ->
         if @part && @book
           ids = @book.parts.pluck('id')
@@ -142,26 +124,17 @@ module.exports =
           idx = ids.indexOf @part_id
           ids[idx + 1]
 
+
       page_here_id: ->
-        [..., last] = @page_ids
+        [..., last] = @page_idxs
         last
 
       page_next_id: ->
         if @page_here_id? && @page_here_id + 1 < @chats_here.length
           @page_here_id + 1
 
-      chat: ->
-        @read_at["sow_story.#{@book_id}"]
-        o = @$store.state.book
-        @chat_id = o.chat_id
-        @part_id = o.part_id
-        Query.chats.find @chat_id
-
-      parts: ->
-        @book?.parts.list ? []
-
-
       now: ->
+        @$store.commit "menu/mode", @menus
         Query.chats.now(@hide_potof_ids)
 
       chats: ->
@@ -171,6 +144,7 @@ module.exports =
         @chats(@part_id)
 
       chats_pages: ->
-        @page_ids.map (page)=> @chats_here[page]
+        @page_idxs.map (page)=> @chats_here[page]
+    }
 
 </script>

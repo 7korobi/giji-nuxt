@@ -6,14 +6,13 @@ module.exports =
   head: require("./head.coffee")
   env: require("./env.coffee")
 
-  plugins: [
-    'node_modules/element-ui'
-  ]
+  plugins: []
   css: [
     'element-ui/lib/theme-default/index.css'
   ]
   #####
   # Customize the progress-bar color
   #
-  loading: { color: '#3B8070' }
+  loading:
+    color: '#3B8070'
 

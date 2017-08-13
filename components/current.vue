@@ -10,10 +10,11 @@ module.exports = require("~components/chat.vue").component_class()
 <template lang="pug">
 .chat.current(@click="click", :id="id", :key="id", :class="classname")
   .date
-    span
-      abbr(v-if="sign") {{ sign }}
-    span
-      abbr(v-if="id", :chat_id="id") {{ anker }}
-    span
-      timeago(v-if="write_at", :since="write_at")
+    span(v-if="sign")
+      abbr {{ sign }}
+    span(v-if="id")
+      abbr {{ chat.part.label }}
+      abbr(:chat_id="id") {{ anker }}
+    span(v-if="write_at")
+      timeago(:since="write_at")
 </template>

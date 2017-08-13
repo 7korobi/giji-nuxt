@@ -54,11 +54,6 @@ module.exports =
           if chk?.value == "confirm" && confirm "open?\n#{url}"
             open url, "_blank"
 
-      phase: (args...)->
-        Query.phases.find args.join "-"
-      chat: (args...)->
-        Query.chats.find args.join "-"
-
     computed:
       el_adjust: el.adjust
 
@@ -68,7 +63,7 @@ module.exports =
       anker: ->
         { read_at, chat_id } = @$store.state.book
         current = Query.chats.find chat_id
-        chat = Query.chats.find @id
+        chat = @chat
         if chat
           console.log chat unless chat.phase
           { mark } = chat.phase
@@ -100,6 +95,10 @@ module.exports =
           """<b chk="confirm" href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""
         .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
+
+      chat: ->
+        if @id
+          Query.chats.find @id
 
       classname: ->
         if "focus" == @el_adjust

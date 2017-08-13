@@ -1,22 +1,20 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+{ see } = require "~plugins/book"
 
 module.exports =
-  computed:
-    chat: ->
-      { chat_id } = @$store.state.book
-      Query.chats.find chat_id
-    current: ->
-      @$store.state.menu.set.current
-    mentions: ->
-      { chat_id } = @$store.state.book
-      Query.chats.reduce?.mention_to?[chat_id]
+  computed: {
+    see...
+    show: ->
+      @chat && @$store.state.menu.set.current
+  }
+
 </script>
 
 <template lang="pug">
-.inframe(v-if="current")
+.inframe(v-if="show")
   h6 参照されている
-  chat(v-if="chat" show="current", :id="chat.id")
+  chat(show="current", :id="chat.id")
   table
     transition-group.tlist(name="list" tag="tbody")
       tr-intro-chat(v-for="o in mentions" @anker="$listeners.anker", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")

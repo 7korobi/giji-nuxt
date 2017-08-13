@@ -5,18 +5,18 @@
       .icons.form
         a.item.active(@click="back")
           i.fa.fa-map-pin
-  .summary
-    mentions(@anker="anker")
+  transition-group.summary(name="list" tag="div" key="summary")
+    mentions(key="1" @anker="anker")
   .center-left
   .center-right
   .contentframe
     .inframe
       transition-group.inframe(name="list" tag="div")
-        div(v-for="(chats, idx) in chat_pages.list", :key="idx")
+        div(v-for="(chats, idx) in chat_pages", :key="idx")
           chat(v-for="o in chats" @anker.capture="anker", :id="o.id", :key="o.id")
 </template>
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
+{ Query } = require "~plugins/memory-record"
 
 module.exports =
   default:

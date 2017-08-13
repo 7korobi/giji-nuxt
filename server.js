@@ -1567,7 +1567,7 @@ module.exports = {
   build: __webpack_require__(16),
   head: __webpack_require__(18),
   env: __webpack_require__(17),
-  plugins: ['node_modules/element-ui'],
+  plugins: [],
   css: ['element-ui/lib/theme-default/index.css'],
   //####
   // Customize the progress-bar color

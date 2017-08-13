@@ -22,8 +22,6 @@ if (process.browser) {
 }
 
 // Import SSR plugins
-let plugin0 = require('C:\\Dropbox\\www\\giji-nuxt\\node_modules\\element-ui')
-plugin0 = plugin0.default || plugin0
 
 
 // Component: <nuxt-child>
@@ -117,10 +115,6 @@ async function createApp (ssrContext) {
   delete ctx.error
 
   // Inject external plugins
-  
-  if (typeof plugin0 === 'function') {
-    await plugin0(ctx)
-  }
   
 
   return { app, router, store }

@@ -1,5 +1,5 @@
 <template lang="pug">
-.inframe(v-if="part")
+.inframe(v-if="show")
   h6 {{ part.label }}の参加者
   .swipe.potofs
     table
@@ -55,14 +55,14 @@
       tbody
         tr
           td
-            btn(@input="reset", :value="value", :as="live_on")  参加者
+            btn(v-model="hide_potof_ids", :as="live_on")  参加者
           td
-            btn(@input="reset", :value="value", :as="live_off") リタイア
+            btn(v-model="hide_potof_ids", :as="live_off") リタイア
         tr
           td
-            btn(@input="reset", :value="value", :as="full_on")  全表示
+            btn(v-model="hide_potof_ids", :as="full_on")  全表示
           td
-            btn(@input="reset", :value="value", :as="full_off") クリア
+            btn(v-model="hide_potof_ids", :as="full_off") クリア
 
     portrate(v-for="o in potofs", :key="o.face_id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
       .bar(:class="bgc(o)")
@@ -70,38 +70,33 @@
 
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
+{ see } = require "~plugins/book"
 
 module.exports =
-  props: ["value"]
   data: ->
     sort: "live"
     order: "asc"
     full_mode: true
     live_mode: true
-  watch:
-    value: ->
-      for o in @potofs
-        o.hide = false
-      for id in @value
-        Query.potofs.find(id).hide = true
-      @$store.commit "book/data", {}
+    read_at: read_at
 
-  computed:
+  computed: {
+    see...
     full_on:  ->  @potof_ids -> false
     full_off: ->  @potof_ids -> true
     live_on:  ->  @potof_ids (o)-> ! o.commit
     live_off: ->  @potof_ids (o)-> o.commit
 
-    part: ->
-      { potof } = @$store.state.menu.set
-      potof && @$parent.part
-
     potofs: ->
-      { book_id, part_id } = @$parent
-      { sort, order } = @
-      if book_id
-        Query.potofs.catalog(book_id, part_id, sort, order).list
+      hides = @hide_potof_ids
+      if @part
+        { list } = Query.potofs.catalog(@book_id, @part_id, @sort, @order)
+        for o in list
+          o.hide = false
+        for id in hides
+          Query.potofs.find(id).hide = true
+        list
       else
         []
 
@@ -112,6 +107,10 @@ module.exports =
         else
           (o)-> o.live.role_id
 
+    show: ->
+      @part && @$store.state.menu.set.potof
+
+  }
   methods:
     potof_ids: (f)->
       @potofs
@@ -119,12 +118,9 @@ module.exports =
       .map (o)-> o.id
       .sort()
 
-    reset: (as)->
-      @$emit 'input', as.sort()
-
     toggle: (o)->
       o.hide = ! o.hide
-      @$emit 'input', @potof_ids (o)-> o.hide
+      @hide_potof_ids = @potof_ids (o)-> o.hide
 
     reverse: ->
       switch @order
@@ -176,20 +172,5 @@ module.exports =
     height:       68px
     span
       white-space: nowrap
-
-
-.list-move
-  transition: transform 0.3s
-
-.list-enter-to
-  transition: all 0.2s ease 0.1s
-
-.list-leave-to
-  position: absolute
-
-.list-enter,
-.list-leave-to
-  opacity: 0
-  transform: translateY(30px)
 </style>
 
