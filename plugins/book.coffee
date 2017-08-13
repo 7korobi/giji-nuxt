@@ -11,7 +11,7 @@ finds = (keys...)->
     state =
       "#{key}":
         get: ->
-          @$store.state.book[key] || @$route.params[key]
+          @$route.params[key] || @$route.query[key] || @$store.state.book[key]
       "#{name}":
         get: ->
           @read_at?["book.#{@book_id}"]

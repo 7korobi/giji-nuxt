@@ -1858,7 +1858,11 @@ module.exports = {
             break;
           case "I":
             potof_id = void 0;
-            show = "report";
+            if (phase_idx === "iI" || /(は突然死した。|投票した。|魚の跳ねる、みずみずしい音が聞こえた。|延長されました。|村の設定が変更されました。|が参加しました。|は時が進むよう祈った。|は村を出ました\))$/.test(log)) {
+              show = "post";
+            } else {
+              show = "report";
+            }
             break;
           case "A":
           case "B":
@@ -4435,4 +4439,4 @@ webpackContext.id = 99;
 /***/ })
 
 },[135]);
-//# sourceMappingURL=nuxt.bundle.a4d638e264a0781acefb.js.map
+//# sourceMappingURL=nuxt.bundle.117ac0b7ea8281dfb8e2.js.map

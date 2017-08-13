@@ -27065,7 +27065,7 @@ finds = function (...keys) {
     state = {
       [`${key}`]: {
         get: function () {
-          return this.$store.state.book[key] || this.$route.params[key];
+          return this.$route.params[key] || this.$route.query[key] || this.$store.state.book[key];
         }
       },
       [`${name}`]: {
@@ -45587,4 +45587,4 @@ module.exports = __webpack_require__(36);
 
 /***/ })
 ],[370]);
-//# sourceMappingURL=vendor.bundle.c69b1e554d86dafc28c5.js.map
+//# sourceMappingURL=vendor.bundle.6048120c63a7e3aaaab5.js.map
