@@ -1,9 +1,9 @@
 
-module.exports = Mem = require "./memory-record/index"
-Mem.Rule = require "./memory-record/rule"
+module.exports = Mem = require "./memory-record/index.coffee"
+Mem.Rule = require "./memory-record/rule.coffee"
 Mem.Base =
-  Query:  require "./memory-record/query"
-  Set:    require "./memory-record/set"
-  Map:    require "./memory-record/map"
-  Model:  require "./memory-record/model"
-  Finder: require "./memory-record/finder"
+  Query:  require "./memory-record/query.coffee"
+  Set:    require "./memory-record/set.coffee"
+  Map:    require "./memory-record/map.coffee"
+  Model:  require "./memory-record/model.coffee"
+  Finder: require "./memory-record/finder.coffee"

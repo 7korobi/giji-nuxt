@@ -1881,23 +1881,48 @@ module.exports = {
 
 module.exports = {
   scrollBehavior: function(to, from, savedPosition) {
-    console.log({to, from});
-    switch (false) {
-      case !savedPosition:
-        console.log("scroll to saved.");
-        return savedPosition;
-      case !to.hash:
-        console.log("scroll to " + to.hash);
-        return {
-          selector: to.hash
-        };
-      case to.path === from.path:
+    var basic, book;
+    book = function(to, from) {
+      var from_id, to_id;
+      [from_id, to_id] = [from, to].map(function(o) {
+        var ref;
+        return (ref = o.params.idx) != null ? ref.split("-").slice(0, 2).join("-") : void 0;
+      });
+      if (from_id !== to_id) {
         return {
           x: 0,
           y: 0
         };
-      default:
-        return false;
+      }
+    };
+    basic = function(to) {
+      switch (false) {
+        case !to.hash:
+          console.log("scroll to " + to.hash);
+          return {
+            selector: to.hash
+          };
+        case to.path === from.path:
+          return {
+            x: 0,
+            y: 0
+          };
+        default:
+          return false;
+      }
+    };
+    console.log({to, from});
+    console.log(to.name);
+    if (savedPosition) {
+      console.log("scroll to saved.");
+      return savedPosition;
+    } else {
+      switch (to.name) {
+        case "sow-village-idx-mode":
+          return book(to, from);
+        default:
+          return basic(to, from);
+      }
     }
   }
 };

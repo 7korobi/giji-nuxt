@@ -1,8 +1,10 @@
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
 { see } = require "~plugins/book"
 
 module.exports =
+  data: -> 
+    { read_at }
   computed: {
     see...
     show: ->

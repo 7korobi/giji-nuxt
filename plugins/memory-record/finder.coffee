@@ -1,5 +1,5 @@
 _ = require "lodash"
-{ Query, Format } = require "./index"
+{ Query, Format } = require "./index.coffee"
 
 OBJ = ->
   new Object null

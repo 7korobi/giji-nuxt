@@ -1,5 +1,5 @@
 _ = require "lodash"
-Mem = require "./index"
+Mem = require "./index.coffee"
 
 module.exports = class Model
   @rowid = 0

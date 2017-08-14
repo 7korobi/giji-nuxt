@@ -1,5 +1,5 @@
 _ = require "lodash"
-{ Query } = require "./index"
+{ Query } = require "./index.coffee"
 
 module.exports = class Map
   @bless: (o)->

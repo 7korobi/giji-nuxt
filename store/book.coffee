@@ -4,13 +4,6 @@ axios = require "axios"
 module.exports =
   namespaced: true
   state: ->
-    folder_id: ""
-    book_id: ""
-    part_id: ""
-    section_id: ""
-    phase_id: ""
-    chat_id: ""
-    page_idxs: []
     hide_potof_ids: []
 
   mutations:
@@ -51,23 +44,6 @@ module.exports =
 
     hide_potof_ids: (state, ids)->
       state.hide_potof_ids = ids
-
-    reset: (state, { page_idxs, part_id, part, mode })->
-      part ?= Query.parts.find part_id
-      return unless part
-      if mode
-        window.scrollTo 0,0
-      unless state.part_id == part.id && state.page_idxs[0]== page_idxs[0]
-        window.scrollTo 0,0
-      state.part_id = part.id
-      state.page_idxs = page_idxs
-
-    see: (state, chat_id)->
-      return unless chat_id
-      return unless chat = Query.chats.find(chat_id)
-      for key, val of state when chat[key]
-        state[key] = chat[key]
-      state.chat_id    = chat_id
 
   actions:
     books: ({commit}, folder)->

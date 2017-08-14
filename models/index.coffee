@@ -4,7 +4,7 @@ Vue = Vue.default if window?
 Mem = require "~plugins/memory-record"
 Mem.vm = new Vue
   data:
-    read_at: Mem.read_at = {}
+    read_at: Mem.read_at
 
 Mem.read_at_gate = (name, cb)->
   return if Date.now() - 10 * 60 * 1000 < Mem.read_at[name]

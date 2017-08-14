@@ -30,32 +30,57 @@ const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeag
 
 const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
 
-const _6b82fb4a = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_book_id\\index.vue' /* webpackChunkName: "pages/sow-village-book_id" */)
-
 const _4aa7c725 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
 
-const _79d75b66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_book_id\\top.vue' /* webpackChunkName: "pages/sow-village-book_id-top" */)
+const _f72d487e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\top.vue' /* webpackChunkName: "pages/sow-village-idx-top" */)
+
+const _3c51e96e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages/sow-village-idx-mode" */)
 
 
 
 const scrollBehavior = function (to, from, savedPosition) {
-      console.log({to, from});
-      switch (false) {
-        case !savedPosition:
-          console.log("scroll to saved.");
-          return savedPosition;
-        case !to.hash:
-          console.log("scroll to " + to.hash);
-          return {
-            selector: to.hash
-          };
-        case to.path === from.path:
+      var basic, book;
+      book = function(to, from) {
+        var from_id, to_id;
+        [from_id, to_id] = [from, to].map(function(o) {
+          var ref;
+          return (ref = o.params.idx) != null ? ref.split("-").slice(0, 2).join("-") : void 0;
+        });
+        if (from_id !== to_id) {
           return {
             x: 0,
             y: 0
           };
-        default:
-          return false;
+        }
+      };
+      basic = function(to) {
+        switch (false) {
+          case !to.hash:
+            console.log("scroll to " + to.hash);
+            return {
+              selector: to.hash
+            };
+          case to.path === from.path:
+            return {
+              x: 0,
+              y: 0
+            };
+          default:
+            return false;
+        }
+      };
+      console.log({to, from});
+      console.log(to.name);
+      if (savedPosition) {
+        console.log("scroll to saved.");
+        return savedPosition;
+      } else {
+        switch (to.name) {
+          case "sow-village-idx-mode":
+            return book(to, from);
+          default:
+            return basic(to, from);
+        }
       }
     }
 
@@ -129,19 +154,19 @@ export function createRouter () {
 			name: "demo-oauth"
 		},
 		{
-			path: "/sow/village/:book_id",
-			component: _6b82fb4a,
-			name: "sow-village-book_id"
-		},
-		{
 			path: "/summary/faces/:id",
 			component: _4aa7c725,
 			name: "summary-faces-id"
 		},
 		{
-			path: "/sow/village/:book_id/top",
-			component: _79d75b66,
-			name: "sow-village-book_id-top"
+			path: "/sow/village/:idx/top",
+			component: _f72d487e,
+			name: "sow-village-idx-top"
+		},
+		{
+			path: "/sow/village/:idx/:mode?",
+			component: _3c51e96e,
+			name: "sow-village-idx-mode"
 		}
     ]
   })

@@ -1,5 +1,7 @@
+path   = require 'path'
 coffee = /\.coffee$/
 vue    = /\.vue$/
+current = process.cwd()
 isServer = true
 
 module.exports =
@@ -9,21 +11,18 @@ module.exports =
     server: './api/index.coffee'
     # spec:   './spec/index.coffee'
   output:
-    path: process.cwd()
+    path: current
     filename: '[name].js'
   resolve:
-    extensions: ['.js']
-
-    ###
+    extensions: ['.js','.coffee']
     alias:
-      '~':           process.cwd()
-      '~pages':      process.cwd() + '/pages'
-      '~static':     process.cwd() + '/static'
-      '~assets':     process.cwd() + '/assets'
-      '~plugins':    process.cwd() + '/plugins'
-      '~components': process.cwd() + '/components'
-    ###
-            
+      '~':           current
+      '~pages':      path.join current, '/pages'
+      '~static':     path.join current, '/static'
+      '~assets':     path.join current, '/assets'
+      '~plugins':    path.join current, '/plugins'
+      '~components': path.join current, '/components'
+
   module:
     loaders: [
       test: vue

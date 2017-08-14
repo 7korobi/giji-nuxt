@@ -1,6 +1,6 @@
 _ = require "lodash"
-Mem = require "./index"
-Query = require "./query"
+Mem = require "./index.coffee"
+Query = require "./query.coffee"
 
 OBJ = ->
   new Object null

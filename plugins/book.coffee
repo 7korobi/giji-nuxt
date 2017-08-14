@@ -1,41 +1,80 @@
 Vuex = require "vuex"
 Vuex = Vuex.default if window?
 
-{ Query } = require "~plugins/memory-record"
+{ Query, read_at } = require "~plugins/memory-record"
 
-finds = (keys...)->
+
+tree = (keys...)->
   o = {}
-  keys.map (name)->
+  make = (name, at)->
     key = "#{name}_id"
     list = "#{name}s"
     state =
       "#{key}":
         get: ->
-          @$route.params[key] || @$route.query[key] || @$store.state.book[key]
+          (at < @idx.length) && @idx[0..at].join("-")
       "#{name}":
         get: ->
-          @read_at?["book.#{@book_id}"]
+          read_at["book.#{@book_id}"]
           Query[list].find @[key]
-          
+
     o = { o..., state... }
-  o.book.set = (cmd)-> @$store.commit "book/reset", cmd
+  for name, idx in keys
+    make name, idx
+
+  o.book.set = ({ page_idxs, chat_id, part_id, part })->
+    if part_id
+      part ?= Query.parts.find part_id
+    if part
+      idx = part.id
+    if chat_id
+      chat = Query.chats.find chat_id
+      part = chat.part
+      idx  = chat_id
+    return unless part
+
+    unless @part_id == part.id && @page_idxs[0] == page_idxs[0]
+      window.scrollTo 0,0
+
+    [head,..., tail] = page_idxs
+    pages =
+      if head == tail
+        "#{1 + head}"
+      else
+        [1 + head, 1 + tail].join("-")
+    { name, params, query } = @$route
+    params = { params..., idx }
+    query = { query..., pages }
+    @$router.replace { name, params, query }
   o
 
+base =
+  idx: -> @$route.params.idx.split("-")
+  idx_type: -> [null,"folder_id","book_id","part_id",""][@idx.length]
 
+see = {
+  base...
+  tree("folder","book","part","section","phase","chat")...
+  page_idxs: ->
+    { pages = "1" } = @$route.query
+    [head, tail] = "#{pages}".split("-").map (o)-> Number(o) - 1
+    [head .. tail ? head]
+  page_ids: ->
+    @page_idxs.map (idx)=>
+      "#{@part_id}-#{idx}"
+  mentions: ->
+    read_at?["book.#{@book_id}"]
+    Query.chats.reduce?.mention_to?[@chat_id]
+  hide_potof_ids: ->
+    @$store.state.book.hide_potof_ids
+  mode:
+    get: ->
+      @$route.params.mode || "full"
+    set: (mode)->
+      window.scrollTo 0,0
+      { name, params, query } = @$route
+      params = { params..., mode }
+      @$router.replace { name, params, query }
+}
 
-module.exports =
-  see: {
-    finds("folder","book","part","section","phase","chat")...
-    page_idxs: ->
-      @$store.state.book.page_idxs
-    page_ids: ->
-      @page_idxs.map (id)=>
-        "#{@part_id}-#{id}"
-    hide_potof_ids:
-      get: ->
-        @$store.state.book.hide_potof_ids
-      set: (ids)->
-        @$store.commit "book/hide_potof_ids", ids
-    mentions: ->
-      Query.chats.reduce?.mention_to?[@chat_id]
-  }
+module.exports = { base, see }

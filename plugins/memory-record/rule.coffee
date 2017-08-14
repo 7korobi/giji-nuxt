@@ -1,11 +1,11 @@
 _ = require "lodash"
-Mem = require "./index"
+Mem = require "./index.coffee"
 
-Finder = require "./finder"
-Query  = require "./query"
-Model  = require "./model"
-Set    = require "./set"
-Map    = require "./map"
+Finder = require "./finder.coffee"
+Query  = require "./query.coffee"
+Model  = require "./model.coffee"
+Set    = require "./set.coffee"
+Map    = require "./map.coffee"
 
 Mem.Name = {}
 rename = (base)->

@@ -54,16 +54,14 @@ module.exports =
           if chk?.value == "confirm" && confirm "open?\n#{url}"
             open url, "_blank"
 
-    computed:
+    computed: {
       el_adjust: el.adjust
 
       full: ->
         ! @$store.state.menu.set.current
 
       anker: ->
-        { read_at, chat_id } = @$store.state.book
-        current = Query.chats.find chat_id
-        chat = @chat
+        { chat, current } = @
         if chat
           console.log chat unless chat.phase
           { mark } = chat.phase
@@ -82,7 +80,6 @@ module.exports =
 
       log_html: ->
         return "" unless @log
-        @$store.state.book.read_at
         @log
         .replace ///[a-z]+\:\/\/[^"\s<>]+///g, (url, idx, src)->
           return url if '<a href="' == src[idx - 9...idx].toLowerCase()
@@ -96,12 +93,20 @@ module.exports =
         .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
         .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
 
+      current: ->
+        { idx } = @$route.params
+        if idx
+          Query.chats.find idx
       chat: ->
         if @id
           Query.chats.find @id
 
       classname: ->
         if "focus" == @el_adjust
-          @$store.commit "book/see", @id
+          if idx = @id
+            { name, params, query } = @$route
+            params = { params..., idx }
+            @$router.replace { name, params, query }
         [@handle, @el_adjust]
+    }
 </script>

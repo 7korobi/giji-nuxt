@@ -120,13 +120,13 @@
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
-          a(:href="o.href") {{ o.name }}
+          nuxt-link(:to="part_url(o.id, 0)") {{ o.name }}
         .cards
           table.btns.card(style="width: 33%")
             tbody
               tr
                 td(style="text-align: right" colspan="2")
-                  nuxt-link(:to="'village/' + o.id") {{ o.id }}
+                  nuxt-link(:to="part_url(o.id, 0)") {{ o.id }}
                   kbd(style="width: 40px")
                     img(:src="rating_img(o.q.rating)")
               tr
@@ -205,6 +205,9 @@ module.exports =
     reset: ->
       @$router.replace query: {}
       Object.assign @, q.base.query
+    
+    part_url: (book_id, part_idx)->
+      "village/#{book_id}-#{part_idx}/full"
 
     rating_img: (rating)->
       "#{env.STORE_URL}/images/icon/cd_#{rating}.png"
