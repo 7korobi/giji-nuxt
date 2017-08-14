@@ -71,7 +71,7 @@
 
 <script lang="coffee">
 { Query, read_at } = require "~plugins/memory-record"
-{ see } = require "~plugins/book"
+{ computed } = require "~plugins/book"
 
 module.exports =
   data: ->
@@ -82,7 +82,7 @@ module.exports =
     read_at: read_at
 
   computed: {
-    see...
+    computed...
     full_on:  ->  @potof_ids -> false
     full_off: ->  @potof_ids -> true
     live_on:  ->  @potof_ids (o)-> ! o.commit

@@ -36,7 +36,7 @@ tree = (keys...)->
     unless @part_id == part.id && @page_idxs[0] == page_idxs[0]
       window.scrollTo 0,0
 
-    [head,..., tail] = page_idxs
+    [head, ..., tail] = page_idxs
     pages =
       if head == tail
         "#{1 + head}"
@@ -50,14 +50,21 @@ tree = (keys...)->
 
 base =
   idx: -> @$route.params.idx.split("-")
-  idx_type: -> [null,"folder_id","book_id","part_id",""][@idx.length]
 
-see = {
+mounted = ->
+  if @chat_id
+    el = document.querySelector '#' + @chat_id
+    if el
+      unless el.className.match "focus"
+        @$store.dispatch "menu/focus", el
+
+computed = {
   base...
-  tree("folder","book","part","section","phase","chat")...
+  tree("folder","book","part","phase","chat")...
+  pages: ->
+    @$route.query.pages || "1"
   page_idxs: ->
-    { pages = "1" } = @$route.query
-    [head, tail] = "#{pages}".split("-").map (o)-> Number(o) - 1
+    [head, tail] = "#{@pages}".split("-").map (o)-> Number(o) - 1
     [head .. tail ? head]
   page_ids: ->
     @page_idxs.map (idx)=>
@@ -67,6 +74,13 @@ see = {
     Query.chats.reduce?.mention_to?[@chat_id]
   hide_potof_ids: ->
     @$store.state.book.hide_potof_ids
+
+  menus:
+    get: ->
+      key for key, val of @$store.state.menu.set when val
+    set: (menus)->
+      @$store.commit "menu/mode", menus
+  
   mode:
     get: ->
       @$route.params.mode || "full"
@@ -77,4 +91,4 @@ see = {
       @$router.replace { name, params, query }
 }
 
-module.exports = { base, see }
+module.exports = { computed, mounted }

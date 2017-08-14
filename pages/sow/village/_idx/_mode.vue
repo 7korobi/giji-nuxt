@@ -55,7 +55,7 @@
           a(v-if="part_next_id" @click="part_next") 次の日へ
 
       transition-group.inframe(name="list" tag="div" v-for="(chats, idx) in chats_pages", :key="idx")
-        chat(v-for="o in chats" @anker.capture="anker", :id="o.id", :key="o.id")
+        chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
         .center(v-else)
@@ -70,22 +70,29 @@
 
 <script lang="coffee">
 { Query, read_at } = require "~plugins/memory-record"
-{ see } = require "~plugins/book"
+{ computed, mounted } = require "~plugins/book"
 
 module.exports =
   default:
     data: ->
-      menus: []
       read_at: read_at
 
     mounted: ->
       @$store.dispatch "sow/story", @book_id
+      .then =>
+        mounted.call @
 
     methods:
-      anker: (ids)->
+      focus: (idx)->
+        { name, params, query } = @$route
+        params = { params..., idx }
+        @$router.replace { name, params, query }
+        
+      anker: (book_id, a)->
+        back = [a[0], @mode, @pages ].join(",")
         @$router.push
-          path: "/ankers"
-          query: { ids }
+          path: "../#{@book_id}/anker"
+          query: { a, back }
 
       page_add: (id)->
         page_idxs = [@page_idxs[0], id]
@@ -102,7 +109,7 @@ module.exports =
           page_idxs: [0]
 
     computed: {
-      see...
+      computed...
       part_prev_id: ->
         if @part && @book
           ids = @book.parts.pluck('id')
@@ -126,7 +133,6 @@ module.exports =
 
       now: ->
         @read_at["book.#{@book_id}"]
-        @$store.commit "menu/mode", @menus
         Query.chats.now(@hide_potof_ids)
 
       chats: ->

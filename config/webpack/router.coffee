@@ -2,8 +2,8 @@
 module.exports =
   scrollBehavior: (to, from, savedPosition)->
     book = (to, from)->
-      [from_id, to_id] = [from, to].map (o)-> o.params.idx?.split("-")[0..1].join("-")
-      unless from_id == to_id
+      [from_book, to_book] = [from, to].map (o)-> o.params.idx?.split("-")[0..1].join("-")
+      unless from_book == to_book
         x: 0
         y: 0
 
@@ -25,7 +25,7 @@ module.exports =
       savedPosition
     else
       switch to.name
-        when "sow-village-idx-mode"
+        when "sow-village-idx-mode", "sow-village-idx-anker"
           book  to, from
         else
           basic to, from

@@ -1883,12 +1883,12 @@ module.exports = {
   scrollBehavior: function(to, from, savedPosition) {
     var basic, book;
     book = function(to, from) {
-      var from_id, to_id;
-      [from_id, to_id] = [from, to].map(function(o) {
+      var from_book, to_book;
+      [from_book, to_book] = [from, to].map(function(o) {
         var ref;
         return (ref = o.params.idx) != null ? ref.split("-").slice(0, 2).join("-") : void 0;
       });
-      if (from_id !== to_id) {
+      if (from_book !== to_book) {
         return {
           x: 0,
           y: 0
@@ -1919,6 +1919,7 @@ module.exports = {
     } else {
       switch (to.name) {
         case "sow-village-idx-mode":
+        case "sow-village-idx-anker":
           return book(to, from);
         default:
           return basic(to, from);

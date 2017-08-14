@@ -1,6 +1,6 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-{ see } = require "~plugins/book"
+{ computed } = require "~plugins/book"
 
 format =
   head: new Intl.DateTimeFormat 'ja-JP',
@@ -12,7 +12,7 @@ format =
 module.exports =
   props: ["chats"]
   methods:
-    pages: (part_id)->
+    all_page_idxs: (part_id)->
       last = @chats(part_id).length
       [0 ... last]
 
@@ -42,7 +42,7 @@ module.exports =
       else
         "tooltip-bottom"
   computed: {
-    see...
+    computed...
     show: ->
       @$store.state.menu.set.toc
   }
@@ -60,7 +60,7 @@ module.exports =
               | {{o.label}}
               sup {{ chats(o.id).all }}
           td.l.form
-            span(v-for="page in pages(o.id)", :key="page")
+            span(v-for="page in all_page_idxs(o.id)", :key="page")
               btn(bool="include" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_ids", :as="[o.id + '-' + page]", :class="tooltip(line)")
                 | {{ page + 1 }}
 

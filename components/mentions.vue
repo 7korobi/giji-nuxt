@@ -1,12 +1,12 @@
 <script lang="coffee">
 { Query, read_at } = require "~plugins/memory-record"
-{ see } = require "~plugins/book"
+{ computed } = require "~plugins/book"
 
 module.exports =
   data: -> 
     { read_at }
   computed: {
-    see...
+    computed...
     show: ->
       @chat && @$store.state.menu.set.current
   }

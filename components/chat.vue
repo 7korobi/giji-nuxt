@@ -47,8 +47,9 @@ module.exports =
       click: ({ target })->
         { chat_id, href, chk } = target.attributes
         if chat_id && chat = Query.chats.find chat_id.value
+          { book_id } = chat
           ids = Array.from new Set [@id, chat.id]
-          @$emit "anker", ids
+          @$emit "anker", book_id, ids.map (id)-> id[book_id.length ..]
           
         if url = href?.value
           if chk?.value == "confirm" && confirm "open?\n#{url}"
@@ -61,13 +62,12 @@ module.exports =
         ! @$store.state.menu.set.current
 
       anker: ->
-        { chat, current } = @
-        if chat
+        if chat = @chat
           console.log chat unless chat.phase
           { mark } = chat.phase
           if mark?
             prefix =
-              if current && current.part_id == chat.part_id
+              if (current = @current) && current.part_id == chat.part_id
                 ""
               else
                 "#{chat.part.idx}:"
@@ -102,11 +102,10 @@ module.exports =
           Query.chats.find @id
 
       classname: ->
-        if "focus" == @el_adjust
-          if idx = @id
-            { name, params, query } = @$route
-            params = { params..., idx }
-            @$router.replace { name, params, query }
+        { id } = @
+        if id && "focus" == @el_adjust
+          # console.log "focus", id
+          @$emit "focus", id
         [@handle, @el_adjust]
     }
 </script>

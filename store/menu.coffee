@@ -56,4 +56,19 @@ module.exports =
 
       state.left  = left
       state.right = left + width
+    
+  actions:
+    focus: ({ state }, el)->
+      return unless window?
+      # new Promise (ok)-> window.requestAnimationFrame ok
+      new Promise (ok)-> ok()
+      .then ->
+        rect = el.getBoundingClientRect()
+        rect_center = rect.top + rect.height / 2
+        top = rect_center - state.center
+
+        console.log rect_center, state.center
+        window.scrollTo 0, top
+        console.log rect.top + rect.height / 2
+        console.log "goto", el.id, top
 

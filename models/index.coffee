@@ -7,9 +7,11 @@ Mem.vm = new Vue
     read_at: Mem.read_at
 
 Mem.read_at_gate = (name, cb)->
-  return if Date.now() - 10 * 60 * 1000 < Mem.read_at[name]
-  cb().then ->
-    Vue.set Mem.read_at, name, Date.now()
+  if Date.now() - 10 * 60 * 1000 < Mem.read_at[name]
+    new Promise (ok)-> ok()
+  else
+    cb().then ->
+      Vue.set Mem.read_at, name, Date.now()
 
 require "./chr"
 require "./potof"

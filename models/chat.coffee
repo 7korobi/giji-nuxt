@@ -20,7 +20,10 @@ new Rule("chat").schema ->
     extra:  pages 'SAI', all.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY','public'])
     rest:   pages 'SAI', all.where (o)-> o.phase.handle in ['GSAY']
 
-    ankers: (ids)-> all.where(_id: ids).sort("write_at", "desc").list
+    ankers: (book_id, a)->
+      ids = a.map (idx)-> book_id + idx
+      all.where(_id: ids).sort("write_at", "desc")
+
     now: (hides)->
       memo:   (part_id)-> all.memo(  hides, part_id).reduce.last ? blank
       memos:  (part_id)-> all.memo(  hides, part_id).reduce.list ? blank
