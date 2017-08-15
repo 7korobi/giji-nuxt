@@ -32833,7 +32833,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
- * vee-validate v2.0.0-rc.9
+ * vee-validate v2.0.0-rc.12
  * (c) 2017 Abdelrahman Awad
  * @license MIT
  */
@@ -33803,6 +33803,30 @@ var getDataAttribute = function (el, name) { return el.getAttribute(("data-vv-" 
 var setDataAttribute = function (el, name, value) { return el.setAttribute(("data-vv-" + name), value); };
 
 /**
+ * Shallow object comparison.
+ *
+ * @param {*} lhs 
+ * @param {*} rhs 
+ * @return {Boolean}
+ */
+var isEqual = function (lhs, rhs) {
+  if (lhs instanceof RegExp && rhs instanceof RegExp) {
+    return isEqual(lhs.source, rhs.source) && isEqual(lhs.flags, rhs.flags);
+  }
+
+  // if both are objects, compare each key recursively.
+  if (isObject(lhs) && isObject(rhs)) {
+    return Object.keys(lhs).every(function (key) {
+      return isEqual(lhs[key], rhs[key]);
+    }) && Object.keys(rhs).every(function (key) {
+      return isEqual(lhs[key], rhs[key]);
+    });
+  }
+
+  return lhs === rhs;
+};
+
+/**
  * Determines the input field scope.
  */
 var getScope = function (el) {
@@ -34098,29 +34122,6 @@ var find = function (array, predicate) {
   });
 
   return result;
-};
-
-/**
- * Gets the rules from a binding value or the element dataset.
- *
- * @param {Object} binding The binding object.
- * @param {element} el The element.
- * @returns {String|Object}
- */
-var getRules = function (binding, el) {
-  if (!binding || ! binding.expression) {
-    return getDataAttribute(el, 'rules');
-  }
-
-  if (typeof binding.value === 'string') {
-    return binding.value;
-  }
-
-  if (~['string', 'object'].indexOf(typeof binding.value.rules)) {
-    return binding.value.rules;
-  }
-
-  return binding.value;
 };
 
 var getInputEventName = function (el) {
@@ -34648,10 +34649,31 @@ Generator.generate = function generate (el, binding, vnode, options) {
     events: Generator.resolveEvents(el, vnode) || options.events,
     model: model,
     delay: Generator.resolveDelay(el, vnode, options),
-    rules: getRules(binding, el),
+    rules: Generator.resolveRules(el, binding),
     initial: !!binding.modifiers.initial,
     alias: Generator.resolveAlias(el, vnode)
   };
+};
+
+/**
+ * 
+ * @param {*} el 
+ * @param {*} binding 
+ */
+Generator.resolveRules = function resolveRules (el, binding) {
+  if (!binding || !binding.expression) {
+    return getDataAttribute(el, 'rules');
+  }
+
+  if (typeof binding.value === 'string') {
+    return binding.value;
+  }
+
+  if (~['string', 'object'].indexOf(typeof binding.value.rules)) {
+    return binding.value.rules;
+  }
+
+  return binding.value;
 };
 
 /**
@@ -34660,8 +34682,12 @@ Generator.generate = function generate (el, binding, vnode, options) {
  */
 Generator.makeVM = function makeVM (vm) {
   return {
-    $el: vm.$el || null,
-    $refs: vm.$refs || {},
+    get $el () {
+      return vm.$el;
+    },
+    get $refs () {
+      return vm.$refs;
+    },
     $watch: vm.$watch ? vm.$watch.bind(vm) : function () {},
     $validator: vm.$validator ? {
       errors: vm.$validator.errors,
@@ -34857,7 +34883,6 @@ var Field = function Field (el, options) {
   this.id = uniqId();
   this.el = el;
   this.updated = false;
-  this.expression = null;
   this.dependencies = [];
   this.watchers = [];
   this.events = [];
@@ -34870,6 +34895,7 @@ var Field = function Field (el, options) {
   this.vm = options.vm || this.vm;
   this.component = options.component || this.component;
   this.update(options);
+  this.updated = false;
 };
 
 var prototypeAccessors$1 = { isVue: {},validator: {},isRequired: {},isDisabled: {},isHeadless: {},displayName: {},value: {},rejectsFalse: {} };
@@ -34961,6 +34987,12 @@ Field.prototype.matches = function matches (options) {
 Field.prototype.update = function update (options) {
   this.targetOf = options.targetOf || null;
   this.initial = options.initial || this.initial || false;
+
+  // update errors scope if the field scope was changed.
+  if (options.scope && options.scope !== this.scope && this.validator.errors && isCallable(this.validator.errors.update)) {
+    this.validator.errors.update(this.id, { scope: this.scope });
+  }
+
   this.scope = options.scope || this.scope || null;
   this.name = options.name || this.name || null;
   this.rules = options.rules ? normalizeRules(options.rules) : this.rules;
@@ -34968,23 +35000,20 @@ Field.prototype.update = function update (options) {
   this.listen = options.listen !== undefined ? options.listen : this.listen;
   this.classes = options.classes || this.classes || false;
   this.classNames = options.classNames || this.classNames || DEFAULT_OPTIONS.classNames;
-  this.expression = JSON.stringify(options.expression);
   this.alias = options.alias || this.alias;
   this.getter = isCallable(options.getter) ? options.getter : this.getter;
   this.delay = options.delay || this.delay || 0;
   this.events = typeof options.events === 'string' && options.events.length ? options.events.split('|') : this.events;
   this.updateDependencies();
   this.addActionListeners();
-  if (this.updated && this.validator.errors && isCallable(this.validator.errors.update)) {
-    this.validator.errors.update(this.id, { scope: this.scope });
-  }
 
-  // validate if it is updated and was validated before and there was a rules mutation.
-  if (this.updated && this.flags.validated && options.rules) {
+  // validate if it was validated before and field was updated and there was a rules mutation.
+  if (this.flags.validated && options.rules && this.updated) {
     this.validator.validate(("#" + (this.id)));
   }
 
   this.updated = true;
+
   // no need to continue.
   if (this.isHeadless) {
     return;
@@ -36313,6 +36342,13 @@ var makeMixin = function (Vue, options) {
     };
   };
 
+  mixin.beforeDestroy = function beforeDestroy () {
+    // mark the validator paused to prevent delayed validation.
+    if (this.$validator && isCallable(this.$validator.pause)) {
+      this.$validator.pause();
+    }
+  };
+
   return mixin;
 };
 
@@ -36331,8 +36367,11 @@ var config = {
 };
 
 /**
+ * 
+ * 
  * Finds the requested field by id from the context object.
  * @param {Object} context
+ * @return {Field|null}
  */
 var findField = function (el, context) {
   if (!context || !context.$validator) {
@@ -36340,6 +36379,19 @@ var findField = function (el, context) {
   }
 
   return context.$validator.fields.find({ id: getDataAttribute(el, 'id') });
+};
+
+var update = function (el, binding, vnode) {
+  var field = findField(el, vnode.context);
+
+  // make sure we don't do uneccessary work if no important change was done.
+  if (!field || (field.updated && isEqual(binding.value, binding.oldValue))) { return; }
+  var scope = Generator.resolveScope(el, binding, vnode);
+
+  field.update({
+    scope: scope,
+    rules: Generator.resolveRules(el, binding)
+  });
 };
 
 var createDirective = function (options) {
@@ -36355,31 +36407,12 @@ var createDirective = function (options) {
       var fieldOptions = Generator.generate(el, binding, vnode, options);
       validator.attach(fieldOptions);
     },
-    inserted: function inserted (el, binding, vnode) {
+    inserted: function (el, binding, vnode) {
+      update(el, binding, vnode);
       var field = findField(el, vnode.context);
-      if (!field) { return; }
-
-      var scope = Generator.resolveScope(el, binding, vnode);
-      field.update({ scope: scope });
+      field.updated = false;
     },
-    update: function update (el, ref, ref$1) {
-      var expression = ref.expression;
-      var value = ref.value;
-      var context = ref$1.context;
-
-      var field = findField(el, context);
-      // make sure we don't do uneccessary work if no expression was passed
-      // nor if the expression value did not change.
-      // TODO: Diffing for other options like delay or scope.
-      if (!field || !expression || field.expression === JSON.stringify(value)) { return; }
-
-      var scope = isObject(value) && value.rules ? value.scope : getScope(el);
-      field.update({
-        expression: value,
-        scope: scope,
-        rules: getRules({ expression: expression, value: value }, el)
-      });
-    },
+    update: update,
     unbind: function unbind (el, binding, ref) {
       var context = ref.context;
 
@@ -36463,7 +36496,7 @@ var index = {
   Validator: Validator,
   ErrorBag: ErrorBag,
   Rules: Rules,
-  version: '2.0.0-rc.9'
+  version: '2.0.0-rc.12'
 };
 
 return index;
@@ -40852,7 +40885,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".header[data-v-0648bb3d]{padding-left:20px}.r[data-v-0648bb3d]{text-align:right}.l[data-v-0648bb3d]{text-align:left}.c[data-v-0648bb3d]{text-align:center}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/toc.vue"],"names":[],"mappings":"AACA,yBACE,iBAAmB,CACpB,AACD,oBACE,gBAAkB,CACnB,AACD,oBACE,eAAiB,CAClB,AACD,oBACE,iBAAmB,CACpB","file":"toc.vue","sourcesContent":["\n.header[data-v-0648bb3d] {\n  padding-left: 20px;\n}\n.r[data-v-0648bb3d] {\n  text-align: right;\n}\n.l[data-v-0648bb3d] {\n  text-align: left;\n}\n.c[data-v-0648bb3d] {\n  text-align: center;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".header[data-v-0648bb3d]{padding-left:20px}.r[data-v-0648bb3d]{text-align:right}.l[data-v-0648bb3d]{text-align:left}.c[data-v-0648bb3d]{text-align:center}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/toc.vue"],"names":[],"mappings":"AACA,yBACE,iBAAmB,CACpB,AACD,oBACE,gBAAkB,CACnB,AACD,oBACE,eAAiB,CAClB,AACD,oBACE,iBAAmB,CACpB","file":"toc.vue","sourcesContent":["\n.header[data-v-0648bb3d] {\n  padding-left: 20px;\n}\n.r[data-v-0648bb3d] {\n  text-align: right;\n}\n.l[data-v-0648bb3d] {\n  text-align: left;\n}\n.c[data-v-0648bb3d] {\n  text-align: center;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40866,7 +40899,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".talk[data-v-1e641cf2]{width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0;margin:0 0 6px}.talk tbody[data-v-1e641cf2],.talk td[data-v-1e641cf2],.talk tfoot[data-v-1e641cf2],.talk th[data-v-1e641cf2],.talk thead[data-v-1e641cf2]{border:0;padding:0;background:transparent}.talk td[data-v-1e641cf2]{vertical-align:middle;position:relative}.talk th[data-v-1e641cf2]{width:125px;vertical-align:top}.talk th .portrate[data-v-1e641cf2]{margin:0 19px 0 16px}.contentframe .baloon[data-v-1e641cf2]{position:absolute;content:\"\";width:0;height:0;top:60px;left:-6px;border-style:solid;border-width:6px;border-radius:6px 0 0 6px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/talk.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,mBAAoB,AACpB,yBAA0B,AAC1B,iBAAkB,AAClB,cAAkB,CACnB,AACD,2IAKE,SAAU,AACV,UAAW,AACX,sBAAwB,CACzB,AACD,0BACE,sBAAuB,AACvB,iBAAmB,CACpB,AACD,0BACE,YAAa,AACb,kBAAoB,CACrB,AACD,oCACE,oBAAsB,CACvB,AACD,uCACE,kBAAmB,AACnB,WAAY,AACZ,QAAS,AACT,SAAU,AACV,SAAU,AACV,UAAW,AACX,mBAAoB,AACpB,iBAAkB,AAClB,yBAA2B,CAC5B","file":"talk.vue","sourcesContent":["\n.talk[data-v-1e641cf2] {\n  width: 100%;\n  table-layout: fixed;\n  border-collapse: collapse;\n  border-spacing: 0;\n  margin: 0 0 6px 0;\n}\n.talk thead[data-v-1e641cf2],\n.talk tfoot[data-v-1e641cf2],\n.talk tbody[data-v-1e641cf2],\n.talk th[data-v-1e641cf2],\n.talk td[data-v-1e641cf2] {\n  border: 0;\n  padding: 0;\n  background: transparent;\n}\n.talk td[data-v-1e641cf2] {\n  vertical-align: middle;\n  position: relative;\n}\n.talk th[data-v-1e641cf2] {\n  width: 125px;\n  vertical-align: top;\n}\n.talk th .portrate[data-v-1e641cf2] {\n  margin: 0 19px 0 16px;\n}\n.contentframe .baloon[data-v-1e641cf2] {\n  position: absolute;\n  content: '';\n  width: 0;\n  height: 0;\n  top: 60px;\n  left: -6px;\n  border-style: solid;\n  border-width: 6px;\n  border-radius: 6px 0 0 6px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".talk[data-v-1e641cf2]{width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0;margin:0 0 6px}.talk tbody[data-v-1e641cf2],.talk td[data-v-1e641cf2],.talk tfoot[data-v-1e641cf2],.talk th[data-v-1e641cf2],.talk thead[data-v-1e641cf2]{border:0;padding:0;background:transparent}.talk td[data-v-1e641cf2]{vertical-align:middle;position:relative}.talk th[data-v-1e641cf2]{width:125px;vertical-align:top}.talk th .portrate[data-v-1e641cf2]{margin:0 19px 0 16px}.contentframe .baloon[data-v-1e641cf2]{position:absolute;content:\"\";width:0;height:0;top:60px;left:-6px;border-style:solid;border-width:6px;border-radius:6px 0 0 6px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/talk.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,mBAAoB,AACpB,yBAA0B,AAC1B,iBAAkB,AAClB,cAAkB,CACnB,AACD,2IAKE,SAAU,AACV,UAAW,AACX,sBAAwB,CACzB,AACD,0BACE,sBAAuB,AACvB,iBAAmB,CACpB,AACD,0BACE,YAAa,AACb,kBAAoB,CACrB,AACD,oCACE,oBAAsB,CACvB,AACD,uCACE,kBAAmB,AACnB,WAAY,AACZ,QAAS,AACT,SAAU,AACV,SAAU,AACV,UAAW,AACX,mBAAoB,AACpB,iBAAkB,AAClB,yBAA2B,CAC5B","file":"talk.vue","sourcesContent":["\n.talk[data-v-1e641cf2] {\n  width: 100%;\n  table-layout: fixed;\n  border-collapse: collapse;\n  border-spacing: 0;\n  margin: 0 0 6px 0;\n}\n.talk thead[data-v-1e641cf2],\n.talk tfoot[data-v-1e641cf2],\n.talk tbody[data-v-1e641cf2],\n.talk th[data-v-1e641cf2],\n.talk td[data-v-1e641cf2] {\n  border: 0;\n  padding: 0;\n  background: transparent;\n}\n.talk td[data-v-1e641cf2] {\n  vertical-align: middle;\n  position: relative;\n}\n.talk th[data-v-1e641cf2] {\n  width: 125px;\n  vertical-align: top;\n}\n.talk th .portrate[data-v-1e641cf2] {\n  margin: 0 19px 0 16px;\n}\n.contentframe .baloon[data-v-1e641cf2] {\n  position: absolute;\n  content: '';\n  width: 0;\n  height: 0;\n  top: 60px;\n  left: -6px;\n  border-style: solid;\n  border-width: 6px;\n  border-radius: 6px 0 0 6px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40894,7 +40927,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".post[data-v-42513b7b]{padding-right:12px;margin:0 0 6px 7px}.contentframe .post[data-v-42513b7b]{margin:0 0 6px 107px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/post.vue"],"names":[],"mappings":"AACA,uBACE,mBAAoB,AACpB,kBAAoB,CACrB,AACD,qCACE,oBAAsB,CACvB","file":"post.vue","sourcesContent":["\n.post[data-v-42513b7b] {\n  padding-right: 12px;\n  margin: 0 0 6px 7px;\n}\n.contentframe .post[data-v-42513b7b] {\n  margin: 0 0 6px 107px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".post[data-v-42513b7b]{padding-right:12px;margin:0 0 6px 7px}.contentframe .post[data-v-42513b7b]{margin:0 0 6px 107px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/post.vue"],"names":[],"mappings":"AACA,uBACE,mBAAoB,AACpB,kBAAoB,CACrB,AACD,qCACE,oBAAsB,CACvB","file":"post.vue","sourcesContent":["\n.post[data-v-42513b7b] {\n  padding-right: 12px;\n  margin: 0 0 6px 7px;\n}\n.contentframe .post[data-v-42513b7b] {\n  margin: 0 0 6px 107px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40908,7 +40941,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, "IMG{display:block}IMG.hide{-webkit-filter:sepia(60%) hue-rotate(180deg);filter:sepia(60%) hue-rotate(180deg)}.chrblank{background:#444844;color:#ccf;margin:0 auto}.chrblank p{text-align:center;white-space:nowrap}.swipe .portrate{max-width:45px;width:45px;background-color:#000}.swipe .portrate IMG{max-height:65px;height:65px;max-width:45px;width:45px}.swipe .portrate IMG+.chrblank{margin:.5px .5px 2px;padding:0}.swipe .portrate .chrblank{max-width:44px;width:44px;border-radius:4px}.contentframe .portrate,.fullframe .portrate{max-width:90px;width:90px;background-color:#000}.contentframe .portrate IMG,.fullframe .portrate IMG{max-height:130px;height:130px;max-width:90px;width:90px}.contentframe .portrate IMG+.chrblank,.fullframe .portrate IMG+.chrblank{margin:1px 1px 3px;padding:0}.contentframe .portrate .chrblank,.fullframe .portrate .chrblank{max-width:88px;width:88px;border-radius:9px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/portrate.vue"],"names":[],"mappings":"AACA,IACE,aAAe,CAChB,AACD,SACE,6CAA8C,AACtC,oCAAsC,CAC/C,AACD,UACE,mBAAoB,AACpB,WAAY,AACZ,aAAe,CAChB,AACD,YACE,kBAAmB,AACnB,kBAAoB,CACrB,AACD,iBACE,eAAgB,AAChB,WAAY,AACZ,qBAAuB,CACxB,AACD,qBACE,gBAAiB,AACjB,YAAa,AACb,eAAgB,AAChB,UAAY,CACb,AACD,+BACE,qBAA8B,AAC9B,SAAW,CACZ,AACD,2BACE,eAAgB,AAChB,WAAY,AACZ,iBAAmB,CACpB,AACD,6CAEE,eAAgB,AAChB,WAAY,AACZ,qBAAuB,CACxB,AACD,qDAEE,iBAAkB,AAClB,aAAc,AACd,eAAgB,AAChB,UAAY,CACb,AACD,yEAEE,mBAAwB,AACxB,SAAW,CACZ,AACD,iEAEE,eAAgB,AAChB,WAAY,AACZ,iBAAmB,CACpB","file":"portrate.vue","sourcesContent":["\nIMG {\n  display: block;\n}\nIMG.hide {\n  -webkit-filter: sepia(60%) hue-rotate(180deg);\n          filter: sepia(60%) hue-rotate(180deg);\n}\n.chrblank {\n  background: #444844;\n  color: #ccf;\n  margin: 0 auto;\n}\n.chrblank p {\n  text-align: center;\n  white-space: nowrap;\n}\n.swipe .portrate {\n  max-width: 45px;\n  width: 45px;\n  background-color: #000;\n}\n.swipe .portrate IMG {\n  max-height: 65px;\n  height: 65px;\n  max-width: 45px;\n  width: 45px;\n}\n.swipe .portrate IMG + .chrblank {\n  margin: 0.5px 0.5px 2px 0.5px;\n  padding: 0;\n}\n.swipe .portrate .chrblank {\n  max-width: 44px;\n  width: 44px;\n  border-radius: 4px;\n}\n.fullframe .portrate,\n.contentframe .portrate {\n  max-width: 90px;\n  width: 90px;\n  background-color: #000;\n}\n.fullframe .portrate IMG,\n.contentframe .portrate IMG {\n  max-height: 130px;\n  height: 130px;\n  max-width: 90px;\n  width: 90px;\n}\n.fullframe .portrate IMG + .chrblank,\n.contentframe .portrate IMG + .chrblank {\n  margin: 1px 1px 3px 1px;\n  padding: 0;\n}\n.fullframe .portrate .chrblank,\n.contentframe .portrate .chrblank {\n  max-width: 88px;\n  width: 88px;\n  border-radius: 9px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "IMG{display:block}IMG.hide{-webkit-filter:sepia(60%) hue-rotate(180deg);filter:sepia(60%) hue-rotate(180deg)}.chrblank{background:#444844;color:#ccf;margin:0 auto}.chrblank p{text-align:center;white-space:nowrap}.swipe .portrate{max-width:45px;width:45px;background-color:#000}.swipe .portrate IMG{max-height:65px;height:65px;max-width:45px;width:45px}.swipe .portrate IMG+.chrblank{margin:.5px .5px 2px;padding:0}.swipe .portrate .chrblank{max-width:44px;width:44px;border-radius:4px}.contentframe .portrate,.fullframe .portrate{max-width:90px;width:90px;background-color:#000}.contentframe .portrate IMG,.fullframe .portrate IMG{max-height:130px;height:130px;max-width:90px;width:90px}.contentframe .portrate IMG+.chrblank,.fullframe .portrate IMG+.chrblank{margin:1px 1px 3px;padding:0}.contentframe .portrate .chrblank,.fullframe .portrate .chrblank{max-width:88px;width:88px;border-radius:9px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/portrate.vue"],"names":[],"mappings":"AACA,IACE,aAAe,CAChB,AACD,SACE,6CAA8C,AACtC,oCAAsC,CAC/C,AACD,UACE,mBAAoB,AACpB,WAAY,AACZ,aAAe,CAChB,AACD,YACE,kBAAmB,AACnB,kBAAoB,CACrB,AACD,iBACE,eAAgB,AAChB,WAAY,AACZ,qBAAuB,CACxB,AACD,qBACE,gBAAiB,AACjB,YAAa,AACb,eAAgB,AAChB,UAAY,CACb,AACD,+BACE,qBAA8B,AAC9B,SAAW,CACZ,AACD,2BACE,eAAgB,AAChB,WAAY,AACZ,iBAAmB,CACpB,AACD,6CAEE,eAAgB,AAChB,WAAY,AACZ,qBAAuB,CACxB,AACD,qDAEE,iBAAkB,AAClB,aAAc,AACd,eAAgB,AAChB,UAAY,CACb,AACD,yEAEE,mBAAwB,AACxB,SAAW,CACZ,AACD,iEAEE,eAAgB,AAChB,WAAY,AACZ,iBAAmB,CACpB","file":"portrate.vue","sourcesContent":["\nIMG {\n  display: block;\n}\nIMG.hide {\n  -webkit-filter: sepia(60%) hue-rotate(180deg);\n          filter: sepia(60%) hue-rotate(180deg);\n}\n.chrblank {\n  background: #444844;\n  color: #ccf;\n  margin: 0 auto;\n}\n.chrblank p {\n  text-align: center;\n  white-space: nowrap;\n}\n.swipe .portrate {\n  max-width: 45px;\n  width: 45px;\n  background-color: #000;\n}\n.swipe .portrate IMG {\n  max-height: 65px;\n  height: 65px;\n  max-width: 45px;\n  width: 45px;\n}\n.swipe .portrate IMG + .chrblank {\n  margin: 0.5px 0.5px 2px 0.5px;\n  padding: 0;\n}\n.swipe .portrate .chrblank {\n  max-width: 44px;\n  width: 44px;\n  border-radius: 4px;\n}\n.fullframe .portrate,\n.contentframe .portrate {\n  max-width: 90px;\n  width: 90px;\n  background-color: #000;\n}\n.fullframe .portrate IMG,\n.contentframe .portrate IMG {\n  max-height: 130px;\n  height: 130px;\n  max-width: 90px;\n  width: 90px;\n}\n.fullframe .portrate IMG + .chrblank,\n.contentframe .portrate IMG + .chrblank {\n  margin: 1px 1px 3px 1px;\n  padding: 0;\n}\n.fullframe .portrate .chrblank,\n.contentframe .portrate .chrblank {\n  max-width: 88px;\n  width: 88px;\n  border-radius: 9px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40922,7 +40955,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".report[data-v-4481894f]{-webkit-box-shadow:0 -10px 20px -10px #000;box-shadow:0 -10px 20px -10px #000;border-style:double dotted;border-width:4px 1px;margin:0 -10px 6px;padding:1px 8px 1px 10px}.report .name[data-v-4481894f]{margin-left:127px;margin-right:13px}.report .date[data-v-4481894f]{margin-right:13px}.contentframe .report[data-v-4481894f]{position:relative}.contentframe .report[data-v-4481894f]:after,.contentframe .report[data-v-4481894f]:before{top:-8px;content:\"\";position:absolute;border-style:solid;border-width:1px;border-top-color:transparent}.contentframe .report[data-v-4481894f]:before{border-width:4px 8px 0 0;left:0}.contentframe .report[data-v-4481894f]:after{border-width:4px 0 0 8px;right:0}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/report.vue"],"names":[],"mappings":"AACA,yBACE,2CAA8C,AACtC,mCAAsC,AAC9C,2BAA4B,AAC5B,qBAAsB,AACtB,mBAA0B,AAC1B,wBAA0B,CAC3B,AACD,+BACE,kBAAmB,AACnB,iBAAmB,CACpB,AACD,+BACE,iBAAmB,CACpB,AACD,uCACE,iBAAmB,CACpB,AACD,2FAEE,SAAU,AACV,WAAY,AACZ,kBAAmB,AACnB,mBAAoB,AACpB,iBAAkB,AAClB,4BAA8B,CAC/B,AACD,8CACE,yBAA0B,AAC1B,MAAQ,CACT,AACD,6CACE,yBAA0B,AAC1B,OAAS,CACV","file":"report.vue","sourcesContent":["\n.report[data-v-4481894f] {\n  -webkit-box-shadow: 0px -10px 20px -10px #000;\n          box-shadow: 0px -10px 20px -10px #000;\n  border-style: double dotted;\n  border-width: 4px 1px;\n  margin: 0 -10px 6px -10px;\n  padding: 1px 8px 1px 10px;\n}\n.report .name[data-v-4481894f] {\n  margin-left: 127px;\n  margin-right: 13px;\n}\n.report .date[data-v-4481894f] {\n  margin-right: 13px;\n}\n.contentframe .report[data-v-4481894f] {\n  position: relative;\n}\n.contentframe .report[data-v-4481894f]::before,\n.contentframe .report[data-v-4481894f]::after {\n  top: -8px;\n  content: \"\";\n  position: absolute;\n  border-style: solid;\n  border-width: 1px;\n  border-top-color: transparent;\n}\n.contentframe .report[data-v-4481894f]::before {\n  border-width: 4px 8px 0 0;\n  left: 0;\n}\n.contentframe .report[data-v-4481894f]::after {\n  border-width: 4px 0 0 8px;\n  right: 0;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".report[data-v-4481894f]{-webkit-box-shadow:0 -10px 20px -10px #000;box-shadow:0 -10px 20px -10px #000;border-style:double dotted;border-width:4px 1px;margin:0 -10px 6px;padding:1px 8px 1px 10px}.report .name[data-v-4481894f]{margin-left:127px;margin-right:13px}.report .date[data-v-4481894f]{margin-right:13px}.contentframe .report[data-v-4481894f]{position:relative}.contentframe .report[data-v-4481894f]:after,.contentframe .report[data-v-4481894f]:before{top:-8px;content:\"\";position:absolute;border-style:solid;border-width:1px;border-top-color:transparent}.contentframe .report[data-v-4481894f]:before{border-width:4px 8px 0 0;left:0}.contentframe .report[data-v-4481894f]:after{border-width:4px 0 0 8px;right:0}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/report.vue"],"names":[],"mappings":"AACA,yBACE,2CAA8C,AACtC,mCAAsC,AAC9C,2BAA4B,AAC5B,qBAAsB,AACtB,mBAA0B,AAC1B,wBAA0B,CAC3B,AACD,+BACE,kBAAmB,AACnB,iBAAmB,CACpB,AACD,+BACE,iBAAmB,CACpB,AACD,uCACE,iBAAmB,CACpB,AACD,2FAEE,SAAU,AACV,WAAY,AACZ,kBAAmB,AACnB,mBAAoB,AACpB,iBAAkB,AAClB,4BAA8B,CAC/B,AACD,8CACE,yBAA0B,AAC1B,MAAQ,CACT,AACD,6CACE,yBAA0B,AAC1B,OAAS,CACV","file":"report.vue","sourcesContent":["\n.report[data-v-4481894f] {\n  -webkit-box-shadow: 0px -10px 20px -10px #000;\n          box-shadow: 0px -10px 20px -10px #000;\n  border-style: double dotted;\n  border-width: 4px 1px;\n  margin: 0 -10px 6px -10px;\n  padding: 1px 8px 1px 10px;\n}\n.report .name[data-v-4481894f] {\n  margin-left: 127px;\n  margin-right: 13px;\n}\n.report .date[data-v-4481894f] {\n  margin-right: 13px;\n}\n.contentframe .report[data-v-4481894f] {\n  position: relative;\n}\n.contentframe .report[data-v-4481894f]::before,\n.contentframe .report[data-v-4481894f]::after {\n  top: -8px;\n  content: \"\";\n  position: absolute;\n  border-style: solid;\n  border-width: 1px;\n  border-top-color: transparent;\n}\n.contentframe .report[data-v-4481894f]::before {\n  border-width: 4px 8px 0 0;\n  left: 0;\n}\n.contentframe .report[data-v-4481894f]::after {\n  border-width: 4px 0 0 8px;\n  right: 0;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40936,7 +40969,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, "#export[data-v-5cc901d7]{border-collapse:separate;border-spacing:2px;padding:30px;margin:0 auto}#export tfoot[data-v-5cc901d7],#export thead[data-v-5cc901d7]{text-align:center}#export th[data-v-5cc901d7]{background-color:#444}#export td[data-v-5cc901d7]{background-color:#000;vertical-align:top;padding:0 3px}#welcome[data-v-5cc901d7]{background-size:cover}#welcome .btns[data-v-5cc901d7]{background-color:rgba(77,78,70,.9)}.filmline[data-v-5cc901d7]{margin:0;height:11px;background-repeat:repeat-x}.filmline .contentframe[data-v-5cc901d7]{background-image:none}.links[data-v-5cc901d7]{white-space:pre}h2[data-v-5cc901d7]{height:100px;margin:0;padding:25px 0 0;white-space:pre;font-size:xx-large;text-align:center;line-height:1.1em;background-color:rgba(92,92,32,.5)}h2 sup[data-v-5cc901d7]{font-size:large}h2 a[data-v-5cc901d7]{font-size:xx-large;line-height:1.1em;color:#fff}h2 a[data-v-5cc901d7]:focus,h2 a[data-v-5cc901d7]:hover{-webkit-box-shadow:0 0 20px 3px #fff inset;box-shadow:inset 0 0 20px 3px #fff}h2 a[data-v-5cc901d7]:active{-webkit-box-shadow:0 0 20px 3px rgba(51,251,118,.5) inset;box-shadow:inset 0 0 20px 3px rgba(51,251,118,.5)}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/welcome.vue"],"names":[],"mappings":"AACA,yBACE,yBAA0B,AAC1B,mBAAoB,AACpB,aAAc,AACd,aAAiB,CAClB,AACD,8DAEE,iBAAmB,CACpB,AACD,4BACE,qBAAuB,CACxB,AACD,4BACE,sBAAuB,AACvB,mBAAoB,AACpB,aAAe,CAChB,AACD,0BACE,qBAAuB,CACxB,AACD,gCACE,kCAAqC,CACtC,AACD,2BACE,SAAU,AACV,YAAa,AACb,0BAA4B,CAC7B,AACD,yCACE,qBAAuB,CACxB,AACD,wBACE,eAAiB,CAClB,AACD,oBACE,aAAc,AACd,SAAU,AACV,iBAAoB,AACpB,gBAAiB,AACjB,mBAAoB,AACpB,kBAAmB,AACnB,kBAAmB,AACnB,kCAAqC,CACtC,AACD,wBACE,eAAiB,CAClB,AACD,sBACE,mBAAoB,AACpB,kBAAmB,AACnB,UAAY,CACb,AACD,wDAEE,2CAA4C,AACpC,kCAAoC,CAC7C,AACD,6BACE,0DAA4D,AACpD,iDAAoD,CAC7D","file":"welcome.vue","sourcesContent":["\n#export[data-v-5cc901d7] {\n  border-collapse: separate;\n  border-spacing: 2px;\n  padding: 30px;\n  margin: 0px auto;\n}\n#export thead[data-v-5cc901d7],\n#export tfoot[data-v-5cc901d7] {\n  text-align: center;\n}\n#export th[data-v-5cc901d7] {\n  background-color: #444;\n}\n#export td[data-v-5cc901d7] {\n  background-color: #000;\n  vertical-align: top;\n  padding: 0 3px;\n}\n#welcome[data-v-5cc901d7] {\n  background-size: cover;\n}\n#welcome .btns[data-v-5cc901d7] {\n  background-color: rgba(77,78,70,0.9);\n}\n.filmline[data-v-5cc901d7] {\n  margin: 0;\n  height: 11px;\n  background-repeat: repeat-x;\n}\n.filmline .contentframe[data-v-5cc901d7] {\n  background-image: none;\n}\n.links[data-v-5cc901d7] {\n  white-space: pre;\n}\nh2[data-v-5cc901d7] {\n  height: 100px;\n  margin: 0;\n  padding: 25px 0 0 0;\n  white-space: pre;\n  font-size: xx-large;\n  text-align: center;\n  line-height: 1.1em;\n  background-color: rgba(92,92,32,0.5);\n}\nh2 sup[data-v-5cc901d7] {\n  font-size: large;\n}\nh2 a[data-v-5cc901d7] {\n  font-size: xx-large;\n  line-height: 1.1em;\n  color: #fff;\n}\nh2 a[data-v-5cc901d7]:hover,\nh2 a[data-v-5cc901d7]:focus {\n  -webkit-box-shadow: 0 0 20px 3px #fff inset;\n          box-shadow: 0 0 20px 3px #fff inset;\n}\nh2 a[data-v-5cc901d7]:active {\n  -webkit-box-shadow: 0 0 20px 3px rgba(51,251,118,0.5) inset;\n          box-shadow: 0 0 20px 3px rgba(51,251,118,0.5) inset;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "#export[data-v-5cc901d7]{border-collapse:separate;border-spacing:2px;padding:30px;margin:0 auto}#export tfoot[data-v-5cc901d7],#export thead[data-v-5cc901d7]{text-align:center}#export th[data-v-5cc901d7]{background-color:#444}#export td[data-v-5cc901d7]{background-color:#000;vertical-align:top;padding:0 3px}#welcome[data-v-5cc901d7]{background-size:cover}#welcome .btns[data-v-5cc901d7]{background-color:rgba(77,78,70,.9)}.filmline[data-v-5cc901d7]{margin:0;height:11px;background-repeat:repeat-x}.filmline .contentframe[data-v-5cc901d7]{background-image:none}.links[data-v-5cc901d7]{white-space:pre}h2[data-v-5cc901d7]{height:100px;margin:0;padding:25px 0 0;white-space:pre;font-size:xx-large;text-align:center;line-height:1.1em;background-color:rgba(92,92,32,.5)}h2 sup[data-v-5cc901d7]{font-size:large}h2 a[data-v-5cc901d7]{font-size:xx-large;line-height:1.1em;color:#fff}h2 a[data-v-5cc901d7]:focus,h2 a[data-v-5cc901d7]:hover{-webkit-box-shadow:0 0 20px 3px #fff inset;box-shadow:inset 0 0 20px 3px #fff}h2 a[data-v-5cc901d7]:active{-webkit-box-shadow:0 0 20px 3px rgba(51,251,118,.5) inset;box-shadow:inset 0 0 20px 3px rgba(51,251,118,.5)}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/welcome.vue"],"names":[],"mappings":"AACA,yBACE,yBAA0B,AAC1B,mBAAoB,AACpB,aAAc,AACd,aAAiB,CAClB,AACD,8DAEE,iBAAmB,CACpB,AACD,4BACE,qBAAuB,CACxB,AACD,4BACE,sBAAuB,AACvB,mBAAoB,AACpB,aAAe,CAChB,AACD,0BACE,qBAAuB,CACxB,AACD,gCACE,kCAAqC,CACtC,AACD,2BACE,SAAU,AACV,YAAa,AACb,0BAA4B,CAC7B,AACD,yCACE,qBAAuB,CACxB,AACD,wBACE,eAAiB,CAClB,AACD,oBACE,aAAc,AACd,SAAU,AACV,iBAAoB,AACpB,gBAAiB,AACjB,mBAAoB,AACpB,kBAAmB,AACnB,kBAAmB,AACnB,kCAAqC,CACtC,AACD,wBACE,eAAiB,CAClB,AACD,sBACE,mBAAoB,AACpB,kBAAmB,AACnB,UAAY,CACb,AACD,wDAEE,2CAA4C,AACpC,kCAAoC,CAC7C,AACD,6BACE,0DAA4D,AACpD,iDAAoD,CAC7D","file":"welcome.vue","sourcesContent":["\n#export[data-v-5cc901d7] {\n  border-collapse: separate;\n  border-spacing: 2px;\n  padding: 30px;\n  margin: 0px auto;\n}\n#export thead[data-v-5cc901d7],\n#export tfoot[data-v-5cc901d7] {\n  text-align: center;\n}\n#export th[data-v-5cc901d7] {\n  background-color: #444;\n}\n#export td[data-v-5cc901d7] {\n  background-color: #000;\n  vertical-align: top;\n  padding: 0 3px;\n}\n#welcome[data-v-5cc901d7] {\n  background-size: cover;\n}\n#welcome .btns[data-v-5cc901d7] {\n  background-color: rgba(77,78,70,0.9);\n}\n.filmline[data-v-5cc901d7] {\n  margin: 0;\n  height: 11px;\n  background-repeat: repeat-x;\n}\n.filmline .contentframe[data-v-5cc901d7] {\n  background-image: none;\n}\n.links[data-v-5cc901d7] {\n  white-space: pre;\n}\nh2[data-v-5cc901d7] {\n  height: 100px;\n  margin: 0;\n  padding: 25px 0 0 0;\n  white-space: pre;\n  font-size: xx-large;\n  text-align: center;\n  line-height: 1.1em;\n  background-color: rgba(92,92,32,0.5);\n}\nh2 sup[data-v-5cc901d7] {\n  font-size: large;\n}\nh2 a[data-v-5cc901d7] {\n  font-size: xx-large;\n  line-height: 1.1em;\n  color: #fff;\n}\nh2 a[data-v-5cc901d7]:hover,\nh2 a[data-v-5cc901d7]:focus {\n  -webkit-box-shadow: 0 0 20px 3px #fff inset;\n          box-shadow: 0 0 20px 3px #fff inset;\n}\nh2 a[data-v-5cc901d7]:active {\n  -webkit-box-shadow: 0 0 20px 3px rgba(51,251,118,0.5) inset;\n          box-shadow: 0 0 20px 3px rgba(51,251,118,0.5) inset;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40950,7 +40983,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".per[data-v-71b7ec82]{vertical-align:-.2em;font-size:.7em;margin:0 0 0 -.2em;padding:0;display:inline}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/text-editor.vue"],"names":[],"mappings":"AACA,sBACE,qBAAuB,AACvB,eAAiB,AACjB,mBAAqB,AACrB,UAAW,AACX,cAAgB,CACjB","file":"text-editor.vue","sourcesContent":["\n.per[data-v-71b7ec82] {\n  vertical-align: -0.2em;\n  font-size: 0.7em;\n  margin: 0 0 0 -0.2em;\n  padding: 0;\n  display: inline;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".per[data-v-71b7ec82]{vertical-align:-.2em;font-size:.7em;margin:0 0 0 -.2em;padding:0;display:inline}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/text-editor.vue"],"names":[],"mappings":"AACA,sBACE,qBAAuB,AACvB,eAAiB,AACjB,mBAAqB,AACrB,UAAW,AACX,cAAgB,CACjB","file":"text-editor.vue","sourcesContent":["\n.per[data-v-71b7ec82] {\n  vertical-align: -0.2em;\n  font-size: 0.7em;\n  margin: 0 0 0 -0.2em;\n  padding: 0;\n  display: inline;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40964,7 +40997,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".mention[data-v-7932de7d]{overflow:hidden;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/tr-intro-chat.vue"],"names":[],"mappings":"AACA,0BACE,gBAAiB,AACjB,mBAAoB,AACpB,0BAA2B,AACxB,sBAAwB,CAC5B","file":"tr-intro-chat.vue","sourcesContent":["\n.mention[data-v-7932de7d] {\n  overflow: hidden;\n  white-space: nowrap;\n  -o-text-overflow: ellipsis;\n     text-overflow: ellipsis;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".mention[data-v-7932de7d]{overflow:hidden;white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/tr-intro-chat.vue"],"names":[],"mappings":"AACA,0BACE,gBAAiB,AACjB,mBAAoB,AACpB,0BAA2B,AACxB,sBAAwB,CAC5B","file":"tr-intro-chat.vue","sourcesContent":["\n.mention[data-v-7932de7d] {\n  overflow: hidden;\n  white-space: nowrap;\n  -o-text-overflow: ellipsis;\n     text-overflow: ellipsis;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40978,7 +41011,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".filmend-frame[data-v-79cd9445]{height:0}.filmend-frame .inframe[data-v-79cd9445]{padding:0}.outframe .contentframe[data-v-79cd9445]{text-align:left}.filmend[data-v-79cd9445]{margin:-11px 0 0 -2px;height:36px;width:126px;display:inline-block}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/layout-header.vue"],"names":[],"mappings":"AACA,gCACE,QAAU,CACX,AACD,yCACE,SAAW,CACZ,AACD,yCACE,eAAiB,CAClB,AACD,0BACE,sBAAuB,AACvB,YAAa,AACb,YAAa,AACb,oBAAsB,CACvB","file":"layout-header.vue","sourcesContent":["\n.filmend-frame[data-v-79cd9445] {\n  height: 0;\n}\n.filmend-frame .inframe[data-v-79cd9445] {\n  padding: 0;\n}\n.outframe .contentframe[data-v-79cd9445] {\n  text-align: left;\n}\n.filmend[data-v-79cd9445] {\n  margin: -11px 0 0 -2px;\n  height: 36px;\n  width: 126px;\n  display: inline-block;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".filmend-frame[data-v-79cd9445]{height:0}.filmend-frame .inframe[data-v-79cd9445]{padding:0}.outframe .contentframe[data-v-79cd9445]{text-align:left}.filmend[data-v-79cd9445]{margin:-11px 0 0 -2px;height:36px;width:126px;display:inline-block}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/layout-header.vue"],"names":[],"mappings":"AACA,gCACE,QAAU,CACX,AACD,yCACE,SAAW,CACZ,AACD,yCACE,eAAiB,CAClB,AACD,0BACE,sBAAuB,AACvB,YAAa,AACb,YAAa,AACb,oBAAsB,CACvB","file":"layout-header.vue","sourcesContent":["\n.filmend-frame[data-v-79cd9445] {\n  height: 0;\n}\n.filmend-frame .inframe[data-v-79cd9445] {\n  padding: 0;\n}\n.outframe .contentframe[data-v-79cd9445] {\n  text-align: left;\n}\n.filmend[data-v-79cd9445] {\n  margin: -11px 0 0 -2px;\n  height: 36px;\n  width: 126px;\n  display: inline-block;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -40992,7 +41025,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, "table[data-v-83dca6b8]{width:100%;border-collapse:collapse}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/mentions.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,wBAA0B,CAC3B","file":"mentions.vue","sourcesContent":["\ntable[data-v-83dca6b8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, "table[data-v-83dca6b8]{width:100%;border-collapse:collapse}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/mentions.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,wBAA0B,CAC3B","file":"mentions.vue","sourcesContent":["\ntable[data-v-83dca6b8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -41006,7 +41039,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".r[data-v-9cd11cbc]{text-align:right}.l[data-v-9cd11cbc]{text-align:left}.c[data-v-9cd11cbc]{text-align:center}.last[data-v-9cd11cbc]{min-width:1000px}.portrate[data-v-9cd11cbc]{-ms-flex-preferred-size:auto;flex-basis:auto}.list[data-v-9cd11cbc]{background:#000;padding:2px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-line-pack:distribute;align-content:space-around;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;min-width:100%}.list img[data-v-9cd11cbc]{max-height:65px;height:65px}.list .bar[data-v-9cd11cbc]{height:3px;border-radius:3px}.list .btns[data-v-9cd11cbc]{border-radius:3px;max-height:68px;height:68px}.list .btns span[data-v-9cd11cbc]{white-space:nowrap}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/potofs.vue"],"names":[],"mappings":"AACA,oBACE,gBAAkB,CACnB,AACD,oBACE,eAAiB,CAClB,AACD,oBACE,iBAAmB,CACpB,AACD,uBACE,gBAAkB,CACnB,AACD,2BACE,6BAA8B,AAC1B,eAAiB,CACtB,AACD,uBACE,gBAAiB,AACjB,YAAa,AACb,oBAAqB,AACrB,oBAAqB,AACrB,aAAc,AACd,8BAA+B,AAC/B,6BAA8B,AAC1B,uBAAwB,AACpB,mBAAoB,AAC5B,qBAAsB,AAClB,iBAAkB,AACtB,yBAA0B,AACtB,sBAAuB,AACnB,mBAAoB,AAC5B,8BAA+B,AAC3B,2BAA4B,AAChC,uBAAwB,AACpB,oBAAqB,AACjB,2BAA4B,AACpC,cAAgB,CACjB,AACD,2BACE,gBAAiB,AACjB,WAAa,CACd,AACD,4BACE,WAAY,AACZ,iBAAmB,CACpB,AACD,6BACE,kBAAmB,AACnB,gBAAiB,AACjB,WAAa,CACd,AACD,kCACE,kBAAoB,CACrB","file":"potofs.vue","sourcesContent":["\n.r[data-v-9cd11cbc] {\n  text-align: right;\n}\n.l[data-v-9cd11cbc] {\n  text-align: left;\n}\n.c[data-v-9cd11cbc] {\n  text-align: center;\n}\n.last[data-v-9cd11cbc] {\n  min-width: 1000px;\n}\n.portrate[data-v-9cd11cbc] {\n  -ms-flex-preferred-size: auto;\n      flex-basis: auto;\n}\n.list[data-v-9cd11cbc] {\n  background: #000;\n  padding: 2px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  min-width: 100%;\n}\n.list img[data-v-9cd11cbc] {\n  max-height: 65px;\n  height: 65px;\n}\n.list .bar[data-v-9cd11cbc] {\n  height: 3px;\n  border-radius: 3px;\n}\n.list .btns[data-v-9cd11cbc] {\n  border-radius: 3px;\n  max-height: 68px;\n  height: 68px;\n}\n.list .btns span[data-v-9cd11cbc] {\n  white-space: nowrap;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".r[data-v-9cd11cbc]{text-align:right}.l[data-v-9cd11cbc]{text-align:left}.c[data-v-9cd11cbc]{text-align:center}.last[data-v-9cd11cbc]{min-width:1000px}.portrate[data-v-9cd11cbc]{-ms-flex-preferred-size:auto;flex-basis:auto}.list[data-v-9cd11cbc]{background:#000;padding:2px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-line-pack:distribute;align-content:space-around;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start;min-width:100%}.list img[data-v-9cd11cbc]{max-height:65px;height:65px}.list .bar[data-v-9cd11cbc]{height:3px;border-radius:3px}.list .btns[data-v-9cd11cbc]{border-radius:3px;max-height:68px;height:68px}.list .btns span[data-v-9cd11cbc]{white-space:nowrap}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/potofs.vue"],"names":[],"mappings":"AACA,oBACE,gBAAkB,CACnB,AACD,oBACE,eAAiB,CAClB,AACD,oBACE,iBAAmB,CACpB,AACD,uBACE,gBAAkB,CACnB,AACD,2BACE,6BAA8B,AAC1B,eAAiB,CACtB,AACD,uBACE,gBAAiB,AACjB,YAAa,AACb,oBAAqB,AACrB,oBAAqB,AACrB,aAAc,AACd,8BAA+B,AAC/B,6BAA8B,AAC1B,uBAAwB,AACpB,mBAAoB,AAC5B,qBAAsB,AAClB,iBAAkB,AACtB,yBAA0B,AACtB,sBAAuB,AACnB,mBAAoB,AAC5B,8BAA+B,AAC3B,2BAA4B,AAChC,uBAAwB,AACpB,oBAAqB,AACjB,2BAA4B,AACpC,cAAgB,CACjB,AACD,2BACE,gBAAiB,AACjB,WAAa,CACd,AACD,4BACE,WAAY,AACZ,iBAAmB,CACpB,AACD,6BACE,kBAAmB,AACnB,gBAAiB,AACjB,WAAa,CACd,AACD,kCACE,kBAAoB,CACrB","file":"potofs.vue","sourcesContent":["\n.r[data-v-9cd11cbc] {\n  text-align: right;\n}\n.l[data-v-9cd11cbc] {\n  text-align: left;\n}\n.c[data-v-9cd11cbc] {\n  text-align: center;\n}\n.last[data-v-9cd11cbc] {\n  min-width: 1000px;\n}\n.portrate[data-v-9cd11cbc] {\n  -ms-flex-preferred-size: auto;\n      flex-basis: auto;\n}\n.list[data-v-9cd11cbc] {\n  background: #000;\n  padding: 2px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  min-width: 100%;\n}\n.list img[data-v-9cd11cbc] {\n  max-height: 65px;\n  height: 65px;\n}\n.list .bar[data-v-9cd11cbc] {\n  height: 3px;\n  border-radius: 3px;\n}\n.list .btns[data-v-9cd11cbc] {\n  border-radius: 3px;\n  max-height: 68px;\n  height: 68px;\n}\n.list .btns span[data-v-9cd11cbc] {\n  white-space: nowrap;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -41020,7 +41053,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".hide[data-v-a91341c6]{height:2px;margin:-7px 8px 6px 125px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/hide.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,yBAA2B,CAC5B","file":"hide.vue","sourcesContent":["\n.hide[data-v-a91341c6] {\n  height: 2px;\n  margin: -7px 8px 6px 125px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".hide[data-v-a91341c6]{height:2px;margin:-7px 8px 6px 125px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/hide.vue"],"names":[],"mappings":"AACA,uBACE,WAAY,AACZ,yBAA2B,CAC5B","file":"hide.vue","sourcesContent":["\n.hide[data-v-a91341c6] {\n  height: 2px;\n  margin: -7px 8px 6px 125px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -41036,7 +41069,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".current[data-v-fe4f7f24]{border-bottom-style:solid;border-bottom-width:1px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/components/current.vue"],"names":[],"mappings":"AACA,0BACE,0BAA2B,AAC3B,uBAAyB,CAC1B","file":"current.vue","sourcesContent":["\n.current[data-v-fe4f7f24] {\n  border-bottom-style: solid;\n  border-bottom-width: 1px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".current[data-v-fe4f7f24]{border-bottom-style:solid;border-bottom-width:1px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/components/current.vue"],"names":[],"mappings":"AACA,0BACE,0BAA2B,AAC3B,uBAAyB,CAC1B","file":"current.vue","sourcesContent":["\n.current[data-v-fe4f7f24] {\n  border-bottom-style: solid;\n  border-bottom-width: 1px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -45772,4 +45805,4 @@ module.exports = __webpack_require__(38);
 
 /***/ })
 ],[374]);
-//# sourceMappingURL=vendor.bundle.45c896869a96b552c711.js.map
+//# sourceMappingURL=vendor.bundle.23b796aea574ad219191.js.map
