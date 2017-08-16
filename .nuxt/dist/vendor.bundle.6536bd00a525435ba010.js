@@ -27207,7 +27207,7 @@ computed = Object.assign({}, base, tree("folder", "book", "part", "phase", "chat
     return (ref1 = Query.chats.reduce) != null ? (ref2 = ref1.mention_to) != null ? ref2[this.chat_id] : void 0 : void 0;
   },
   back: function () {
-    return [this.chat_id, this.mode, this.pages].join(",");
+    return [this.chat_id || this.part_id, this.mode, this.pages].join(",");
   },
   hide_potof_ids: {
     get: function () {
@@ -45814,4 +45814,4 @@ module.exports = __webpack_require__(38);
 
 /***/ })
 ],[375]);
-//# sourceMappingURL=vendor.bundle.ca93437fd64185880192.js.map
+//# sourceMappingURL=vendor.bundle.6536bd00a525435ba010.js.map

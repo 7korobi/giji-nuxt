@@ -71,7 +71,7 @@ computed = {
     @read_at?["book.#{@book_id}"]
     Query.chats.reduce?.mention_to?[@chat_id]
   back: ->
-    [ @chat_id, @mode, @pages ].join(",")
+    [ @chat_id || @part_id, @mode, @pages ].join(",")
 
   hide_potof_ids:
     get: ->
