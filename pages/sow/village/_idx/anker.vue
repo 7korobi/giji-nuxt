@@ -26,7 +26,7 @@ module.exports =
 
   mounted: ->
     @menus = [@menus..., "current"]
-    mounted()
+    mounted.call(@)
 
   methods:
     focus: (idx)->

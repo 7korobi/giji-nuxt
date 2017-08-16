@@ -37,7 +37,7 @@ module.exports = {
   },
   mounted: function() {
     this.menus = [...this.menus, "current"];
-    return mounted();
+    return mounted.call(this);
   },
   methods: {
     focus: function(idx) {
@@ -142,4 +142,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=8.nuxt.bundle.e74194eebfbb5e1e6e13.js.map
+//# sourceMappingURL=8.nuxt.bundle.cc9452f44a8d1ade319c.js.map
