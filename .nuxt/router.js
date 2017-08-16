@@ -38,11 +38,11 @@ const _3c51e96e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village
 
 const scrollBehavior = function (to, from, savedPosition) {
       var basic, book, has_top;
-      book = function(has_top, to, from) {
+      book = function(idx_limit, has_top, to, from) {
         var from_name, from_part, to_name, to_part;
         [from_part, to_part] = [from, to].map(function(o) {
           var ref;
-          return (ref = o.params.idx) != null ? ref.split("-").slice(0, 3).join("-") : void 0;
+          return (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
         });
         from_name = from.params.mode || from.name;
         to_name = to.params.mode || to.name;
@@ -86,8 +86,9 @@ const scrollBehavior = function (to, from, savedPosition) {
           });
           switch (to.name) {
             case "sow-village-idx-mode":
+              return book(1, has_top, to, from);
             case "sow-village-idx-anker":
-              return book(has_top, to, from);
+              return book(2, has_top, to, from);
             default:
               return basic(has_top, to, from);
           }

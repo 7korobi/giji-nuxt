@@ -2770,12 +2770,12 @@ var _3c51e96e = function _3c51e96e() {
 
 var scrollBehavior = function scrollBehavior(to, from, savedPosition) {
 		var basic, book, has_top;
-		book = function book(has_top, to, from) {
+		book = function book(idx_limit, has_top, to, from) {
 				var from_name, from_part, to_name, to_part;
 
 				var _map = [from, to].map(function (o) {
 						var ref;
-						return (ref = o.params.idx) != null ? ref.split("-").slice(0, 3).join("-") : void 0;
+						return (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
 				});
 
 				var _map2 = (0, _slicedToArray3.default)(_map, 2);
@@ -2825,8 +2825,9 @@ var scrollBehavior = function scrollBehavior(to, from, savedPosition) {
 						});
 						switch (to.name) {
 								case "sow-village-idx-mode":
+										return book(1, has_top, to, from);
 								case "sow-village-idx-anker":
-										return book(has_top, to, from);
+										return book(2, has_top, to, from);
 								default:
 										return basic(has_top, to, from);
 						}
@@ -4504,4 +4505,4 @@ module.exports = {"nation":{"head":"国のルール","list":[{"head":"ここは�
 /***/ })
 
 },[136]);
-//# sourceMappingURL=nuxt.bundle.5aee53d50ad856573873.js.map
+//# sourceMappingURL=nuxt.bundle.18e67652a50cd2113c1a.js.map
