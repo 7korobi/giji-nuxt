@@ -60,7 +60,6 @@ module.exports =
     focus: (state, chat_id)->
       return unless window?
       return unless el = window[chat_id]
-      console.log "el = ", el
       return unless rect = el.getBoundingClientRect()
       rect_center = rect.top + rect.height / 2
       top = rect_center - state.horizon

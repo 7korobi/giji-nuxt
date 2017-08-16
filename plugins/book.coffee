@@ -49,7 +49,6 @@ base =
   idx: -> @$route.params.idx.split("-")
 
 mounted = ->
-  console.log @
   { chat_id } = @
   @$store.dispatch "sow/story", @book_id
   .then =>

@@ -61,7 +61,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".card[data-v-0cd08049]{padding:10px 0 10px 20px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/pages/index.vue"],"names":[],"mappings":"AACA,uBACE,wBAA0B,CAC3B","file":"index.vue","sourcesContent":["\n.card[data-v-0cd08049] {\n  padding: 10px 0 10px 20px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".card[data-v-0cd08049]{padding:10px 0 10px 20px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/pages/index.vue"],"names":[],"mappings":"AACA,uBACE,wBAA0B,CAC3B","file":"index.vue","sourcesContent":["\n.card[data-v-0cd08049] {\n  padding: 10px 0 10px 20px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -206,4 +206,4 @@ var update = __webpack_require__(3)("29075bcd", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=4.nuxt.bundle.2db7389cba35d3613672.js.map
+//# sourceMappingURL=4.nuxt.bundle.9e2bd184966e974ab86b.js.map

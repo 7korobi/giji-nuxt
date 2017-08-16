@@ -74,7 +74,8 @@ module.exports =
       .map (o)->
         { face_id, to, log, write_at, csid } = o
         csid = 'sf' if csid == 'SF'
-        face_id = undefined if face_id in ["maker", "admin","c06"]
+        face_id = undefined if face_id in ["maker", "admin", "c06"]
+        o.event_id ?= o._id.split("-")[0..2].join("-")
         return if "*CAST*" == log
 
         guide = true
@@ -187,7 +188,7 @@ module.exports =
       Set.book.add
         _id: o._id
         label: o.name
-        winner_id: data.events[-1..][0].winner[4..]
+        winner_id: data.events[-1..][0].winner?[4..]
         potof_size: Query.potofs.where({book_id}).list.length
         log: log
         sign: o.sow_auth_id.replace(/\./g, '&#2e')

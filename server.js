@@ -1906,14 +1906,14 @@ module.exports = {
   scrollBehavior: function(to, from, savedPosition) {
     var basic, book, has_top;
     book = function(has_top, to, from) {
-      var from_book, from_name, to_book, to_name;
-      [from_book, to_book] = [from, to].map(function(o) {
+      var from_name, from_part, to_name, to_part;
+      [from_part, to_part] = [from, to].map(function(o) {
         var ref;
-        return (ref = o.params.idx) != null ? ref.split("-").slice(0, 2).join("-") : void 0;
+        return (ref = o.params.idx) != null ? ref.split("-").slice(0, 3).join("-") : void 0;
       });
       from_name = from.params.mode || from.name;
       to_name = to.params.mode || to.name;
-      if (from_book + from_name !== to_book + to_name) {
+      if (from_part + from_name !== to_part + to_name) {
         console.log(`scroll to TOP (${from_name} != ${to_name})`);
         return {
           x: 0,
@@ -1948,7 +1948,6 @@ module.exports = {
           selector: to.hash
         };
       default:
-        console.log(to.name, to.matched);
         has_top = to.matched.some(function(r) {
           return r.components.default.options.scrollToTop;
         });
