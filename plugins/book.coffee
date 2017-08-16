@@ -1,7 +1,7 @@
 Vuex = require "vuex"
 Vuex = Vuex.default if window?
 
-{ Query, read_at } = require "~plugins/memory-record"
+{ Query } = require "~plugins/memory-record"
 
 
 tree = (keys...)->
@@ -15,7 +15,7 @@ tree = (keys...)->
           (at < @idx.length) && @idx[0..at].join("-")
       "#{name}":
         get: ->
-          read_at["book.#{@book_id}"]
+          @read_at["book.#{@book_id}"]
           Query[list].find @[key]
 
     o = { o..., state... }
@@ -33,9 +33,6 @@ tree = (keys...)->
       idx  = chat_id
     return unless part
 
-    unless @part_id == part.id && @page_idxs[0] == page_idxs[0]
-      window.scrollTo 0,0
-
     [head, ..., tail] = page_idxs
     pages =
       if head == tail
@@ -52,11 +49,13 @@ base =
   idx: -> @$route.params.idx.split("-")
 
 mounted = ->
-  if @chat_id
-    el = document.querySelector '#' + @chat_id
-    if el
-      unless el.className.match "focus"
-        @$store.dispatch "menu/focus", el
+  console.log @
+  { chat_id } = @
+  @$store.dispatch "sow/story", @book_id
+  .then =>
+    if chat_id
+      @$nextTick =>
+        @$store.commit "menu/focus", chat_id
 
 computed = {
   base...
@@ -70,10 +69,16 @@ computed = {
     @page_idxs.map (idx)=>
       "#{@part_id}-#{idx}"
   mentions: ->
-    read_at?["book.#{@book_id}"]
+    @read_at?["book.#{@book_id}"]
     Query.chats.reduce?.mention_to?[@chat_id]
-  hide_potof_ids: ->
-    @$store.state.book.hide_potof_ids
+  back: ->
+    [ @chat_id, @mode, @pages ].join(",")
+
+  hide_potof_ids:
+    get: ->
+      @$store.state.book.hide_potof_ids
+    set: (ids)->
+      @$store.commit "book/hide_potof_ids", ids
 
   menus:
     get: ->

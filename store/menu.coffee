@@ -46,29 +46,23 @@ module.exports =
         state.set[id] = true
 
     center: (state, { top, left, height, width })->
-      state.height  = height
-      state.horizon = height / 2
-      state.width   = width
+      state.height  = parseInt height
+      state.horizon = parseInt height / 2
+      state.width   = parseInt width
 
-      state.top    = top
-      state.center = top + height / 2
-      state.bottom = top + height
+      state.top    = parseInt top
+      state.center = parseInt top + height / 2
+      state.bottom = parseInt top + height
 
-      state.left  = left
-      state.right = left + width
+      state.left  = parseInt left
+      state.right = parseInt left + width
     
-  actions:
-    focus: ({ state }, el)->
+    focus: (state, chat_id)->
       return unless window?
-      # new Promise (ok)-> window.requestAnimationFrame ok
-      new Promise (ok)-> ok()
-      .then ->
-        rect = el.getBoundingClientRect()
-        rect_center = rect.top + rect.height / 2
-        top = rect_center - state.center
-
-        console.log rect_center, state.center
-        window.scrollTo 0, top
-        console.log rect.top + rect.height / 2
-        console.log "goto", el.id, top
+      return unless el = window[chat_id]
+      console.log "el = ", el
+      return unless rect = el.getBoundingClientRect()
+      rect_center = rect.top + rect.height / 2
+      top = rect_center - state.horizon
+      window.scrollBy 0, top
 

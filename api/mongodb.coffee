@@ -330,7 +330,6 @@ module.exports = (app)->
   app.get '/api/story/oldlog/:story_id', (req, res, next)->
     { story_id } = req.params
     fields =
-      comment:  0
       password: 0
     Promise.all [
       giji.find "stories",  { _id: story_id, is_epilogue: true, is_finish: true}, fields

@@ -2,6 +2,16 @@ require "../models/index"
 axios = require "axios"
 Mem = require "~plugins/memory-record"
 
+###
+  store.state は下記の特徴を持つ。
+  ページ遷移をまたいでデータを保管する。
+  SSRからデータを獲得する。
+
+  store.state は下記の制約を受ける。
+  JSON で表現可能な情報に限る。
+  要素の追加、削除は特別な命令を使う。
+###
+
 module.exports =
   default:
     state: ->

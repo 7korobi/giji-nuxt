@@ -593,7 +593,6 @@ module.exports = function(app) {
     var fields, story_id;
     ({story_id} = req.params);
     fields = {
-      comment: 0,
       password: 0
     };
     return Promise.all([
@@ -1879,51 +1878,87 @@ module.exports = {
 /* 20 */
 /***/ (function(module, exports) {
 
+/*
+const scrollBehavior = (to, from, savedPosition) => {
+  // savedPosition は popState ナビゲーションでのみ利用できます
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    let position = {}
+    // 子パスが見つからないとき
+    if (to.matched.length < 2) {
+      // ページのトップへスクロールする
+      position = { x: 0, y: 0 }
+    }
+    else if (to.matched.some((r) => r.components.default.options.scrollToTop)) {
+      // 子パスのひとつが scrollToTop オプションが true にセットされているとき
+      position = { x: 0, y: 0 }
+    }
+    // アンカーがあるときは、セレクタを返すことでアンカーまでスクロールする
+    if (to.hash) {
+      position = { selector: to.hash }
+    }
+    return position
+  }
+}
+*/
 module.exports = {
   scrollBehavior: function(to, from, savedPosition) {
-    var basic, book;
-    book = function(to, from) {
-      var from_book, to_book;
+    var basic, book, has_top;
+    book = function(has_top, to, from) {
+      var from_book, from_name, to_book, to_name;
       [from_book, to_book] = [from, to].map(function(o) {
         var ref;
         return (ref = o.params.idx) != null ? ref.split("-").slice(0, 2).join("-") : void 0;
       });
-      if (from_book !== to_book) {
+      from_name = from.params.mode || from.name;
+      to_name = to.params.mode || to.name;
+      if (from_book + from_name !== to_book + to_name) {
+        console.log(`scroll to TOP (${from_name} != ${to_name})`);
         return {
           x: 0,
           y: 0
         };
       }
     };
-    basic = function(to) {
+    basic = function(has_top, to) {
       switch (false) {
-        case !to.hash:
-          console.log("scroll to " + to.hash);
-          return {
-            selector: to.hash
-          };
-        case to.path === from.path:
+        case from.path === to.path:
+          console.log(`scroll to TOP (${from.path} != ${to.path})`);
           return {
             x: 0,
             y: 0
           };
-        default:
-          return false;
+        case !has_top:
+          console.log("scroll to TOP (has scrollToTop)");
+          return {
+            x: 0,
+            y: 0
+          };
       }
     };
     console.log({to, from});
-    console.log(to.name);
-    if (savedPosition) {
-      console.log("scroll to saved.");
-      return savedPosition;
-    } else {
-      switch (to.name) {
-        case "sow-village-idx-mode":
-        case "sow-village-idx-anker":
-          return book(to, from);
-        default:
-          return basic(to, from);
-      }
+    switch (false) {
+      case !savedPosition:
+        console.log("scroll restore", savedPosition);
+        return savedPosition;
+      case !to.hash:
+        console.log("scroll to " + to.hash);
+        return {
+          selector: to.hash
+        };
+      default:
+        console.log(to.name, to.matched);
+        has_top = to.matched.some(function(r) {
+          return r.components.default.options.scrollToTop;
+        });
+        switch (to.name) {
+          case "sow-village-idx-mode":
+          case "sow-village-idx-anker":
+            return book(has_top, to, from);
+          default:
+            return basic(has_top, to, from);
+        }
     }
   }
 };

@@ -67,7 +67,7 @@ module.exports =
           update: false
 
       write_at = 0
-      chat = null
+      chat_tail = null
 
       _.sortBy data.messages, (o)-> o.write_at = new Date o.date
       .map (o)->
@@ -166,8 +166,7 @@ module.exports =
           group: phase_group
           update: false
         Set.chat.add { _id, potof_id, phase_id, write_at, to, show, deco, log, handle }
-        chat_at = write_at
-        chat = o
+        chat_tail = o
 
       Set.phase.merge phases
 
@@ -176,12 +175,15 @@ module.exports =
         label: o.name ? "#{o.turn}日目"
 
       o = data.stories[0]
+      chat_head = Query.chats.find o._id + "-0-II-0"
       Set.book.add
         _id: o._id
         label: o.name
         winner_id: data.events[-1..][0].winner[4..]
         potof_size: Query.potofs.where({book_id}).list.length
-        write_at: chat.write_at
+        log: o.comment ? "コメントがありません"
+        sign: o.sow_auth_od
+        write_at: chat_tail.write_at
 
   actions:
     story: ({ state, commit, rootState }, story_id)->

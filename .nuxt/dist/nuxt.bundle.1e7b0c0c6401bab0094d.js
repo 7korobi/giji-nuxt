@@ -1544,6 +1544,15 @@ axios = __webpack_require__(20);
 
 Mem = __webpack_require__(1);
 
+/*
+  store.state は下記の特徴を持つ。
+  ページ遷移をまたいでデータを保管する。
+  SSRからデータを獲得する。
+
+  store.state は下記の制約を受ける。
+  JSON で表現可能な情報に限る。
+  要素の追加、削除は特別な命令を使う。
+*/
 module.exports = {
   default: {
     state: function () {
@@ -1661,34 +1670,30 @@ module.exports = {
       return results;
     },
     center: function (state, { top, left, height, width }) {
-      state.height = height;
-      state.horizon = height / 2;
-      state.width = width;
-      state.top = top;
-      state.center = top + height / 2;
-      state.bottom = top + height;
-      state.left = left;
-      return state.right = left + width;
-    }
-  },
-  actions: {
-    focus: function ({ state }, el) {
+      state.height = parseInt(height);
+      state.horizon = parseInt(height / 2);
+      state.width = parseInt(width);
+      state.top = parseInt(top);
+      state.center = parseInt(top + height / 2);
+      state.bottom = parseInt(top + height);
+      state.left = parseInt(left);
+      return state.right = parseInt(left + width);
+    },
+    focus: function (state, chat_id) {
+      var el, rect, rect_center, top;
       if (typeof window === "undefined" || window === null) {
         return;
       }
-      // new Promise (ok)-> window.requestAnimationFrame ok
-      return new Promise(function (ok) {
-        return ok();
-      }).then(function () {
-        var rect, rect_center, top;
-        rect = el.getBoundingClientRect();
-        rect_center = rect.top + rect.height / 2;
-        top = rect_center - state.center;
-        console.log(rect_center, state.center);
-        window.scrollTo(0, top);
-        console.log(rect.top + rect.height / 2);
-        return console.log("goto", el.id, top);
-      });
+      if (!(el = window[chat_id])) {
+        return;
+      }
+      console.log("el = ", el);
+      if (!(rect = el.getBoundingClientRect())) {
+        return;
+      }
+      rect_center = rect.top + rect.height / 2;
+      top = rect_center - state.horizon;
+      return window.scrollBy(0, top);
     }
   }
 };
@@ -1713,7 +1718,7 @@ module.exports = {
   },
   mutations: {
     join: function (state, data) {
-      var book_id, chat, csid, date, i, idx, job, len, o, phases, potof_id, ref, ref1, write_at;
+      var book_id, chat_head, chat_tail, csid, date, i, idx, job, len, o, phases, potof_id, ref, ref1, ref2, write_at;
       book_id = data.stories[0]._id;
       ref = data.potofs;
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
@@ -1786,11 +1791,11 @@ module.exports = {
         }
       };
       write_at = 0;
-      chat = null;
+      chat_tail = null;
       _.sortBy(data.messages, function (o) {
         return o.write_at = new Date(o.date);
       }).map(function (o) {
-        var _id, chat_at, deco, face_id, guide, handle, log, phase_group, phase_id, phase_idx, phase_type, ref2, ref3, show, to;
+        var _id, deco, face_id, guide, handle, log, phase_group, phase_id, phase_idx, phase_type, ref2, ref3, show, to;
         ({ face_id, to, log, write_at, csid } = o);
         if (csid === 'SF') {
           csid = 'sf';
@@ -1905,8 +1910,7 @@ module.exports = {
           };
         }
         Set.chat.add({ _id, potof_id, phase_id, write_at, to, show, deco, log, handle });
-        chat_at = write_at;
-        return chat = o;
+        return chat_tail = o;
       });
       Set.phase.merge(phases);
       Set.part.merge(data.events.map(function (o) {
@@ -1917,12 +1921,15 @@ module.exports = {
         };
       }));
       o = data.stories[0];
+      chat_head = Query.chats.find(o._id + "-0-II-0");
       return Set.book.add({
         _id: o._id,
         label: o.name,
         winner_id: data.events.slice(-1)[0].winner.slice(4),
         potof_size: Query.potofs.where({ book_id }).list.length,
-        write_at: chat.write_at
+        log: (ref2 = o.comment) != null ? ref2 : "コメントがありません",
+        sign: o.sow_auth_od,
+        write_at: chat_tail.write_at
       });
     }
   },
@@ -2716,9 +2723,9 @@ var _ebdd3d22 = function _ebdd3d22() {
 };
 
 var scrollBehavior = function scrollBehavior(to, from, savedPosition) {
-		var basic, book;
-		book = function book(to, from) {
-				var from_book, to_book;
+		var basic, book, has_top;
+		book = function book(has_top, to, from) {
+				var from_book, from_name, to_book, to_name;
 
 				var _map = [from, to].map(function (o) {
 						var ref;
@@ -2730,42 +2737,54 @@ var scrollBehavior = function scrollBehavior(to, from, savedPosition) {
 				from_book = _map2[0];
 				to_book = _map2[1];
 
-				if (from_book !== to_book) {
+				from_name = from.params.mode || from.name;
+				to_name = to.params.mode || to.name;
+				if (from_book + from_name !== to_book + to_name) {
+						console.log('scroll to TOP (' + from_name + ' != ' + to_name + ')');
 						return {
 								x: 0,
 								y: 0
 						};
 				}
 		};
-		basic = function basic(to) {
+		basic = function basic(has_top, to) {
 				switch (false) {
-						case !to.hash:
-								console.log("scroll to " + to.hash);
-								return {
-										selector: to.hash
-								};
-						case to.path === from.path:
+						case from.path === to.path:
+								console.log('scroll to TOP (' + from.path + ' != ' + to.path + ')');
 								return {
 										x: 0,
 										y: 0
 								};
-						default:
-								return false;
+						case !has_top:
+								console.log("scroll to TOP (has scrollToTop)");
+								return {
+										x: 0,
+										y: 0
+								};
 				}
 		};
 		console.log({ to: to, from: from });
-		console.log(to.name);
-		if (savedPosition) {
-				console.log("scroll to saved.");
-				return savedPosition;
-		} else {
-				switch (to.name) {
-						case "sow-village-idx-mode":
-						case "sow-village-idx-anker":
-								return book(to, from);
-						default:
-								return basic(to, from);
-				}
+		switch (false) {
+				case !savedPosition:
+						console.log("scroll restore", savedPosition);
+						return savedPosition;
+				case !to.hash:
+						console.log("scroll to " + to.hash);
+						return {
+								selector: to.hash
+						};
+				default:
+						console.log(to.name, to.matched);
+						has_top = to.matched.some(function (r) {
+								return r.components.default.options.scrollToTop;
+						});
+						switch (to.name) {
+								case "sow-village-idx-mode":
+								case "sow-village-idx-anker":
+										return book(has_top, to, from);
+								default:
+										return basic(has_top, to, from);
+						}
 		}
 };
 
@@ -3781,14 +3800,14 @@ function getContext(context, app) {
   var ctx = {
     isServer: !!context.isServer,
     isClient: !!context.isClient,
-    isDev: false,
+    isDev: true,
     app: app,
     store: context.store,
     route: context.to ? context.to : context.route,
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: { "WEB_URL": "http://giji.f5.si", "API_URL": "http://giji.f5.si/api", "SOW_URL": "http://giji.f5.si/sow", "STORE_URL": "http://s3-ap-northeast-1.amazonaws.com/giji-assets" },
+    env: { "WEB_URL": "http://lvh.me:4000", "API_URL": "http://giji.f5.si/api", "SOW_URL": "http://giji.f5.si/sow", "STORE_URL": "http://s3-ap-northeast-1.amazonaws.com/giji-assets" },
     hotReload: context.hotReload || false
   };
   var next = context.next;
@@ -4457,4 +4476,4 @@ webpackContext.id = 99;
 /***/ })
 
 },[135]);
-//# sourceMappingURL=nuxt.bundle.40edfd3ceca3169cb91b.js.map
+//# sourceMappingURL=nuxt.bundle.1e7b0c0c6401bab0094d.js.map
