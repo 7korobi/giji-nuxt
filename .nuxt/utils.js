@@ -57,14 +57,14 @@ export function getContext (context, app) {
   let ctx = {
     isServer: !!context.isServer,
     isClient: !!context.isClient,
-    isDev: true,
+    isDev: false,
     app: app,
     store: context.store,
     route: (context.to ? context.to : context.route),
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {"WEB_URL":"http://lvh.me:4000","API_URL":"http://giji.f5.si/api","SOW_URL":"http://giji.f5.si/sow","STORE_URL":"http://s3-ap-northeast-1.amazonaws.com/giji-assets"},
+    env: {"WEB_URL":"http://giji.f5.si","API_URL":"http://giji.f5.si/api","SOW_URL":"http://giji.f5.si/sow","STORE_URL":"http://s3-ap-northeast-1.amazonaws.com/giji-assets"},
     hotReload: context.hotReload || false
   }
   const next = context.next

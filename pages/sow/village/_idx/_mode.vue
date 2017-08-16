@@ -52,8 +52,7 @@
           a(v-if="part_next_id" @click="part_next") 次の日へ
 
       div(v-if="mode == 'title' && book")
-        report.form(handle="MAKER" deco="head") {{ book }}
-        report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.label", :sign="book.sign", :log="book.log")
+        report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.head", :sign="book.sign", :log="book.log")
 
       div(v-if="mode == 'memo'")
         report.form(handle="footer")

@@ -10,6 +10,11 @@ new Rule("book").schema ->
   @has_many "potofs"
   @belongs_to "winner"
 
+  Object.assign @model_property,
+    head:
+      get: ->
+        "#{@idx}: #{@label}"
+  
   @scope (all)->
     {}
 

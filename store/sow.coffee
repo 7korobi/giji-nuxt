@@ -1,4 +1,5 @@
 { Model, Query, Rule, Set } = Mem = require "~plugins/memory-record"
+{ nation } = require "../yaml/rule.yml"
 axios = require "axios"
 _ = require "lodash"
 
@@ -176,13 +177,20 @@ module.exports =
 
       o = data.stories[0]
       chat_head = Query.chats.find o._id + "-0-II-0"
+      n_rules = for {head}, idx in nation.list
+        "#{idx + 1}. #{head}"
+      log = """
+        #{o.comment}
+        ■国のルール
+        #{n_rules.join("\n")}
+      """
       Set.book.add
         _id: o._id
         label: o.name
         winner_id: data.events[-1..][0].winner[4..]
         potof_size: Query.potofs.where({book_id}).list.length
-        log: o.comment ? "コメントがありません"
-        sign: o.sow_auth_od
+        log: log
+        sign: o.sow_auth_id.replace(/\./g, '&#2e')
         write_at: chat_tail.write_at
 
   actions:
