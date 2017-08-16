@@ -59,8 +59,8 @@ module.exports =
         has_top = to.matched.some (r)-> r.components.default.options.scrollToTop
         switch to.name
           when "sow-village-idx-mode"
-            book  1, has_top, to, from
-          when "sow-village-idx-anker"
             book  2, has_top, to, from
+          when "sow-village-idx-anker"
+            book  1, has_top, to, from
           else
             basic has_top, to, from

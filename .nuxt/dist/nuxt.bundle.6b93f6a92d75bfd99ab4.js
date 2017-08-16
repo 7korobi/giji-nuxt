@@ -2825,9 +2825,9 @@ var scrollBehavior = function scrollBehavior(to, from, savedPosition) {
 						});
 						switch (to.name) {
 								case "sow-village-idx-mode":
-										return book(1, has_top, to, from);
-								case "sow-village-idx-anker":
 										return book(2, has_top, to, from);
+								case "sow-village-idx-anker":
+										return book(1, has_top, to, from);
 								default:
 										return basic(has_top, to, from);
 						}
@@ -4505,4 +4505,4 @@ module.exports = {"nation":{"head":"国のルール","list":[{"head":"ここは�
 /***/ })
 
 },[136]);
-//# sourceMappingURL=nuxt.bundle.18e67652a50cd2113c1a.js.map
+//# sourceMappingURL=nuxt.bundle.6b93f6a92d75bfd99ab4.js.map

@@ -1953,9 +1953,9 @@ module.exports = {
         });
         switch (to.name) {
           case "sow-village-idx-mode":
-            return book(1, has_top, to, from);
-          case "sow-village-idx-anker":
             return book(2, has_top, to, from);
+          case "sow-village-idx-anker":
+            return book(1, has_top, to, from);
           default:
             return basic(has_top, to, from);
         }
