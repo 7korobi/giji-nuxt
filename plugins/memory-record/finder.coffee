@@ -50,7 +50,7 @@ module.exports = class Finder
       map.finish o, query, @set
       _.set query, path, o
 
-    for path, cmd of query.$sort when o =_.get(query, path)
+    for path, cmd of query.$sort when o = _.get(query, path)
       o = map.order o, cmd, @set
       _.set query, path, o
 
@@ -91,4 +91,3 @@ module.exports = class Finder
         @model.create item
         @model.rowid++
       return
-

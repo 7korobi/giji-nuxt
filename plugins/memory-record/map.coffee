@@ -21,7 +21,7 @@ module.exports = class Map
       set:  item.id
     model.map_reduce item, emit
 
-    emit = (keys..., cmd)=>
+    emit = (keys..., cmd)->
       path = ["_reduce", keys...].join('.')
       all.$sort[path] = cmd
     model.order item, emit
@@ -33,9 +33,9 @@ module.exports = class Map
     if map.list
       o.list = []
     if map.count
-      o.count = 0 
+      o.count = 0
     if map.all
-      o.all = 0 
+      o.all = 0
     if map.set
       o.hash = {}
 
@@ -110,4 +110,3 @@ module.exports = class Map
       unless o.min <= map.min
         o.min_is = item
         o.min = map.min
-

@@ -33,7 +33,7 @@ module.exports = class Set extends Array
   @$deploy: (map, model, item, parent)->
 
   @bless: (list)->
-    ids = list.map (o)=> o.id
+    ids = list.map (o)-> o.id
     list.__proto__ = @prototype
     list.all = @all
     list.$name = @$name
@@ -80,7 +80,6 @@ module.exports = class Set extends Array
   merge:         f_merge
   add:    f_item f_merge
   append: f_item f_merge
-  create: f_item f_merge
 
   reject:        f_remove
   del:    f_item f_remove

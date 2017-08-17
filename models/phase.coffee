@@ -40,5 +40,3 @@ new Rule("phase").schema ->
         sort: ["count", "desc"]
       emit "handle",
         sort: ["count", "desc"]
-
-

@@ -27,6 +27,8 @@ new Rule("stat").schema ->
     @deploy: ->
       @able_id = @idx
 
+
+
 new Rule("role").schema ->
   @habtm "ables"
 

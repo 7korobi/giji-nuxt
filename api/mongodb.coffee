@@ -94,9 +94,9 @@ mongo.connect MONGO_URL_SOW
     ]
 
   giji.aggregate_max = ->
-    db.collection("potof_for_face_sow_auth_max",{ObjectId}).remove({})
+    db.collection("potof_for_face_sow_auth_max", { ObjectId }).remove({})
     .then ->
-      db.collection("potof_for_face_sow_auth",{ObjectId}).aggregate [
+      db.collection("potof_for_face_sow_auth", { ObjectId }).aggregate [
         $project:
           _id: 1
           count:
@@ -121,10 +121,10 @@ mongo.connect MONGO_URL_SOW
           o._id      = top._id
           o
     .then (data)->
-      db.collection("potof_for_face_sow_auth_max",{ObjectId}).insert data
+      db.collection("potof_for_face_sow_auth_max", { ObjectId }).insert data
 
   giji.oldlog = ->
-    db.collection("stories",{ObjectId}).aggregate [
+    db.collection("stories", { ObjectId }).aggregate [
       $match:
         is_finish:
           $eq: true
@@ -151,7 +151,7 @@ mongo.connect MONGO_URL_SOW
       false
 
   giji.scan = ->
-    db.collection("message_by_story_for_face",{ObjectId}).aggregate [
+    db.collection("message_by_story_for_face", { ObjectId }).aggregate [
       $group:
         _id: null
         story_ids:
@@ -159,7 +159,7 @@ mongo.connect MONGO_URL_SOW
     ], {ObjectId}
     .then ([o])->
       list = o?.story_ids ? []
-      db.collection("stories",{ObjectId}).aggregate [
+      db.collection("stories", { ObjectId }).aggregate [
         $match:
           _id:
             $nin: list
@@ -183,7 +183,7 @@ mongo.connect MONGO_URL_SOW
       Promise.all set_bases
 
   giji.set_base = (story_id)->
-    db.collection("messages",{ObjectId}).aggregate [
+    db.collection("messages", { ObjectId }).aggregate [
       $match:
         story_id: story_id
         sow_auth_id:
@@ -347,8 +347,3 @@ module.exports = (app)->
       next()
 
   return
-
-
-
-
-

@@ -8,16 +8,16 @@ new Rule("chat").schema ->
   blank = []
   blank.all = 0
   pages = (group, q)-> (hides, part_id)->
-    q.where (o)=> part_id == o.part_id && !(o.potof_id in hides) && o.phase.group in group
+    q.where (o)-> part_id == o.part_id && !(o.potof_id in hides) && o.phase.group in group
   @scope (all)->
     memo:   pages 'M',   all
-    title:  pages 'SAI', all.where (o)-> o.phase.handle in ['MAKER','ADMIN','public']
+    title:  pages 'SAI', all.where (o)-> o.phase.handle in ['MAKER', 'ADMIN', 'public']
 
     full:   pages 'SAI', all
-    normal: pages 'SAI', all.where (o)-> o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','public','private']
+    normal: pages 'SAI', all.where (o)-> o.phase.handle in ['SSAY', 'VSSAY', 'MAKER', 'ADMIN', 'public', 'private']
 
-    solo:   pages 'SAI', all.where (o)-> o.phase.handle in ['TSAY','private']
-    extra:  pages 'SAI', all.where (o)-> ! (o.phase.handle in ['SSAY','VSSAY','MAKER','ADMIN','dark','GSAY','TSAY','public'])
+    solo:   pages 'SAI', all.where (o)-> o.phase.handle in ['TSAY', 'private']
+    extra:  pages 'SAI', all.where (o)-> ! (o.phase.handle in ['SSAY', 'VSSAY', 'MAKER', 'ADMIN', 'dark', 'GSAY', 'TSAY', 'public'])
     rest:   pages 'SAI', all.where (o)-> o.phase.handle in ['GSAY']
 
     ankers: (book_id, a)->
@@ -50,7 +50,7 @@ new Rule("chat").schema ->
         """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
 
     @map_reduce: (o, emit)->
-      emit "last", [o.potof_id,o.phase_id].join('+'),
+      emit "last", [o.potof_id, o.phase_id].join('+'),
         max: o.write_at
 
       emit "say",

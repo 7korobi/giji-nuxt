@@ -22,7 +22,7 @@ jobs (name, ctx)->
   agenda.define name, ctx.define
 
 agenda.on 'ready', ->
-  unless pno 
+  unless pno
     jobs (name, ctx)->
       if ctx.every
         agenda.every ctx.every, name

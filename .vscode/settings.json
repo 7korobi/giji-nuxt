@@ -1,5 +1,6 @@
 // 既定の設定とユーザー設定を上書きするには、このファイル内に設定を挿入します
 {
+  "debug.inlineValues": true,
   "editor.tabSize": 2,
   "editor.renderWhitespace": "all",
   "editor.minimap.enabled": true,
@@ -10,12 +11,122 @@
   "editor.renderControlCharacters": true,
   "explorer.openEditors.visible": 30,
   "files.eol": "\n",
-  "plantuml.jar": "C:\\Dropbox\\bin\\plantuml.jar",
   "terminal.integrated.lineHeight": 1.1,
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.scrollback": 1000,
   "workbench.editor.showTabs": true,
-  "workbench.colorTheme": "Monokai",
+  "workbench.colorTheme": "Spirited Away",
   "window.newWindowDimensions": "maximized",
   "window.menuBarVisibility": "toggle",
+  "coffeelinter.defaultRules": {
+    "arrow_spacing": {
+      "level": "ignore"
+    },
+    "braces_spacing": {
+      "level": "ignore",
+      "spaces": 1,
+      "empty_object_spaces": 0
+    },
+    "camel_case_classes": {
+      "level": "ignore"
+    },
+    "colon_assignment_spacing": {
+      "level": "ignore",
+      "spacing": {
+        "left": 0,
+        "right": 1
+      }
+    },
+    "cyclomatic_complexity": {
+      "level": "warn",
+      "value": 15
+    },
+    "ensure_comprehensions": {
+      "level": "warn"
+    },
+    "eol_last": {
+      "level": "error"
+    },
+    "indentation": {
+      "value": 2,
+      "level": "error"
+    },
+    "line_endings": {
+      "level": "error",
+      "value": "unix"
+    },
+    "max_line_length": {
+      "value": 120,
+      "level": "warn",
+      "limitComments": true
+    },
+    "missing_fat_arrows": {
+      "level": "ignore",
+      "is_strict": true
+    },
+    "newlines_after_classes": {
+      "value": 3,
+      "level": "warn"
+    },
+    "no_debugger": {
+      "level": "warn",
+      "console": true
+    },
+    "no_empty_functions": {
+      "level": "ignore"
+    },
+    "no_empty_param_list": {
+      "level": "warn"
+    },
+    "no_implicit_braces": {
+      "level": "ignore",
+      "strict": true
+    },
+    "no_implicit_parens": {
+      "level": "ignore",
+      "strict": true
+    },
+    "no_interpolation_in_single_quotes": {
+      "level": "error"
+    },
+    "no_nested_string_interpolation": {
+      "level": "error"
+    },
+    "no_plusplus": {
+      "level": "ignore"
+    },
+    "no_tabs": {
+      "level": "error"
+    },
+    "no_this": {
+      "level": "error"
+    },
+    "no_throwing_strings": {
+      "level": "error"
+    },
+    "no_trailing_semicolons": {
+      "level": "error"
+    },
+    "no_trailing_whitespace": {
+      "level": "warn",
+      "allowed_in_comments": false,
+      "allowed_in_empty_lines": true
+    },
+    "no_unnecessary_fat_arrows": {
+      "level": "warn"
+    },
+    "prefer_english_operator": {
+      "level": "ignore",
+      "doubleNotLevel": "ignore"
+    },
+    "space_operators": {
+      "level": "warn"
+    },
+    "spacing_after_comma": {
+      "level": "warn"
+    },
+    "transform_messes_up_line_numbers": {
+      "level": "warn"
+    }
+  }
 }

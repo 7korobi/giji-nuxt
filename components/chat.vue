@@ -41,7 +41,7 @@ module.exports =
     m attrs.show, { attrs, key, on: ctx.data.on }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign"]
+    props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign", "img_src"]
 
     methods:
       click: ({ target })->

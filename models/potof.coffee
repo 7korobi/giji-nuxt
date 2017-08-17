@@ -16,9 +16,9 @@ new Rule("potof").schema ->
     catalog: (book_id, part_id, sort, order)->
       switch sort
         when "say.count"
-          sort = (o)=> o.say(part_id).count
+          sort = (o)-> o.say(part_id).count
         when "say.all"
-          sort = (o)=> o.say(part_id).all
+          sort = (o)-> o.say(part_id).all
       Query.books.find(book_id).potofs.sort(sort, order)
 
   class @model extends @model
@@ -65,12 +65,12 @@ new Rule("potof").schema ->
         head = stat?.label ? ""
         "#{head}#{o.label}"
 
-      @live    = @cards.find("#{@_id}-live") ? 
+      @live    = @cards.find("#{@_id}-live") ?
       @request = @cards.find("#{@_id}-request")
       @commit  = @stats.find("#{@_id}-commit")
       @give    = @stats.find("#{@_id}-give")
 
-      @winner_id = @find @cards, ["bond", "gift", "role", "live"], (o)=> o.role.win
+      @winner_id = @find @cards, ["bond", "gift", "role", "live"], (o)-> o.role.win
 
       if @live
         @live_class = @live.role_id

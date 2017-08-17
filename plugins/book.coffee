@@ -58,7 +58,7 @@ mounted = ->
 
 computed = {
   base...
-  tree("folder","book","part","phase","chat")...
+  tree("folder", "book", "part", "phase", "chat")...
   pages: ->
     @$route.query.pages || "1"
   page_idxs: ->
@@ -89,7 +89,6 @@ computed = {
     get: ->
       @$route.params.mode || "full"
     set: (mode)->
-      window.scrollTo 0,0
       { name, params, query } = @$route
       params = { params..., mode }
       @$router.replace { name, params, query }

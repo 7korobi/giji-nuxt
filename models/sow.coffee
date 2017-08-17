@@ -62,8 +62,8 @@ new Rule("sow_village").schema ->
         monthry: monthry.format updated_at
         rating: @rating
 
-      @q.rating = "default"  if @rating in [null, 0, "0","null","view"]
-      @q.rating = "alert"    if @rating in ["R15","r15","r18"]
+      @q.rating = "default"  if @rating in [null, 0, "0", "null", "view"]
+      @q.rating = "alert"    if @rating in ["R15", "r15", "r18"]
       @q.rating = "violence" if @rating in ["gro"]
 
 
@@ -136,7 +136,7 @@ new Rule("folder").schema ->
         @max_vils = o.MAX_VILLAGES
         if @max_vils
           @href = @config.cfg.URL_SW + "/sow.cgi"
-          [protocol,_, hostname,path_dir...] = @href.split("/")
+          [protocol, _, hostname, path_dir...] = @href.split("/")
           @hostname = hostname
           path = "/" + path_dir.join("/")
 

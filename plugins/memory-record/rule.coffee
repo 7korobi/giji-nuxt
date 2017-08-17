@@ -239,7 +239,7 @@ module.exports = class Rule
     { key = name.id, target = name.list, miss } = option
     @relation_to_one name.base, target, key, miss
 
-  habtm: (to, option={})->
+  habtm: (to, option = {})->
     name = rename to.replace /s$/, ""
     { key = name.ids, target = name.list } = option
     @relation_to_many name.list, target, key, "_id"
@@ -249,15 +249,14 @@ module.exports = class Rule
     { key = @$name.id, target = name.list } = option
     @relation_to_many name.list, target, "_id", key
 
-  tree: (option={})->
+  tree: (option = {})->
     @relation_tree "nodes", @$name.id
     @belongs_to @$name.base, option
 
-  graph: (option={})->
+  graph: (option = {})->
     { directed, cost } = option
     ik = @$name.ids
     @relation_to_many @$name.list, @$name.list, ik, "_id"
     @relation_graph "path", ik
     unless directed
       true # todo
-

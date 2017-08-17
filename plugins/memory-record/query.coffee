@@ -44,8 +44,8 @@ module.exports = class Query
   _copy: ({ @all, @_all_ids, @_group, @_filters, @$sort })->
 
   in: (req)->
-    query_parser @, req, (q, target, req, path)=>
-      add = (f)=> q._filters.push f
+    query_parser @, req, (q, target, req, path)->
+      add = (f)-> q._filters.push f
       switch req && req.constructor
         when Array
           set = set_for req
@@ -66,8 +66,8 @@ module.exports = class Query
           throw Error 'unimplemented'
 
   where: (req)->
-    query_parser @, req, (q, target, req, path)=>
-      add = (f)=> q._filters.push f
+    query_parser @, req, (q, target, req, path)->
+      add = (f)-> q._filters.push f
       switch req && req.constructor
         when Function
           add req
@@ -149,5 +149,3 @@ module.exports = class Query
     ids:
       get: ->
         Object.keys @hash
-
-

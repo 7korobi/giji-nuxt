@@ -1,6 +1,8 @@
 _ = require "lodash"
 Mem = require "./index.coffee"
 
+
+
 module.exports = class Model
   @rowid = 0
 
@@ -27,7 +29,9 @@ module.exports = class Model
   @aggregate: [
     (o, idx)->
   ]
+
   @map_reduce: (item, emit)->
+    undefined
 
   @order: (reduce, emit)->
-    
+    undefined

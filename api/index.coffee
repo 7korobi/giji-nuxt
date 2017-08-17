@@ -11,7 +11,7 @@ port = 4000 + (pm_id - 0 || 0)
 
 app = express()
 app.use bodyParser.json()
-app.use (req,res,next)->
+app.use (req, res, next)->
   res.header "Access-Control-Allow-Origin", "*"
   res.header "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
   next()
@@ -40,4 +40,3 @@ do ->
     catch err
       console.error err
       process.exit(1)
-

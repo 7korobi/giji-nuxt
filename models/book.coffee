@@ -35,4 +35,3 @@ Set.option.set require '../yaml/set_option.yml'
 Set.winner.set require '../yaml/set_winner.yml'
 Set.say.set    require '../yaml/set_says.yml'
 Set.game.set   require "../yaml/sow_game.yml"
-

@@ -3,21 +3,27 @@
 
 module.exports =
   props:
+    img_src:
+      type: String
     face_id:
       type: String
     hide:
       type: Boolean
   computed:
+    has_html: ->
+      !! @$slots.default
     image_class: ->
       if @hide
         ["hide"]
       else
         []
-    has_html: ->
-      !! @$slots.default
-    face_url: ->
+    image_src: ->
       face = Query.faces.find(@face_id, "all")
-      "#{env.STORE_URL}/images/portrate/#{ face.id }.jpg"
+      switch
+        when @img_src
+          @img_src
+        when face
+          "#{env.STORE_URL}/images/portrate/#{ face.id }.jpg"
 
   methods:
     click: ->
@@ -28,7 +34,7 @@ module.exports =
 
 <template lang="pug">
 .portrate(@click="click")
-  img(:src="face_url", :class="image_class")
+  img(:src="image_src", :class="image_class")
   .chrblank(v-if="has_html")
     slot
 </template>

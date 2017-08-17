@@ -4,7 +4,7 @@ try
   test = '__vue-localstorage-test__'
   ls = window.localStorage
   ss = window.sessionStorage
-  Cookie = require('tiny-cookie');
+  Cookie = require 'tiny-cookie'
   ls.setItem(test, test)
   ls.removeItem(test)
   ss.setItem(test, test)
@@ -60,12 +60,12 @@ type_as = (val, ret)->
       ret ? val
 
 get_by_json = (storage, val, cb)->
-        if storage
-          stored = cb()
-          stored &&= JSON.parse stored
-          type_as val, stored
-        else
-          val
+  if storage
+    stored = cb()
+    stored &&= JSON.parse stored
+    type_as val, stored
+  else
+    val
 
 class BrowserValue
   constructor: ->

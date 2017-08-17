@@ -80,7 +80,7 @@ new Rule("face").schema ->
         lives: []
         log:
           date_min:   0xfffffffffffff
-          date_max: - 0xfffffffffffff
+          date_max:  -0xfffffffffffff
           story_ids: []
         fav:
           _id:

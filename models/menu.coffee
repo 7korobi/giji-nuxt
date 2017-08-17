@@ -7,6 +7,8 @@ new Rule("site").schema ->
       o.rowid = @rowid
     constructor: ->
 
+
+
 new Rule("width").schema ->
   @order "rowid"
   class @model extends @model
@@ -14,12 +16,16 @@ new Rule("width").schema ->
       o.rowid = @rowid
     constructor: ->
 
+
+
 new Rule("font").schema ->
   @order "rowid"
   class @model extends @model
     @create: (o)->
       o.rowid = @rowid
     constructor: ->
+
+
 
 new Rule("theme").schema ->
   @order "rowid"
@@ -32,6 +38,8 @@ new Rule("theme").schema ->
         770: ["morning.png", @bg]
         580: ["b.jpg", "w.jpg"]
         458: ["b.jpg", "w.jpg"]
+
+
 
 new Rule("menu").schema ->
   @order "rowid"
@@ -238,4 +246,3 @@ Set.menu.set
     order: 99999
     label: ""
     badge: -> 0
-
