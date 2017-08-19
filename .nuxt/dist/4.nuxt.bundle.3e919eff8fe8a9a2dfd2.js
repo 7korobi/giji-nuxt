@@ -33,7 +33,7 @@ var Query;
 
 module.exports = {
   mixins: [
-    __webpack_require__(38),
+    __webpack_require__(37),
     __webpack_require__(97)({
       replace: {
         params: {
@@ -424,4 +424,4 @@ var update = __webpack_require__(3)("30e87388", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=4.nuxt.bundle.8002678314c85a4e262a.js.map
+//# sourceMappingURL=4.nuxt.bundle.3e919eff8fe8a9a2dfd2.js.map

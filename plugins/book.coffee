@@ -1,9 +1,5 @@
-Vuex = require "vuex"
-Vuex = Vuex.default if window?
-
 { Query } = require "~plugins/memory-record"
 ajax = require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
-
 
 tree = (keys...)->
   o = {}
@@ -55,7 +51,8 @@ tree = (keys...)->
 
 mounted = ->
   { chat_id } = @
-  ajax.mounted.call(@).then =>
+  ajax.mounted.call @
+  .then =>
     if chat_id
       @$nextTick =>
         @$store.commit "menu/focus", chat_id

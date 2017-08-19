@@ -29,7 +29,7 @@ var Query;
 ({Query} = __webpack_require__(1));
 
 module.exports = {
-  mixins: [__webpack_require__(38)],
+  mixins: [__webpack_require__(37)],
   mounted: function() {
     return this.menus = [...this.menus, "current"];
   },
@@ -136,4 +136,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=9.nuxt.bundle.c2f478d84739586285ad.js.map
+//# sourceMappingURL=9.nuxt.bundle.d24fb7f9ce0141ef7075.js.map

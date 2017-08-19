@@ -27,8 +27,8 @@ base = ([time_num..., time_tail], name, calc)->
       timer: {}
       read_at: {}
     o.timer[key] = timeout
-    base.root.commit base.arg.commit, o
-    if Date.now() - timer[key] < read_at[key]
+    commit base.arg.commit, o
+    if Date.now() - timeout < read_at[key]
       new Promise (ok)-> ok()
     else
       ret = @$store.dispatch name, payload
@@ -36,7 +36,7 @@ base = ([time_num..., time_tail], name, calc)->
         ret
         .then ->
           o.read_at[key] = Date.now()
-          base.root.commit base.arg.commit, o
+          commit base.arg.commit, o
       else
         ret
 
