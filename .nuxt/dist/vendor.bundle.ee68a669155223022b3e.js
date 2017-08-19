@@ -31298,7 +31298,7 @@ var base,
     slice = [].slice;
 
 base = function (arg, name, calc) {
-  var arg, i, timeout;
+  var arg, capture, i, timeout;
   time_num = 2 <= arg.length ? slice.call(arg, 0, i = arg.length - 1) : (i = 0, []), time_tail = arg[i++];
   name = name;
   calc = calc;
@@ -31314,13 +31314,23 @@ base = function (arg, name, calc) {
         return 1000 * 3600 * 24 * time_num;
     }
   }();
+  capture = function (vue) {
+    var key, payload, suffix;
+    if (calc) {
+      payload = calc.call(vue);
+      suffix = JSON.stringify(payload);
+    } else {
+      payload = null;
+      suffix = "";
+    }
+    key = name + suffix;
+    return { payload, key, name };
+  };
   return {
     mounted: function () {
-      var commit, key, o, payload, read_at, ref, ret, suffix, timer;
+      var commit, key, o, payload, read_at, ret, timer;
       ({ commit, timer, read_at } = base.root);
-      payload = calc.call(this);
-      suffix = (ref = JSON.stringify(payload)) != null ? ref : "";
-      key = name + suffix;
+      ({ payload, key, name } = capture(this));
       o = {
         timer: {},
         read_at: {}
@@ -31345,10 +31355,8 @@ base = function (arg, name, calc) {
     },
     computed: {
       read_at: function () {
-        var key, payload, ref, suffix;
-        payload = calc.call(this);
-        suffix = (ref = JSON.stringify(payload)) != null ? ref : "";
-        key = name + suffix;
+        var key;
+        ({ key } = capture(this));
         return this.$store.state.read_at[key];
       }
     }
@@ -45829,4 +45837,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[376]);
-//# sourceMappingURL=vendor.bundle.3dd6b5c4d6eabbb3baea.js.map
+//# sourceMappingURL=vendor.bundle.ee68a669155223022b3e.js.map

@@ -10,11 +10,19 @@ base = ([time_num..., time_tail], name, calc)->
       when "d"
         1000 * 3600 * 24 * time_num
 
+  capture = (vue)->
+    if calc
+      payload = calc.call vue
+      suffix = JSON.stringify payload
+    else
+      payload = null
+      suffix = ""
+    key = name + suffix
+    { payload, key, name }
+
   mounted: ->
     { commit, timer, read_at } = base.root
-    payload = calc.call(@)
-    suffix = JSON.stringify(payload) ? ""
-    key = name + suffix
+    { payload, key, name } = capture @
     o =
       timer: {}
       read_at: {}
@@ -34,9 +42,7 @@ base = ([time_num..., time_tail], name, calc)->
 
   computed:
     read_at: ->
-      payload = calc.call(@)
-      suffix = JSON.stringify(payload) ? ""
-      key = name + suffix
+      { key } = capture @
       @$store.state.read_at[key]
 
 base.plugin = (@arg)->
