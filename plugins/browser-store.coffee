@@ -1,12 +1,12 @@
 browser_store = bs = (method)->
   db = bs[method]
   init: (key)-> JSON.parse db.getItem key
-  pack: (computed, key, val)->
+  pack: (computed, type, key, val)->
     computed[key] =
       get: ->
-        { value, type } = @$data.$browser[key]
+        value = @$data.$browser[key].value
         if value
-          type(value)
+          type value
         else
           val
 
@@ -20,13 +20,12 @@ browser_store = bs = (method)->
 
 router = (method)->
   init: (key)-> null
-  pack: (computed, key, val)->
+  pack: (computed, type, key, val)->
     computed[key] =
       get: ->
-        { type } = @$data.$browser[key]
         value = @$route.params[key] || @$route.query[key]
         if value
-          type(value)
+          type value
         else
           val
 
@@ -85,7 +84,7 @@ module.exports = (args1)->
   pack = (setter, key, value)->
     type = value.constructor
     value = setter.init(key) ? value
-    setter.pack computed, key, value
+    setter.pack computed, type, key, value
 
     $browser[key] = { value, type }
     if cb

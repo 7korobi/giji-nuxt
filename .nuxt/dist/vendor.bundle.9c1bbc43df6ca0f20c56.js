@@ -31319,11 +31319,11 @@ browser_store = bs = function (method) {
     init: function (key) {
       return JSON.parse(db.getItem(key));
     },
-    pack: function (computed, key, val) {
+    pack: function (computed, type, key, val) {
       return computed[key] = {
         get: function () {
-          var type, value;
-          ({ value, type } = this.$data.$browser[key]);
+          var value;
+          value = this.$data.$browser[key].value;
           if (value) {
             return type(value);
           } else {
@@ -31348,11 +31348,10 @@ router = function (method) {
     init: function (key) {
       return null;
     },
-    pack: function (computed, key, val) {
+    pack: function (computed, type, key, val) {
       return computed[key] = {
         get: function () {
-          var type, value;
-          ({ type } = this.$data.$browser[key]);
+          var value;
           value = this.$route.params[key] || this.$route.query[key];
           if (value) {
             return type(value);
@@ -31446,7 +31445,7 @@ module.exports = function (args1) {
     var ref, type;
     type = value.constructor;
     value = (ref = setter.init(key)) != null ? ref : value;
-    setter.pack(computed, key, value);
+    setter.pack(computed, type, key, value);
     $browser[key] = { value, type };
     if (cb) {
       return watch[key] = function (newVal, oldVal) {
@@ -45869,4 +45868,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[376]);
-//# sourceMappingURL=vendor.bundle.a9a594d6d339d4dea0f1.js.map
+//# sourceMappingURL=vendor.bundle.9c1bbc43df6ca0f20c56.js.map
