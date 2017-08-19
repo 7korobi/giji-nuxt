@@ -4,7 +4,12 @@ browser_store = bs = (method)->
   pack: (computed, key, val)->
     computed[key] =
       get: ->
-        @$data.$browser[key].value || val
+        { value, type } = @$data.$browser[key]
+        if value
+          type(value)
+        else
+          val
+
       set: (val)->
         if val?
           db.setItem key, JSON.stringify(val)
@@ -18,7 +23,13 @@ router = (method)->
   pack: (computed, key, val)->
     computed[key] =
       get: ->
-        @$route.params[key] || @$route.query[key] || val
+        { type } = @$data.$browser[key]
+        value = @$route.params[key] || @$route.query[key]
+        if value
+          type(value)
+        else
+          val
+
       set: (val)->
         o = {}
         o[key] = val

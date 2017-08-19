@@ -31322,7 +31322,13 @@ browser_store = bs = function (method) {
     pack: function (computed, key, val) {
       return computed[key] = {
         get: function () {
-          return this.$data.$browser[key].value || val;
+          var type, value;
+          ({ value, type } = this.$data.$browser[key]);
+          if (value) {
+            return type(value);
+          } else {
+            return val;
+          }
         },
         set: function (val) {
           if (val != null) {
@@ -31345,7 +31351,14 @@ router = function (method) {
     pack: function (computed, key, val) {
       return computed[key] = {
         get: function () {
-          return this.$route.params[key] || this.$route.query[key] || val;
+          var type, value;
+          ({ type } = this.$data.$browser[key]);
+          value = this.$route.params[key] || this.$route.query[key];
+          if (value) {
+            return type(value);
+          } else {
+            return val;
+          }
         },
         set: function (val) {
           var hash, name, o, params, query, to;
@@ -45856,4 +45869,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[376]);
-//# sourceMappingURL=vendor.bundle.8550d89a92e5c02bf0b9.js.map
+//# sourceMappingURL=vendor.bundle.a9a594d6d339d4dea0f1.js.map
