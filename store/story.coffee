@@ -19,13 +19,11 @@ module.exports =
 
   actions:
     progress: ({state, commit, rootState })->
-      Mem.read_at_gate "story_progress", ->
-        axios.get "#{env.API_URL}/story/progress"
-        .then ({ status, data })->
-          commit "progress", data
+      axios.get "#{env.API_URL}/story/progress"
+      .then ({ status, data })->
+        commit "progress", data
 
     oldlog: ({ state, commit, rootState })->
-      Mem.read_at_gate "story_oldlog", ->
-        axios.get "#{env.SOW_URL}/index.json.gz"
-        .then ({ status, data })->
-          commit "oldlog", data
+      axios.get "#{env.SOW_URL}/index.json.gz"
+      .then ({ status, data })->
+        commit "oldlog", data

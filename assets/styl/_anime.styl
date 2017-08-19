@@ -16,13 +16,9 @@
 
 
 .timeline
-  &-move
-    transition: transform 0.3s
-  &-enter-to
+  &-enter, &leave-to
+    opacity: 0
     transition: all 0.2s ease 0.1s
-  &-enter, &-leave-to
-    height: 0
-    overflow: hidden
 
 .portrates
   background: #000

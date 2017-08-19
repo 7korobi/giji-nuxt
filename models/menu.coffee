@@ -1,3 +1,4 @@
+###
 { Set, Model, Query, Rule } = require "~plugins/memory-record"
 
 new Rule("site").schema ->
@@ -246,3 +247,4 @@ Set.menu.set
     order: 99999
     label: ""
     badge: -> 0
+###

@@ -8,7 +8,7 @@ module.exports = require("~components/chat.vue").component_class()
 </style>
 
 <template lang="pug">
-.chat.current(@click="click", :id="id", :key="id", :class="classname")
+.chat.current(@click="click", :key="id", :class="classname")
   .date
     span(v-if="sign")
       abbr {{ sign }}

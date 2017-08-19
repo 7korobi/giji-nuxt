@@ -11,22 +11,19 @@
   .center-right
   .contentframe
     .inframe
-      transition-group.inframe(name="list" tag="div")
+      transition-group.inframe(name="timeline" tag="div")
         div(v-for="(chats, idx) in chat_pages", :key="idx")
           chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 </template>
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
-{ computed, mounted } = require "~plugins/book"
+{ Query } = require "~plugins/memory-record"
 
 module.exports =
-  scrollToTop: true
-  data: ->
-    { read_at }
-
+  mixins: [
+    require '~plugins/book'
+  ]
   mounted: ->
     @menus = [@menus..., "current"]
-    mounted.call(@)
 
   methods:
     focus: (idx)->
@@ -40,10 +37,9 @@ module.exports =
       query = { query..., a }
       @$router.replace { name, params, query }
 
-  computed: {
-    computed...
+  computed:
     chat_pages: ->
-      @read_at["book.#{@book_id}"]
+      @read_at
       a = Array.from new Set [@$route.query.a...]
       Query.chats.ankers(@book_id, a).list
 
@@ -51,6 +47,5 @@ module.exports =
       [ chat_id, mode, pages ] = @$route.query.back.split(",")
       path: "../#{chat_id}/#{mode}"
       query: { pages }
-  }
 
 </script>

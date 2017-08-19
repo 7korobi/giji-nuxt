@@ -16,6 +16,7 @@ node_modules
 
 # logs
 npm-debug.log
+yarn-error.log
 
 # Copyright
 static/images/portrate

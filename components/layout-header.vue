@@ -1,47 +1,45 @@
 <script lang="coffee">
-BrowserValue = require "~plugins/browser-value"
-q = new BrowserValue
-q.cookie
-  theme: "cinema"
-  font:  "std"
+
 
 module.exports =
-  default:
-    watch: q.watch (_, key, val)->
-      return unless window?
-      switch key
-        when "theme", "font"
-          @use[key]?.unuse()
-          @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
-          @use[key].use()
-    data: ->
-      q.data @,
-        top:    0
-        width:  0
-        height: 0
-        use: {}
-        welcome: true # @$route.name == 'demo'
+  mixins: [
+    require("~plugins/browser-store")
+      cookie:
+        theme: "cinema"
+        font:  "std"
+      watch: (val, key)->
+        return unless window?
+        @use[key]?.unuse()
+        @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
+        @use[key].use()
+  ]
+  data: ->
+    top:    0
+    width:  0
+    height: 0
+    use: {}
+    welcome: true
 
-    created: ->
-      return unless window?
-      document.ontouchstart = ->
-      @poll()
+  created: ->
+    return unless window?
+    document.ontouchstart = ->
+    @poll()
 
-    computed:
-      center: ->
-        @$store.commit "menu/center", { @top, @left, @height, @width }
-      body_class: ->
-        [@theme, @font].join("~")
+  computed:
+    center: ->
+      @$store.commit "menu/center", { @top, @left, @height, @width }
+    body_class: ->
+      [@theme, @font].join("~")
 
-    methods:
-      poll: ->
-        if @top == scrollY && @left == scrollX
-          @center
-        @top = scrollY
-        @left = scrollX
-        @width = innerWidth
-        @height = innerHeight
-        requestAnimationFrame @poll
+  methods:
+    poll: ->
+      if @top == scrollY && @left == scrollX
+        @center
+      @top = scrollY
+      @left = scrollX
+      @width = innerWidth
+      @height = innerHeight
+      requestAnimationFrame @poll
 
 </script>
 <template lang="pug">

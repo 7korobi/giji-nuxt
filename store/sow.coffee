@@ -50,7 +50,7 @@ module.exports =
             sw: true
 
         if o.zapcount
-          job = ["IR","R","O","Y","G","B","I","V","UV"][o.clearance] + "-"
+          job = ["IR", "R", "O", "Y", "G", "B", "I", "V", "UV"][o.clearance] + "-"
         else
           job = Query.chr_jobs.find("#{csid}_#{o.face_id}")?.job
 
@@ -196,7 +196,6 @@ module.exports =
 
   actions:
     story: ({ state, commit, rootState }, story_id)->
-      Mem.read_at_gate "book.#{story_id}", ->
-        axios.get "#{env.SOW_URL}/#{story_id}.json.gz"
-        .then ({ status, data })->
-          commit "join", data
+      axios.get "#{env.SOW_URL}/#{story_id}.json.gz"
+      .then ({ status, data })->
+        commit "join", data

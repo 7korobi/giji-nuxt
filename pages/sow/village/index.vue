@@ -142,18 +142,18 @@
               a(v-for="opt in o.option_datas.list")
                .label {{ opt.label }}
             p
-              a(v-for="role in o.roles.config", :class="role.win")
+              a(v-if="role" v-for="role in o.roles.config", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.count") {{ role.count }}
             hr
             p
-              a(v-for="role in o.roles.event", :class="role.win")
+              a(v-if="role" v-for="role in o.roles.event", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.count") {{ role.count }}
             p
-              a(v-for="role in o.roles.discard", :class="role.win")
+              a(v-if="role" v-for="role in o.roles.discard", :class="role.win")
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.count") {{ role.count }}
@@ -163,48 +163,43 @@
 </template>
 <script lang="coffee">
 _ = require "lodash"
-{ Query, read_at } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
+{ Query } = require "~plugins/memory-record"
 el = require "~plugins/dom"
 
-q = new BrowserValue
-q.query
-  order:  "vid"
-  folder_id: []
-  yeary: []
-  monthry: []
-  upd_range: []
-  upd_at: []
-  sow_auth_id: []
-  rating: []
-  size: []
-  say: []
-  game: []
-  option: []
-  event: []
-  discard: []
-  config: []
-
 module.exports =
-  watch: q.watch (_, key, val)->
-    @limit = 25
-    @drill = true
+  mixins: [
+    require("~plugins/get-by-mount") "1h", "story/oldlog"
+    require("~plugins/browser-store")
+      replace:
+        query:
+          order:  "vid"
+          folder_id: []
+          yeary: []
+          monthry: []
+          upd_range: []
+          upd_at: []
+          sow_auth_id: []
+          rating: []
+          size: []
+          say: []
+          game: []
+          option: []
+          event: []
+          discard: []
+          config: []
+      watch: ->
+        @drill = true
+  ]
 
   data: ->
-    q.data @,
-      mode: "oldlog"
-      limit: 25
-      asc: "desc"
-      drill: false
-      read_at: read_at
-
-  mounted: ->
-    @$store.dispatch "story/oldlog"
+    mode: "oldlog"
+    limit: 25
+    asc: "desc"
+    drill: false
 
   methods:
     reset: ->
       @$router.replace query: {}
-      Object.assign @, q.base.query
     
     part_url: (book_id, part_idx)->
       "village/#{book_id}-#{part_idx}/full"
@@ -234,15 +229,15 @@ module.exports =
       obj
 
     limit_next: ->
-      @read_at.story_oldlog
+      @read_at
       Math.min @villages_all.list.length, @limit + 25
 
     all: ->
-      @read_at.story_oldlog
+      @read_at
       Query.sow_villages.mode @mode
 
     villages_all: ->
-      @read_at.story_oldlog
+      @read_at
       Query.sow_villages.search @mode, @query_in, @query_where, @order, @asc
 
     villages: ->

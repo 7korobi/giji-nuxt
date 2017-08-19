@@ -84,18 +84,16 @@ module.exports =
 
   actions:
     faces: ({ dispatch, state, commit, rootState })->
-      Mem.read_at_gate "aggregate_faces", ->
-        axios.get "#{env.API_URL}/aggregate/faces"
-        .then ({ status, data })->
-          commit "faces", { data }
-        .catch (err)->
-          console.log err
+      axios.get "#{env.API_URL}/aggregate/faces"
+      .then ({ status, data })->
+        commit "faces", { data }
+      .catch (err)->
+        console.log err
 
     face: ({ state, commit, rootState }, id)->
-      Mem.read_at_gate "aggregate_face.#{id}", ->
-        axios.get "#{env.API_URL}/aggregate/faces/#{id}"
-        .then ({ status, data })->
-          commit "face", { data, id }
-        .catch (err)->
-          console.log err
+      axios.get "#{env.API_URL}/aggregate/faces/#{id}"
+      .then ({ status, data })->
+        commit "face", { data, id }
+      .catch (err)->
+        console.log err
 

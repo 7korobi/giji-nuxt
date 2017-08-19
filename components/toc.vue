@@ -1,5 +1,5 @@
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
+{ Query } = require "~plugins/memory-record"
 { computed } = require "~plugins/book"
 
 format =
@@ -11,8 +11,6 @@ format =
 
 module.exports =
   props: ["chats"]
-  data: ->
-    { read_at }
   methods:
     all_page_idxs: (part_id)->
       last = @chats(part_id).length

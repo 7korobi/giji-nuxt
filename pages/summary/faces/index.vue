@@ -45,28 +45,23 @@
 </template>
 
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
+{ Query } = require "~plugins/memory-record"
 _ = require "lodash"
 
-q = new BrowserValue
-q.query
-  order: "story_length"
-  tag_id:  "all"
-
 module.exports =
-  default:
-    watch: q.watch ->
-    data: ->
-      q.data @, { read_at }
+  mixins: [
+    require("~plugins/get-by-mount") "12h", "aggregate/faces"
+    require("~plugins/browser-store")
+      push:
+        query:
+          order: "story_length"
+          tag_id:  "all"
+  ]
 
-    mounted: ->
-      @$store.dispatch "aggregate/faces"
-
-    computed:
-      faces: ->
-        @read_at.aggregate_faces
-        Query.faces.aggregate(@tag_id, @order)
+  computed:
+    faces: ->
+      @read_at
+      Query.faces.aggregate(@tag_id, @order)
 
 </script>
 

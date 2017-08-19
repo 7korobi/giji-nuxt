@@ -70,7 +70,7 @@
 
 
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
+{ Query } = require "~plugins/memory-record"
 { computed } = require "~plugins/book"
 
 module.exports =
@@ -79,7 +79,6 @@ module.exports =
     order: "asc"
     full_mode: true
     live_mode: true
-    read_at: read_at
 
   computed: {
     computed...

@@ -6,50 +6,50 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 
-const _f1048964 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */)
+const _26460e66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */)
 
-const _3a53eb0b = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
+const _126e656c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
 
-const _f63558c2 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
+const _d988a500 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
 
-const _4b01ef72 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
+const _8471841e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
 
-const _95e722fe = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
+const _718150c0 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
 
-const _6be40015 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
+const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
 
-const _379d8e3a = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
+const _beb3c9bc = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
 
-const _09806650 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
+const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
 
-const _67dc6458 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
+const _eef29fda = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
 
-const _1d9d7386 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
+const _3f090d08 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
 
-const _2a3129fe = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
+const _6fbb897d = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
 
-const _5b5d93e6 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
+const _4aa7c725 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
 
-const _494e8978 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\anker.vue' /* webpackChunkName: "pages/sow-village-idx-anker" */)
+const _08e1dd12 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\anker.vue' /* webpackChunkName: "pages/sow-village-idx-anker" */)
 
-const _ebdd3d22 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages/sow-village-idx-mode" */)
+const _3c51e96e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages/sow-village-idx-mode" */)
 
-const _80ef296a = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\user\\_id.vue' /* webpackChunkName: "pages/user-id" */)
+const _80025d6c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\user\\_id.vue' /* webpackChunkName: "pages/user-id" */)
 
 
 
 const scrollBehavior = function (to, from, savedPosition) {
       var basic, book, has_top;
       book = function(idx_limit, has_top, to, from) {
-        var from_name, from_part, to_name, to_part;
-        [from_part, to_part] = [from, to].map(function(o) {
-          var ref;
-          return (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+        [from, to] = [from, to].map(function(o) {
+          var name, page, part, ref, ref1;
+          name = o.params.mode || o.name;
+          part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+          page = (ref1 = o.query.pages) != null ? ref1.split("-")[0] : void 0;
+          return `${name} ${part} ${page}`;
         });
-        from_name = from.params.mode || from.name;
-        to_name = to.params.mode || to.name;
-        if (from_part + from_name !== to_part + to_name) {
-          console.log(`scroll to TOP (${from_name} != ${to_name})`);
+        if (from !== to) {
+          console.log(`scroll to TOP (${from} != ${to})`);
           return {
             x: 0,
             y: 0
@@ -57,6 +57,7 @@ const scrollBehavior = function (to, from, savedPosition) {
         }
       };
       basic = function(has_top, to) {
+        console.log({to, from});
         switch (false) {
           case from.path === to.path:
             console.log(`scroll to TOP (${from.path} != ${to.path})`);
@@ -72,7 +73,6 @@ const scrollBehavior = function (to, from, savedPosition) {
             };
         }
       };
-      console.log({to, from});
       switch (false) {
         case !savedPosition:
           console.log("scroll restore", savedPosition);
@@ -108,77 +108,77 @@ export function createRouter () {
     routes: [
   		{
 			path: "/",
-			component: _f1048964,
+			component: _26460e66,
 			name: "index"
 		},
 		{
 			path: "/demo",
-			component: _3a53eb0b,
+			component: _126e656c,
 			name: "demo"
 		},
 		{
 			path: "/rule-guide",
-			component: _f63558c2,
+			component: _d988a500,
 			name: "rule-guide"
 		},
 		{
 			path: "/character-tag",
-			component: _4b01ef72,
+			component: _8471841e,
 			name: "character-tag"
 		},
 		{
 			path: "/demo/names",
-			component: _95e722fe,
+			component: _718150c0,
 			name: "demo-names"
 		},
 		{
 			path: "/demo/timeago",
-			component: _6be40015,
+			component: _42ad62d8,
 			name: "demo-timeago"
 		},
 		{
 			path: "/demo/books",
-			component: _379d8e3a,
+			component: _beb3c9bc,
 			name: "demo-books"
 		},
 		{
 			path: "/demo/oauth",
-			component: _09806650,
+			component: _74156ee2,
 			name: "demo-oauth"
 		},
 		{
 			path: "/demo/chats",
-			component: _67dc6458,
+			component: _eef29fda,
 			name: "demo-chats"
 		},
 		{
 			path: "/sow/village",
-			component: _1d9d7386,
+			component: _3f090d08,
 			name: "sow-village"
 		},
 		{
 			path: "/summary/faces",
-			component: _2a3129fe,
+			component: _6fbb897d,
 			name: "summary-faces"
 		},
 		{
 			path: "/summary/faces/:id",
-			component: _5b5d93e6,
+			component: _4aa7c725,
 			name: "summary-faces-id"
 		},
 		{
 			path: "/sow/village/:idx/anker",
-			component: _494e8978,
+			component: _08e1dd12,
 			name: "sow-village-idx-anker"
 		},
 		{
 			path: "/sow/village/:idx/:mode?",
-			component: _ebdd3d22,
+			component: _3c51e96e,
 			name: "sow-village-idx-mode"
 		},
 		{
 			path: "/user/:id?",
-			component: _80ef296a,
+			component: _80025d6c,
 			name: "user-id"
 		}
     ]

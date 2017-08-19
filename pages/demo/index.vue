@@ -12,7 +12,7 @@
       post(:write_at="Date.now()", handle="TSAY")
         nuxt-link.button(to="/demo/chats") chats sample
       post(:write_at="Date.now()", handle="TSAY")
-        nuxt-link.button(to="/sow/village/allstar-2") 村ログ(allstar-2)
+        nuxt-link.button(to="/sow/village/allstar-2-0/full") 村ログ(allstar-2)
 </template>
 <script lang="coffee">
 

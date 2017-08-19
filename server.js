@@ -1755,7 +1755,7 @@ module.exports = {
       ]
     ]
   },
-  vendor: ['axios', 'vee-validate', '~components/vue.coffee', '~plugins/memory-record.coffee', '~plugins/browser-value'],
+  vendor: ['axios', 'vee-validate', '~components/vue.coffee', '~plugins/memory-record.coffee'],
   loaders: [
     {
       test: /\.(png|jpe?g|gif|svg)$/,
@@ -1906,15 +1906,15 @@ module.exports = {
   scrollBehavior: function(to, from, savedPosition) {
     var basic, book, has_top;
     book = function(idx_limit, has_top, to, from) {
-      var from_name, from_part, to_name, to_part;
-      [from_part, to_part] = [from, to].map(function(o) {
-        var ref;
-        return (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+      [from, to] = [from, to].map(function(o) {
+        var name, page, part, ref, ref1;
+        name = o.params.mode || o.name;
+        part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+        page = (ref1 = o.query.pages) != null ? ref1.split("-")[0] : void 0;
+        return `${name} ${part} ${page}`;
       });
-      from_name = from.params.mode || from.name;
-      to_name = to.params.mode || to.name;
-      if (from_part + from_name !== to_part + to_name) {
-        console.log(`scroll to TOP (${from_name} != ${to_name})`);
+      if (from !== to) {
+        console.log(`scroll to TOP (${from} != ${to})`);
         return {
           x: 0,
           y: 0
@@ -1922,6 +1922,7 @@ module.exports = {
       }
     };
     basic = function(has_top, to) {
+      console.log({to, from});
       switch (false) {
         case from.path === to.path:
           console.log(`scroll to TOP (${from.path} != ${to.path})`);
@@ -1937,7 +1938,6 @@ module.exports = {
           };
       }
     };
-    console.log({to, from});
     switch (false) {
       case !savedPosition:
         console.log("scroll restore", savedPosition);

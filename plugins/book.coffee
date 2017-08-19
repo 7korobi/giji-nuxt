@@ -2,6 +2,7 @@ Vuex = require "vuex"
 Vuex = Vuex.default if window?
 
 { Query } = require "~plugins/memory-record"
+ajax = require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
 
 
 tree = (keys...)->
@@ -15,7 +16,7 @@ tree = (keys...)->
           (at < @idx.length) && @idx[0..at].join("-")
       "#{name}":
         get: ->
-          @read_at["book.#{@book_id}"]
+          @read_at
           Query[list].find @[key]
 
     o = { o..., state... }
@@ -39,26 +40,30 @@ tree = (keys...)->
         "#{1 + head}"
       else
         [1 + head, 1 + tail].join("-")
-    { name, params, query } = @$route
+    { name, params, query, hash } = @$route
     params = { params..., idx }
     query = { query..., pages }
-    @$router.replace { name, params, query }
-  o
+    @$router.replace { name, params, query, hash }
 
-base =
-  idx: -> @$route.params.idx.split("-")
+  o.idx =
+    get: -> @$route.params.idx.split("-")
+    set: (idx)->
+      { name, params, query, hash } = @$route
+      params = { params..., idx }
+      @$router.replace { name, params, query, hash }
+  o
 
 mounted = ->
   { chat_id } = @
-  @$store.dispatch "sow/story", @book_id
-  .then =>
+  ajax.mounted.call(@).then =>
     if chat_id
       @$nextTick =>
         @$store.commit "menu/focus", chat_id
 
 computed = {
-  base...
   tree("folder", "book", "part", "phase", "chat")...
+  ajax.computed...
+
   pages: ->
     @$route.query.pages || "1"
   page_idxs: ->
@@ -67,9 +72,11 @@ computed = {
   page_ids: ->
     @page_idxs.map (idx)=>
       "#{@part_id}-#{idx}"
+
   mentions: ->
-    @read_at?["book.#{@book_id}"]
+    @read_at
     Query.chats.reduce?.mention_to?[@chat_id]
+
   back: ->
     [ @chat_id || @part_id, @mode, @pages ].join(",")
 
@@ -84,14 +91,6 @@ computed = {
       key for key, val of @$store.state.menu.set when val
     set: (menus)->
       @$store.commit "menu/mode", menus
-  
-  mode:
-    get: ->
-      @$route.params.mode || "full"
-    set: (mode)->
-      { name, params, query } = @$route
-      params = { params..., mode }
-      @$router.replace { name, params, query }
 }
 
 module.exports = { computed, mounted }

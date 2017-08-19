@@ -18,17 +18,14 @@
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
-
-q = new BrowserValue
-q.query
-  tag_id:  "giji"
 
 module.exports =
-  watch: q.watch ->
-  data: ->
-    q.data @
-
+  mixins: [
+    require("~plugins/browser-store")
+      replace:
+        query:
+          tag_id: "giji"
+  ]
   computed:
     set: ->
       Query.tags.find @tag_id

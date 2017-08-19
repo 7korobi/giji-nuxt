@@ -84,67 +84,61 @@
 </template>
 
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
-
-q = new BrowserValue
-q.params
-  id: "c41"
-q.query
-  order: "story_ids.length"
-
+{ Query } = require "~plugins/memory-record"
 _ = require "lodash"
 
 module.exports =
-  default:
-    watch: q.watch ->
-    data: ->
-      q.data @, { read_at }
+  mixins: [
+    require("~plugins/get-by-mount") "12h", "aggregate/face", -> @id
+    require("~plugins/browser-store")
+      push:
+        params:
+          id:  "c41"
+        query:
+          order: "story_ids.length"
+  ]
 
-    mounted: ->
-      @$store.dispatch "aggregate/face", @id
+  filters:
+    currency: (num)->
+      str = String Math.ceil num
+      while str != str = str.replace /^(-?\d+)(\d{3})/, "$1,$2"
+        true
+      return str
 
-    filters:
-      currency: (num)->
-        str = String Math.ceil num
-        while str != str = str.replace /^(-?\d+)(\d{3})/, "$1,$2"
-          true
-        return str
+  methods:
+    log_url: ([folder, id])->
+      "#{env.STORE_URL}/stories/#{folder}-#{id}"
 
-    methods:
-      log_url: ([folder, id])->
-        "#{env.STORE_URL}/stories/#{folder}-#{id}"
+    label_size: (str)->
+      width  = 0.8 * (str.match(/[iIjl]/g) ? []).length
+      width += 1.0 * (str.match(/[0-9a-hkm-z]/g) ? []).length
+      width += 1.3 * (str.match(/[A-HJ-Z]/g) ? []).length
+      width += 2.0 * (str.match(/[^0-9a-zA-Z]/g) ? []).length
+      switch
+        when width <  6.5
+          "label2"
+        # when width < 13
+        #   "label3"
+        when width < 20.5
+          "label4"
+        # when width < 28
+        #   "label5"
+        else
+          "label6"
 
-      label_size: (str)->
-        width  = 0.8 * (str.match(/[iIjl]/g) ? []).length
-        width += 1.0 * (str.match(/[0-9a-hkm-z]/g) ? []).length
-        width += 1.3 * (str.match(/[A-HJ-Z]/g) ? []).length
-        width += 2.0 * (str.match(/[^0-9a-zA-Z]/g) ? []).length
-        switch
-          when width <  6.5
-            "label2"
-          # when width < 13
-          #   "label3"
-          when width < 20.5
-            "label4"
-          # when width < 28
-          #   "label5"
+  computed:
+    sow_auths: ->
+      asc =
+        switch @order
+          when "date_min"
+            "asc"
           else
-            "label6"
+            "desc"
+      _.orderBy @face.sow_auths, @order, asc
 
-    computed:
-      sow_auths: ->
-        asc =
-          switch @order
-            when "date_min"
-              "asc"
-            else
-              "desc"
-        _.orderBy @face.sow_auths, @order, asc
-
-      face: ->
-        @read_at["aggregate_face.#{@id}"]
-        Query.faces.find @id
+    face: ->
+      @read_at
+      Query.faces.find @id
 
 </script>
 

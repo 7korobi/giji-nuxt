@@ -21,7 +21,6 @@ module.exports =
     'vee-validate'
     '~components/vue.coffee'
     '~plugins/memory-record.coffee'
-    '~plugins/browser-value'
   ]
 
   loaders: [

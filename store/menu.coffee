@@ -1,15 +1,6 @@
-{ Model, Set, Query, Rule } = Mem = require "~plugins/memory-record"
-
-if window?
-  window.Mem = Mem
-
-new Rule("menu").schema ->
-  class @model extends @model
-    @deploy: ->
-      @_id ?= @name
-
 module.exports =
   namespaced: true
+
   state: ->
     top:    0
     center: 0
@@ -28,17 +19,8 @@ module.exports =
       potof: false
       current: false
     target: null
+
   mutations:
-    target: (state, name)->
-      if state.target == name
-        state.target = null
-      else
-        state.target = name
-
-    pulse: (state, ext)->
-      for o in state.list when o.name == "spinner"
-        o.ext = ext
-
     mode: (state, list)->
       for id of state.set
         state.set[id] = false
@@ -64,4 +46,3 @@ module.exports =
       rect_center = rect.top + rect.height / 2
       top = rect_center - state.horizon
       window.scrollBy 0, top
-

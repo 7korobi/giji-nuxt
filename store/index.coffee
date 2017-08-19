@@ -1,6 +1,9 @@
 require "../models/index"
 axios = require "axios"
-Mem = require "~plugins/memory-record"
+{ Model, Set, Query, Rule } = Mem = require "~plugins/memory-record"
+
+if window?
+  window.Mem = Mem
 
 ###
   store.state は下記の特徴を持つ。
@@ -13,33 +16,36 @@ Mem = require "~plugins/memory-record"
 ###
 
 module.exports =
-  default:
-    state: ->
-      read_at = Mem.read_at
-      user: null
-      profile: {}
-      env: {}
+  plugins: [
+    require("~plugins/get-by-mount").plugin
+      commit: "update"
+  ]
+  state: ->
+    user: null
+    profile: {}
+    env: {}
+    read_at: {}
+    timer: {}
 
-    actions:
-      nuxtServerInit: ({ commit }, { req, env })->
-        global.env = env
-        commit "public_env", env
-        # { cookie, passport } = req.session
+  actions:
+    nuxtServerInit: ({ commit }, { req, env })->
+      global.env = env
+      commit "update", { env }
+      # { cookie, passport } = req.session
 
-        if id = req.session?.passport?.user
-          commit "login", id
+      if id = req.session?.passport?.user
+        commit "login", id
 
-          axios.get "#{env.API_URL}/user/#{id}"
-          .then ({ status, data })->
-            console.log "HTTP :: /api/books/#{id}"
-            commit "profile", data
+        axios.get "#{env.API_URL}/user/#{id}"
+        .then ({ status, data })->
+          console.log "HTTP :: /api/books/#{id}"
+          commit "update",
+            profile: data
 
-    mutations:
-      public_env: (state, public_env)->
-        state.env = public_env
+  mutations:
+    login: (state, id)->
+      state.user = id
 
-      login: (state, id)->
-        state.user = id
-
-      profile: (state, data)->
-        state.profile = data
+    update: (state, o)->
+      for key, val of state when o[key]
+        state[key] = { o[key]..., val... }

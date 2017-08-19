@@ -340,43 +340,40 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
-
-q = new BrowserValue
-q.query
-  chat_id: ""
-  part_id: ""
-  self_id: ""
 
 module.exports =
-  default:
-    layout: "book"
-    watch: q.watch ->
-    data: ->
-      q.data @
-    mounted: ->
-      @$store.dispatch "book/book", "demo-0"
-      .then =>
-        @$store.dispatch "book/part", "demo-0-0"
-      .then =>
-        @$store.dispatch "book/section", "demo-0-0-1"
-      .then =>
-        @self_id = "demo-0-0-8"
-        @part_id = @$store.state.book.part_id
+  layout: "book"
+  mixins: [
+    require("~plugins/browser-store")
+      replace:
+        query:
+          chat_id: ""
+          part_id: ""
+          self_id: ""
+  ]
+  mounted: ->
+    @$store.dispatch "book/book", "demo-0"
+    .then =>
+      @$store.dispatch "book/part", "demo-0-0"
+    .then =>
+      @$store.dispatch "book/section", "demo-0-0-1"
+    .then =>
+      @self_id = "demo-0-0-8"
+      @part_id = @$store.state.book.part_id
 
-    computed:
-      now: ->
-        Date.now()
-      show_sitemap: ->
-        'sitemap' == @$store.state.menu.target
-      show_write: ->
-        @$store.state.menu.target == 'comment'
-      chats: ->
-        { read_at, @chat_id, book_id } = @$store.state.book
-        book = Query.books.find(book_id)
-        if book
-          book.chats.list
-        else
-          []
+  computed:
+    now: ->
+      Date.now()
+    show_sitemap: ->
+      'sitemap' == @$store.state.menu.target
+    show_write: ->
+      @$store.state.menu.target == 'comment'
+    chats: ->
+      { read_at, @chat_id, book_id } = @$store.state.book
+      book = Query.books.find(book_id)
+      if book
+        book.chats.list
+      else
+        []
 
 </script>

@@ -67,7 +67,7 @@
               i.fa.fa-compress
           span メモ掲載の一覧を表示しています。
 
-      transition-group(name="list" tag="div" v-for="(chats, idx) in chats_pages", :key="idx")
+      transition-group(name="timeline" tag="div" v-for="(chats, idx) in chats_pages", :key="idx")
         chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
@@ -82,21 +82,20 @@
 </style>
 
 <script lang="coffee">
-{ Query, read_at } = require "~plugins/memory-record"
-{ computed, mounted } = require "~plugins/book"
+{ Query } = require "~plugins/memory-record"
 
 module.exports =
-  data: ->
-    { read_at }
-
-  mounted: mounted
-
+  mixins: [
+    require '~plugins/book'
+    require("~plugins/browser-store")
+      replace:
+        params:
+          mode: "full"
+      watch: ->
+        @book = { @part_id, page_idxs: [0] }
+  ]
   methods:
-    focus: (idx)->
-      { name, params, query } = @$route
-      params = { params..., idx }
-      @$router.replace { name, params, query }
-      
+    focus: (@idx)->
     anker: (book_id, a)->
       @$router.push
         path: "../#{@part_id}/anker"
@@ -116,8 +115,7 @@ module.exports =
         part_id: @part_next_id ? @part_id
         page_idxs: [0]
 
-  computed: {
-    computed...
+  computed:
     part_prev_id: ->
       if @part && @book
         ids = @book.parts.pluck('id')
@@ -140,7 +138,7 @@ module.exports =
         @page_here_id + 1
 
     now: ->
-      @read_at["book.#{@book_id}"]
+      @read_at
       Query.chats.now(@hide_potof_ids)
 
     chats: ->
@@ -151,6 +149,5 @@ module.exports =
 
     chats_pages: ->
       @page_idxs.map (page)=> @chats_here[page]
-  }
 
 </script>

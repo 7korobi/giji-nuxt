@@ -18,23 +18,19 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-BrowserValue = require "~plugins/browser-value"
-
-q = new BrowserValue
-q.query
-  tag_id:  "all"
 
 module.exports =
-  default:
-    watch: q.watch ->
-    data: ->
-      q.data @
+  mixins: [
+    require("~plugins/browser-store")
+      replace:
+        query:
+          tag_id: "all"
+  ]
+  computed:
+    name_blanks: ->
+      Query.faces.name_blank()
 
-    computed:
-      name_blanks: ->
-        Query.faces.name_blank()
-
-      name_counts: ->
-        Query.faces.name_head(@tag_id)
+    name_counts: ->
+      Query.faces.name_head(@tag_id)
 
 </script>
