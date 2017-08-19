@@ -13,18 +13,21 @@ browser_store = bs = (method)->
         @$data.$browser[key].value = val
 
 
-router = (method, store)->
+router = (method)->
   init: (key)-> null
   pack: (computed, key, val)->
     computed[key] =
       get: ->
-        @$route[store][key] || val
+        @$route.params[key] || @$route.query[key] || val
       set: (val)->
         o = {}
         o[key] = val
         { name, params, query, hash } = @$route
         to = { name, params, query, hash }
-        to[store] = { to[store]..., o... }
+        if params[key]
+          to.params = { to.params..., o... }
+        else
+          to.query = { to.query..., o... }
         @$router[method] to
 
 
@@ -82,9 +85,8 @@ module.exports = (args1)->
   for method, args2 of args1
     switch method
       when "replace", "push"
-        for store, args3 of args2
-          for key, val of args3
-            pack router(method, store), key, val
+        for key, val of args2
+          pack router(method), key, val
 
       when "cookie", "local", "session"
         for key, val of args2

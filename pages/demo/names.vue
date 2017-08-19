@@ -23,8 +23,7 @@ module.exports =
   mixins: [
     require("~plugins/browser-store")
       replace:
-        query:
-          tag_id: "all"
+        tag_id: "all"
   ]
   computed:
     name_blanks: ->

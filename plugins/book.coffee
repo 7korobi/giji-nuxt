@@ -1,5 +1,12 @@
 { Query } = require "~plugins/memory-record"
 ajax = require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
+store = require("~plugins/browser-store")
+  push:
+    mode: "full"
+  replace:
+    idx: []
+store.computed.idx.get = ->
+  @$route.params.idx.split("-")
 
 tree = (keys...)->
   o = {}
@@ -40,13 +47,6 @@ tree = (keys...)->
     params = { params..., idx }
     query = { query..., pages }
     @$router.replace { name, params, query, hash }
-
-  o.idx =
-    get: -> @$route.params.idx.split("-")
-    set: (idx)->
-      { name, params, query, hash } = @$route
-      params = { params..., idx }
-      @$router.replace { name, params, query, hash }
   o
 
 mounted = ->
@@ -59,6 +59,7 @@ mounted = ->
 
 computed = {
   tree("folder", "book", "part", "phase", "chat")...
+  store.computed...
   ajax.computed...
 
   pages: ->
@@ -74,8 +75,24 @@ computed = {
     @read_at
     Query.chats.reduce?.mention_to?[@chat_id]
 
+  now: ->
+    @read_at
+    Query.chats.now(@hide_potof_ids)
+
+  chats: ->
+    @now[@mode]
+
+  chats_here: ->
+    @chats(@part_id)
+
   back: ->
-    [ @chat_id || @part_id, @mode, @pages ].join(",")
+    pages = @chats_here?.page(@chat) ? 1
+    [ @chat_id || @part_id, @mode, pages ].join(",")
+
+  back_url: ->
+    [ chat_id, mode, pages ] = (@$route.query.back ? @back).split(",")
+    path: "../#{chat_id}/#{mode}"
+    query: { pages }
 
   hide_potof_ids:
     get: ->

@@ -34,13 +34,11 @@ var Query;
 module.exports = {
   layout: "book",
   mixins: [
-    __webpack_require__(97)({
+    __webpack_require__(62)({
       replace: {
-        query: {
-          chat_id: "",
-          part_id: "",
-          self_id: ""
-        }
+        chat_id: "",
+        part_id: "",
+        self_id: ""
       }
     })
   ],
@@ -605,4 +603,4 @@ var update = __webpack_require__(3)("f094c6e2", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=7.nuxt.bundle.ba2a00de619577c89117.js.map
+//# sourceMappingURL=7.nuxt.bundle.8bdc49ae03d62bbb8367.js.map

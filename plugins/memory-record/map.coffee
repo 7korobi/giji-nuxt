@@ -67,6 +67,8 @@ module.exports = class Map
         Math.floor(idx++ / per)
       groups.all = idx
       o = groups
+      o.page = (item)->
+        Math.floor(@from.indexOf(item) / per) + 1
       for a in groups
         a.__proto__ = set.prototype
 

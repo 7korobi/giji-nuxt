@@ -4,6 +4,8 @@
   .sideframe
     .inframe
       .icons.form
+        nuxt-link.item.active(replace, :to="back_url")
+          i.fa.fa-map-marker
         check.item(v-model="menus" as="current")
           i.fa.fa-map-pin
         check.item(v-model="menus" as="toc")
@@ -12,7 +14,7 @@
           i.fa.fa-users
   .summary(name="list" tag="div" key="summary")
     mentions(key="1" @anker="anker")
-    toc(key="2", :chats="chats")
+    toc(key="2")
     potofs(key="3")
   .center-left
   .center-right
@@ -87,12 +89,6 @@
 module.exports =
   mixins: [
     require '~plugins/book'
-    require("~plugins/browser-store")
-      replace:
-        params:
-          mode: "full"
-      watch: ->
-        @book = { @part_id, page_idxs: [0] }
   ]
   methods:
     focus: (@idx)->
@@ -136,16 +132,6 @@ module.exports =
     page_next_id: ->
       if @page_here_id? && @page_here_id + 1 < @chats_here.length
         @page_here_id + 1
-
-    now: ->
-      @read_at
-      Query.chats.now(@hide_potof_ids)
-
-    chats: ->
-      @now[@mode]
-
-    chats_here: ->
-      @chats(@part_id)
 
     chats_pages: ->
       @page_idxs.map (page)=> @chats_here[page]

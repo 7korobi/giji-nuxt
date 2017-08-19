@@ -30,11 +30,9 @@ var Query;
 
 module.exports = {
   mixins: [
-    __webpack_require__(97)({
+    __webpack_require__(62)({
       replace: {
-        query: {
-          tag_id: "giji"
-        }
+        tag_id: "giji"
       }
     })
   ],
@@ -122,4 +120,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=15.nuxt.bundle.a11167373a652490e089.js.map
+//# sourceMappingURL=15.nuxt.bundle.42ab631cdc6b9e1f08e2.js.map

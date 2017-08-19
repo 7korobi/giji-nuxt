@@ -53,9 +53,8 @@ module.exports =
     require("~plugins/get-by-mount") "12h", "aggregate/faces"
     require("~plugins/browser-store")
       push:
-        query:
-          order: "story_length"
-          tag_id:  "all"
+        order: "story_length"
+        tag_id:  "all"
   ]
 
   computed:

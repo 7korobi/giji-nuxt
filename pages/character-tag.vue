@@ -23,8 +23,7 @@ module.exports =
   mixins: [
     require("~plugins/browser-store")
       replace:
-        query:
-          tag_id: "giji"
+        tag_id: "giji"
   ]
   computed:
     set: ->

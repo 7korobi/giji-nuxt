@@ -1557,7 +1557,7 @@ JSON で表現可能な情報に限る。
 要素の追加、削除は特別な命令を使う。
 */
 module.exports = {
-  plugins: [__webpack_require__(62).plugin({
+  plugins: [__webpack_require__(63).plugin({
     commit: "update"
   })],
   state: function () {
@@ -2221,11 +2221,11 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _middleware = __webpack_require__(95);
+var _middleware = __webpack_require__(96);
 
 var _middleware2 = _interopRequireDefault(_middleware);
 
-var _index = __webpack_require__(94);
+var _index = __webpack_require__(95);
 
 var _utils = __webpack_require__(55);
 
@@ -3185,11 +3185,11 @@ var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _nuxtChild = __webpack_require__(74);
+var _nuxtChild = __webpack_require__(75);
 
 var _nuxtChild2 = _interopRequireDefault(_nuxtChild);
 
-var _error = __webpack_require__(92);
+var _error = __webpack_require__(93);
 
 var _error2 = _interopRequireDefault(_error);
 
@@ -3254,7 +3254,7 @@ exports.default = {
   }
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(93)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(94)(module)))
 
 /***/ }),
 
@@ -3709,7 +3709,7 @@ var _keys = __webpack_require__(146);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _extends2 = __webpack_require__(75);
+var _extends2 = __webpack_require__(76);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -4101,7 +4101,7 @@ function escapeGroup(group) {
 
 /***/ }),
 
-/***/ 74:
+/***/ 75:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4161,7 +4161,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 92:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 function injectStyle (ssrContext) {
@@ -4185,7 +4185,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 94:
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4204,7 +4204,7 @@ var _assign = __webpack_require__(41);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _extends2 = __webpack_require__(75);
+var _extends2 = __webpack_require__(76);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -4328,7 +4328,7 @@ var _router = __webpack_require__(139);
 
 var _store = __webpack_require__(140);
 
-var _nuxtChild = __webpack_require__(74);
+var _nuxtChild = __webpack_require__(75);
 
 var _nuxtChild2 = _interopRequireDefault(_nuxtChild);
 
@@ -4336,7 +4336,7 @@ var _nuxtLink = __webpack_require__(138);
 
 var _nuxtLink2 = _interopRequireDefault(_nuxtLink);
 
-var _error = __webpack_require__(92);
+var _error = __webpack_require__(93);
 
 var _error2 = _interopRequireDefault(_error);
 
@@ -4386,7 +4386,7 @@ exports.NuxtError = _error2.default;
 
 /***/ }),
 
-/***/ 95:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4450,4 +4450,4 @@ module.exports = {"nation":{"head":"国のルール","list":[{"head":"ここは�
 /***/ })
 
 },[137]);
-//# sourceMappingURL=nuxt.bundle.50a727fe1a5c578b74f5.js.map
+//# sourceMappingURL=nuxt.bundle.cca3f59a4cf11d192ace.js.map

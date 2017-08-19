@@ -346,10 +346,9 @@ module.exports =
   mixins: [
     require("~plugins/browser-store")
       replace:
-        query:
-          chat_id: ""
-          part_id: ""
-          self_id: ""
+        chat_id: ""
+        part_id: ""
+        self_id: ""
   ]
   mounted: ->
     @$store.dispatch "book/book", "demo-0"

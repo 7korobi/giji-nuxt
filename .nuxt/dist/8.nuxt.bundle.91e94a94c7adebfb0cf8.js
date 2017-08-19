@@ -27,7 +27,7 @@ module.exports = Component.exports
 /***/ 395:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63);
+__webpack_require__(64);
 
 module.exports = {
   default: {
@@ -106,4 +106,4 @@ var update = __webpack_require__(3)("606df778", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=8.nuxt.bundle.3d6f9877805468170fe4.js.map
+//# sourceMappingURL=8.nuxt.bundle.91e94a94c7adebfb0cf8.js.map

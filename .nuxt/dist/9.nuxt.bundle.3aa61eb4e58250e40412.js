@@ -54,14 +54,6 @@ module.exports = {
       this.read_at;
       a = Array.from(new Set([...this.$route.query.a]));
       return Query.chats.ankers(this.book_id, a).list;
-    },
-    back_url: function() {
-      var chat_id, mode, pages;
-      [chat_id, mode, pages] = this.$route.query.back.split(",");
-      return {
-        path: `../${chat_id}/${mode}`,
-        query: {pages}
-      };
     }
   }
 };
@@ -136,4 +128,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=9.nuxt.bundle.d24fb7f9ce0141ef7075.js.map
+//# sourceMappingURL=9.nuxt.bundle.3aa61eb4e58250e40412.js.map

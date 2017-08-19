@@ -10,7 +10,6 @@ format =
     hour:    "2-digit"
 
 module.exports =
-  props: ["chats"]
   methods:
     all_page_idxs: (part_id)->
       last = @chats(part_id).length

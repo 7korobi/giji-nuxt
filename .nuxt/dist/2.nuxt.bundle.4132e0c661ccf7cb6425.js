@@ -35,19 +35,15 @@ _ = __webpack_require__(7);
 
 module.exports = {
   mixins: [
-    __webpack_require__(62)("12h",
+    __webpack_require__(63)("12h",
     "aggregate/face",
     function() {
       return this.id;
     }),
-    __webpack_require__(97)({
+    __webpack_require__(62)({
       push: {
-        params: {
-          id: "c41"
-        },
-        query: {
-          order: "story_ids.length"
-        }
+        id: "c41",
+        order: "story_ids.length"
       }
     })
   ],
@@ -345,4 +341,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=2.nuxt.bundle.2ea84c549c0725822f2a.js.map
+//# sourceMappingURL=2.nuxt.bundle.4132e0c661ccf7cb6425.js.map

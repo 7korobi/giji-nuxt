@@ -24,7 +24,7 @@ module.exports = Component.exports
 /***/ 397:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63);
+__webpack_require__(64);
 
 module.exports = {
   default: {
@@ -47,4 +47,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=16.nuxt.bundle.7c5f5d00488f636c49b4.js.map
+//# sourceMappingURL=16.nuxt.bundle.1cc08a83e16c82fe66fc.js.map

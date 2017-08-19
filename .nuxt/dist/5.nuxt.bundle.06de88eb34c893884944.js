@@ -32,7 +32,7 @@ var Query;
 ({Query} = __webpack_require__(1));
 
 module.exports = {
-  mixins: [__webpack_require__(62)("1h", "story/progress")],
+  mixins: [__webpack_require__(63)("1h", "story/progress")],
   computed: {
     prologue: function() {
       this.read_at;
@@ -201,4 +201,4 @@ var update = __webpack_require__(3)("29075bcd", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=5.nuxt.bundle.0deb09e3f5fc7d7cfff7.js.map
+//# sourceMappingURL=5.nuxt.bundle.06de88eb34c893884944.js.map

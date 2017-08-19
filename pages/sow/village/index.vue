@@ -171,22 +171,21 @@ module.exports =
     require("~plugins/get-by-mount") "1h", "story/oldlog"
     require("~plugins/browser-store")
       replace:
-        query:
-          order:  "vid"
-          folder_id: []
-          yeary: []
-          monthry: []
-          upd_range: []
-          upd_at: []
-          sow_auth_id: []
-          rating: []
-          size: []
-          say: []
-          game: []
-          option: []
-          event: []
-          discard: []
-          config: []
+        order:  "vid"
+        folder_id: []
+        yeary: []
+        monthry: []
+        upd_range: []
+        upd_at: []
+        sow_auth_id: []
+        rating: []
+        size: []
+        say: []
+        game: []
+        option: []
+        event: []
+        discard: []
+        config: []
       watch: ->
         @drill = true
   ]

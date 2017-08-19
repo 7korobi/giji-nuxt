@@ -92,10 +92,8 @@ module.exports =
     require("~plugins/get-by-mount") "12h", "aggregate/face", -> @id
     require("~plugins/browser-store")
       push:
-        params:
-          id:  "c41"
-        query:
-          order: "story_ids.length"
+        id:  "c41"
+        order: "story_ids.length"
   ]
 
   filters:

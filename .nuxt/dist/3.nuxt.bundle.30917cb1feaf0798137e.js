@@ -33,31 +33,29 @@ _ = __webpack_require__(7);
 
 ({Query} = __webpack_require__(1));
 
-el = __webpack_require__(64);
+el = __webpack_require__(65);
 
 module.exports = {
   mixins: [
-    __webpack_require__(62)("1h",
+    __webpack_require__(63)("1h",
     "story/oldlog"),
-    __webpack_require__(97)({
+    __webpack_require__(62)({
       replace: {
-        query: {
-          order: "vid",
-          folder_id: [],
-          yeary: [],
-          monthry: [],
-          upd_range: [],
-          upd_at: [],
-          sow_auth_id: [],
-          rating: [],
-          size: [],
-          say: [],
-          game: [],
-          option: [],
-          event: [],
-          discard: [],
-          config: []
-        }
+        order: "vid",
+        folder_id: [],
+        yeary: [],
+        monthry: [],
+        upd_range: [],
+        upd_at: [],
+        sow_auth_id: [],
+        rating: [],
+        size: [],
+        say: [],
+        game: [],
+        option: [],
+        event: [],
+        discard: [],
+        config: []
       },
       watch: function() {
         return this.drill = true;
@@ -691,4 +689,4 @@ var update = __webpack_require__(3)("6b02251f", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=3.nuxt.bundle.e1c7ef37714a5eabaef4.js.map
+//# sourceMappingURL=3.nuxt.bundle.30917cb1feaf0798137e.js.map

@@ -43,9 +43,4 @@ module.exports =
       a = Array.from new Set [@$route.query.a...]
       Query.chats.ankers(@book_id, a).list
 
-    back_url: ->
-      [ chat_id, mode, pages ] = @$route.query.back.split(",")
-      path: "../#{chat_id}/#{mode}"
-      query: { pages }
-
 </script>

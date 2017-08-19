@@ -32,22 +32,7 @@ var Query;
 ({Query} = __webpack_require__(1));
 
 module.exports = {
-  mixins: [
-    __webpack_require__(37),
-    __webpack_require__(97)({
-      replace: {
-        params: {
-          mode: "full"
-        }
-      },
-      watch: function() {
-        return this.book = {
-          part_id: this.part_id,
-          page_idxs: [0]
-        };
-      }
-    })
-  ],
+  mixins: [__webpack_require__(37)],
   methods: {
     focus: function(idx1) {
       this.idx = idx1;
@@ -105,16 +90,6 @@ module.exports = {
         return this.page_here_id + 1;
       }
     },
-    now: function() {
-      this.read_at;
-      return Query.chats.now(this.hide_potof_ids);
-    },
-    chats: function() {
-      return this.now[this.mode];
-    },
-    chats_here: function() {
-      return this.chats(this.part_id);
-    },
     chats_pages: function() {
       return this.page_idxs.map((page) => {
         return this.chats_here[page];
@@ -153,7 +128,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "inframe"
   }, [_c('div', {
     staticClass: "icons form"
-  }, [_c('check', {
+  }, [_c('nuxt-link', {
+    staticClass: "item active",
+    attrs: {
+      "replace": "replace",
+      "to": _vm.back_url
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-map-marker"
+  })]), _c('check', {
     staticClass: "item",
     attrs: {
       "as": "current"
@@ -208,10 +191,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "anker": _vm.anker
     }
   }), _c('toc', {
-    key: "2",
-    attrs: {
-      "chats": _vm.chats
-    }
+    key: "2"
   }), _c('potofs', {
     key: "3"
   })], 1), _c('div', {
@@ -424,4 +404,4 @@ var update = __webpack_require__(3)("30e87388", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=4.nuxt.bundle.3e919eff8fe8a9a2dfd2.js.map
+//# sourceMappingURL=4.nuxt.bundle.b9c170f49ec10c6ef412.js.map
