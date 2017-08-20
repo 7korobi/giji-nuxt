@@ -26247,10 +26247,12 @@ store = __webpack_require__(37)({
         ({ chat_id } = this);
         this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0) != null ? ref : 0];
         if (chat_id != null && typeof window !== "undefined" && window !== null) {
-          return requestAnimationFrame(() => {
-            return this.$nextTick(() => {
-              console.log(window[chat_id]);
-              return this.$store.commit("menu/focus", chat_id);
+          return this.$nextTick(() => {
+            return requestAnimationFrame(() => {
+              return requestAnimationFrame(() => {
+                console.log(window[chat_id]);
+                return this.$store.commit("menu/focus", chat_id);
+              });
             });
           });
         }
@@ -45909,4 +45911,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[378]);
-//# sourceMappingURL=vendor.bundle.18722aaa59fbd2e3be8d.js.map
+//# sourceMappingURL=vendor.bundle.cf9d7173be9eeed08ffd.js.map

@@ -1,7 +1,7 @@
 {
   "publicPath": "/_nuxt/",
   "all": [
-    "manifest.5e390642452f49d654e3.js",
+    "manifest.76c93a63b9660a6c28a4.js",
     "fonts/element-icons.b02bdc1.ttf",
     "0.nuxt.bundle.4fd6bda805f5349008cc.js",
     "1.nuxt.bundle.168d1bcd8037b3646479.js",
@@ -21,7 +21,7 @@
     "15.nuxt.bundle.e78f6f4d8b8a1b9a0e36.js",
     "16.nuxt.bundle.fc437295ea957571fe96.js",
     "17.nuxt.bundle.a04deaabe3126c8b7441.js",
-    "vendor.bundle.18722aaa59fbd2e3be8d.js",
+    "vendor.bundle.cf9d7173be9eeed08ffd.js",
     "nuxt.bundle.583816b11cd5d77bba34.js",
     "fonts/element-icons.d2f69a9.woff",
     "0.nuxt.bundle.4fd6bda805f5349008cc.js.map",
@@ -42,14 +42,14 @@
     "15.nuxt.bundle.e78f6f4d8b8a1b9a0e36.js.map",
     "16.nuxt.bundle.fc437295ea957571fe96.js.map",
     "17.nuxt.bundle.a04deaabe3126c8b7441.js.map",
-    "vendor.bundle.18722aaa59fbd2e3be8d.js.map",
+    "vendor.bundle.cf9d7173be9eeed08ffd.js.map",
     "nuxt.bundle.583816b11cd5d77bba34.js.map",
-    "manifest.5e390642452f49d654e3.js.map",
+    "manifest.76c93a63b9660a6c28a4.js.map",
     "index.html"
   ],
   "initial": [
-    "manifest.5e390642452f49d654e3.js",
-    "vendor.bundle.18722aaa59fbd2e3be8d.js",
+    "manifest.76c93a63b9660a6c28a4.js",
+    "vendor.bundle.cf9d7173be9eeed08ffd.js",
     "nuxt.bundle.583816b11cd5d77bba34.js"
   ],
   "async": [

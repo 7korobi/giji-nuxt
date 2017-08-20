@@ -11,10 +11,11 @@ store = require("~plugins/browser-store")
         { chat_id } = @
         @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
         if chat_id? && window?
-          requestAnimationFrame =>
-            @$nextTick =>
-              console.log window[chat_id]
-              @$store.commit "menu/focus", chat_id
+          @$nextTick =>
+            requestAnimationFrame =>
+              requestAnimationFrame =>
+                console.log window[chat_id]
+                @$store.commit "menu/focus", chat_id
 
 tree store, "folder", "book", "part", "phase", "chat"
 store.computed.book.set = ({ page_idxs, chat_id, part_id, part })->
