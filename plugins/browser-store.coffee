@@ -121,7 +121,6 @@ module.exports = (args1)->
 
     setter.pack computed, type, key, value
     watch[key] = (newVal, oldVal)->
-      console.log arguments...
       return if _.isEqual newVal, oldVal
       cb?.call @, newVal, key
 

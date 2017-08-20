@@ -8,7 +8,11 @@ store = require("~plugins/browser-store")
   watch: (val, key)->
     switch key
       when "mode"
+        { chat_id } = @
         @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
+        @$nextTick =>
+          console.log "focus #{chat_id}"
+          @$store.commit "menu/focus", chat_id
 
 store.computed.idx.get = ->
   @$route.params.idx.split("-")
