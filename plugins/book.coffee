@@ -56,6 +56,7 @@ store.mounted = ->
   .then =>
     if chat_id
       @$nextTick =>
+        console.log "focus #{chat_id}"
         @$store.commit "menu/focus", chat_id
 
 Object.assign store.computed, {

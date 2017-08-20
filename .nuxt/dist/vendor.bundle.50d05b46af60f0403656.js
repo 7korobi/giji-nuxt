@@ -26350,6 +26350,7 @@ store.mounted = function () {
   return ajax.mounted.call(this).then(() => {
     if (chat_id) {
       return this.$nextTick(() => {
+        console.log(`focus ${chat_id}`);
         return this.$store.commit("menu/focus", chat_id);
       });
     }
@@ -45974,4 +45975,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[377]);
-//# sourceMappingURL=vendor.bundle.9a9166cc5621262e9e51.js.map
+//# sourceMappingURL=vendor.bundle.50d05b46af60f0403656.js.map
