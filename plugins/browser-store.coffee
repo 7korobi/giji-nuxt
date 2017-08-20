@@ -28,9 +28,9 @@ router = (method)->
         else
           val
 
-      set: (val)->
+      set: (newVal)->
         o = {}
-        o[key] = val
+        o[key] = newVal
         { name, params, query, hash } = @$route
         to = { name, params, query, hash }
         if params[key]
@@ -76,14 +76,17 @@ types =
     to_str: String
     by_str: String
     by_url: String
-  "#{Array}":  
+  "#{Array}":
     to_str: JSON.stringify
     by_str: JSON.parse
     by_url: (u)->
-      if Array == u.constructor
-        u
-      else
-        [u]
+      switch u?.constructor
+        when null, undefined
+          null
+        when Array
+          u
+        else
+          [u]
   "#{Object}":
     to_str: JSON.stringify
     by_str: JSON.parse
@@ -93,39 +96,35 @@ module.exports = (args1)->
   computed = {}
   methods = {}
   watch = {}
+
   cb = args1.watch
 
   created = ->
-    console.log @$data.$browser
-    for key, val of @$data.$browser
-      console.log ["created", key, @[key]]
-      cb?.call @, @[key], key
+    for method, args2 of args1
+      for key, val of args2
+        cb?.call @, @[key], key
   data = ->
     { $browser }
 
-  pack = (setter, key, value)->
+  pack = (method, key, value)->
     type = types[value.constructor]
-    value = setter.init(type, key) ? value
-    setter.pack computed, type, key, value
 
-    $browser[key] = { value, type }
-    console.log ["build", key, value, $browser]
-    watch[key] = (newVal, oldVal)->
-      if _.isEqual newVal, oldVal
-        console.log ["watch-same", key, newVal]
-      else
-        @$nextTick ->
-          console.log ["watch", key, newVal, oldVal]
-          cb?.call @, newVal, key
-
-  for method, args2 of args1
     switch method
       when "replace", "push"
-        for key, val of args2
-          pack router(method), key, val
+        setter = router(method)
 
       when "cookie", "local", "session"
-        for key, val of args2
-          pack browser_store(method), key, val
+        setter = browser_store(method)
+        $browser[key] = { value, type }
+
+    value = setter.init(type, key) ? value
+    setter.pack computed, type, key, value
+    watch[key] = (newVal, oldVal)->
+      return if _.isEqual newVal, oldVal
+      cb?.call @, newVal, key
+
+  for method, args2 of args1
+    for key, val of args2
+      pack method, key, val
 
   { data, watch, computed, methods, created }

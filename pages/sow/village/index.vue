@@ -170,8 +170,10 @@
 
 module.exports =
   mixins: [
-    require "~plugins/pager"
     require("~plugins/get-by-mount") "1h", "story/oldlog"
+    require('~plugins/pager')
+      watch: (val, key)->
+        console.log arguments...
     require("~plugins/browser-store")
       replace:
         order:  "vid"
@@ -190,7 +192,9 @@ module.exports =
         discard: []
         config: []
       watch: ->
+        console.log arguments...
         @drill = true
+        @page_idxs = [0]
   ]
 
   data: ->

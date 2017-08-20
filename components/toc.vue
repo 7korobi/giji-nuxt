@@ -9,6 +9,7 @@ format =
 module.exports =
   mixins: [
     require '~plugins/book'
+    require('~plugins/pager') {}
   ]
   methods:
     all_page_idxs: (part_id)->

@@ -5,8 +5,11 @@ store = require("~plugins/browser-store")
     mode: "full"
   replace:
     idx: []
-  watch: ->
-    console.log "book watch", arguments
+  watch: (val, key)->
+    switch key
+      when "mode"
+        @page_idxs = [ @page_all_contents?.page?(@chat) ? 1 ]
+
 store.computed.idx.get = ->
   @$route.params.idx.split("-")
 
@@ -46,7 +49,8 @@ tree = (keys...)->
     @$router.replace { name, params, query, hash }
   o
 
-mounted = ->
+
+store.mounted = ->
   { chat_id } = @
   ajax.mounted.call @
   .then =>
@@ -54,9 +58,8 @@ mounted = ->
       @$nextTick =>
         @$store.commit "menu/focus", chat_id
 
-computed = {
+Object.assign store.computed, {
   tree("folder", "book", "part", "phase", "chat")...
-  store.computed...
   ajax.computed...
 
   page_all_contents: ->
@@ -95,4 +98,4 @@ computed = {
       @$store.commit "menu/mode", menus
 }
 
-module.exports = { computed, mounted }
+module.exports = store

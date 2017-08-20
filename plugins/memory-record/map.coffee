@@ -63,12 +63,15 @@ module.exports = class Map
 
     if per = map.page_by
       idx = 0
+      from = o
       groups = Object.values _.groupBy o, (o)->
         Math.floor(idx++ / per)
       groups.all = idx
       o = groups
       o.page = (item)->
-        Math.floor(@from.indexOf(item) / per) + 1
+        at = @from?.indexOf(item) 
+        at = null if at < 0
+        at && Math.floor(at / per) + 1
       for a in groups
         a.__proto__ = set.prototype
 
