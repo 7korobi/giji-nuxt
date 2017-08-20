@@ -10,10 +10,8 @@
   .center-left
   .center-right
   .contentframe
-    .inframe
-      transition-group.inframe(name="timeline" tag="div")
-        div(v-for="(chats, idx) in chat_pages", :key="idx")
-          chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+    .inframe(v-for="(chats, idx) in chat_pages", :key="idx")
+      chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"

@@ -54,7 +54,7 @@
             | 破棄役職
             sup(v-if="discard.length") {{ discard.length }}
         sub(style="width: 100%")
-          | {{ villages_all.list.length }}村があてはまります。
+          | {{ all_contents.length }}村があてはまります。
 
       post.form(v-if="drill" handle="btns" key="subform")
         p(v-if="order === 'vid'")
@@ -117,6 +117,7 @@
             | {{ o.label }}
             sup(v-if="1 < o.count") {{ o.count }}
 
+    .inframe(v-for="(villages, idx) in page_contents", :key="idx")
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
@@ -157,17 +158,19 @@
                .label
                  | {{ role.label }}
                  sup(v-if="1 < role.count") {{ role.count }}
-      report(handle="btns" key="limitup")
-        scroll-mine(key="add" v-model="limit", :as="limit + 25") {{ limit_next }}件
+
+
+    .inframe
+      report(handle="footer" key="limitup")
+        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
 
 </template>
 <script lang="coffee">
-_ = require "lodash"
 { Query } = require "~plugins/memory-record"
-el = require "~plugins/dom"
 
 module.exports =
   mixins: [
+    require "~plugins/pager"
     require("~plugins/get-by-mount") "1h", "story/oldlog"
     require("~plugins/browser-store")
       replace:
@@ -192,7 +195,6 @@ module.exports =
 
   data: ->
     mode: "oldlog"
-    limit: 25
     asc: "desc"
     drill: false
 
@@ -227,20 +229,14 @@ module.exports =
         obj["q." + key] = @[key]
       obj
 
-    limit_next: ->
-      @read_at
-      Math.min @villages_all.list.length, @limit + 25
-
     all: ->
       @read_at
       Query.sow_villages.mode @mode
 
-    villages_all: ->
+    page_all_contents: ->
       @read_at
       Query.sow_villages.search @mode, @query_in, @query_where, @order, @asc
-
-    villages: ->
-      @villages_all.list[0...@limit]
+      .reduce.list
 
 </script>
 <style lang="stylus" scoped>

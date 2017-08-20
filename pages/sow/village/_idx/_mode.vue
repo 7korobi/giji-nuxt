@@ -53,24 +53,26 @@
           a(v-if="part_prev_id" @click="part_prev") 前の日へ
           a(v-if="part_next_id" @click="part_next") 次の日へ
 
-      div(v-if="mode == 'title' && book")
-        report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.head", :sign="book.sign", :log="book.log")
+    .inframe(v-if="mode == 'title' && book")
+      report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.head", :sign="book.sign", :log="book.log")
 
-      div(v-if="mode == 'memo'")
-        report.form(handle="footer")
-          span
-            btn(v-model="mode", as="memos")
-              i.fa.fa-expand
-          span 最新のメモを表示しています。
-      div(v-if="mode == 'memos'")
-        report.form(handle="footer")
-          span
-            btn(v-model="mode", as="memo")
-              i.fa.fa-compress
-          span メモ掲載の一覧を表示しています。
+    .inframe(v-if="mode == 'memo'")
+      report.form(handle="footer")
+        span
+          btn(v-model="mode", as="memos")
+            i.fa.fa-expand
+        span 最新のメモを表示しています。
+    .inframe(v-if="mode == 'memos'")
+      report.form(handle="footer")
+        span
+          btn(v-model="mode", as="memo")
+            i.fa.fa-compress
+        span メモ掲載の一覧を表示しています。
 
-      transition-group(name="timeline" tag="div" v-for="(chats, idx) in chats_pages", :key="idx")
-        chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+    .inframe(v-for="(chats, idx) in page_contents", :key="idx")
+      chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+
+    .inframe
       report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
         .center(v-else)
@@ -84,10 +86,9 @@
 </style>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
-
 module.exports =
   mixins: [
+    require '~plugins/pager'
     require '~plugins/book'
   ]
   methods:
@@ -96,10 +97,6 @@ module.exports =
       @$router.push
         path: "../#{@part_id}/anker"
         query: { a, @back }
-
-    page_add: (id)->
-      page_idxs = [@page_idxs[0], id]
-      @book = { @part_id, page_idxs }
 
     part_prev: ->
       @book =
@@ -123,17 +120,8 @@ module.exports =
         ids = @book.parts.pluck('id')
         idx = ids.indexOf @part_id
         ids[idx + 1]
-
-
-    page_here_id: ->
-      [..., last] = @page_idxs
-      last
-
-    page_next_id: ->
-      if @page_here_id? && @page_here_id + 1 < @chats_here.length
-        @page_here_id + 1
-
-    chats_pages: ->
-      @page_idxs.map (page)=> @chats_here[page]
+    
+    page_all_contents: ->
+      @chats(@part_id)
 
 </script>

@@ -1,7 +1,4 @@
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
-{ computed } = require "~plugins/book"
-
 format =
   head: new Intl.DateTimeFormat 'ja-JP',
     weekday: "short"
@@ -10,6 +7,9 @@ format =
     hour:    "2-digit"
 
 module.exports =
+  mixins: [
+    require '~plugins/book'
+  ]
   methods:
     all_page_idxs: (part_id)->
       last = @chats(part_id).length
@@ -25,7 +25,7 @@ module.exports =
         write = format.tail.format @write_at
         begin
         .replace "時", "-" + write
-      
+
     input_part: (part_id)->
       @book =
         part_id: part_id
@@ -35,16 +35,16 @@ module.exports =
       @book =
         part_id: part_id
         page_idxs: [page_id]
+
     tooltip: (line)->
       if 1 < line
         "tooltip-top"
       else
         "tooltip-bottom"
-  computed: {
-    computed...
+  computed:
     show: ->
       @$store.state.menu.set.toc
-  }
+
 </script>
 
 <template lang="pug">

@@ -96,4 +96,3 @@ module.exports =
         commit "face", { data, id }
       .catch (err)->
         console.log err
-

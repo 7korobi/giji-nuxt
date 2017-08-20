@@ -10,7 +10,9 @@ module.exports =
         if idx < 0
           [@as, @value...]
         else
-          [@value[0...idx]...,@value[idx + 1..-1]...]
+          head = @value[...idx]
+          tail = @value[idx + 1 ..]
+          [head..., tail...]
       @$emit 'input', newVal
 
 

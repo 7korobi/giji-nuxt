@@ -27,7 +27,7 @@ new Rule("sow_village").schema ->
     mode: ( mode )->
       all.where({ mode })
     search: ( mode, query_in, query_where, order, asc )->
-      all.where({ mode }).in(query_in).where(query_where).sort(order, asc)
+      all.where({ mode }).in(query_in).where(query_where).sort(order, asc).page(25)
 
   Object.assign @model_property,
     roles:

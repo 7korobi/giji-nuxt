@@ -1,31 +1,30 @@
+_ = require "lodash"
+
 browser_store = bs = (method)->
   db = bs[method]
-  init: (key)-> JSON.parse db.getItem key
-  pack: (computed, type, key, val)->
+  init: ({by_str}, key)-> by_str db.getItem key
+  pack: (computed, {to_str}, key, val)->
     computed[key] =
       get: ->
         value = @$data.$browser[key].value
-        if value
-          type value
-        else
-          val
+        value ? val
 
       set: (val)->
         if val?
-          db.setItem key, JSON.stringify(val)
+          db.setItem key, to_str val
         else
           db.removeItem key
         @$data.$browser[key].value = val
 
 
 router = (method)->
-  init: (key)-> null
-  pack: (computed, type, key, val)->
+  init: ->
+  pack: (computed, {by_url}, key, val)->
     computed[key] =
       get: ->
         value = @$route.params[key] || @$route.query[key]
         if value
-          type value
+          by_url value
         else
           val
 
@@ -68,29 +67,56 @@ catch e
     removeItem: (key)->    delete @_data[key]
 
 
+types =
+  "#{Number}":
+    to_str: String
+    by_str: Number
+    by_url: Number
+  "#{String}":
+    to_str: String
+    by_str: String
+    by_url: String
+  "#{Array}":  
+    to_str: JSON.stringify
+    by_str: JSON.parse
+    by_url: (u)->
+      if Array == u.constructor
+        u
+      else
+        [u]
+  "#{Object}":
+    to_str: JSON.stringify
+    by_str: JSON.parse
+
 module.exports = (args1)->
   $browser = {}
   computed = {}
+  methods = {}
   watch = {}
   cb = args1.watch
 
   created = ->
-    if cb
-      for key, val of @$data.$browser
-        cb.call @, @[key], key
+    console.log @$data.$browser
+    for key, val of @$data.$browser
+      console.log ["created", key, @[key]]
+      cb?.call @, @[key], key
   data = ->
     { $browser }
 
   pack = (setter, key, value)->
-    type = value.constructor
-    value = setter.init(key) ? value
+    type = types[value.constructor]
+    value = setter.init(type, key) ? value
     setter.pack computed, type, key, value
 
     $browser[key] = { value, type }
-    if cb
-      watch[key] = (newVal, oldVal)->
+    console.log ["build", key, value, $browser]
+    watch[key] = (newVal, oldVal)->
+      if _.isEqual newVal, oldVal
+        console.log ["watch-same", key, newVal]
+      else
         @$nextTick ->
-          cb.call(@, newVal, key)
+          console.log ["watch", key, newVal, oldVal]
+          cb?.call @, newVal, key
 
   for method, args2 of args1
     switch method
@@ -102,4 +128,4 @@ module.exports = (args1)->
         for key, val of args2
           pack browser_store(method), key, val
 
-  { data, watch, computed, created }
+  { data, watch, computed, methods, created }

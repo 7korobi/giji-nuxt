@@ -10,4 +10,3 @@ module.exports =
           console.error err
         else
           console.log stderr
-

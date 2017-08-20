@@ -5,6 +5,8 @@ store = require("~plugins/browser-store")
     mode: "full"
   replace:
     idx: []
+  watch: ->
+    console.log "book watch", arguments
 store.computed.idx.get = ->
   @$route.params.idx.split("-")
 
@@ -37,12 +39,7 @@ tree = (keys...)->
       idx  = chat_id
     return unless part
 
-    [head, ..., tail] = page_idxs
-    pages =
-      if head == tail
-        "#{1 + head}"
-      else
-        [1 + head, 1 + tail].join("-")
+    pages = @pages_calc page_idxs
     { name, params, query, hash } = @$route
     params = { params..., idx }
     query = { query..., pages }
@@ -62,14 +59,8 @@ computed = {
   store.computed...
   ajax.computed...
 
-  pages: ->
-    @$route.query.pages || "1"
-  page_idxs: ->
-    [head, tail] = "#{@pages}".split("-").map (o)-> Number(o) - 1
-    [head .. tail ? head]
-  page_ids: ->
-    @page_idxs.map (idx)=>
-      "#{@part_id}-#{idx}"
+  page_all_contents: ->
+    @chats(@part_id)
 
   mentions: ->
     @read_at
@@ -82,11 +73,8 @@ computed = {
   chats: ->
     @now[@mode]
 
-  chats_here: ->
-    @chats(@part_id)
-
   back: ->
-    pages = @chats_here?.page(@chat) ? 1
+    pages = @page_all_contents?.page?(@chat) ? 1
     [ @chat_id || @part_id, @mode, pages ].join(",")
 
   back_url: ->
