@@ -26076,16 +26076,19 @@ browser_store = bs = function (method) {
       return computed[key] = {
         get: function () {
           var value;
-          value = this.$data.$browser[key].value;
+          value = this.$data.$browser[key];
           return value != null ? value : val;
         },
-        set: function (val) {
-          if (val != null) {
-            db.setItem(key, to_str(val));
+        set: function (newVal) {
+          var o;
+          if (newVal != null) {
+            db.setItem(key, to_str(newVal));
           } else {
             db.removeItem(key);
           }
-          return this.$data.$browser[key].value = val;
+          o = {};
+          o[key] = newVal;
+          return this.$data.$browser = Object.assign({}, this.$data.$browser, o);
         }
       };
     }
@@ -26094,7 +26097,6 @@ browser_store = bs = function (method) {
 
 router = function (method) {
   return {
-    init: function () {},
     pack: function (computed, { by_url }, key, val) {
       return computed[key] = {
         get: function () {
@@ -26238,11 +26240,12 @@ module.exports = function (args1) {
       case "local":
       case "session":
         setter = browser_store(method);
-        $browser[key] = { value, type };
+        value = (ref = setter.init(type, key)) != null ? ref : value;
+        $browser[key] = value;
     }
-    value = (ref = setter.init(type, key)) != null ? ref : value;
     setter.pack(computed, type, key, value);
     return watch[key] = function (newVal, oldVal) {
+      console.log(...arguments);
       if (_.isEqual(newVal, oldVal)) {
         return;
       }
@@ -45975,4 +45978,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[377]);
-//# sourceMappingURL=vendor.bundle.50d05b46af60f0403656.js.map
+//# sourceMappingURL=vendor.bundle.9cdde79368ba60e84f4d.js.map

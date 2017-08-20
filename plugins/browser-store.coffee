@@ -6,19 +6,20 @@ browser_store = bs = (method)->
   pack: (computed, {to_str}, key, val)->
     computed[key] =
       get: ->
-        value = @$data.$browser[key].value
+        value = @$data.$browser[key]
         value ? val
 
-      set: (val)->
-        if val?
-          db.setItem key, to_str val
+      set: (newVal)->
+        if newVal?
+          db.setItem key, to_str newVal
         else
           db.removeItem key
-        @$data.$browser[key].value = val
+        o = {}
+        o[key] = newVal
+        @$data.$browser = { @$data.$browser..., o... }
 
 
 router = (method)->
-  init: ->
   pack: (computed, {by_url}, key, val)->
     computed[key] =
       get: ->
@@ -115,11 +116,12 @@ module.exports = (args1)->
 
       when "cookie", "local", "session"
         setter = browser_store(method)
-        $browser[key] = { value, type }
+        value = setter.init(type, key) ? value
+        $browser[key] = value
 
-    value = setter.init(type, key) ? value
     setter.pack computed, type, key, value
     watch[key] = (newVal, oldVal)->
+      console.log arguments...
       return if _.isEqual newVal, oldVal
       cb?.call @, newVal, key
 
