@@ -8,7 +8,7 @@ store = require("~plugins/browser-store")
   watch: (val, key)->
     switch key
       when "mode"
-        @page_idxs = [ @page_all_contents?.page?(@chat) ? 1 ]
+        @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
 
 store.computed.idx.get = ->
   @$route.params.idx.split("-")
@@ -77,7 +77,7 @@ Object.assign store.computed, {
     @now[@mode]
 
   back: ->
-    pages = @page_all_contents?.page?(@chat) ? 1
+    pages = 1 + @page_all_contents?.page_idx?(@chat) ? 0
     [ @chat_id || @part_id, @mode, pages ].join(",")
 
   back_url: ->

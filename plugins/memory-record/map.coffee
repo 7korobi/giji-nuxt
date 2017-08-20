@@ -68,10 +68,10 @@ module.exports = class Map
         Math.floor(idx++ / per)
       groups.all = idx
       o = groups
-      o.page = (item)->
-        at = @from?.indexOf(item) 
-        at = null if at < 0
-        at && Math.floor(at / per) + 1
+      o.page_idx = (item)->
+        for a, page_idx in @ when item in a
+          return page_idx
+        null
       for a in groups
         a.__proto__ = set.prototype
 

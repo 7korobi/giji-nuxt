@@ -26282,7 +26282,7 @@ store = __webpack_require__(37)({
     var ref, ref1;
     switch (key) {
       case "mode":
-        return this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page === "function" ? ref1.page(this.chat) : void 0 : void 0) != null ? ref : 1];
+        return this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0) != null ? ref : 0];
     }
   }
 });
@@ -26374,7 +26374,7 @@ Object.assign(store.computed, Object.assign({}, tree("folder", "book", "part", "
   },
   back: function () {
     var pages, ref, ref1;
-    pages = (ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page === "function" ? ref1.page(this.chat) : void 0 : void 0) != null ? ref : 1;
+    pages = (ref = 1 + ((ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0)) != null ? ref : 0;
     return [this.chat_id || this.part_id, this.mode, pages].join(",");
   },
   back_url: function () {
@@ -32078,7 +32078,8 @@ module.exports = Finder = class Finder {
 var Map,
     Query,
     _,
-    slice = [].slice;
+    slice = [].slice,
+    indexOf = [].indexOf;
 
 _ = __webpack_require__(5);
 
@@ -32176,13 +32177,16 @@ module.exports = Map = class Map {
       }));
       groups.all = idx;
       o = groups;
-      o.page = function (item) {
-        var at, ref;
-        at = (ref = this.from) != null ? ref.indexOf(item) : void 0;
-        if (at < 0) {
-          at = null;
+      o.page_idx = function (item) {
+        var a, i, len, page_idx, ref;
+        ref = this;
+        for (page_idx = i = 0, len = ref.length; i < len; page_idx = ++i) {
+          a = ref[page_idx];
+          if (indexOf.call(a, item) >= 0) {
+            return page_idx;
+          }
         }
-        return at && Math.floor(at / per) + 1;
+        return null;
       };
       for (i = 0, len = groups.length; i < len; i++) {
         a = groups[i];
@@ -45970,4 +45974,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[377]);
-//# sourceMappingURL=vendor.bundle.10433988aefacc039362.js.map
+//# sourceMappingURL=vendor.bundle.9a9166cc5621262e9e51.js.map
