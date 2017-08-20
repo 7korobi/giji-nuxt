@@ -4485,7 +4485,7 @@ base = function (arg, name, calc) {
   };
   return {
     mounted: function () {
-      var commit, key, o, payload, read_at, ret, timer;
+      var commit, key, o, payload, read_at, timer;
       ({ commit, timer, read_at } = base.root);
       ({ payload, key, name } = capture(this));
       o = {
@@ -4499,15 +4499,10 @@ base = function (arg, name, calc) {
           return ok();
         });
       } else {
-        ret = this.$store.dispatch(name, payload);
-        if (ret.then != null) {
-          return ret.then(function () {
-            o.read_at[key] = Date.now();
-            return commit(base.arg.commit, o);
-          });
-        } else {
-          return ret;
-        }
+        return this.$store.dispatch(name, payload).then(function () {
+          o.read_at[key] = Date.now();
+          return commit(base.arg.commit, o);
+        });
       }
     },
     computed: {
@@ -4534,4 +4529,4 @@ module.exports = base;
 /***/ })
 
 },[139]);
-//# sourceMappingURL=nuxt.bundle.583816b11cd5d77bba34.js.map
+//# sourceMappingURL=nuxt.bundle.d79d056b82ff829b99e4.js.map

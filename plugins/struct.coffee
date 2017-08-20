@@ -4,10 +4,12 @@ module.exports =
   relative_to: ({ name, params, query, hash }, o)->
     to = { name, params, query, hash }
     for key, val of o
+      ext = {}
+      ext[key] = val
       if params[key]
-        to.params[key] = val
+        to.params = { to.params..., ext... }
       else
-        to.query[key] = val
+        to.query = { to.query..., ext... }
     to
 
   uniq: (args...)->

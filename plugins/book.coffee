@@ -1,5 +1,6 @@
 { Query } = require "~plugins/memory-record"
 { tree, relative_to } = require "~plugins/struct"
+
 store = require("~plugins/browser-store")
   push:
     mode: "full"
@@ -8,14 +9,14 @@ store = require("~plugins/browser-store")
   watch: (val, key)->
     switch key
       when "mode"
-        { chat_id } = @
+        focus.call @, @chat_id
         @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
-        if chat_id? && window?
-          @$nextTick =>
-            requestAnimationFrame =>
-              requestAnimationFrame =>
-                console.log window[chat_id]
-                @$store.commit "menu/focus", chat_id
+
+focus = (chat_id)->
+  if chat_id? && window?
+    @$nextTick =>
+      console.log window[chat_id]
+      @$store.commit "menu/focus", chat_id
 
 tree store, "folder", "book", "part", "phase", "chat"
 store.computed.book.set = ({ page_idxs, chat_id, part_id, part })->
@@ -68,5 +69,10 @@ Object.assign store.computed,
       key for key, val of @$store.state.menu.set when val
     set: (menus)->
       @$store.commit "menu/mode", menus
+
+store.watch.read_at = ->
+  focus.call @, @chat_id
+  @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
+  
 
 module.exports = store

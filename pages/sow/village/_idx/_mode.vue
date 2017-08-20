@@ -92,7 +92,10 @@ module.exports =
     require '~plugins/book'
     require('~plugins/pager')
       watch: (val, key)->
-        @$store.commit "menu/focus", @chat_id if @chat_id
+        { chat_id } = @
+        if chat_id
+          @$nextTick ->
+            @$store.commit "menu/focus", chat_id
   ]
   methods:
     focus: (@idx)->

@@ -31,14 +31,10 @@ base = ([time_num..., time_tail], name, calc)->
     if Date.now() - timeout < read_at[key]
       new Promise (ok)-> ok()
     else
-      ret = @$store.dispatch name, payload
-      if ret.then?
-        ret
-        .then ->
-          o.read_at[key] = Date.now()
-          commit base.arg.commit, o
-      else
-        ret
+      @$store.dispatch name, payload
+      .then ->
+        o.read_at[key] = Date.now()
+        commit base.arg.commit, o
 
   computed:
     read_at: ->

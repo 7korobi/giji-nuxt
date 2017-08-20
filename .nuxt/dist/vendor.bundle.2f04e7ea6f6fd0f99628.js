@@ -26227,7 +26227,7 @@ module.exports = function (args1) {
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Query, relative_to, store, tree;
+var Query, focus, relative_to, store, tree;
 
 ({ Query } = __webpack_require__(1));
 
@@ -26241,24 +26241,23 @@ store = __webpack_require__(37)({
     idx: []
   },
   watch: function (val, key) {
-    var chat_id, ref, ref1;
+    var ref, ref1;
     switch (key) {
       case "mode":
-        ({ chat_id } = this);
-        this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0) != null ? ref : 0];
-        if (chat_id != null && typeof window !== "undefined" && window !== null) {
-          return this.$nextTick(() => {
-            return requestAnimationFrame(() => {
-              return requestAnimationFrame(() => {
-                console.log(window[chat_id]);
-                return this.$store.commit("menu/focus", chat_id);
-              });
-            });
-          });
-        }
+        focus.call(this, this.chat_id);
+        return this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0) != null ? ref : 0];
     }
   }
 });
+
+focus = function (chat_id) {
+  if (chat_id != null && typeof window !== "undefined" && window !== null) {
+    return this.$nextTick(() => {
+      console.log(window[chat_id]);
+      return this.$store.commit("menu/focus", chat_id);
+    });
+  }
+};
 
 tree(store, "folder", "book", "part", "phase", "chat");
 
@@ -26340,6 +26339,12 @@ Object.assign(store.computed, {
     }
   }
 });
+
+store.watch.read_at = function () {
+  var ref, ref1;
+  focus.call(this, this.chat_id);
+  return this.page_idxs = [(ref = (ref1 = this.page_all_contents) != null ? typeof ref1.page_idx === "function" ? ref1.page_idx(this.chat) : void 0 : void 0) != null ? ref : 0];
+};
 
 module.exports = store;
 
@@ -31468,14 +31473,16 @@ var Query;
 
 module.exports = {
   relative_to: function ({ name, params, query, hash }, o) {
-    var key, to, val;
+    var ext, key, to, val;
     to = { name, params, query, hash };
     for (key in o) {
       val = o[key];
+      ext = {};
+      ext[key] = val;
       if (params[key]) {
-        to.params[key] = val;
+        to.params = Object.assign({}, to.params, ext);
       } else {
-        to.query[key] = val;
+        to.query = Object.assign({}, to.query, ext);
       }
     }
     return to;
@@ -36552,9 +36559,11 @@ module.exports = function ({ watch }) {
   store = __webpack_require__(37)({
     push: {
       pages: "1"
-    },
-    watch: watch
+    }
   });
+  if (watch) {
+    store.watch.page_head_id = watch;
+  }
   Object.assign(store.methods, {
     page_add: function (tail) {
       var head;
@@ -36595,7 +36604,12 @@ module.exports = function ({ watch }) {
         return `${this.part_id}-${idx}`;
       });
     },
-    page_here_id: function () {
+    page_head_id: function () {
+      var head, ref;
+      ref = this.page_idxs, head = ref[0];
+      return head;
+    },
+    page_tail_id: function () {
       var last, ref;
       ref = this.page_idxs, last = ref[ref.length - 1];
       return last;
@@ -36603,8 +36617,8 @@ module.exports = function ({ watch }) {
     page_next_id: function () {
       var all, ref;
       all = (ref = this.page_all_contents) != null ? ref : [[]];
-      if (this.page_here_id != null && this.page_here_id + 1 < all.length) {
-        return this.page_here_id + 1;
+      if (this.page_tail_id != null && this.page_tail_id + 1 < all.length) {
+        return this.page_tail_id + 1;
       }
     },
     page_contents: function () {
@@ -45911,4 +45925,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[378]);
-//# sourceMappingURL=vendor.bundle.cf9d7173be9eeed08ffd.js.map
+//# sourceMappingURL=vendor.bundle.2f04e7ea6f6fd0f99628.js.map

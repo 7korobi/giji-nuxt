@@ -4,7 +4,7 @@ module.exports = ({watch})->
   store = require("~plugins/browser-store")
     push:
       pages: "1"
-    watch: watch
+  store.watch.page_head_id = watch if watch
 
   Object.assign store.methods,
     page_add: (tail)->
@@ -30,14 +30,18 @@ module.exports = ({watch})->
       @page_idxs.map (idx)=>
         "#{@part_id}-#{idx}"
 
-    page_here_id: ->
+    page_head_id: ->
+      [head, ...] = @page_idxs
+      head
+
+    page_tail_id: ->
       [..., last] = @page_idxs
       last
 
     page_next_id: ->
       all = @page_all_contents ? [[]]
-      if @page_here_id? && @page_here_id + 1 < all.length
-        @page_here_id + 1
+      if @page_tail_id? && @page_tail_id + 1 < all.length
+        @page_tail_id + 1
 
     page_contents: ->
       all = @page_all_contents ? [[]]

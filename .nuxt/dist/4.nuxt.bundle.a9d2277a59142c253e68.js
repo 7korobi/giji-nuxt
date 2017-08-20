@@ -38,9 +38,13 @@ module.exports = {
     __webpack_require__(99)({
       watch: function(val,
     key) {
-        if (this.chat_id) {
-          return this.$store.commit("menu/focus",
-    this.chat_id);
+        var chat_id;
+        ({chat_id} = this);
+        if (chat_id) {
+          return this.$nextTick(function() {
+            return this.$store.commit("menu/focus",
+    chat_id);
+          });
         }
       }
     })
@@ -404,4 +408,4 @@ var update = __webpack_require__(3)("30e87388", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=4.nuxt.bundle.110b92713a2fd6eeddb9.js.map
+//# sourceMappingURL=4.nuxt.bundle.a9d2277a59142c253e68.js.map
