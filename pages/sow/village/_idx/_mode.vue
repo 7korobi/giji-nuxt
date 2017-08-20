@@ -88,6 +88,7 @@
 <script lang="coffee">
 module.exports =
   mixins: [
+    require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
     require '~plugins/book'
     require('~plugins/pager')
       watch: (val, key)->

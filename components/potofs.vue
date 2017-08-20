@@ -71,17 +71,19 @@
 
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-{ computed } = require "~plugins/book"
 
 module.exports =
+  mixins: [
+    require '~plugins/book'
+  ]
+
   data: ->
     sort: "live"
     order: "asc"
     full_mode: true
     live_mode: true
 
-  computed: {
-    computed...
+  computed:
     full_on:  ->  @potof_ids -> false
     full_off: ->  @potof_ids -> true
     live_on:  ->  @potof_ids (o)-> ! o.commit
@@ -109,7 +111,6 @@ module.exports =
     show: ->
       @part && @$store.state.menu.set.potof
 
-  }
   methods:
     potof_ids: (f)->
       @potofs

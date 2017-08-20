@@ -1,5 +1,5 @@
 { Query } = require "~plugins/memory-record"
-ajax = require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
+{ tree, relative_to } = require "~plugins/struct"
 store = require("~plugins/browser-store")
   push:
     mode: "full"
@@ -10,63 +10,28 @@ store = require("~plugins/browser-store")
       when "mode"
         { chat_id } = @
         @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
-        @$nextTick =>
-          console.log "focus #{chat_id}"
-          @$store.commit "menu/focus", chat_id
+        if chat_id? && window?
+          requestAnimationFrame =>
+            @$nextTick =>
+              console.log window[chat_id]
+              @$store.commit "menu/focus", chat_id
 
-store.computed.idx.get = ->
-  @$route.params.idx.split("-")
+tree store, "folder", "book", "part", "phase", "chat"
+store.computed.book.set = ({ page_idxs, chat_id, part_id, part })->
+  if part_id
+    part ?= Query.parts.find part_id
+  if part
+    idx = part.id
+  if chat_id
+    chat = Query.chats.find chat_id
+    part = chat.part
+    idx  = chat_id
+  return unless part
 
-tree = (keys...)->
-  o = {}
-  make = (name, at)->
-    key = "#{name}_id"
-    list = "#{name}s"
-    state =
-      "#{key}":
-        get: ->
-          (at < @idx.length) && @idx[0..at].join("-")
-      "#{name}":
-        get: ->
-          @read_at
-          Query[list].find @[key]
+  pages = @pages_calc page_idxs
+  @$router.replace relative_to @$route, { idx, pages }
 
-    o = { o..., state... }
-  for name, idx in keys
-    make name, idx
-
-  o.book.set = ({ page_idxs, chat_id, part_id, part })->
-    if part_id
-      part ?= Query.parts.find part_id
-    if part
-      idx = part.id
-    if chat_id
-      chat = Query.chats.find chat_id
-      part = chat.part
-      idx  = chat_id
-    return unless part
-
-    pages = @pages_calc page_idxs
-    { name, params, query, hash } = @$route
-    params = { params..., idx }
-    query = { query..., pages }
-    @$router.replace { name, params, query, hash }
-  o
-
-
-store.mounted = ->
-  { chat_id } = @
-  ajax.mounted.call @
-  .then =>
-    if chat_id
-      @$nextTick =>
-        console.log "focus #{chat_id}"
-        @$store.commit "menu/focus", chat_id
-
-Object.assign store.computed, {
-  tree("folder", "book", "part", "phase", "chat")...
-  ajax.computed...
-
+Object.assign store.computed,
   page_all_contents: ->
     @chats(@part_id)
 
@@ -83,11 +48,12 @@ Object.assign store.computed, {
 
   back: ->
     pages = 1 + @page_all_contents?.page_idx?(@chat) ? 0
-    [ @chat_id || @part_id, @mode, pages ].join(",")
+    [ @chat_id || @part_id, pages, @mode, @$route.name ].join(",")
 
   back_url: ->
-    [ chat_id, mode, pages ] = (@$route.query.back ? @back).split(",")
-    path: "../#{chat_id}/#{mode}"
+    [ idx, pages, mode, name ] = (@$route.query.back ? @back).split(",")
+    name: name
+    params: { idx, mode }
     query: { pages }
 
   hide_potof_ids:
@@ -101,6 +67,5 @@ Object.assign store.computed, {
       key for key, val of @$store.state.menu.set when val
     set: (menus)->
       @$store.commit "menu/mode", menus
-}
 
 module.exports = store

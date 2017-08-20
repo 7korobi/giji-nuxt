@@ -15,6 +15,7 @@
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+{ uniq, relative_to } = require "~plugins/struct"
 
 module.exports =
   mixins: [
@@ -30,15 +31,13 @@ module.exports =
       @$router.replace { name, params, query }
     
     anker: (book_id, a)->
-      a = Array.from new Set [a..., @$route.query.a...]
-      { name, params, query } = @$route
-      query = { query..., a }
-      @$router.replace { name, params, query }
+      a = uniq @$route.query.a, a
+      @$router.replace relative_to @$route, { a }
 
   computed:
     chat_pages: ->
       @read_at
-      a = Array.from new Set [@$route.query.a...]
+      a = uniq @$route.query.a
       Query.chats.ankers(@book_id, a).list
 
 </script>

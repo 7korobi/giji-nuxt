@@ -1,4 +1,5 @@
 _ = require "lodash"
+{ types, relative_to } = require "~plugins/struct"
 
 browser_store = bs = (method)->
   db = bs[method]
@@ -30,15 +31,8 @@ router = (method)->
           val
 
       set: (newVal)->
-        o = {}
-        o[key] = newVal
-        { name, params, query, hash } = @$route
-        to = { name, params, query, hash }
-        if params[key]
-          to.params = { to.params..., o... }
-        else
-          to.query = { to.query..., o... }
-        @$router[method] to
+        @$router[method] relative_to @$route,
+          "#{key}": newVal
 
 
 try
@@ -67,30 +61,6 @@ catch e
     setItem:    (key, s)-> @_data[key] = s
     removeItem: (key)->    delete @_data[key]
 
-
-types =
-  "#{Number}":
-    to_str: String
-    by_str: Number
-    by_url: Number
-  "#{String}":
-    to_str: String
-    by_str: String
-    by_url: String
-  "#{Array}":
-    to_str: JSON.stringify
-    by_str: JSON.parse
-    by_url: (u)->
-      switch u?.constructor
-        when null, undefined
-          null
-        when Array
-          u
-        else
-          [u]
-  "#{Object}":
-    to_str: JSON.stringify
-    by_str: JSON.parse
 
 module.exports = (args1)->
   $browser = {}
