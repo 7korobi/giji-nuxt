@@ -44,7 +44,7 @@ module.exports =
       to_str: JSON.stringify
       by_str: JSON.parse
 
-  tree: (store, keys...)->
+  path: (store, keys...)->
     o = store.computed
     make = (name, at)->
       key = "#{name}_id"

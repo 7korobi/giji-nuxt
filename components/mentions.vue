@@ -1,19 +1,19 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-{ computed } = require "~plugins/book"
 
 module.exports =
-  computed: {
-    computed...
+  mixins: [
+    require '~plugins/book'
+  ]
+  computed:
     show: ->
-      @chat && @$store.state.menu.set.current
-  }
+      @$store.state.menu.set.current && @chat
 
 </script>
 
 <template lang="pug">
 .inframe(v-if="show")
-  h6 参照されている
+  h6(:class="chat.handle") 参照されている
   chat(show="current", :id="chat.id")
   table
     transition-group.tlist(name="list" tag="tbody")

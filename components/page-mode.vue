@@ -1,0 +1,49 @@
+<script lang="coffee">
+{ relative_to } = require "~plugins/struct"
+
+module.exports =
+  mixins: [
+    require '~plugins/book'
+  ]
+  methods:
+    mode_to: (mode)->
+      path: "../#{@chat_id || @part_id}/#{mode}"
+      query: @$route.query
+      hash:  @$route.hash
+
+  computed:
+    show: ->
+      @part_id && @now
+
+</script>
+
+<template lang="pug">
+.center(v-if="show")
+  span
+    nuxt-link(:to="mode_to('memo')")
+      | メモ
+      sup {{ now.memo(part_id).all }}
+  span
+    nuxt-link(:to="mode_to('title')")
+      | タイトル
+      sup {{ now.title(part_id).all }}
+  span
+    nuxt-link(:to="mode_to('full')")
+      | バレ
+      sup {{ now.full(part_id).all }}
+    nuxt-link(:to="mode_to('normal')")
+      | 通常
+      sup {{ now.normal(part_id).all }}
+  span
+    nuxt-link(:to="mode_to('solo')")
+      | 独り言
+      sup {{ now.solo(part_id).all }}
+    nuxt-link(:to="mode_to('extra')")
+      | 非日常
+      sup {{ now.extra(part_id).all }}
+    nuxt-link(:to="mode_to('rest')")
+      | 墓休み
+      sup {{ now.rest(part_id).all }}
+  span
+</template>
+

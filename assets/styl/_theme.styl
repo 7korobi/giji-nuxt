@@ -213,9 +213,11 @@ palette($themes, $backT, $penT, $border)
         &:hover,
         &:focus
           background-color: $focus
-        &:active
-          background-color: $active
+        &.nuxt-link-exact-active,
+        &.nuxt-link-active,
         &.active,
+        .nuxt-link-exact-active,
+        .nuxt-link-active,
         .active
           background-color: $active
 
@@ -230,6 +232,7 @@ palette($themes, $backT, $penT, $border)
       .date
         color: $hide
 
+      h5,
       strong,
       abbr,
       rt,

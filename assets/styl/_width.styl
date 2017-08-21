@@ -12,14 +12,14 @@ width($font, $center)
 
   .center-left,
   .center-right
-    width: "calc( 50% - %s )" % ($half + 30px)
+    width: "calc( (50% - %s) / 3 )" % $half
 
   @media screen and (min-width: $limit3)
     .summary
       width: "calc( 50% - %s )" % $half
   @media screen and (max-width: $limit3)
     .summary
-      width: $font * 9
+      width: $font * 8
 
   @media screen and (min-width: $limit2)
     .sideframe
@@ -43,4 +43,4 @@ width($font, $center)
       .contentframe
         margin: 0 5%
     .summary:hover
-      width: "calc( 100% - %s )" % 50px
+      width: "calc( 100% - %s )" % 60px

@@ -10,6 +10,9 @@ module.exports =
 <template lang="pug">
 div
   layout-header
+  .outframe
+    .center-left
+    .center-right
   nuxt
   layout-footer
 

@@ -7,11 +7,16 @@
           i.fa.fa-map-pin
   .summary(name="list" tag="div" key="summary")
     mentions(key="1" @anker="anker")
-  .center-left
-  .center-right
   .contentframe
-    .inframe(v-for="(chats, idx) in chat_pages", :key="idx")
-      chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+    .inframe
+      report.form(handle="footer" key="finder")
+        page-mode
+    .inframe
+      chat(v-for="o in anker_chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+    .inframe
+      report.form(handle="footer" key="finder")
+        page-mode
+
 </template>
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
@@ -19,6 +24,7 @@
 
 module.exports =
   mixins: [
+    require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
     require '~plugins/book'
   ]
   mounted: ->
@@ -35,7 +41,7 @@ module.exports =
       @$router.replace relative_to @$route, { a }
 
   computed:
-    chat_pages: ->
+    anker_chats: ->
       @read_at
       a = uniq @$route.query.a
       Query.chats.ankers(@book_id, a).list

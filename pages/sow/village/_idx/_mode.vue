@@ -16,42 +16,11 @@
     mentions(key="1" @anker="anker")
     toc(key="2")
     potofs(key="3")
-  .center-left
-  .center-right
-
   .contentframe
     .inframe
       report.form(handle="footer" key="finder")
-        .center
-          span
-            btn(v-model="mode", as="memo")
-              | メモ
-              sup(v-if="part") {{ now.memo(part_id).all }}
-          span
-            btn(v-model="mode", as="title")
-              | タイトル
-              sup(v-if="part") {{ now.title(part_id).all }}
-          span
-            btn(v-model="mode", as="full")
-              | バレ
-              sup(v-if="part") {{ now.full(part_id).all }}
-            btn(v-model="mode", as="normal")
-              | 通常
-              sup(v-if="part") {{ now.normal(part_id).all }}
-          span
-            btn(v-model="mode", as="solo")
-              | 独り言
-              sup(v-if="part") {{ now.solo(part_id).all }}
-            btn(v-model="mode", as="extra")
-              | 非日常
-              sup(v-if="part") {{ now.extra(part_id).all }}
-            btn(v-model="mode", as="rest")
-              | 墓休み
-              sup(v-if="part") {{ now.rest(part_id).all }}
-          span
-        .center
-          a(v-if="part_prev_id" @click="part_prev") 前の日へ
-          a(v-if="part_next_id" @click="part_next") 次の日へ
+        page-mode
+        page-part
 
     .inframe(v-if="mode == 'title' && book")
       report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.head", :sign="book.sign", :log="book.log")
@@ -73,11 +42,12 @@
       chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 
     .inframe
-      report(handle="footer" key="limitup")
-        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
-        .center(v-else)
-          a(v-if="part_prev_id" @click="part_prev") 前の日へ
-          a(v-if="part_next_id" @click="part_next") 次の日へ
+      report(v-if="page_next_id" handle="footer" key="limitup")
+        .center
+          scroll-mine(@input="page_add", :as="page_next_id") 次頁
+      report(v-else handle="footer" key="limitup")
+        page-part
+        page-mode
 
 </template>
 
@@ -104,29 +74,7 @@ module.exports =
         path: "../#{@part_id}/anker"
         query: { a, @back }
 
-    part_prev: ->
-      @book =
-        part_id: @part_prev_id ? @part_id
-        page_idxs: [0]
-
-    part_next: ->
-      @book =
-        part_id: @part_next_id ? @part_id
-        page_idxs: [0]
-
   computed:
-    part_prev_id: ->
-      if @part && @book
-        ids = @book.parts.pluck('id')
-        idx = ids.indexOf @part_id
-        ids[idx - 1]
-
-    part_next_id: ->
-      if @part && @book
-        ids = @book.parts.pluck('id')
-        idx = ids.indexOf @part_id
-        ids[idx + 1]
-    
     page_all_contents: ->
       @chats(@part_id)
 

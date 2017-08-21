@@ -12,6 +12,7 @@ module.exports =
         requestAnimationFrame =>
           @$emit 'input', @as
       [@el_adjust]
+
 </script>
 
 <template lang="pug">

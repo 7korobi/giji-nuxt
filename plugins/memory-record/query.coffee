@@ -102,19 +102,17 @@ module.exports = class Query
   shuffle: ->
     @sort Math.random
 
-  sort: (sort...)->
-    return @ if _.isEqual sort, @$sort['_reduce.list']?.sort
+  order: (order)->
+    return @ if _.isEqual order, @$sort['_reduce.list']
     new Query @, ->
       @$sort = _.cloneDeep @$sort
-      @$sort['_reduce.list'] ?= {}
-      Object.assign @$sort['_reduce.list'], { sort }
+      @$sort['_reduce.list'] = order
+
+  sort: (sort...)->
+    @order { sort }
   
   page: (page_by)->
-    return @ if _.isEqual page_by, @$sort['_reduce.list']?.page_by
-    new Query @, ->
-      @$sort = _.cloneDeep @$sort
-      @$sort['_reduce.list'] ?= {}
-      Object.assign @$sort['_reduce.list'], { page_by }
+    @order { page_by }
     
   find: (ids...)->
     for id in ids when o = @hash[id]

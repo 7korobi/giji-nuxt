@@ -44,14 +44,16 @@ module.exports =
         "tooltip-bottom"
   computed:
     show: ->
-      @$store.state.menu.set.toc
+      @$store.state.menu.set.toc && @book?.parts
 
 </script>
 
 <template lang="pug">
-.inframe(v-if="show")
+.inframe.TITLE(v-if="show")
   h6 栞
-  .swipe.header
+  .swipe
+    page-mode(style="white-space: nowrap")
+    hr
     table
       tbody
         tr(v-for="(o, line) in book.parts.list", :key="o.id")

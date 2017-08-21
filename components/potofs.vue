@@ -1,7 +1,7 @@
 <template lang="pug">
-.inframe(v-if="show")
+.inframe.potofs.header(v-if="show")
   h6 {{ part.label }}の参加者
-  .swipe.potofs
+  .swipe
     table
       tfoot
         tr.btns
@@ -109,7 +109,7 @@ module.exports =
           (o)-> o.live.role_id
 
     show: ->
-      @part && @$store.state.menu.set.potof
+      @$store.state.menu.set.potof && @part
 
   methods:
     potof_ids: (f)->

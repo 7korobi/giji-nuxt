@@ -16,7 +16,6 @@ attrs =
   VGSAY:  { mark: '@', label: '見物' }
 
 new Rule("phase").schema ->
-  @order "write_at"
   @path "folder", "book", "part"
   @has_many "chats"
 
@@ -36,6 +35,8 @@ new Rule("phase").schema ->
         count: 1
 
     @order: (o, emit)->
+      emit "list",
+        sort: ["write_at"]
       emit "group",
         sort: ["count", "desc"]
       emit "handle",

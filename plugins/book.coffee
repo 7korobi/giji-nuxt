@@ -1,5 +1,5 @@
 { Query } = require "~plugins/memory-record"
-{ tree, relative_to } = require "~plugins/struct"
+{ path, relative_to } = require "~plugins/struct"
 
 store = require("~plugins/browser-store")
   push:
@@ -18,7 +18,7 @@ focus = (chat_id)->
       console.log window[chat_id]
       @$store.commit "menu/focus", chat_id
 
-tree store, "folder", "book", "part", "phase", "chat"
+path store, "folder", "book", "part", "phase", "chat"
 store.computed.book.set = ({ page_idxs, chat_id, part_id, part })->
   if part_id
     part ?= Query.parts.find part_id
