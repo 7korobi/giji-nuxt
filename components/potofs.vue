@@ -147,8 +147,12 @@ module.exports =
 .last
   min-width: 1000px
 
+.btns a
+  margin-bottom: 6px
+
 .portrate
   flex-basis: auto
+  margin: 2px
 
 .list
   background: #000
@@ -170,6 +174,7 @@ module.exports =
     border-radius: 3px
     max-height:   68px
     height:       68px
+    margin-right: 4px
     span
       white-space: nowrap
 </style>

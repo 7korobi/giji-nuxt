@@ -4,7 +4,8 @@
     .inframe
       .icons.form
         nuxt-link.item.active(replace, :to="back_url")
-          i.fa.fa-map-pin
+          i.fa.fa-map-marker
+
   .summary(name="list" tag="div" key="summary")
     mentions(key="1" @anker="anker")
   .contentframe

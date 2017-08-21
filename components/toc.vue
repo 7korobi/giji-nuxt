@@ -12,36 +12,43 @@ module.exports =
     require('~plugins/pager') {}
   ]
   methods:
-    all_page_idxs: (part_id)->
-      last = @chats(part_id).length
-      [0 ... last]
-
-    page_label: (part_id, page_id)->
-      [ first,..., last ] = @chats(part_id)[page_id]
-      begin = format.head.format first.write_at
-      write = format.head.format last.write_at
-      if begin == write
-        begin
+    time_label: (first, last)->
+      span = last.write_at - first.write_at
+      first_str = format.head.format first.write_at
+      last_str  = format.head.format last.write_at
+      if first_str == last_str
+        first_str
       else
-        write = format.tail.format @write_at
-        begin
-        .replace "時", "-" + write
+        if span < 23 * 3600 * 1000
+          last_str = format.tail.format last.write_at
+          first_str.replace "時", "-" + last_str
+        else
+          first_str + " - " + last_str
 
-    input_part: (part_id)->
-      @book =
-        part_id: part_id
-        page_idxs: [0]
+    part_label: (part_id)->
+      [ first,..., last ] = @chats(part_id)
+      [ first, ...] = first
+      [ ...,  last] = last
+      @time_label first, last
 
-    input_page: (part_id, page_id)->
-      @book =
-        part_id: part_id
-        page_idxs: [page_id]
+    page_label: (part_id, page_idx)->
+      [ first,..., last ] = @chats(part_id)[page_idx]
+      @time_label first, last
 
-    tooltip: (line)->
-      if 1 < line
-        "tooltip-top"
+    go_page: (part_id, page_idx)->
+      return unless part_id && data = @chats(part_id)
+
+      pages = 1 + page_idx
+
+      @$router.push
+        path: "../#{part_id}/#{@mode}"
+        query: { pages }
+
+    page_btn_class: (part_id, page_idx)->
+      if @part_id == part_id && page_idx in @page_idxs
+        ["nuxt-link-exact-active"]
       else
-        "tooltip-bottom"
+        []
   computed:
     show: ->
       @$store.state.menu.set.toc && @book?.parts
@@ -58,17 +65,21 @@ module.exports =
       tbody
         tr(v-for="(o, line) in book.parts.list", :key="o.id")
           th.r.form
-            btn(@input="input_part", :value="part_id", :as="o.id")
+            btn.tooltip-top(@input="go_page(o.id, 0)", :data-tooltip="part_label(o.id)", :value="part_id", :as="o.id")
               | {{o.label}}
               sup {{ chats(o.id).all }}
           td.l.form
-            span(v-for="page in all_page_idxs(o.id)", :key="page")
-              btn(bool="include" @input="input_page(o.id, page)" @toggle="input_page(o.id, page)", :data-tooltip="page_label(o.id, page)", :value="page_ids", :as="[o.id + '-' + page]", :class="tooltip(line)")
-                | {{ page + 1 }}
+            a.page.tooltip-top(v-for="(_, page_idx) in chats(o.id)" @click="go_page(o.id, page_idx)", :data-tooltip="page_label(o.id, page_idx)", :class="page_btn_class(o.id, page_idx)")
+              | {{ page_idx + 1 }}
 
 </template>
 
 <style lang="stylus" scoped>
+.nuxt-link-exact-active
+.page
+  min-width: 2.5ex
+  text-align: center
+
 .header
   padding-left: 20px
 .r

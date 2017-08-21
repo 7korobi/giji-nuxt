@@ -15,43 +15,37 @@ module.exports =
         backgroundImage: "url(#{env.STORE_URL}/images/bg/fhd-giji.png)"
         backgroundPosition: "left 50% top #{ @top }px"
 
-    methods:
-      vils: (id)->
-        max_vils = Query.folders.find(id).max_vils
-        if max_vils && "progress" == @export_to
-          "#{max_vils}村:"
-        else
-          ""
-
-      url: (id)->
-        switch @export_to
-          when "progress"
-            Query.folders.find(id).href
-          when "finish"
-            "/sow/village?folder_id=#{id}"
 
     components:
       sow:
         functional: true
-        props: ["folder"]
+        props: ["folder_id"]
         render: (m, ctx)->
-          { folder } = ctx.props
-          children = ctx.children ? [ folder.toLowerCase() ]
+          { folder_id } = ctx.props
+          { export_to } = ctx.parent
+          children = ctx.children ? [ folder_id.toLowerCase() ]
 
-          vils = ctx.parent.vils folder
-          href = ctx.parent.url  folder
-          outer = ctx.parent.export_to == "progress"
-          m "p", [
-            vils
-            if href
-              if outer
+          switch export_to
+            when "progress"
+              { href, max_vils } = Query.folders.find(folder_id)
+              vils =
+                if max_vils
+                  "#{max_vils}村:"
+                else
+                  ""
+              m "p", [
+                vils
                 m "a",{ attrs: { href }}, children
-              else
-                m "nuxt-link",{ attrs: {to: href}}, children
+              ]
 
-            else
-              children
-          ]
+            when "finish"
+              to =
+                path: "/sow/village"
+                query: { folder_id, pages: 1 }
+              console.log to
+              m "p", [
+                m "nuxt-link",{ attrs: { to }}, children
+              ]
 
 </script>
 <template lang="pug">
@@ -66,22 +60,22 @@ module.exports =
     tbody
       tr
         td.links.form
-          sow(folder="LOBBY")
-          sow(folder="OFFPARTY")
+          sow(folder_id="LOBBY")
+          sow(folder_id="OFFPARTY")
         td.links.form
-          sow(folder="MORPHE")
-          sow(folder="CABALA") cafe
+          sow(folder_id="MORPHE")
+          sow(folder_id="CABALA") cafe
         td.links.form
-          sow(folder="WOLF")
-          sow(folder="ULTIMATE")
-          sow(folder="ALLSTAR")
+          sow(folder_id="WOLF")
+          sow(folder_id="ULTIMATE")
+          sow(folder_id="ALLSTAR")
         td.links.form
-          sow(folder="RP") role-play
-          sow(folder="PRETENSE") RP-advance
-          sow(folder="PERJURY")
-          sow(folder="XEBEC")
-          sow(folder="CRAZY")
-          sow(folder="CIEL")
+          sow(folder_id="RP") role-play
+          sow(folder_id="PRETENSE") RP-advance
+          sow(folder_id="PERJURY")
+          sow(folder_id="XEBEC")
+          sow(folder_id="CRAZY")
+          sow(folder_id="CIEL")
     tfoot
       tr
         th.btns(colspan=4)

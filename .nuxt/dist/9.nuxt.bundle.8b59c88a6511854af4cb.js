@@ -86,7 +86,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "to": _vm.back_url
     }
   }, [_c('i', {
-    staticClass: "fa fa-map-pin"
+    staticClass: "fa fa-map-marker"
   })])], 1)])]), _c('div', {
     key: "summary",
     staticClass: "summary",
@@ -136,4 +136,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 /***/ })
 
 });
-//# sourceMappingURL=9.nuxt.bundle.2cee2a5c73958e643121.js.map
+//# sourceMappingURL=9.nuxt.bundle.8b59c88a6511854af4cb.js.map

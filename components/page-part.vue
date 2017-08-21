@@ -4,11 +4,10 @@ module.exports =
     require '~plugins/book'
   ]
   methods:
-    part_to: (idx)->
-      console.log idx, @chats(idx)
-      return unless idx && data = @chats(idx)
+    part_to: (part_id)->
+      return unless part_id && data = @chats(part_id)
 
-      path: "../#{idx}/#{@mode}"
+      path: "../#{part_id}/#{@mode}"
 
   computed:
     part_prev: ->
