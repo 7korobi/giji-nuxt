@@ -25903,7 +25903,9 @@ store = __webpack_require__(38)({
 focus = function (chat_id) {
   if (chat_id != null && typeof window !== "undefined" && window !== null) {
     return this.$nextTick(() => {
-      console.log(window[chat_id]);
+      if (!window[chat_id]) {
+        console.log(chat_id);
+      }
       return this.$store.commit("menu/focus", chat_id);
     });
   }
@@ -36615,7 +36617,7 @@ module.exports = function ({ watch }) {
     page_contents: function () {
       var all, ref;
       all = (ref = this.page_all_contents) != null ? ref : [[]];
-      return this.page_idxs.map(page => {
+      return this.page_idxs.map(function (page) {
         return all[page];
       });
     },
@@ -39529,7 +39531,6 @@ module.exports = {
                   pages: 1
                 }
               };
-              console.log(to);
               return m("p", [
                 m("nuxt-link",
                 {
@@ -46109,4 +46110,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[384]);
-//# sourceMappingURL=vendor.bundle.43a45ed346a17849a742.js.map
+//# sourceMappingURL=vendor.bundle.51d9d572350727a98876.js.map

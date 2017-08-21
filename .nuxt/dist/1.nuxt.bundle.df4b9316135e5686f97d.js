@@ -39,7 +39,7 @@ module.exports = {
     "aggregate/faces"),
     __webpack_require__(38)({
       push: {
-        order: "story_length",
+        order: "date_max",
         tag_id: "all"
       }
     })
@@ -219,4 +219,4 @@ var update = __webpack_require__(3)("03836546", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=1.nuxt.bundle.b4123571a191b7bffd1c.js.map
+//# sourceMappingURL=1.nuxt.bundle.df4b9316135e5686f97d.js.map
