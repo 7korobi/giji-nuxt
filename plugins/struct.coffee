@@ -1,5 +1,14 @@
 { Query } = require "~plugins/memory-record"
 
+to_x = (type, sp, nil)-> (u)->
+  switch u?.constructor
+    when null, undefined, sp
+      nil
+    when type
+      u
+    else
+      type u
+
 module.exports =
   relative_to: ({ name, params, query, hash }, o)->
     to = { name, params, query, hash }
@@ -20,24 +29,17 @@ module.exports =
 
   types:
     "#{Number}":
-      to_str: String
-      by_str: Number
-      by_url: Number
+      to_str: to_x String, NaN, ""
+      by_str: to_x Number, "", NaN
+      by_url: to_x Number, "", NaN
     "#{String}":
-      to_str: String
-      by_str: String
-      by_url: String
+      to_str: to_x String, null, ""
+      by_str: to_x String, "", null
+      by_url: to_x String, "", null
     "#{Array}":
       to_str: JSON.stringify
       by_str: JSON.parse
-      by_url: (u)->
-        switch u?.constructor
-          when null, undefined
-            null
-          when Array
-            u
-          else
-            [u]
+      by_url: to_x Array, null, null
     "#{Object}":
       to_str: JSON.stringify
       by_str: JSON.parse

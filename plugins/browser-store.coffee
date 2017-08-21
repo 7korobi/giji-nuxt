@@ -7,8 +7,7 @@ browser_store = bs = (method)->
   pack: (computed, {to_str}, key, val)->
     computed[key] =
       get: ->
-        value = @$data.$browser[key]
-        value ? val
+        @$data.$browser[key]
 
       set: (newVal)->
         if newVal?
