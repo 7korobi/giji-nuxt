@@ -43534,36 +43534,27 @@ if(false) {
 
 /***/ }),
 /* 297 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEnabled", function() { return isEnabled; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAll", function() { return getAll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "set", function() { return set; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRaw", function() { return getRaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRaw", function() { return setRaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "remove", function() { return remove; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isCookieEnabled", function() { return isEnabled; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return get; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllCookies", function() { return getAll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCookie", function() { return set; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRawCookie", function() { return getRaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRawCookie", function() { return setRaw; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeCookie", function() { return remove; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(298);
 
+
+exports.__esModule = true;
+exports.removeCookie = exports.setRawCookie = exports.getRawCookie = exports.setCookie = exports.getAllCookies = exports.getCookie = exports.isCookieEnabled = exports.remove = exports.setRaw = exports.getRaw = exports.set = exports.getAll = exports.get = exports.isEnabled = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _util = __webpack_require__(298);
 
 // Check if the browser cookie is enabled.
 function isEnabled() {
-  const key = '@key@';
-  const value = '1';
-  const re = new RegExp(`(?:^|; )${key}=${value}(?:;|$)`);
+  var key = '@key@';
+  var value = '1';
+  var re = new RegExp('(?:^|; )' + key + '=' + value + '(?:;|$)');
 
-  document.cookie = `${key}=${value}`;
+  document.cookie = key + '=' + value;
 
-  const enabled = re.test(document.cookie);
+  var enabled = re.test(document.cookie);
 
   if (enabled) {
     // eslint-disable-next-line
@@ -43574,13 +43565,15 @@ function isEnabled() {
 }
 
 // Get the cookie value by key.
-function get(key, decoder = decodeURIComponent) {
-  if ((typeof key !== 'string') || !key) {
+function get(key) {
+  var decoder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : decodeURIComponent;
+
+  if (typeof key !== 'string' || !key) {
     return null;
   }
 
-  const reKey = new RegExp(`(?:^|; )${__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* escapeRe */])(key)}(?:=([^;]*))?(?:;|$)`);
-  const match = reKey.exec(document.cookie);
+  var reKey = new RegExp('(?:^|; )' + (0, _util.escapeRe)(key) + '(?:=([^;]*))?(?:;|$)');
+  var match = reKey.exec(document.cookie);
 
   if (match === null) {
     return null;
@@ -43590,14 +43583,16 @@ function get(key, decoder = decodeURIComponent) {
 }
 
 // The all cookies
-function getAll(decoder = decodeURIComponent) {
-  const reKey = /(?:^|; )([^=]+?)(?:=([^;]*))?(?:;|$)/g;
-  const cookies = {};
-  let match;
+function getAll() {
+  var decoder = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : decodeURIComponent;
+
+  var reKey = /(?:^|; )([^=]+?)(?:=([^;]*))?(?:;|$)/g;
+  var cookies = {};
+  var match = void 0;
 
   /* eslint-disable no-cond-assign */
-  while ((match = reKey.exec(document.cookie))) {
-    reKey.lastIndex = (match.index + match.length) - 1;
+  while (match = reKey.exec(document.cookie)) {
+    reKey.lastIndex = match.index + match.length - 1;
     cookies[match[1]] = typeof decoder === 'function' ? decoder(match[2]) : match[2];
   }
 
@@ -43605,16 +43600,19 @@ function getAll(decoder = decodeURIComponent) {
 }
 
 // Set a cookie.
-function set(key, value, encoder = encodeURIComponent, attrs) {
-  if (typeof encoder === 'object' && encoder !== null) {
+function set(key, value) {
+  var encoder = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : encodeURIComponent;
+  var attrs = arguments[3];
+
+  if ((typeof encoder === 'undefined' ? 'undefined' : _typeof(encoder)) === 'object' && encoder !== null) {
     /* eslint-disable no-param-reassign */
     attrs = encoder;
     encoder = null;
     /* eslint-enable no-param-reassign */
   }
-  const attrsStr = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["b" /* convert */])(attrs || {});
-  const valueStr = typeof encoder === 'function' ? encoder(value) : value;
-  const newCookie = `${key}=${valueStr}${attrsStr}`;
+  var attrsStr = (0, _util.convert)(attrs || {});
+  var valueStr = typeof encoder === 'function' ? encoder(value) : value;
+  var newCookie = key + '=' + valueStr + attrsStr;
   document.cookie = newCookie;
 }
 
@@ -43633,18 +43631,32 @@ function setRaw(key, value, opts) {
   return set(key, value, null, opts);
 }
 
-
-
+exports.isEnabled = isEnabled;
+exports.get = get;
+exports.getAll = getAll;
+exports.set = set;
+exports.getRaw = getRaw;
+exports.setRaw = setRaw;
+exports.remove = remove;
+exports.isCookieEnabled = isEnabled;
+exports.getCookie = get;
+exports.getAllCookies = getAll;
+exports.setCookie = set;
+exports.getRawCookie = getRaw;
+exports.setRawCookie = setRaw;
+exports.removeCookie = remove;
 
 /***/ }),
 /* 298 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* unused harmony export hasOwn */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return escapeRe; });
-/* unused harmony export computeExpires */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return convert; });
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function hasOwn(obj, key) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
@@ -43656,18 +43668,25 @@ function escapeRe(str) {
 
 // Return a future date by the given string.
 function computeExpires(str) {
-  const lastCh = str.charAt(str.length - 1);
-  const value = parseInt(str, 10);
-  let expires = new Date();
+  var lastCh = str.charAt(str.length - 1);
+  var value = parseInt(str, 10);
+  var expires = new Date();
 
   switch (lastCh) {
-    case 'Y': expires.setFullYear(expires.getFullYear() + value); break;
-    case 'M': expires.setMonth(expires.getMonth() + value); break;
-    case 'D': expires.setDate(expires.getDate() + value); break;
-    case 'h': expires.setHours(expires.getHours() + value); break;
-    case 'm': expires.setMinutes(expires.getMinutes() + value); break;
-    case 's': expires.setSeconds(expires.getSeconds() + value); break;
-    default: expires = new Date(str);
+    case 'Y':
+      expires.setFullYear(expires.getFullYear() + value);break;
+    case 'M':
+      expires.setMonth(expires.getMonth() + value);break;
+    case 'D':
+      expires.setDate(expires.getDate() + value);break;
+    case 'h':
+      expires.setHours(expires.getHours() + value);break;
+    case 'm':
+      expires.setMinutes(expires.getMinutes() + value);break;
+    case 's':
+      expires.setSeconds(expires.getSeconds() + value);break;
+    default:
+      expires = new Date(str);
   }
 
   return expires;
@@ -43675,25 +43694,25 @@ function computeExpires(str) {
 
 // Convert an object to a cookie option string.
 function convert(opts) {
-  let res = '';
+  var res = '';
 
   // eslint-disable-next-line
-  for (const key in opts) {
+  for (var key in opts) {
     if (hasOwn(opts, key)) {
       if (/^expires$/i.test(key)) {
-        let expires = opts[key];
+        var expires = opts[key];
 
-        if (typeof expires !== 'object') {
+        if ((typeof expires === 'undefined' ? 'undefined' : _typeof(expires)) !== 'object') {
           expires += typeof expires === 'number' ? 'D' : '';
           expires = computeExpires(expires);
         }
-        res += `;${key}=${expires.toUTCString()}`;
+        res += ';' + key + '=' + expires.toUTCString();
       } else if (/^secure$/.test(key)) {
         if (opts[key]) {
-          res += `;${key}`;
+          res += ';' + key;
         }
       } else {
-        res += `;${key}=${opts[key]}`;
+        res += ';' + key + '=' + opts[key];
       }
     }
   }
@@ -43705,8 +43724,10 @@ function convert(opts) {
   return res;
 }
 
-
-
+exports.hasOwn = hasOwn;
+exports.escapeRe = escapeRe;
+exports.computeExpires = computeExpires;
+exports.convert = convert;
 
 /***/ }),
 /* 299 */
@@ -46088,4 +46109,4 @@ module.exports = __webpack_require__(1);
 
 /***/ })
 ],[384]);
-//# sourceMappingURL=vendor.bundle.8ec18d0040f3c2de4705.js.map
+//# sourceMappingURL=vendor.bundle.43a45ed346a17849a742.js.map
