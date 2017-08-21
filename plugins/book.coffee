@@ -15,7 +15,7 @@ store = require("~plugins/browser-store")
 focus = (chat_id)->
   if chat_id? && window?
     @$nextTick =>
-      console.log window[chat_id]
+      console.log chat_id unless window[chat_id]
       @$store.commit "menu/focus", chat_id
 
 path store, "folder", "book", "part", "phase", "chat"

@@ -42,7 +42,6 @@ module.exports =
               to =
                 path: "/sow/village"
                 query: { folder_id, pages: 1 }
-              console.log to
               m "p", [
                 m "nuxt-link",{ attrs: { to }}, children
               ]

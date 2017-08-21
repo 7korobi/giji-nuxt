@@ -45,7 +45,7 @@ module.exports = ({watch})->
 
     page_contents: ->
       all = @page_all_contents ? [[]]
-      @page_idxs.map (page)=> all[page]
+      @page_idxs.map (page)-> all[page]
 
     all_contents: ->
       @page_all_contentes?.from ? []
