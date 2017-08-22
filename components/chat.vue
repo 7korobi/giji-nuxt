@@ -1,31 +1,7 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
-marked = require 'marked'
 el = require "~plugins/dom"
-
-renderer = new marked.Renderer()
-renderer.paragraph = (text)->
-  text
-
-renderer.em = (text)->
-  console.log text
-  text
-
-renderer.link = (href, title, text)->
-  [protocol, hostname] = href.split(///\://|/|\?|\#///g)
-  title = [protocol, hostname].join("\n")
-  """<b chk="confirm" href="#{href}" title="#{title}">#{protocol}</b>"""
-
-marked.setOptions
-  renderer: renderer
-  gfm: true
-  tables: true
-  breaks: true
-  pedantic: false
-  sanitize: false
-  smartLists: true
-  smartypants: true
-
+marked = require "~plugins/marked"
 
 module.exports =
   functional: true
@@ -105,7 +81,7 @@ module.exports =
 
       log_html: ->
         return "" unless @log
-        marked @log.replace "<br>", "\n"
+        marked @log
 
       current: ->
         { idx } = @$route.params
@@ -118,7 +94,6 @@ module.exports =
       classname: ->
         { id } = @
         if id && "focus" == @el_adjust
-          # console.log "focus", id
           @$emit "focus", id
         [@handle, @el_adjust]
     }
