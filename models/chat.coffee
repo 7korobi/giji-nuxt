@@ -42,7 +42,7 @@ new Rule("chat").schema ->
     @deploy: ->
       @q =
         mention_ids: []
-      @log = @log.replace ///<mw\ +(..)(\d+),(\d+),([^>]+)>///g, (str, phase_idx, $1, part_idx, code)=>
+      @log = @log.replace ///<mw\ +(..)(\d+),(\d+),(.+?)>///g, (str, phase_idx, $1, part_idx, code)=>
         if phase_idx == 'MM'
           phase_idx = @phase_id[-2..][0] + 'M'
         idx = Number($1)

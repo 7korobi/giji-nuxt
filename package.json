@@ -16,6 +16,7 @@
     "element-ui": "latest",
     "express-session": "latest",
     "global": "latest",
+    "marked": "latest",
     "mocha-webpack": "latest",
     "monaco-editor": "latest",
     "mongodb-bluebird": "latest",

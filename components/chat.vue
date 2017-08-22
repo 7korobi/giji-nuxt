@@ -1,6 +1,31 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
+marked = require 'marked'
 el = require "~plugins/dom"
+
+renderer = new marked.Renderer()
+renderer.paragraph = (text)->
+  text
+
+renderer.em = (text)->
+  console.log text
+  text
+
+renderer.link = (href, title, text)->
+  [protocol, hostname] = href.split(///\://|/|\?|\#///g)
+  title = [protocol, hostname].join("\n")
+  """<b chk="confirm" href="#{href}" title="#{title}">#{protocol}</b>"""
+
+marked.setOptions
+  renderer: renderer
+  gfm: true
+  tables: true
+  breaks: true
+  pedantic: false
+  sanitize: false
+  smartLists: true
+  smartypants: true
+
 
 module.exports =
   functional: true
@@ -80,18 +105,7 @@ module.exports =
 
       log_html: ->
         return "" unless @log
-        @log
-        .replace ///[a-z]+\:\/\/[^"\s<>]+///g, (url, idx, src)->
-          return url if '<a href="' == src[idx - 9...idx].toLowerCase()
-          suffix = ""
-          url = url.replace ///&lt;$|&gt;$|\]$|\[$///, (last)->
-            suffix = last
-            ""
-          [protocol, hostname] = url.split(///\://|/|\?|\#///g)
-          title = [protocol, hostname].join("\n")
-          """<b chk="confirm" href="#{url}" title="#{title}">#{protocol}</b>#{suffix}"""
-        .replace ///(\/\*).*(\*\/|$)///g, "<em>$&</em>"
-        .replace ///(^|\/\*).*(\*\/)///g, "<em>$&</em>"
+        marked @log.replace "<br>", "\n"
 
       current: ->
         { idx } = @$route.params
