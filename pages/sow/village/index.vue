@@ -124,13 +124,13 @@
       report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
-          nuxt-link(:to="part_url(o.id, 0)") {{ o.name }}
+          nuxt-link(:to="book_url(o.id, 'title')") {{ o.name }}
         .cards
           table.btns.card(style="width: 33%")
             tbody
               tr
                 td(style="text-align: right" colspan="2")
-                  nuxt-link(:to="part_url(o.id, 0)") {{ o.id }}
+                  nuxt-link(:to="book_url(o.id, 'normal')") {{ o.id }}
                   kbd(style="width: 40px")
                     img(:src="rating_img(o.q.rating)")
               tr
@@ -206,8 +206,10 @@ module.exports =
     reset: ->
       @$router.replace query: {}
     
-    part_url: (book_id, part_idx)->
-      "village/#{book_id}-#{part_idx}/full"
+    book_url: (book_id, mode)->
+      name: "sow-village-idx-mode"
+      params: { mode, idx: [book_id, 0].join("-") }
+      query: { pages: 1 }
 
     rating_img: (rating)->
       "#{env.STORE_URL}/images/icon/cd_#{rating}.png"

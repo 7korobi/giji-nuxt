@@ -51,7 +51,10 @@ module.exports =
       list = "#{name}s"
       o[key] =
         get: ->
-          (at < @idx.length) && @idx[0..at].join("-")
+          if at < @idx.length
+            @idx[0..at].join("-")
+          else
+            null
       o[name] =
         get: ->
           @read_at

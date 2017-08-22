@@ -54,7 +54,7 @@
       talk(v-for="folder in face.folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder.nation")
         | {{ folder.length }}回登場しました
         .flex
-          a.label-mini(v-for="id in folder", :href="log_url(id)") {{ id[1] }}
+          nuxt-link.label-mini(v-for="id in folder", :to="log_url(id)", :key="id") {{ id[1] }}
 
 
       report(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
@@ -104,8 +104,10 @@ module.exports =
       return str
 
   methods:
-    log_url: ([folder, id])->
-      "#{env.STORE_URL}/stories/#{folder}-#{id}"
+    log_url: (book_id)->
+      name: "sow-village-idx-mode"
+      params: { mode: "title", idx: [book_id..., 0].join("-") }
+      query: { pages: 1 }
 
     label_size: (str)->
       width  = 0.8 * (str.match(/[iIjl]/g) ? []).length

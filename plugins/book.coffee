@@ -15,25 +15,12 @@ store = require("~plugins/browser-store")
 focus = (chat_id)->
   if chat_id? && window?
     @$nextTick =>
-      unless window[chat_id]
-        console.log chat_id 
-      @$store.commit "menu/focus", chat_id
+      if window[chat_id]
+        @$store.commit "menu/focus", chat_id
+      else
+        console.log chat_id
 
 path store, "folder", "book", "part", "phase", "chat"
-store.computed.book.set = ({ page_idxs, chat_id, part_id, part })->
-  if part_id
-    part ?= Query.parts.find part_id
-  if part
-    idx = part.id
-  if chat_id
-    chat = Query.chats.find chat_id
-    part = chat.part
-    idx  = chat_id
-  return unless part
-
-  pages = @pages_calc page_idxs
-  @$router.replace relative_to @$route, { idx, pages }
-
 Object.assign store.computed,
   page_all_contents: ->
     @chats(@part_id)

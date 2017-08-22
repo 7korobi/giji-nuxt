@@ -40,6 +40,8 @@ module.exports =
 
       pages = 1 + page_idx
 
+      if window?
+        window.scrollTo 0, 0
       @$router.push
         path: "../#{part_id}/#{@mode}"
         query: { pages }

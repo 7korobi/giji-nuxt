@@ -42,8 +42,8 @@ base = ([time_num..., time_tail], name, calc)->
       @$store.state.read_at[key]
 
 base.plugin = (@arg)->
-    ({ commit, state })->
-      { timer, read_at } = state
-      base.root = { commit, timer, read_at }
+  ({ commit, state })->
+    { timer, read_at } = state
+    base.root = { commit, timer, read_at }
 
 module.exports = base
