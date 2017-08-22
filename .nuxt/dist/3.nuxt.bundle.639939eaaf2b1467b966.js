@@ -75,8 +75,17 @@ module.exports = {
         query: {}
       });
     },
-    part_url: function(book_id, part_idx) {
-      return `village/${book_id}-${part_idx}/full`;
+    book_url: function(book_id, mode) {
+      return {
+        name: "sow-village-idx-mode",
+        params: {
+          mode,
+          idx: [book_id, 0].join("-")
+        },
+        query: {
+          pages: 1
+        }
+      };
     },
     rating_img: function(rating) {
       return `${env.STORE_URL}/images/icon/cd_${rating}.png`;
@@ -138,7 +147,7 @@ exports = module.exports = __webpack_require__(2)(true);
 
 
 // module
-exports.push([module.i, ".cards[data-v-8875469c]{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-ms-flex-line-pack:distribute;align-content:space-around;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.card[data-v-8875469c]{padding:2px}", "", {"version":3,"sources":["C:/Dropbox/www/giji-nuxt/pages/sow/village/index.vue"],"names":[],"mappings":"AACA,wBACE,oBAAqB,AACrB,oBAAqB,AACrB,aAAc,AACd,8BAA+B,AAC/B,6BAA8B,AAC1B,uBAAwB,AACpB,mBAAoB,AAC5B,qBAAsB,AAClB,iBAAkB,AACtB,8BAA+B,AAC3B,2BAA4B,AAChC,wBAAyB,AACrB,qBAAsB,AAClB,uBAAwB,AAChC,uBAAwB,AACpB,oBAAqB,AACjB,0BAA4B,CACrC,AACD,uBACE,WAAa,CACd","file":"index.vue","sourcesContent":["\n.cards[data-v-8875469c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  -webkit-box-align: start;\n      -ms-flex-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.card[data-v-8875469c] {\n  padding: 2px;\n}\n"],"sourceRoot":""}]);
+exports.push([module.i, ".cards[data-v-8875469c]{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:nowrap;flex-wrap:nowrap;-ms-flex-line-pack:distribute;align-content:space-around;-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.card[data-v-8875469c]{padding:2px}", "", {"version":3,"sources":["D:/Dropbox/www/giji-nuxt/pages/sow/village/index.vue"],"names":[],"mappings":"AACA,wBACE,oBAAqB,AACrB,oBAAqB,AACrB,aAAc,AACd,8BAA+B,AAC/B,6BAA8B,AAC1B,uBAAwB,AACpB,mBAAoB,AAC5B,qBAAsB,AAClB,iBAAkB,AACtB,8BAA+B,AAC3B,2BAA4B,AAChC,wBAAyB,AACrB,qBAAsB,AAClB,uBAAwB,AAChC,uBAAwB,AACpB,oBAAqB,AACjB,0BAA4B,CACrC,AACD,uBACE,WAAa,CACd","file":"index.vue","sourcesContent":["\n.cards[data-v-8875469c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: nowrap;\n      flex-wrap: nowrap;\n  -ms-flex-line-pack: distribute;\n      align-content: space-around;\n  -webkit-box-align: start;\n      -ms-flex-align: start;\n          align-items: flex-start;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.card[data-v-8875469c] {\n  padding: 2px;\n}\n"],"sourceRoot":""}]);
 
 // exports
 
@@ -587,7 +596,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         staticClass: "pull-right"
       }, [_vm._v(_vm._s(o.sow_auth_id))]), _c('nuxt-link', {
         attrs: {
-          "to": _vm.part_url(o.id, 0)
+          "to": _vm.book_url(o.id, 'title')
         }
       }, [_vm._v(_vm._s(o.name))])], 1), _c('div', {
         staticClass: "cards"
@@ -605,7 +614,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }, [_c('nuxt-link', {
         attrs: {
-          "to": _vm.part_url(o.id, 0)
+          "to": _vm.book_url(o.id, 'normal')
         }
       }, [_vm._v(_vm._s(o.id))]), _c('kbd', {
         staticStyle: {
@@ -691,4 +700,4 @@ var update = __webpack_require__(3)("6b02251f", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=3.nuxt.bundle.8f59259bd172964e2128.js.map
+//# sourceMappingURL=3.nuxt.bundle.639939eaaf2b1467b966.js.map

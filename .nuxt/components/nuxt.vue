@@ -6,7 +6,7 @@
 <script>
 import Vue from 'vue'
 import NuxtChild from './nuxt-child'
-import NuxtError from 'C:\\Dropbox\\www\\giji-nuxt\\layouts\\error.vue'
+import NuxtError from 'D:\\Dropbox\\www\\giji-nuxt\\layouts\\error.vue'
 
 export default {
   name: 'nuxt',
