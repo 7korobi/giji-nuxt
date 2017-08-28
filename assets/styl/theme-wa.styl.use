@@ -1,7 +1,6 @@
 @import "./_theme.styl"
 @import "./_theme_wood.styl"
 
-$border = #333
 body
   background: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/nagatanienn.png")
 
@@ -12,17 +11,12 @@ hr
   box-shadow: rgba(255,255,255,0.3) 0 1px 0
 
 *
-  border-color: $border
+  border-color: #333
 
-palette(pens,    pens, silver, $border)
-palette(blacks, black,   gold, $border)
-palette(stats,  light,   dark, $border)
-palette(says,  silver,   dark, $border)
-
-.chat
-  .name
-    border-bottom: 1px solid rgba(0,0,0,0.2)
-    box-shadow: rgba(255,255,255,0.3) 0 1px 0
+palette(pens,    foot)
+palette(stats,   foot)
+palette(world,  black)
+palette(says,   light)
 
 .talk
   .chat

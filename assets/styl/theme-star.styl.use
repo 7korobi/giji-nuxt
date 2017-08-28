@@ -8,10 +8,10 @@ hr
   border-style: none none solid none
   border-bottom: 1px dashed
 
-palette(pens,   glass,  light, $border)
-palette(blacks, black, silver, $border)
-palette(stats,  light,   dark, $border)
-palette(says,   glass,  light, $border)
+palette(pens,    foot)
+palette(stats,   foot)
+palette(world,   foot)
+palette(says,   night)
 
 .talk
   .chat

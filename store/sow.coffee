@@ -114,16 +114,7 @@ module.exports =
             show = "talk"
           when "I"
             potof_id = undefined
-            if phase_idx == "iI" || ///(
-                   は突然死した。
-                  |投票した。
-                  |魚の跳ねる、みずみずしい音が聞こえた。
-                  |延長されました。
-                  |村の設定が変更されました。
-                  |が参加しました。
-                  |は時が進むよう祈った。
-                  |は村を出ました\)
-                  )$///.test log
+            if log.match(///。|、///g).length < 3
               show = "post"
             else
               show = "report"

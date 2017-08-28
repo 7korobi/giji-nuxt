@@ -23,7 +23,7 @@
       report(handle="footer")
         table
           thead
-            tr.dark
+            tr
               th 総合値
               th 一番長い発言
               th 総文字数
@@ -39,7 +39,7 @@
       report(handle="footer")
         table
           thead
-            tr.dark
+            tr
               th 平均値
               th /村数
               th 文字数

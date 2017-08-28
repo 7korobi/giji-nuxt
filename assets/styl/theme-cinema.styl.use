@@ -1,7 +1,6 @@
 @import "./_theme.styl"
 @import "./_theme_film.styl"
 
-$border = #663
 body
   background-color: mix(spin(#ff0000,  2 * 18deg + 0deg), #777, 20%)
 
@@ -12,12 +11,12 @@ hr
   box-shadow: rgba(255,255,255,0.3) 0 1px 0
 
 *
-  border-color: $border
+  border-color: #663
 
-palette(pens,    pens, silver, $border)
-palette(blacks, black, silver, $border)
-palette(stats,  light,   dark, $border)
-palette(says,  silver,   dark, $border)
+palette(pens,    foot)
+palette(stats,   foot)
+palette(world,  black)
+palette(says,   light)
 
 .talk
   .chat

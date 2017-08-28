@@ -27,7 +27,9 @@ module.exports =
 
     part_label: (part_id)->
       [ first,..., last ] = @chats(part_id)
+      return "" unless first
       [ first, ...] = first
+      return "" unless last
       [ ...,  last] = last
       @time_label first, last
 
