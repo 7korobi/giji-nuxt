@@ -37,3 +37,9 @@ module.exports =
       job ?= Query.chr_jobs.find("all_#{face_id}")
       job.job
 </script>
+
+<style lang="stylus">
+.center-left,
+.center-right
+  display: none
+</style>

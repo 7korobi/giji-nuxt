@@ -18,6 +18,7 @@ module.exports = require("~components/chat.vue").component_class()
 <template lang="pug">
 .chat.post(@click="click", :id="id", :key="id", :class="classname")
   chat-head(v-if="head", :full="full" :head="head", :to="to", :sign="sign")
+  hr(v-if="head")
   .text(:class="deco" v-if="$slots.default")
     slot
   .text(:class="deco" v-html="log_html" v-else)

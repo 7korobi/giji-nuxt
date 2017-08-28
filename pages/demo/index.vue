@@ -4,6 +4,8 @@
     .inframe
       br
       post(:write_at="Date.now()", handle="TSAY")
+        nuxt-link(to="/demo/markdown") Markdown vue
+      post(:write_at="Date.now()", handle="TSAY")
         nuxt-link.button(to="/demo/oauth") OpenID
       post(:write_at="Date.now()", handle="TSAY")
         nuxt-link.button(to="/demo/timeago") 時計 page

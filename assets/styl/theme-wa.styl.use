@@ -5,6 +5,12 @@ $border = #333
 body
   background: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/nagatanienn.png")
 
+hr
+  margin: 0
+  border-style: none none solid none
+  border-bottom: 1px solid rgba(0,0,0,0.2)
+  box-shadow: rgba(255,255,255,0.3) 0 1px 0
+
 *
   border-color: $border
 
@@ -27,11 +33,6 @@ palette(says,  silver,   dark, $border)
 .post
   border-style: solid none solid solid
   border-width: 2px 0 2px 18px
-
-.chat
-  .name
-    border-bottom: 1px solid rgba(0,0,0,0.2)
-    box-shadow: rgba(255,255,255,0.3) 0 1px 0
 
 .contentframe
   background-repeat: repeat

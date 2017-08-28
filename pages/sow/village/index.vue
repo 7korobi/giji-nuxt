@@ -57,7 +57,7 @@
             | 破棄役職
             sup(v-if="discard.length") {{ discard.length }}
         sub(style="width: 100%")
-          | {{ all_contents.length }}村があてはまります。
+          | {{ page_all_contents.all | currency }}村があてはまります。
 
       post.form(v-if="drill" handle="btns" key="subform")
         p(v-if="order === 'vid'")
@@ -121,7 +121,7 @@
             sup(v-if="1 < o.count") {{ o.count }}
 
     .inframe(v-for="(villages, idx) in page_contents", :key="idx")
-      report(handle="MAKER", v-for="o in villages", :write_at="o.timer.updateddt", :id="o._id", :key="o._id")
+      report(handle="MAKER", v-for="o in villages", :write_at="o.write_at", :id="o._id", :key="o._id")
         .name
           sup.pull-right {{ o.sow_auth_id }}
           nuxt-link(:to="book_url(o.id, 'title')") {{ o.name }}

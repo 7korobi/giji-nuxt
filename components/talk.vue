@@ -46,6 +46,7 @@ table.talk(:id="id", :key="id")
         .baloon(:class="classname")
         .chat(@click="click", :key="id", :class="classname")
           chat-head(v-if="head", :full="full", :head="head", :to="to", :sign="sign")
+          hr(v-if="head")
           .text(:class="deco" v-if="$slots.default")
             slot
           .text(:class="deco" v-html="log_html" v-else)

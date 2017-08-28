@@ -50,6 +50,7 @@ new Rule("sow_village").schema ->
       minute = "0#{minute}" if minute < 10
       updated_at = new Date @timer.updateddt
 
+      @write_at = updated_at
       @query = Query.sow_villages.where({@id})
       @q =
         sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')

@@ -14,6 +14,10 @@ div
     .center-left
     .center-right
   nuxt
-  layout-footer
+  .outframe
+    .contentframe
+      .inframe
+        report(handle="footer", :write_at="854319600000")
+          layout-footer
 
 </template>

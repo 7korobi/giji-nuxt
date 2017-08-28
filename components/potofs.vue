@@ -38,9 +38,9 @@
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
           td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
-          td.r(:class="o.live.role_id") {{ count("回", o.say(part.id).count) }}
-          td.r(:class="o.live.role_id") {{ count("字", o.say(part.id).all) }}
-          td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) }}
+          td.r(:class="o.live.role_id") {{ count("回", o.say(part.id).count)  | currency }}
+          td.r(:class="o.live.role_id") {{ count("字", o.say(part.id).all)    | currency }}
+          td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) | currency }}
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
           td.c(:class="o.live.role_id")

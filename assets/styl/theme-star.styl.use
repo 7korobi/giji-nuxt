@@ -3,14 +3,15 @@
 
 $border = #333
 
+hr
+  margin: 0
+  border-style: none none solid none
+  border-bottom: 1px dashed
+
 palette(pens,   glass,  light, $border)
 palette(blacks, black, silver, $border)
 palette(stats,  light,   dark, $border)
 palette(says,   glass,  light, $border)
-
-.chat
-  .name
-    border-bottom: 1px dashed
 
 .talk
   .chat

@@ -159,7 +159,7 @@ module.exports =
 
         phase_id = "#{o.event_id}-#{phase_idx}"
         _id = "#{phase_id}-#{idx}"
-        deco = o.style
+        deco = o.style ? "sow"
 
         phases[phase_id] ?=
           handle: handle

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// Recursive find files in ~/store
+// Recursive find files in {srcDir}/store
 const files = require.context('~/store', true, /^\.\/.*\.(js|ts|coffee)$/)
 const filenames = files.keys()
 

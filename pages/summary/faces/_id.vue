@@ -29,7 +29,7 @@
               th 総文字数
               th 総発言回数
           tbody.calc(v-for="o in face.mestypes")
-            tr(:class="o.handle", :key="o.handle")
+            tr(:class="o.handle")
               th {{ o.title }}
               td {{ o.max | currency }} 字
               td {{ o.all | currency }} 字
@@ -45,16 +45,16 @@
               th 文字数
               th 発言回数
           tbody.calc(v-for="o in face.mestypes")
-            tr(:class="o.handle", :key="o.handle")
+            tr(:class="o.handle")
               th {{ o.title }}
               td {{ o.per | currency }} 村
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in face.folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder.nation")
+      talk(v-for="folder in face.folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder[0][0]")
         | {{ folder.length }}回登場しました
         .flex
-          nuxt-link.label-mini(v-for="id in folder", :to="log_url(id)", :key="id") {{ id[1] }}
+          nuxt-link.label-mini(v-for="id in folder", :to="log_url(id)", :key="id.join('-')") {{ id[1] }}
 
 
       report(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
@@ -68,9 +68,9 @@
             tr(v-for="o in sow_auths", :key="o._id.sow_auth_id")
               td
                 .sow_auth_id {{ o._id.sow_auth_id }}
-              td.r {{ o.story_ids.length }}村
-              td.r {{ o.count }}回
-              td.r {{ o.all }}文字
+              td.r {{ o.story_ids.length | currency }}村
+              td.r {{ o.count | currency }}回
+              td.r {{ o.all | currency }}文字
               td.timer
                 timeago.count(:since="o.date_min")
               td
@@ -95,13 +95,6 @@ module.exports =
         id:  "c41"
         order: "story_ids.length"
   ]
-
-  filters:
-    currency: (num)->
-      str = String Math.ceil num
-      while str != str = str.replace /^(-?\d+)(\d{3})/, "$1,$2"
-        true
-      return str
 
   methods:
     log_url: (book_id)->

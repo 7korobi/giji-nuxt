@@ -202,6 +202,13 @@ palette($themes, $backT, $penT, $border)
         &:link
           background-color: $off
 
+      .name,
+      a:not([name])
+        sup,
+        sub
+          background-color: $emboss
+          color: $high
+
       .active
         background-color: $active
 
@@ -225,17 +232,18 @@ palette($themes, $backT, $penT, $border)
         &:checked
           background-color: $on
 
-      em,
       .name,
       .date
         color: $hide
+      
+      del
+        text-decoration: none
+        color: $hide
 
       h5,
-      strong,
-      abbr,
       rt,
-      sup,
-      sub
+      abbr,
+      strong
         background-color: $emboss
         color: $high
 

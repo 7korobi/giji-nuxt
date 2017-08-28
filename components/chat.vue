@@ -1,7 +1,7 @@
 <script lang="coffee">
 { Query } = require "~plugins/memory-record"
 el = require "~plugins/dom"
-marked = require "~plugins/marked"
+markdown = require "~plugins/markdown"
 
 module.exports =
   functional: true
@@ -42,7 +42,24 @@ module.exports =
     m attrs.show, { attrs, key, on: ctx.data.on }
 
   component_class: ->
-    props: ["id", "write_at", "handle", "deco", "log", "face_id", "head", "to", "sign", "img_src"]
+    props:
+      id: String
+      write_at: [Date, Number]
+
+      sign: String
+      head: String
+      to: String
+
+      face_id: String
+      img_src: String
+
+      handle: String
+      deco:
+        type: String
+        default: "giji"
+      log:
+        type: String
+        default: ""
 
     methods:
       click: ({ target })->
@@ -81,7 +98,7 @@ module.exports =
 
       log_html: ->
         return "" unless @log
-        marked @log
+        markdown[@deco](@log)
 
       current: ->
         { idx } = @$route.params
