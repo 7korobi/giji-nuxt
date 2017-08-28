@@ -176,9 +176,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "handle": "footer"
     }
-  }, [_c('table', [_c('thead', [_c('tr', {
-    staticClass: "dark"
-  }, [_c('th', [_vm._v("総合値")]), _c('th', [_vm._v("一番長い発言")]), _c('th', [_vm._v("総文字数")]), _c('th', [_vm._v("総発言回数")])])]), _vm._l((_vm.face.mestypes), function(o) {
+  }, [_c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("総合値")]), _c('th', [_vm._v("一番長い発言")]), _c('th', [_vm._v("総文字数")]), _c('th', [_vm._v("総発言回数")])])]), _vm._l((_vm.face.mestypes), function(o) {
     return _c('tbody', {
       staticClass: "calc"
     }, [_c('tr', {
@@ -188,9 +186,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "handle": "footer"
     }
-  }, [_c('table', [_c('thead', [_c('tr', {
-    staticClass: "dark"
-  }, [_c('th', [_vm._v("平均値")]), _c('th', [_vm._v("/村数")]), _c('th', [_vm._v("文字数")]), _c('th', [_vm._v("発言回数")])])]), _vm._l((_vm.face.mestypes), function(o) {
+  }, [_c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("平均値")]), _c('th', [_vm._v("/村数")]), _c('th', [_vm._v("文字数")]), _c('th', [_vm._v("発言回数")])])]), _vm._l((_vm.face.mestypes), function(o) {
     return _c('tbody', {
       staticClass: "calc"
     }, [_c('tr', {
@@ -339,4 +335,4 @@ var update = __webpack_require__(3)("c3a83286", content, true);
 /***/ })
 
 });
-//# sourceMappingURL=2.nuxt.bundle.abdc8f71e39aab76084d.js.map
+//# sourceMappingURL=2.nuxt.bundle.8d241432a6be54156ac4.js.map

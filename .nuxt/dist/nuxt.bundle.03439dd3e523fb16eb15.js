@@ -3140,7 +3140,7 @@ module.exports = {
             break;
           case "I":
             potof_id = void 0;
-            if (phase_idx === "iI" || /(は突然死した。|投票した。|魚の跳ねる、みずみずしい音が聞こえた。|延長されました。|村の設定が変更されました。|が参加しました。|は時が進むよう祈った。|は村を出ました\))$/.test(log)) {
+            if (log.match(/。|、/g).length < 3) {
               show = "post";
             } else {
               show = "report";
@@ -4566,4 +4566,4 @@ module.exports = base;
 /***/ })
 
 },[122]);
-//# sourceMappingURL=nuxt.bundle.37b6513e7c35c29f00d9.js.map
+//# sourceMappingURL=nuxt.bundle.03439dd3e523fb16eb15.js.map
