@@ -7,9 +7,10 @@ hr
   border-style: none none solid none
   border-bottom: 1px dashed
 
-palette(pens,    foot)
+palette(pens,   metal)
 palette(stats,   foot)
 palette(world,   foot)
+palette(manage, black)
 palette(says,   night)
 
 .talk

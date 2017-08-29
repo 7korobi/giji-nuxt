@@ -16,6 +16,7 @@ hr
 palette(pens,    foot)
 palette(stats,   foot)
 palette(world,  black)
+palette(manage, black)
 palette(says,   light)
 
 .talk

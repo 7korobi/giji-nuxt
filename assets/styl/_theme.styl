@@ -20,17 +20,18 @@ themes = {
     VGRAVE: '.VGSAY'
     GRAVE:  '.GSAY'
     N09:    '.N09'
-
-    SILVER:  '.TSAY'
   }
   world: {
-    VBROAD: '.public'
-    VGRAVE: '.private'
-    SILVER: '.MAKER, .TITLE, .links, .btns'
-    GOLD:   '.ADMIN'
+    BROAD:  '.public'
+    GRAVE:  '.private'
+  }
+  manage: {
+    SILVER: '.MAKER, .TITLE'
+    GOLD:   '.ADMIN, .links, .btns'
   }
   pens: {
-    SILVER:  '.chrblank, .footer, .header'
+    SILVER:  '.chrblank'
+    GOLD:    '.footer, .header'
   }
   stats: {
     SPORT:  '.HATER, .LONEWOLF'
@@ -41,11 +42,34 @@ themes = {
     LOVE:   '.LOVER'
     VBROAD: '.NONE, .MOB, .mob, .visiter, .grave, .alive'
     GRAVE:  '.executed'
-
-    GOLD:   '.hide'
-    SILVER: '.suddendead, .leave'
+    SILVER: '.TSAY, .suddendead, .leave, .hide'
   }
 }
+
+
+dark   =  hsla(0, 0%, 0%, 1)
+
+ZZZ    =   hsla(0,62%, 8%,1)
+black  =  hsla(60, 4%,10%,1)
+
+OOO    =   hsla(0,79%,15%,1)
+fude   = hsla(240, 8%,17%,1)
+
+NNN    =   hsla(0,44%,40%,1)
+lead   =  hsla(68, 5%,29%,1)
+lead   =  hsla(68, 5%,30%,1)
+earth  =  hsla(43,43%,30%,1)
+
+gray   =  hsla(64, 7%,58%,1)
+brass  =  hsla(52,47%,48%,1)
+
+HHH    =  hsla(0,66%,75%,1)
+silver =  hsla(0, 0%,75%,1)
+gold   = hsla(50,90%,50%,1)
+
+PPP    =   hsla(0,99%,47%,1)
+snow   = hsla(180,86%,97%,1)
+ivory  =  hsla(55,47%,92%,1)
 
 
 hues = {
@@ -56,7 +80,7 @@ hues = {
   ALIEN:   6 * 18deg
   P05:     5 * 18deg
   P04:     4 * 18deg
-  BROAD:   3 * 18deg - 8deg
+  BROAD:   3 * 18deg - 6deg
   VBROAD:  2 * 18deg
   P01:     1 * 18deg
   WOLF:    0
@@ -70,7 +94,7 @@ hues = {
   GRAVE:  -8 * 18deg
   N09:    -9 * 18deg
   SILVER:  8 * 18deg
-  GOLD:    3 * 18deg
+  GOLD:    3 * 18deg - 4deg
 }
 
 
@@ -95,8 +119,8 @@ saturates = {
   VGRAVE: 140%
   GRAVE:  120%
   N09:    110%
-  SILVER:  10%
-  GOLD:   100%
+  SILVER:  33%
+  GOLD:    33%
 }
 
 lights = {
@@ -138,37 +162,69 @@ palette($themes, $backT)
 
 
 palette_single($bgTheme, $backT, $hue, key)
-  if foot == $backT
-    $edge = $baloon = HSLA(key,33%,66%,1)
+  if metal == $backT
+    $edge = $baloon = HSLA(key, 6%,66%,1)
 
-    $hide = $emboss =     HSLA(key,75%,15%,1)
-    $off = $active = spin(HSLA(key,75%,15%,1),-18deg)
-    $on = $focus =   spin(HSLA(key,75%,15%,1),+18deg)
+    $hide = $emboss =     HSLA(key,10%,10%,1)
+    $off = $active = spin(HSLA(key,10%,33%,1),-18deg)
+    $on = $focus =   spin(HSLA(key,10%,33%,1),+18deg)
 
-    $bg =   HSLA(key,44%,40%,1)
-    $bgHi = HSLA(key,75%,15%,1)
+    $bg =   HSLA(key,10%,25%,1)
+    $bgHi = HSLA(key,15%,25%,1)
 
-    $pen =  HSLA(key,33%,66%,1)
+    $pen =  HSLA(key, 6%,66%,1)
 
     $good = HSLA(ALIEN,33%,66%,1)
     $warn = HSLA(P01,  33%,66%,1)
     $ban =  HSLA(WOLF, 33%,66%,1)
 
+  if foot == $backT
+    $edge =           HSLA(key,40%,50%,1)
+    $emboss =         HSLA(key,40%,35%,1)
+    $off =            HSLA(key,30%,35%,1)
+    $on =             HSLA(key,40%,45%,1)
+    $focus =          HSLA(key,30%,45%,1)
+
+    $hide =           HSLA(key,50%,10%,1)
+    $bg = $baloon =   HSLA(key,35%,30%,1)
+    $bgHi =           HSLA(key,75%,20%,1)
+
+    $pen =  HSLA(key,  10%,80%,1)
+    $good = HSLA(ALIEN,33%,66%,1)
+    $warn = HSLA(P01,  33%,66%,1)
+    $ban  = HSLA(WOLF, 33%,66%,1)
+
   if light == $backT
-    $hide = HSLA(key,75%,15%,1)
+    $emboss = $edge = HSLA(key,40%,50%,1)
+    $off =            HSLA(key,30%,50%,1)
+    $on =             HSLA(key,40%,40%,1)
+    $focus =          HSLA(key,30%,40%,1)
 
-    $emboss = $edge =     HSLA(key,44%,40%,1)
-    $off = $active = spin(HSLA(key,44%,40%,1),-18deg)
-    $on = $focus =   spin(HSLA(key,44%,40%,1),+18deg)
+    $hide =           HSLA(key,75%,25%,1)
+    $bg = $baloon =   HSLA(key,35%,63%,1)
+    $bgHi =           HSLA(key,66%,70%,1)
 
-    $bgHi =         HSLA(key,66%,75%,1)
-    $bg = $baloon = HSLA(key,33%,66%,1)
-
-    $pen =  HSLA(key, 0%, 0%,1)
-
+    $pen =  HSLA(key,   0%,0%,1)
     $good = HSLA(ALIEN,66%,8%,1)
     $warn = HSLA(P01,  66%,8%,1)
     $ban =  HSLA(WOLF, 66%,8%,1)
+
+  if black == $backT
+    $edge =           HSLA(key,50%,30%,1)
+    $emboss =         HSLA(key,40%,20%,1)
+    $off =            HSLA(key,30%,20%,1)
+    $on =             HSLA(key,40%,30%,1)
+    $focus =          HSLA(key,30%,30%,1)
+
+    $hide =           HSLA(key,44%,40%,1)
+    $bg = $baloon =   HSLA(key,35%,15%,1)
+    $bgHi =           HSLA(key,66%, 8%,1)
+
+    $pen =  HSLA(SILVER,5%,80%,1)
+
+    $good = HSLA(ALIEN,33%,66%,1)
+    $warn = HSLA(P01,  33%,66%,1)
+    $ban  = HSLA(WOLF, 33%,66%,1)
 
   if night == $backT
     $edge = $baloon = HSLA(key,99%,47%,1)
@@ -185,22 +241,6 @@ palette_single($bgTheme, $backT, $hue, key)
     $good = HSLA(ALIEN,99%,47%,1)
     $warn = HSLA(P01,  99%,47%,1)
     $ban  = HSLA(WOLF, 99%,47%,1)
-
-  if black == $backT
-    $edge = $baloon = HSLA(key,66%,75%,1)
-
-    $hide = $emboss =     HSLA(key,44%,40%,1)
-    $off = $active = spin(HSLA(key,44%,40%,1),-18deg)
-    $on = $focus =   spin(HSLA(key,44%,40%,1),+18deg)
-
-    $bg =   HSLA(key,75%,15%,1)
-    $bgHi = HSLA(key,66%, 8%,1)
-
-    $pen =  HSLA(SILVER,66%,75%,1)
-
-    $good = HSLA(ALIEN,33%,66%,1)
-    $warn = HSLA(P01,  33%,66%,1)
-    $ban  = HSLA(WOLF, 33%,66%,1)
 
   {$bgTheme}
     &,
@@ -219,9 +259,69 @@ palette_single($bgTheme, $backT, $hue, key)
     .fa-ban
       color: $ban
 
+    kbd
+      background-color: #000
+
+    code
+      background-color: $off
+
+    input[type=checkbox],
+    input[type=radio]
+      background-color: $off
+      &:checked,
+      &.active,
+      .active
+        background-color: $on
+      &:hover,
+      &:focus
+        background-color: $focus
+      sup,
+      sub
+        background-color: $emboss
+        color: $bgHi
+
+    a,
+    input,
+    button
+      background-color: $off
+      &.active,
+      .active
+        background-color: $on
+      &:hover,
+      &:focus
+        background-color: $focus
+      sup,
+      sub
+        background-color: $emboss
+        color: $bgHi
+
+    [href],
     [title],
     [data-tooltip]
-      background-color: $bgHi
+      color: $pen
+      background-color: $off
+      &:visited
+        background-color: $off
+      &:link
+        background-color: $off
+      &:hover,
+      &:focus
+        background-color: $focus
+      &.nuxt-link-exact-active,
+      &.active,
+      .nuxt-link-exact-active,
+      .active
+        background-color: $on
+      sup,
+      sub
+        background-color: $emboss
+        color: $bgHi
+
+    .name
+      sup,
+      sub
+        background-color: $emboss
+        color: $bgHi
 
     [title]:before,
     [title]:after,
@@ -230,55 +330,10 @@ palette_single($bgTheme, $backT, $hue, key)
       color:            $pen
       background-color: $bgHi
 
-    .name,
-    a:not([name])
-      sup,
-      sub
-        background-color: $emboss
-        color: $bgHi
-
-    b
+    b,
+    em
       color: $pen
       background-color: $bgHi
-
-    body a:not([name])&,
-    a:not([name])
-      color: $pen
-      &:visited
-        background-color: $on
-      &:link
-        background-color: $off
-
-    .active
-      background-color: $active
-
-    input,
-    button,
-    body a:not([name])&,
-    a:not([name])
-      background-color: $bgHi
-      &:hover,
-      &:focus
-        background-color: $focus
-      &.nuxt-link-exact-active,
-      &.active,
-      .nuxt-link-exact-active,
-      .active
-        background-color: $active
-
-    input[type=checkbox],
-    input[type=radio]
-      background-color: $off
-      &:checked
-        background-color: $on
-
-    .name,
-    .date
-      color: $hide
-    
-    del
-      text-decoration: none
-      color: $hide
 
     h5,
     rt,
@@ -286,5 +341,11 @@ palette_single($bgTheme, $backT, $hue, key)
     strong
       background-color: $emboss
       color: $bgHi
+
+    del,
+    .name,
+    .date
+      color: $hide
+
 
 
