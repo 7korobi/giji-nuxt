@@ -1,48 +1,58 @@
 themes = {
   says: {
-    SPORT:  '.SPORT'
-    P09:    '.P09'
-    ELSE:   '.ELSE'
-    P07:    '.P07'
-    ALIEN:  '.XSAY, .BSAY'
-    P05:    '.P05'
-    P04:    '.P04'
-    BROAD:  '.SSAY, .MSAY'
-    VBROAD: '.VSSAY, .VSAY'
-    P01:    '.P01'
-    WOLF:   '.WSAY'
-    N01:    '.N01'
-    N02:    '.N02'
-    VLOVE:  '.AIM'
-    LOVE:   '.SPSAY, .PSAY'
-    N05:    '.N05'
-    N06:    '.N06'
-    VGRAVE: '.VGSAY'
-    GRAVE:  '.GSAY'
-    N09:    '.N09'
+    SPORT:  SPORT
+    P09:    P09
+    ELSE:   P08 ELSE
+    BRONZE: P07
+    ALIEN:  P06 XSAY BSAY
+    P05:    P05
+    P04:    P04
+    BROAD:  P03 SSAY MSAY
+    VBROAD: P02 VSSAY VSAY
+    P01:    P01
+    WOLF:   WSAY
+    N01:    N01
+    N02:    N02
+    VLOVE:  N03 AIM
+    LOVE:   N04 SPSAY PSAY
+    N05:    N05
+    N06:    N06
+    VGRAVE: N07 VGSAY
+    GRAVE:  N08 GSAY
+    N09:    N09
   }
+  sepia: {
+    SPORT:  TSAY hide
+  }
+
   world: {
-    BROAD:  '.public'
-    GRAVE:  '.private'
+    BROAD:  public
+    GRAVE:  private
   }
-  manage: {
-    SILVER: '.MAKER, .TITLE'
-    GOLD:   '.ADMIN, .links, .btns'
+  metal: {
+    ELSE:   MAKER TITLE welcome-links
+    BROAD:  ADMIN
   }
-  pens: {
-    SILVER:  '.chrblank'
-    GOLD:    '.footer, .header'
-  }
+
   stats: {
-    SPORT:  '.HATER, .LONEWOLF'
-    ELSE:   '.PIXI, .GURU'
-    ALIEN:  '.EVIL'
-    BROAD:  '.HUMAN, .DISH, .live, .juror'
-    WOLF:   '.WOLF, .suicide, .victim, .cursed, .feared, .droop'
-    LOVE:   '.LOVER'
-    VBROAD: '.NONE, .MOB, .mob, .visiter, .grave, .alive'
-    GRAVE:  '.executed'
-    SILVER: '.TSAY, .suddendead, .leave, .hide'
+    SPORT:  HATER LONEWOLF
+    ELSE:   PIXI GURU
+    ALIEN:  EVIL
+    BROAD:  HUMAN DISH live juror
+    WOLF:   WOLF suicide victim cursed feared droop
+    LOVE:   LOVER
+    VBROAD: NONE MOB mob visiter grave alive
+    GRAVE:  executed
+  }
+  header: {
+    ALIEN:  suddendead leave
+    BRONZE: BRONZE footer header
+    BROAD:  btns chrblank
+    N09:    welcome-btns
+  }
+
+  grass: {
+    BROAD: title-bar icons
   }
 }
 
@@ -60,7 +70,6 @@ lead   =  hsla(68, 5%,29%,1)
 lead   =  hsla(68, 5%,30%,1)
 earth  =  hsla(43,43%,30%,1)
 
-gray   =  hsla(64, 7%,58%,1)
 brass  =  hsla(52,47%,48%,1)
 
 HHH    =  hsla(0,66%,75%,1)
@@ -76,7 +85,7 @@ hues = {
   SPORT:  10 * 18deg
   P09:     9 * 18deg
   ELSE:    8 * 18deg
-  P07:     7 * 18deg
+  BRONZE:  7 * 18deg
   ALIEN:   6 * 18deg
   P05:     5 * 18deg
   P04:     4 * 18deg
@@ -93,8 +102,6 @@ hues = {
   VGRAVE: -7 * 18deg
   GRAVE:  -8 * 18deg
   N09:    -9 * 18deg
-  SILVER:  8 * 18deg
-  GOLD:    3 * 18deg - 4deg
 }
 
 
@@ -102,7 +109,7 @@ saturates = {
   SPORT:  100%
   P09:     90%
   ELSE:    90%
-  P07:     80%
+  BRONZE:  90%
   ALIEN:   90%
   P05:     90%
   P04:    100%
@@ -119,15 +126,13 @@ saturates = {
   VGRAVE: 140%
   GRAVE:  120%
   N09:    110%
-  SILVER:  33%
-  GOLD:    33%
 }
 
 lights = {
   SPORT:  100%
   P09:     95%
   ELSE:    95%
-  P07:     90%
+  BRONZE:  95%
   ALIEN:   95%
   P05:     95%
   P04:    100%
@@ -144,8 +149,6 @@ lights = {
   VGRAVE: 120%
   GRAVE:  110%
   N09:    105%
-  SILVER: 100%
-  GOLD:   100%
 }
 
 
@@ -162,190 +165,268 @@ palette($themes, $backT)
 
 
 palette_single($bgTheme, $backT, $hue, key)
-  if metal == $backT
-    $edge = $baloon = HSLA(key, 6%,66%,1)
-
-    $hide = $emboss =     HSLA(key,10%,10%,1)
-    $off = $active = spin(HSLA(key,10%,33%,1),-18deg)
-    $on = $focus =   spin(HSLA(key,10%,33%,1),+18deg)
-
-    $bg =   HSLA(key,10%,25%,1)
-    $bgHi = HSLA(key,15%,25%,1)
-
-    $pen =  HSLA(key, 6%,66%,1)
-
-    $good = HSLA(ALIEN,33%,66%,1)
-    $warn = HSLA(P01,  33%,66%,1)
-    $ban =  HSLA(WOLF, 33%,66%,1)
 
   if foot == $backT
-    $edge =           HSLA(key,40%,50%,1)
-    $emboss =         HSLA(key,40%,35%,1)
+    $edge =           HSLA(key,60%,50%,1)
+    $emboss =         HSLA(key,60%,35%,1)
     $off =            HSLA(key,30%,35%,1)
     $on =             HSLA(key,40%,45%,1)
     $focus =          HSLA(key,30%,45%,1)
 
     $hide =           HSLA(key,50%,10%,1)
     $bg = $baloon =   HSLA(key,35%,30%,1)
-    $bgHi =           HSLA(key,75%,20%,1)
+    $bgHi =           HSLA(key,66%,27%,1)
 
     $pen =  HSLA(key,  10%,80%,1)
     $good = HSLA(ALIEN,33%,66%,1)
     $warn = HSLA(P01,  33%,66%,1)
     $ban  = HSLA(WOLF, 33%,66%,1)
 
+  if ash == $backT
+    $edge =           HSLA(key,20%,50%,1)
+    $emboss =         HSLA(key,20%,35%,1)
+    $off =            HSLA(key, 9%,35%,1)
+    $on =             HSLA(key, 9%,45%,1)
+    $focus =          HSLA(key, 9%,45%,1)
+
+    $hide =           HSLA(key, 9%,10%,1)
+    $bg = $baloon =   HSLA(key, 5%,29%,1)
+    $bgHi =           HSLA(key,11%,20%,1)
+
+    $pen =  HSLA(key,  10%,80%,1)
+    $good = HSLA(ALIEN,33%,66%,1)
+    $warn = HSLA(P01,  33%,66%,1)
+    $ban  = HSLA(WOLF, 33%,66%,1)
+
+
+
   if light == $backT
-    $emboss = $edge = HSLA(key,40%,50%,1)
+    $edge =           HSLA(key,60%,50%,1)
+    $emboss =         HSLA(key,40%,55%,1)
     $off =            HSLA(key,30%,50%,1)
     $on =             HSLA(key,40%,40%,1)
     $focus =          HSLA(key,30%,40%,1)
 
     $hide =           HSLA(key,75%,25%,1)
     $bg = $baloon =   HSLA(key,35%,63%,1)
-    $bgHi =           HSLA(key,66%,70%,1)
+    $bgHi =           HSLA(key,50%,70%,1)
 
     $pen =  HSLA(key,   0%,0%,1)
     $good = HSLA(ALIEN,66%,8%,1)
     $warn = HSLA(P01,  66%,8%,1)
     $ban =  HSLA(WOLF, 66%,8%,1)
 
+  if sepia == $backT
+    $edge =           HSLA(key,20%,50%,1)
+    $emboss =         HSLA(key, 9%,55%,1)
+    $off =            HSLA(key, 9%,50%,1)
+    $on =             HSLA(key, 9%,40%,1)
+    $focus =          HSLA(key, 9%,40%,1)
+
+    $hide =           HSLA(key,11%,25%,1)
+    $bg = $baloon =   HSLA(key, 5%,63%,1)
+    $bgHi =           HSLA(key, 9%,70%,1)
+
+    $pen =  HSLA(key,   0%,0%,1)
+    $good = HSLA(ALIEN,66%,8%,1)
+    $warn = HSLA(P01,  66%,8%,1)
+    $ban =  HSLA(WOLF, 66%,8%,1)
+
+
+
   if black == $backT
-    $edge =           HSLA(key,50%,30%,1)
-    $emboss =         HSLA(key,40%,20%,1)
-    $off =            HSLA(key,30%,20%,1)
-    $on =             HSLA(key,40%,30%,1)
-    $focus =          HSLA(key,30%,30%,1)
+    $edge =           HSLA(key,60%,50%,1)
+    $emboss =         HSLA(key,50%,20%,1)
+    $off =            HSLA(key,40%,20%,1)
+    $on =             HSLA(key,50%,30%,1)
+    $focus =          HSLA(key,40%,30%,1)
 
     $hide =           HSLA(key,44%,40%,1)
     $bg = $baloon =   HSLA(key,35%,15%,1)
-    $bgHi =           HSLA(key,66%, 8%,1)
+    $bgHi =           HSLA(key,66%,10%,1)
 
-    $pen =  HSLA(SILVER,5%,80%,1)
+    $pen =  HSLA(SPORT,5%,80%,1)
+
+    $good = HSLA(ALIEN,33%,66%,1)
+    $warn = HSLA(P01,  33%,66%,1)
+    $ban  = HSLA(WOLF, 33%,66%,1)
+
+  if metal == $backT
+    $edge =           HSLA(key,20%,50%,1)
+    $focus =          HSLA(key,30%,10%,1)
+
+    $emboss =         HSLA(key, 9%,20%,1)
+    $off =            HSLA(key, 9%,12%,1)
+    $on =             HSLA(key, 9%,20%,1)
+
+    $hide =           HSLA(key, 6%,40%,1)
+    $bg = $baloon =   HSLA(key, 5%,15%,1)
+    $bgHi =           HSLA(key, 9%, 8%,1)
+
+    $pen =  HSLA(SPORT,0%,80%,1)
 
     $good = HSLA(ALIEN,33%,66%,1)
     $warn = HSLA(P01,  33%,66%,1)
     $ban  = HSLA(WOLF, 33%,66%,1)
 
   if night == $backT
-    $edge = $baloon = HSLA(key,99%,47%,1)
+    $edge =           HSLA(key,60%,50%,1)
+    $emboss =         HSLA(key,50%,15%,1)
+    $off =            HSLA(key,40%,15%,1)
+    $on =             HSLA(key,50%,20%,1)
+    $focus =          HSLA(key,40%,20%,1)
 
-    $hide = $emboss =     HSLA(key,44%,40%,1)
-    $off = $active = spin(HSLA(key,44%,40%,1),-18deg)
-    $on = $focus =   spin(HSLA(key,44%,40%,1),+18deg)
+    $hide =           HSLA(key,44%,40%,1)
+    $bg = $baloon =   HSLA(key,35%, 8%,1)
+    $bgHi =           HSLA(key, 0%, 0%,1)
 
-    $bg =   HSLA(key,66%, 8%,1)
-    $bgHi = HSLA(key, 0%, 0%,1)
+    $pen =  HSLA(key  ,66%,66%,1)
 
-    $pen =  HSLA(key,66%,75%,1)
+    $good = HSLA(ALIEN,75%,40%,1)
+    $warn = HSLA(P01,  75%,40%,1)
+    $ban  = HSLA(WOLF, 75%,40%,1)
 
-    $good = HSLA(ALIEN,99%,47%,1)
-    $warn = HSLA(P01,  99%,47%,1)
-    $ban  = HSLA(WOLF, 99%,47%,1)
 
-  {$bgTheme}
-    &,
-    textarea
+
+  if grass == $backT
+    $edge =           HSLA(key,60%,50%,1)
+    $emboss =         HSLA(key,40%,35%,1)
+    $off =            transparent
+    $on =             HSLA(key,40%,45%,1)
+    $focus =          HSLA(key,30%,45%,1)
+
+    $hide =           HSLA(key,50%,10%,1)
+    $bg = $baloon =   HSLA(key,70%,30%,0.5)
+    $bgHi =           HSLA(key,99%,20%,0.5)
+
+    $pen =  HSLA(key,  10%,80%,1)
+    $good = HSLA(ALIEN,33%,66%,1)
+    $warn = HSLA(P01,  33%,66%,1)
+    $ban  = HSLA(WOLF, 33%,66%,1)
+
+
+  kbd
+    background-color: #000
+
+  for theme in $bgTheme
+    .{theme}
       color:            $pen
       background-color: $bg
       border-color:     $edge
 
-    &.baloon
-      border-color: $baloon
+      &.baloon
+        border-color: $baloon
 
-    .fa-check
-      color: $good
-    .fa-warning
-      color: $warn
-    .fa-ban
-      color: $ban
+      .fa-check
+        color: $good
+      .fa-warning
+        color: $warn
+      .fa-ban
+        color: $ban
 
-    kbd
-      background-color: #000
+      hr
+        border-color: $emboss
 
-    code
-      background-color: $off
+      code
+        background-color: $off
+
+      .name
+        sup,
+        sub
+          background-color: $emboss
+          color: $bgHi
+
+      [title]:before,
+      [title]:after,
+      [data-tooltip]:before,
+      [data-tooltip]:after
+        color:            $pen
+        background-color: $bgHi
+
+      del,
+      .name,
+      .date
+        color: $hide
+
+      b,
+      em
+        color: $pen
+        background-color: $bgHi
+
+      h5,
+      rt,
+      abbr,
+      strong
+        background-color: $emboss
+        color: $bgHi
+
 
     input[type=checkbox],
     input[type=radio]
-      background-color: $off
-      &:checked,
-      &.active,
-      .active
-        background-color: $on
-      &:hover,
-      &:focus
-        background-color: $focus
-      sup,
-      sub
-        background-color: $emboss
-        color: $bgHi
+      body &.{theme},
+      .{theme} &
+        background-color: $off
+        &:checked,
+        &.active,
+        .active
+          background-color: $on
+        &:hover,
+        &:focus
+          background-color: $focus
+        sup,
+        sub
+          background-color: $emboss
+          color: $bgHi
 
     a,
     input,
     button
-      background-color: $off
-      &.active,
-      .active
-        background-color: $on
-      &:hover,
-      &:focus
-        background-color: $focus
-      sup,
-      sub
-        background-color: $emboss
-        color: $bgHi
+      body &.{theme},
+      .{theme} &
+        background-color: $off
+        &.active,
+        .active
+          background-color: $on
+        &:hover,
+        &:focus
+          background-color: $focus
+        sup,
+        sub
+          background-color: $emboss
+          color: $bgHi
+
+    textarea
+      body &.{theme},
+      .{theme} &
+        color:            $pen
+        background-color: $bg
+        border-color:     $edge
 
     [href],
     [title],
     [data-tooltip]
-      color: $pen
-      background-color: $off
-      &:visited
+      body &.{theme},
+      .{theme} &
+        color: $pen
         background-color: $off
-      &:link
-        background-color: $off
-      &:hover,
-      &:focus
-        background-color: $focus
-      &.nuxt-link-exact-active,
-      &.active,
-      .nuxt-link-exact-active,
-      .active
-        background-color: $on
-      sup,
-      sub
-        background-color: $emboss
-        color: $bgHi
+        &:visited
+          background-color: $off
+        &:link
+          background-color: $off
+        &:hover,
+        &:focus
+          background-color: $focus
+        &.nuxt-link-exact-active,
+        &.active,
+        .nuxt-link-exact-active,
+        .active
+          background-color: $on
+        sup,
+        sub
+          background-color: $emboss
+          color: $bgHi
 
-    .name
-      sup,
-      sub
-        background-color: $emboss
-        color: $bgHi
 
-    [title]:before,
-    [title]:after,
-    [data-tooltip]:before,
-    [data-tooltip]:after
-      color:            $pen
-      background-color: $bgHi
-
-    b,
-    em
-      color: $pen
-      background-color: $bgHi
-
-    h5,
-    rt,
-    abbr,
-    strong
-      background-color: $emboss
-      color: $bgHi
-
-    del,
-    .name,
-    .date
-      color: $hide
 
 
 

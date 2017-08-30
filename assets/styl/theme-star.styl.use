@@ -3,16 +3,20 @@
 
 $border = #333
 
-hr
-  margin: 0
-  border-style: none none solid none
-  border-bottom: 1px dashed
 
-palette(pens,   metal)
+palette(grass,  grass)
+
 palette(stats,   foot)
+palette(header,   ash)
+
 palette(world,   foot)
-palette(manage, black)
+palette(metal,    ash)
+
 palette(says,   night)
+palette(sepia,  metal)
+
+.baloon
+  display: none
 
 .talk
   .chat
@@ -25,7 +29,7 @@ palette(says,   night)
   border-width: 0 0 1px 18px
 
 .contentframe
-  background-color: #445599
+  background-color: hsla(240,30%,20%,0.8)
   .talk
     .baloon
       left:  -9px
@@ -37,7 +41,7 @@ body
   background-attachment: fixed
   background-repeat: no-repeat
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/jupiter.png")
-  background-color: #1A1A60
+  background-color: hsla(240,57%,24%,1)
 
 .filmend
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")

@@ -3,16 +3,19 @@
 
 $border = #333
 
-hr
-  margin: 0
-  border-style: none none solid none
-  border-bottom: 1px dashed
+palette(grass,  grass)
 
-palette(pens,   metal)
 palette(stats,   foot)
+palette(header,   ash)
+
 palette(world,   foot)
-palette(manage, black)
+palette(metal,    ash)
+
 palette(says,   night)
+palette(sepia,  metal)
+
+.baloon
+  display: none
 
 .talk
   .chat

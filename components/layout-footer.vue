@@ -28,7 +28,7 @@ Sangria
 div
   text-align: right
 .lang-copyright
-  background-color: white
-  color: red
+  background-color: ivory
+  color: #A00
   text-align: left
 </style>

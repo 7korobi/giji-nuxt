@@ -18,7 +18,6 @@ module.exports =
     width:  0
     height: 0
     use: {}
-    welcome: true
 
   created: ->
     return unless window?
@@ -44,7 +43,7 @@ module.exports =
 </script>
 <template lang="pug">
 div(:class="body_class")
-  welcome(:top="-top / 3", :show="welcome")
+  welcome(:top="top")
     .btns
       span.font
         btn(v-model="font" as="large") 大判

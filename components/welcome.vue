@@ -3,7 +3,7 @@
 
 module.exports =
   default:
-    props: ["top", "show"]
+    props: ["top"]
 
     data: ->
       export_to: "progress"
@@ -11,10 +11,16 @@ module.exports =
     computed:
       root_path: ->
         env.WEB_URL
+      export_style: ->
+        height = @$el?.clientHeight ? 500
+        switch
+          when           0   <= @top < height * 0.5
+            opacity: 1
+          else
+            opacity: 0
       welcome_style: ->
         backgroundImage: "url(#{env.STORE_URL}/images/bg/fhd-giji.png)"
-        backgroundPosition: "left 50% top #{ @top }px"
-
+        backgroundPosition: "left 50% top #{ -@top / 3 }px"
 
     components:
       sow:
@@ -49,26 +55,26 @@ module.exports =
 </script>
 <template lang="pug">
 #welcome(:style="welcome_style")
-  table#export(v-if="show")
+  table#export(:style="export_style")
     thead
       tr
-        th.btns ロビー
-        th.btns 夢の形
-        th.btns 陰謀
-        th.btns ＲＰ
+        th.welcome-btns ロビー
+        th.welcome-btns 夢の形
+        th.welcome-btns 陰謀
+        th.welcome-btns ＲＰ
     tbody
       tr
-        td.links.form
+        td.welcome-links.form
           sow(folder_id="LOBBY")
           sow(folder_id="OFFPARTY")
-        td.links.form
+        td.welcome-links.form
           sow(folder_id="MORPHE")
           sow(folder_id="CABALA") cafe
-        td.links.form
+        td.welcome-links.form
           sow(folder_id="WOLF")
           sow(folder_id="ULTIMATE")
           sow(folder_id="ALLSTAR")
-        td.links.form
+        td.welcome-links.form
           sow(folder_id="RP") role-play
           sow(folder_id="PRETENSE") RP-advance
           sow(folder_id="PERJURY")
@@ -77,14 +83,14 @@ module.exports =
           sow(folder_id="CIEL")
     tfoot
       tr
-        th.btns(colspan=4)
+        th.welcome-btns(colspan=4)
           btn(v-model="export_to" as="finish")   終了した村
           btn(v-model="export_to" as="progress") 進行中の村
       tr
-        th.btns(colspan=4)
+        th.welcome-btns(colspan=4)
           a(:href="root_path") 総合トップ
 
-  h2#title
+  h2.title-bar
     nuxt-link(to="/") 人狼議事
 
   slot
@@ -92,24 +98,20 @@ module.exports =
 </template>
 <style lang="stylus" scoped>
 #export
+  transition: opacity 1s
   border-collapse: separate
-  border-spacing: 2px
+  border-spacing: 3px
   padding: 30px
   margin:   0px auto
 
   thead, tfoot
     text-align: center
-  th
-    background-color: #444
   td
-    background-color: black
     vertical-align: top
     padding: 0 3px
 
 #welcome
   background-size:  cover
-  .btns
-    background-color: rgba(77, 78, 70, 0.9)
 
 .filmline
   margin: 0
@@ -118,7 +120,7 @@ module.exports =
   .contentframe
     background-image: none
 
-.links
+.welcome-links
   white-space: pre
 
 h2
@@ -129,18 +131,7 @@ h2
   font-size: xx-large
   text-align: center
   line-height: 1.1em
-  background-color: rgba(92, 92, 32, 0.5)
-  sup
-    font-size: large
   a
     font-size: xx-large
-    line-height: 1.1em
-    color: #fff
-    &:hover, &:focus
-      box-shadow:
-        0 0 20px 3px lighten(#fff, 50%) inset
-    &:active
-      box-shadow:
-        0 0 20px 3px lighten(rgba(2,92,32,0.5), 50%) inset
 
 </style>

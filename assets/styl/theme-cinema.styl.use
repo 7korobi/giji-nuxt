@@ -4,20 +4,19 @@
 body
   background-color: mix(spin(#ff0000,  2 * 18deg + 0deg), #777, 20%)
 
-hr
-  margin: 0
-  border-style: none none solid none
-  border-bottom: 1px solid rgba(0,0,0,0.2)
-  box-shadow: rgba(255,255,255,0.3) 0 1px 0
-
 *
   border-color: #663
 
-palette(pens,    foot)
+palette(grass,  grass)
+
 palette(stats,   foot)
+palette(header,   ash)
+
 palette(world,  black)
-palette(manage, black)
+palette(metal,  metal)
+
 palette(says,   light)
+palette(sepia,  sepia)
 
 .talk
   .chat
