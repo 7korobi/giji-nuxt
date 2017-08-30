@@ -6,37 +6,37 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 
-const _f1048964 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */)
+const _26460e66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /* webpackChunkName: "pages/index" */)
 
-const _f63558c2 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
+const _d988a500 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
 
-const _3a53eb0b = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
+const _126e656c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
 
-const _4b01ef72 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
+const _8471841e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
 
-const _379d8e3a = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
+const _beb3c9bc = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
 
-const _628607c6 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages/demo-markdown" */)
+const _486a8927 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages/demo-markdown" */)
 
-const _2a3129fe = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
+const _6fbb897d = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
 
-const _6be40015 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
+const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
 
-const _1d9d7386 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
+const _3f090d08 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
 
-const _95e722fe = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
+const _718150c0 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
 
-const _67dc6458 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
+const _eef29fda = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
 
-const _09806650 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
+const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
 
-const _5b5d93e6 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
+const _4aa7c725 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
 
-const _494e8978 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\anker.vue' /* webpackChunkName: "pages/sow-village-idx-anker" */)
+const _08e1dd12 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\anker.vue' /* webpackChunkName: "pages/sow-village-idx-anker" */)
 
-const _ebdd3d22 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages/sow-village-idx-mode" */)
+const _3c51e96e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages/sow-village-idx-mode" */)
 
-const _80ef296a = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\user\\_id.vue' /* webpackChunkName: "pages/user-id" */)
+const _80025d6c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\user\\_id.vue' /* webpackChunkName: "pages/user-id" */)
 
 
 
@@ -109,82 +109,82 @@ export function createRouter () {
     routes: [
   		{
 			path: "/",
-			component: _f1048964,
+			component: _26460e66,
 			name: "index"
 		},
 		{
 			path: "/rule-guide",
-			component: _f63558c2,
+			component: _d988a500,
 			name: "rule-guide"
 		},
 		{
 			path: "/demo",
-			component: _3a53eb0b,
+			component: _126e656c,
 			name: "demo"
 		},
 		{
 			path: "/character-tag",
-			component: _4b01ef72,
+			component: _8471841e,
 			name: "character-tag"
 		},
 		{
 			path: "/demo/books",
-			component: _379d8e3a,
+			component: _beb3c9bc,
 			name: "demo-books"
 		},
 		{
 			path: "/demo/markdown",
-			component: _628607c6,
+			component: _486a8927,
 			name: "demo-markdown"
 		},
 		{
 			path: "/summary/faces",
-			component: _2a3129fe,
+			component: _6fbb897d,
 			name: "summary-faces"
 		},
 		{
 			path: "/demo/timeago",
-			component: _6be40015,
+			component: _42ad62d8,
 			name: "demo-timeago"
 		},
 		{
 			path: "/sow/village",
-			component: _1d9d7386,
+			component: _3f090d08,
 			name: "sow-village"
 		},
 		{
 			path: "/demo/names",
-			component: _95e722fe,
+			component: _718150c0,
 			name: "demo-names"
 		},
 		{
 			path: "/demo/chats",
-			component: _67dc6458,
+			component: _eef29fda,
 			name: "demo-chats"
 		},
 		{
 			path: "/demo/oauth",
-			component: _09806650,
+			component: _74156ee2,
 			name: "demo-oauth"
 		},
 		{
 			path: "/summary/faces/:id",
-			component: _5b5d93e6,
+			component: _4aa7c725,
 			name: "summary-faces-id"
 		},
 		{
 			path: "/sow/village/:idx/anker",
-			component: _494e8978,
+			component: _08e1dd12,
 			name: "sow-village-idx-anker"
 		},
 		{
 			path: "/sow/village/:idx/:mode?",
-			component: _ebdd3d22,
+			component: _3c51e96e,
 			name: "sow-village-idx-mode"
 		},
 		{
 			path: "/user/:id?",
-			component: _80ef296a,
+			component: _80025d6c,
 			name: "user-id"
 		}
     ]
