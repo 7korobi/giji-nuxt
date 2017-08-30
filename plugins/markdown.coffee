@@ -35,16 +35,22 @@ giji = (text)->
 sow = head = mono = (text)->
   text
   .replace ///<br>///g, "\n"
-  .replace ///[a-z]+\:\/\/[^\s<]+[^<.,:;"')\]\s]///g, (url, idx, src)->
+
+  .replace ///<a\ title="(.*?)"><strong>(.*?)</strong></a>///g, (tag, title, item, idx, src)->
+    """<strong title="#{title}">#{item}</strong>"""
+
+  .replace ///[a-z]+://[^\s<]+[^<.,:;"')\]\s]///g, (url, idx, src)->
     return url if '<a href="' == src[idx - 9 ... idx].toLowerCase()
     suffix = ""
     url = url.replace ///&lt;$|&gt;$|\]$|\[$///, (last)->
       suffix = last
       ""
     link(url) + suffix
-  .replace ///(\/\*)[\s\S]*(\*\/|$)///g, (human, idx, src)->
+
+  .replace ///(\/\*)[\s\S]*(\*\/|$)///g, (human, head, tail, idx, src)->
     """<del>#{human}</del>"""
-  .replace ///(^|\/\*)[\s\S]*(\*\/)///g, (human, idx, src)->
+
+  .replace ///(^|\/\*)[\s\S]*(\*\/)///g, (human, head, tail, idx, src)->
     """<del>#{human}</del>"""
 
 

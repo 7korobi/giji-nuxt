@@ -36,11 +36,11 @@
         tr(v-for="o in potofs", :key="o.id" v-if="! o.hide")
           th.r(:class="o.live.role_id") {{ o.job }}
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
-          td.r(:class="o.live.role_id") {{ count("日", o.live.date) }}
+          td.r(:class="o.live.role_id") {{ o.live.date           | currency("日") }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
-          td.r(:class="o.live.role_id") {{ count("回", o.say(part.id).count)  | currency }}
-          td.r(:class="o.live.role_id") {{ count("字", o.say(part.id).all)    | currency }}
-          td.r(:class="o.live.role_id") {{ count("回", o.give && o.give.give) | currency }}
+          td.r(:class="o.live.role_id") {{ o.say(part.id).count  | currency("回") }}
+          td.r(:class="o.live.role_id") {{ o.say(part.id).all    | currency("字") }}
+          td.r(:class="o.live.role_id") {{ o.give && o.give.give | currency("回") }}
           td.c(:class="o.live.role_id")
             kbd {{ o.sign }}
           td.c(:class="o.live.role_id")
@@ -128,13 +128,6 @@ module.exports =
           @order = "desc"
         when "desc"
           @order = "asc"
-
-    count: (unit, n)->
-      switch n
-        when 0, undefined, null, Infinity
-          " "
-        else
-          "#{n}#{unit}"
 
 </script>
 <style lang="stylus" scoped>

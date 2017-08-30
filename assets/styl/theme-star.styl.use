@@ -1,8 +1,6 @@
 @import "./_theme.styl"
 @import "./_theme_film.styl"
 
-$border = #333
-
 
 palette(grass,  grass)
 
@@ -29,11 +27,13 @@ palette(sepia,  metal)
   border-width: 0 0 1px 18px
 
 .contentframe
-  background-color: hsla(240,30%,20%,0.8)
   .talk
     .baloon
       left:  -9px
       border-right-width 1px
+
+.outframe
+  background: linear-gradient(90deg, hsla(210,96%,10%,0), hsla(190,96%,50%,0.7), hsla(210,96%,10%,0))
 
 body
   background-position-x: right
@@ -41,7 +41,7 @@ body
   background-attachment: fixed
   background-repeat: no-repeat
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/jupiter.png")
-  background-color: hsla(240,57%,24%,1)
+  background-color: hsla(210,96%,10%,1)
 
 .filmend
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")
