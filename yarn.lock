@@ -1423,8 +1423,8 @@ css-color-names@0.0.4:
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
 css-loader@^0.28.4:
-  version "0.28.5"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.5.tgz#dd02bb91b94545710212ef7f6aaa66663113d754"
+  version "0.28.7"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.7.tgz#5f2ee989dd32edd907717f953317656160999c1b"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
@@ -2355,11 +2355,11 @@ human-interval@~0.1.3:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/human-interval/-/human-interval-0.1.6.tgz#0057973454764c3abcbeb2aed612fc9644e68488"
 
-iconv-lite@0.4.15:
+iconv-lite@0.4.15, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
 
-iconv-lite@^0.4.17, iconv-lite@~0.4.13:
+iconv-lite@^0.4.17:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.18.tgz#23d8656b16aae6742ac29732ea8f0336a4789cf2"
 
@@ -3264,7 +3264,7 @@ number-is-nan@^1.0.0:
 
 nuxt@7korobi/nuxt.js#coffee-100a4:
   version "1.0.0-alpha.4"
-  resolved "https://codeload.github.com/7korobi/nuxt.js/tar.gz/f1f49ebd4a4e8fa3e5e1f44888f92c13b9aa1a46"
+  resolved "https://codeload.github.com/7korobi/nuxt.js/tar.gz/5e01344e4460d286476c5eb74b788d00a186762f"
   dependencies:
     "@nuxtjs/youch" "3.0.1"
     ansi-html "^0.0.7"
@@ -3304,6 +3304,7 @@ nuxt@7korobi/nuxt.js#coffee-100a4:
     script-ext-html-webpack-plugin "^1.8.1"
     serialize-javascript "^1.3.0"
     serve-static "^1.12.3"
+    uglify-es-webpack-plugin latest
     url-loader "^0.5.8"
     vue "~2.3.3"
     vue-loader "^12.2.1"
@@ -4528,6 +4529,10 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+source-list-map@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-1.1.2.tgz#9889019d1024cce55cdc069498337ef6186a11a1"
+
 source-list-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.0.tgz#aaa47403f7b245a92fbc97ea08f250d6087ed085"
@@ -4721,8 +4726,8 @@ supports-color@^3.1.0, supports-color@^3.2.3:
     has-flag "^1.0.0"
 
 supports-color@^4.0.0, supports-color@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.2.1.tgz#65a4bb2631e90e02420dba5554c375a4754bb836"
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.3.0.tgz#0fa3755bb961136cf75ff2ee3eb775822c04a31b"
   dependencies:
     has-flag "^2.0.0"
 
@@ -4837,6 +4842,20 @@ type-is@~1.6.15:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.15"
+
+uglify-es-webpack-plugin@latest:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/uglify-es-webpack-plugin/-/uglify-es-webpack-plugin-0.10.0.tgz#46fa577fcd0dfdff201c6f805ec004d187b8c9e2"
+  dependencies:
+    uglify-es "^3.0.10"
+    webpack-sources "^0.2.3"
+
+uglify-es@^3.0.10:
+  version "3.0.28"
+  resolved "https://registry.yarnpkg.com/uglify-es/-/uglify-es-3.0.28.tgz#1cdedbbcdb7865223065281ad7b2347629851d4b"
+  dependencies:
+    commander "~2.11.0"
+    source-map "~0.5.1"
 
 uglify-js@3.0.x:
   version "3.0.28"
@@ -5120,6 +5139,13 @@ webpack-sources@^0.1.1:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"
   dependencies:
     source-list-map "~0.1.7"
+    source-map "~0.5.3"
+
+webpack-sources@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.2.3.tgz#17c62bfaf13c707f9d02c479e0dcdde8380697fb"
+  dependencies:
+    source-list-map "^1.1.1"
     source-map "~0.5.3"
 
 webpack-sources@^1.0.1:

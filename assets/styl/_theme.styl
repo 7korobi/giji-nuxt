@@ -56,31 +56,6 @@ themes = {
   }
 }
 
-
-dark   =  hsla(0, 0%, 0%, 1)
-
-ZZZ    =   hsla(0,62%, 8%,1)
-black  =  hsla(60, 4%,10%,1)
-
-OOO    =   hsla(0,79%,15%,1)
-fude   = hsla(240, 8%,17%,1)
-
-NNN    =   hsla(0,44%,40%,1)
-lead   =  hsla(68, 5%,29%,1)
-lead   =  hsla(68, 5%,30%,1)
-earth  =  hsla(43,43%,30%,1)
-
-brass  =  hsla(52,47%,48%,1)
-
-HHH    =  hsla(0,66%,75%,1)
-silver =  hsla(0, 0%,75%,1)
-gold   = hsla(50,90%,50%,1)
-
-PPP    =   hsla(0,99%,47%,1)
-snow   = hsla(180,86%,97%,1)
-ivory  =  hsla(55,47%,92%,1)
-
-
 hues = {
   SPORT:  10 * 18deg
   P09:     9 * 18deg
@@ -323,31 +298,20 @@ palette_single($bgTheme, $backT, $hue, key)
       &.baloon
         border-color: $baloon
 
-      .fa-check
-        color: $good
-      .fa-warning
-        color: $warn
-      .fa-ban
-        color: $ban
-
       hr
         border-color: $emboss
 
       code
         background-color: $off
 
+      blockquote
+        border-color: $edge
+      
       .name
         sup,
         sub
           background-color: $emboss
           color: $bgHi
-
-      [title]:before,
-      [title]:after,
-      [data-tooltip]:before,
-      [data-tooltip]:after
-        color:            $pen
-        background-color: $bgHi
 
       del,
       .name,
@@ -366,6 +330,12 @@ palette_single($bgTheme, $backT, $hue, key)
         background-color: $emboss
         color: $bgHi
 
+      .fa-check
+        color: $good
+      .fa-warning
+        color: $warn
+      .fa-ban
+        color: $ban
 
     input[type=checkbox],
     input[type=radio]
@@ -407,6 +377,21 @@ palette_single($bgTheme, $backT, $hue, key)
         color:            $pen
         background-color: $bg
         border-color:     $edge
+
+    th
+      body &.{theme},
+      .{theme} &
+        color: $pen
+        background-color: $bgHi
+
+    [title],
+    [data-tooltip],
+      body &.{theme}:before,
+      .{theme} &:before,
+      body &.{theme}:after,
+      .{theme} &:after
+        color: $pen
+        background-color: $bgHi
 
     [href],
     [title],

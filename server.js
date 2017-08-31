@@ -1567,7 +1567,7 @@ module.exports = {
   head: __webpack_require__(18),
   env: __webpack_require__(17),
   plugins: [],
-  css: ['element-ui/lib/theme-default/index.css'],
+  css: ['~assets/styl/index.styl', 'element-ui/lib/theme-default/index.css'],
   //####
   // Customize the progress-bar color
 
@@ -1822,11 +1822,6 @@ module.exports = {
       rel: 'stylesheet',
       type: 'text/css',
       href: "https://use.fontawesome.com/6348868528.css"
-    },
-    {
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: "/css/index.css"
     },
     {
       rel: 'icon',
