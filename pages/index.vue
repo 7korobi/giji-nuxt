@@ -4,6 +4,9 @@
     .inframe
       br
       post(handle="XSAY", :write_at="1169852700003") 祝！人狼議事10周年！
+      report(handle="footer" deco="center" v-if="user_id") ロビー
+      post(handle="TSAY" v-if="user_id")
+        nuxt-link(to="/user/#{user_id}") あなたの情報
       report(handle="footer" deco="center") みんなの情報
       post(handle="SSAY")
         a(href="https://github.com/7korobi/giji-nuxt/commits/master") 総合トップ
@@ -47,6 +50,9 @@ module.exports =
     require("~plugins/get-by-mount") "1h", "story/progress"
   ]
   computed:
+    user_id: ->
+      { provider, account } = @$store.state.profile
+      provider && account && "#{provider}-#{account}"
     prologue: ->
       @read_at
       Query.sow_villages.prologue.list

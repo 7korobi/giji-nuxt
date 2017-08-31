@@ -3,7 +3,7 @@
   .contentframe
     .inframe
       br
-      table.talk(v-if="profile")
+      table.talk(v-if="profile.provider")
         tbody
           tr
             th
