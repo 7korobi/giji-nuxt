@@ -8,21 +8,23 @@
 <script>
 import NuxtLoading from './components/nuxt-loading.vue'
 
+import '~assets/styl/index.styl'
+
 import 'element-ui/lib/theme-default/index.css'
 
 
 let layouts = {
 
-  "_book": () => import('C:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
+  "_book": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
 
-  "_default": () => import('C:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */),
+  "_default": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */),
 
-  "_sow-log": () => import('C:\\Dropbox\\www\\giji-nuxt\\layouts\\sow-log.vue'  /* webpackChunkName: "layouts/sow-log" */)
+  "_sow-log": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\sow-log.vue'  /* webpackChunkName: "layouts/sow-log" */)
 
 }
 
 export default {
-  head: {"title":"人狼議事","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=0.5, shrink-to-fit=no"},{"hid":"description","content":"Nuxt.js project"},{"href":"mailto:7korobi@gmail.com"}],"link":[{"rel":"stylesheet","type":"text/css","href":"https://use.fontawesome.com/6348868528.css"},{"rel":"stylesheet","type":"text/css","href":"/css/index.css"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"href":"mailto:7korobi@gmail.com"}],"script":[{"src":"/monaco-editor/vs/loader.js","type":"text/javascript","charset":"utf8"}],"style":[]},
+  head: {"title":"人狼議事","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=0.5, shrink-to-fit=no"},{"hid":"description","content":"Nuxt.js project"},{"href":"mailto:7korobi@gmail.com"}],"link":[{"rel":"stylesheet","type":"text/css","href":"https://use.fontawesome.com/6348868528.css"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"href":"mailto:7korobi@gmail.com"}],"script":[{"src":"/monaco-editor/vs/loader.js","type":"text/javascript","charset":"utf8"}],"style":[]},
   data: () => ({
     layout: null,
     layoutName: ''
