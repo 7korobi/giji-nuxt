@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,9 +84,9 @@ module.exports = require("passport");
 
 var Agenda, Agendash, MONGO_URL, WEB_URL, agenda, jobs, pm_id, pno;
 
-Agenda = __webpack_require__(22);
+Agenda = __webpack_require__(25);
 
-Agendash = __webpack_require__(23);
+Agendash = __webpack_require__(26);
 
 ({pm_id, WEB_URL, MONGO_URL} = process.env);
 
@@ -143,13 +143,13 @@ module.exports = function(app) {
 
 var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(28);
+mongo = __webpack_require__(31);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(26);
+fs = __webpack_require__(29);
 
-_ = __webpack_require__(27);
+_ = __webpack_require__(30);
 
 ({MONGO_URL_SOW, API_URL} = process.env);
 
@@ -627,9 +627,9 @@ module.exports = function(app) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MONGO_URL, Passport, Schema, mongoose, passport;
+var MONGO_URL, mongoose;
 
-({Schema} = mongoose = __webpack_require__(29));
+mongoose = __webpack_require__(32);
 
 ({MONGO_URL} = process.env);
 
@@ -641,45 +641,14 @@ mongoose.connect(MONGO_URL, function(err) {
   }
 });
 
-Passport = mongoose.model('Passport', new Schema({
-  _id: String,
-  nick: String,
-  icon: String,
-  mail: String,
-  write_at: Number,
-  provider: String,
-  account: String,
-  token: String
-}));
-
-passport = __webpack_require__(1);
-
-passport.serializeUser(function(o, done) {
-  var id;
-  id = [o.provider, o.account].join("-");
-  return Passport.findByIdAndUpdate(id, o, {
-    upsert: true
-  }).exec(function(err, doc) {
-    if (err) {
-      console.error(err);
-    }
-    return done(err, id);
-  });
-});
-
-passport.deserializeUser(function(id, done) {
-  return done(null, id);
-});
-
 module.exports = function(app) {
-  app.get('/api/user/:id', function(req, res, next) {
-    var id;
-    ({id} = req.params);
-    return Passport.findById(id, function(err, doc) {
-      res.json(doc);
-      return next();
-    });
-  });
+  var ctx, fname, i, len, ref;
+  ctx = __webpack_require__(13);
+  ref = ctx.keys();
+  for (i = 0, len = ref.length; i < len; i++) {
+    fname = ref[i];
+    ctx(fname)(app, mongoose);
+  }
 };
 
 
@@ -689,7 +658,7 @@ module.exports = function(app) {
 
 var WEB_URL, auth, config, passport;
 
-config = __webpack_require__(21);
+config = __webpack_require__(24);
 
 passport = __webpack_require__(1);
 
@@ -697,14 +666,14 @@ passport = __webpack_require__(1);
 
 auth = {
   slack: {
-    module: __webpack_require__(33).Strategy,
+    module: __webpack_require__(36).Strategy,
     attr: {
       clientID: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET
     }
   },
   google: {
-    module: __webpack_require__(32).Strategy,
+    module: __webpack_require__(35).Strategy,
     attr: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -712,21 +681,21 @@ auth = {
     }
   },
   facebook: {
-    module: __webpack_require__(30).Strategy,
+    module: __webpack_require__(33).Strategy,
     attr: {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET
     }
   },
   github: {
-    module: __webpack_require__(31).Strategy,
+    module: __webpack_require__(34).Strategy,
     attr: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }
   },
   twitter: {
-    module: __webpack_require__(34).Strategy,
+    module: __webpack_require__(37).Strategy,
     attr: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
@@ -776,9 +745,9 @@ module.exports = function(app) {
 
 var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
 
-session = __webpack_require__(25);
+session = __webpack_require__(28);
 
-MongoStore = __webpack_require__(24)(session);
+MongoStore = __webpack_require__(27)(session);
 
 ({MONGO_URL, SECRET_KEY_BASE} = process.env);
 
@@ -1561,11 +1530,11 @@ module.exports = function(app) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(19),
-  router: __webpack_require__(20),
-  build: __webpack_require__(16),
-  head: __webpack_require__(18),
-  env: __webpack_require__(17),
+  render: __webpack_require__(22),
+  router: __webpack_require__(23),
+  build: __webpack_require__(19),
+  head: __webpack_require__(21),
+  env: __webpack_require__(20),
   plugins: [],
   css: ['~assets/styl/index.styl', 'element-ui/lib/theme-default/index.css'],
   //####
@@ -1600,8 +1569,8 @@ module.exports = require("nuxt");
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./aggregate.coffee": 14,
-	"./process.coffee": 15
+	"./aggregate.coffee": 15,
+	"./process.coffee": 16
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -1621,6 +1590,30 @@ webpackContext.id = 12;
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./book.coffee": 17,
+	"./passport.coffee": 18
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 13;
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var HOST, Nuxt, ONLY_VUE, app, bodyParser, config, express, host, pm_id, port;
@@ -1681,7 +1674,7 @@ __webpack_require__(7)(app);
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -1707,7 +1700,7 @@ module.exports = {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -1732,7 +1725,283 @@ module.exports = {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = function(app, {model, Schema}) {
+  var Book, Card, Chat, Part, Phase, Potof, Stat;
+  Card = model('Card', new Schema({
+    write_at: Number,
+    role_id: String,
+    date: Number,
+    idx: String,
+    _id: String
+  }));
+  Stat = model('Stat', new Schema({
+    write_at: Number,
+    role_id: String,
+    sw: Boolean,
+    give: Number,
+    idx: String,
+    _id: String
+  }));
+  Potof = model('Potof', new Schema({
+    write_at: Number,
+    open_at: Number,
+    face_id: String,
+    sign: String,
+    job: String,
+    idx: Number,
+    _id: String
+  }));
+  Book = model('Book', new Schema({
+    write_at: Number,
+    open_at: Number,
+    label: String,
+    sign: String,
+    idx: Number,
+    _id: String
+  }));
+  Part = model('Part', new Schema({
+    write_at: Number,
+    open_at: Number,
+    label: String,
+    idx: Number,
+    _id: String
+  }));
+  Phase = model('Phase', new Schema({
+    write_at: Number,
+    label: String,
+    handle: String,
+    group: String,
+    update: false,
+    chat_idx: Number,
+    idx: Number,
+    _id: String
+  }));
+  Chat = model('Chat', new Schema({
+    write_at: Number,
+    potof_id: String,
+    show: String,
+    deco: String,
+    log: String,
+    idx: Number,
+    _id: String
+  }));
+  app.post('/api/book', function(req, res, next) {
+    var at, book, part;
+    at = new Date() - 0;
+    ({book} = req.body);
+    book.write_at = at;
+    if (book.open_at == null) {
+      book.open_at = at;
+    }
+    part = {
+      _id: `${book._id}-0`,
+      idx: 0,
+      label: "プロローグ",
+      open_at: book.open_at,
+      write_at: book.write_at
+    };
+    return Promise.all([
+      Book.findByIdAndUpdate(book._id,
+      book,
+      {
+        upsert: true
+      }).exec(),
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec()
+    ]).then(function(book, part) {
+      res.json({book, part});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+  app.post('/api/part', function(req, res, next) {
+    var at, idx, part, phases;
+    at = new Date() - 0;
+    ({part} = req.body);
+    part.write_at = at;
+    if (part.open_at == null) {
+      part.open_at = at;
+    }
+    idx = 0;
+    phases = [
+      {
+        label: "公開情報",
+        handle: "public",
+        group: "I",
+        update: false
+      },
+      {
+        label: "秘密情報",
+        handle: "private",
+        group: "I",
+        update: false
+      },
+      {
+        label: "管理",
+        handle: "MAKER",
+        group: "S",
+        update: true
+      },
+      {
+        label: "発言",
+        handle: "SSAY",
+        group: "S",
+        update: false
+      },
+      {
+        label: "発言",
+        handle: "VSSAY",
+        group: "S",
+        update: false
+      },
+      {
+        label: "内緒話",
+        handle: "AIM",
+        group: "S",
+        update: false
+      },
+      {
+        label: "独り言",
+        handle: "TSAY",
+        group: "S",
+        update: false
+      }
+    ].map(function(o) {
+      o.idx = idx;
+      o._id = `${part._id}-${idx++}`;
+      o.write_at = at;
+      return Phase.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    return Promise.all([
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec(),
+      ...phases
+    ]).then(function(part, phase) {
+      res.json({part, phase});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+  return app.post('/api/potof', function(req, res, next) {
+    var at, cards, potof, stat, stats;
+    at = new Date() - 0;
+    ({potof, stat} = req.body);
+    potof.write_at = at;
+    if (potof.open_at == null) {
+      potof.open_at = at;
+    }
+    stats = [
+      stat,
+      {
+        idx: "give",
+        give: 1
+      }
+    ].map(function(o) {
+      o._id = `${potof._id}-${o.idx}`;
+      o.write_at = at;
+      return Stat.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    cards = [
+      {
+        idx: "request",
+        role_id: null
+      }
+    ].map(function(o) {
+      o._id = `${potof._id}-${o.idx}`;
+      o.write_at = at;
+      return Card.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    return Promise.all([
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec(),
+      ...stats,
+      ...cards
+    ]).then(function(part, phase) {
+      res.json({part, phase});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+};
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var passport;
+
+passport = __webpack_require__(1);
+
+passport.serializeUser(function(o, done) {
+  var id;
+  id = [o.provider, o.account].join("-");
+  return Passport.findByIdAndUpdate(id, o, {
+    upsert: true
+  }).exec(function(err, doc) {
+    if (err) {
+      console.error(err);
+    }
+    return done(err, id);
+  });
+});
+
+passport.deserializeUser(function(id, done) {
+  return done(null, id);
+});
+
+module.exports = function(app, {model, Schema}) {
+  var Passport;
+  Passport = model('Passport', new Schema({
+    _id: String,
+    nick: String,
+    icon: String,
+    mail: String,
+    write_at: Number,
+    provider: String,
+    account: String,
+    token: String
+  }));
+  return app.get('/api/user/:id', function(req, res, next) {
+    var id;
+    ({id} = req.params);
+    return Passport.findById(id, function(err, doc) {
+      res.json(doc);
+      return next();
+    });
+  });
+};
+
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1782,7 +2051,7 @@ module.exports = {
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var API_URL, SOW_URL, STORE_URL, WEB_URL;
@@ -1793,7 +2062,7 @@ module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
 
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports) {
 
 //####
@@ -1844,7 +2113,7 @@ module.exports = {
 
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1870,7 +2139,7 @@ module.exports = {
 
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports) {
 
 /*
@@ -1959,85 +2228,85 @@ module.exports = {
 
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("./nuxt.config.js");
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("agendash");
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mongo");
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash");
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-github2");
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth2");
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-slack");
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");

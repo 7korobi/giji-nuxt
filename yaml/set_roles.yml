@@ -319,7 +319,7 @@ grave:
   win: MOB
   group: MOB
   able_ids:
-    - VSAY
+    - VGSAY
     - TSAY
   help: >-
     進行中会話は墓下と

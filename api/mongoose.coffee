@@ -1,4 +1,4 @@
-{ Schema } = mongoose = require "mongoose"
+mongoose = require "mongoose"
 { MONGO_URL } = process.env
 
 mongoose.connect MONGO_URL, (err)->
@@ -7,36 +7,9 @@ mongoose.connect MONGO_URL, (err)->
   else
     console.log "mongoose connected."
 
-
-Passport = mongoose.model 'Passport', new Schema
-  _id: String
-  nick: String
-  icon: String
-  mail: String
-
-  write_at: Number
-
-  provider: String
-  account: String
-  token: String
-
-passport = require "passport"
-passport.serializeUser (o, done)->
-  id = [o.provider, o.account].join("-")
-  Passport.findByIdAndUpdate id, o,
-    upsert: true
-  .exec (err, doc)->
-    if err
-      console.error err
-    done err, id
-
-passport.deserializeUser (id, done)->
-  done null, id
-
 module.exports = (app)->
-  app.get '/api/user/:id', (req, res, next)->
-    { id } = req.params
-    Passport.findById id, (err, doc)->
-      res.json doc
-      next()
+  ctx = require.context "./mongoose", true, ///(.+)\.coffee$///
+  for fname in ctx.keys()
+    ctx(fname)(app, mongoose)
+
   return
