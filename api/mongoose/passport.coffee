@@ -12,8 +12,9 @@ passport.serializeUser (o, done)->
 passport.deserializeUser (id, done)->
   done null, id
 
-module.exports = (app, { model, Schema })->
-  Passport = model 'Passport', new Schema
+module.exports = (app, m)->
+  { Schema } = m
+  Passport = m.model 'Passport', new Schema
     _id: String
     nick: String
     icon: String

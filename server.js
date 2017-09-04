@@ -1978,9 +1978,10 @@ passport.deserializeUser(function(id, done) {
   return done(null, id);
 });
 
-module.exports = function(app, {model, Schema}) {
-  var Passport;
-  Passport = model('Passport', new Schema({
+module.exports = function(app, m) {
+  var Passport, Schema;
+  ({Schema} = m);
+  Passport = m.model('Passport', new Schema({
     _id: String,
     nick: String,
     icon: String,
