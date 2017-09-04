@@ -5,7 +5,7 @@
 
 .page-enter-active,
 .page-leave-active
-  transition: opacity .5s
+  transition: opacity .7s
 
 .page-enter,
 .page-leave-active
@@ -19,7 +19,7 @@ input[type=button],
 input[type=image],
 input[type=reset],
 [title], [data-tooltip],
-a, b, kbd, code, strong,
+a, b, em, strong, kbd, code,
 input, select, button, textarea,
 .btn
   display: inline-block
@@ -50,8 +50,9 @@ input, select, button, textarea,
 th, td
   border-radius: 2px
 
+strong,
 b
-  font-weight: bold
+  font-weight: normal
 
 span
   display: inline-block
@@ -61,6 +62,22 @@ del
 
 em
   font-style: normal
+
+pre
+  margin: 0 -4px
+
+li
+  margin:  0
+  padding: 0
+
+ol, ul
+  margin:  0
+  padding: 0 0 0 4ex
+ol
+  list-style-type: circle
+ul
+  list-style-type: decimal
+
 
 abbr,
 input,
@@ -73,9 +90,7 @@ textarea
 label,
 rt,
 sup,
-sub,
-kbd,
-code
+sub
   padding: 0 4px
 
 label,
@@ -111,7 +126,6 @@ blockquote
 
 sup, sub
   display: inline-block
-  font-weight: bold
   text-align: center
 
 .btns,
@@ -139,10 +153,7 @@ h4
 h5
 h6
 p
-pre
 
-sup
-sub
 a
 b
 strong
@@ -150,8 +161,5 @@ em
 del
 code
 kbd
-ul
-ol
-li
 
   zzz: yyy

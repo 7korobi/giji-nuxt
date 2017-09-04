@@ -12,25 +12,14 @@ palette(metal,    ash)
 palette(says,   night)
 palette(sepia,  metal)
 
-.baloon
-  display: none
-
 .talk
   .chat
     border-style: none none solid solid
     border-width: 0 0 1px 3px
     margin:  0 7px 0 -3px
 
-.post
-  border-style: none none solid solid
-  border-width: 0 0 1px 18px
-
 .contentframe
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/karakusa.png")
-  .talk
-    .baloon
-      left:  -9px
-      border-right-width 1px
 
 body
   background-position-x: right

@@ -100,6 +100,6 @@ it shows white-space: pre
 
 module.exports =
   mounted: ->
-    @$el.className = "outframe inframe chat text TSAY"
+    @$el.className = "outframe inframe chat text SSAY"
 
 </script>

@@ -13,24 +13,12 @@ palette(metal,    ash)
 palette(says,   night)
 palette(sepia,  metal)
 
-.baloon
-  display: none
-
 .talk
   .chat
-    border-style: none none solid solid
-    border-width: 0 0 1px 3px
-    margin:  0 7px 0 -3px
-
-.post
-  border-style: none none solid solid
-  border-width: 0 0 1px 18px
-
-.contentframe
-  .talk
-    .baloon
-      left:  -9px
-      border-right-width 1px
+    border-style: solid
+    border-radius: 0.5rem 0 0 0.5rem
+    border-width: 1px 4px 1px 1px
+    margin:  -1px 3px -1px -1px
 
 .outframe
   background: linear-gradient(90deg, hsla(210,96%,10%,0), hsla(190,96%,50%,0.7), hsla(210,96%,10%,0))

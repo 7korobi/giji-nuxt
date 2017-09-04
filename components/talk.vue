@@ -23,7 +23,10 @@ module.exports = require("~components/chat.vue").component_class()
       margin:  0 19px 0 16px
 
 .contentframe
+  .chat
+    z-index:  2
   .baloon
+    z-index: 1
     position: absolute
     content: ''
     width:  0
@@ -33,6 +36,7 @@ module.exports = require("~components/chat.vue").component_class()
     border-style: solid
     border-width:  6px
     border-radius: 6px 0 0 6px
+    border-right-width 1px
 
 </style>
 

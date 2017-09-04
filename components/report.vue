@@ -28,6 +28,7 @@ module.exports = require("~components/chat.vue").component_class()
       border-style: solid
       border-width: 1px
       border-top-color: transparent
+      background-color: transparent
 
     &::before
       border-width: 4px 8px 0 0

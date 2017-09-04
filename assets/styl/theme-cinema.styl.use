@@ -16,7 +16,7 @@ palette(world,  black)
 palette(metal,  metal)
 
 palette(says,   light)
-palette(sepia,  sepia)
+palette(sepia,   snow)
 
 .talk
   .chat
@@ -25,19 +25,11 @@ palette(sepia,  sepia)
     border-width: 0
     margin:  0 7px 0 0
 
-.post
-  border-style: solid none solid solid
-  border-width: 2px 0 2px 18px
-
 .contentframe
   background-repeat: repeat
   background-position: right
   background-attachment: fixed
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/renga.png")
-  .talk
-    .baloon
-      left:  -6px
-      border-right-width 1px
 
 .filmend
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")

@@ -66,14 +66,14 @@
         table
           transition-group.tlist(name="list" tag="tbody")
             tr(v-for="o in sow_auths", :key="o._id.sow_auth_id")
-              td
+              th
                 .sow_auth_id {{ o._id.sow_auth_id }}
-              td.r {{ o.story_ids.length | currency }}村
-              td.r {{ o.count | currency }}回
-              td.r {{ o.all | currency }}文字
+              td.r.count {{ o.story_ids.length | currency }}村
+              td.r.count {{ o.count | currency }}回
+              td.r.count {{ o.all | currency }}文字
               td.timer
                 timeago.count(:since="o.date_min")
-              td
+              th
                 .pad ～
               td.timer
                 timeago.count(:since="o.date_max")

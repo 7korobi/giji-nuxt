@@ -6,6 +6,8 @@ module.exports = require("~components/chat.vue").component_class()
 .post
   padding-right: 12px
   margin 0 0 6px 7px
+  border-style: solid none solid solid
+  border-width: 2px 0 2px 18px
 
 .contentframe
   .post
