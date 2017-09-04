@@ -38,13 +38,13 @@
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
           td.r(:class="o.live.role_id") {{ o.live.date           | currency("日") }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
-          td.r(:class="o.live.role_id") {{ o.say(part.id).count  | currency("回") }}
-          td.r(:class="o.live.role_id") {{ o.say(part.id).all    | currency("字") }}
-          td.r(:class="o.live.role_id") {{ o.give && o.give.give | currency("回") }}
-          td.c(:class="o.live.role_id")
-            kbd {{ o.sign }}
-          td.c(:class="o.live.role_id")
-            kbd(v-if="o.request") {{ o.request.role.label }}
+          th.r(:class="o.say_id(part.id)") {{ o.say(part.id).count  | currency("回") }}
+          th.r(:class="o.say_id(part.id)") {{ o.say(part.id).all    | currency("字") }}
+          th.r(:class="o.say_id(part.id)") {{ o.give && o.give.give | currency("回") }}
+          th.c(:class="o.say_id(part.id)")
+            abbr(:class="o.say_id(part.id)") {{ o.sign }}
+          th.c(:class="o.winner_id")
+            abbr(v-if="o.request", :class="o.winner_id") {{ o.request.role.label }}
           td.c(:class="o.winner_id") {{ o.win }}
           td.c(:class="o.winner_id") {{ o.winner && o.winner.label }}
           td.c(:class="o.winner_id") {{ o.role_labels.join("、") }}

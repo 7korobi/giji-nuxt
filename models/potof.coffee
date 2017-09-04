@@ -29,6 +29,10 @@ new Rule("potof").schema ->
       all:   0
       max: null
       min: null
+
+    say_id: (part_id)->
+      { max_is } = @say(part_id)
+      max_is?.phase?.handle ? "TSAY"
     
     find: (q, keys, cb = (o)-> o )->
       for key in keys

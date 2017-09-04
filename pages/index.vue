@@ -4,8 +4,8 @@
     .inframe
       br
       post(handle="XSAY", :write_at="1169852700003") 祝！人狼議事10周年！
-      report(handle="footer" deco="center" v-if="user_id") ロビー
-      post(handle="TSAY" v-if="user_id")
+      report(handle="footer" deco="center" v-if="user_url") ロビー
+      post(handle="TSAY" v-if="user_url")
         nuxt-link(:to="user_url") あなたの情報
       report(handle="footer" deco="center") みんなの情報
       post(handle="SSAY")

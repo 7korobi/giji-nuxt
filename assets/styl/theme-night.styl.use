@@ -3,7 +3,8 @@
 
 $border = #333
 
-palette(grass,  grass)
+palette_single(title-bar, grass, BROAD)
+palette_single(icons,     grass, BROAD)
 
 palette(stats,   foot)
 palette(header,   ash)

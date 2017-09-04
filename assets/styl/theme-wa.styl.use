@@ -4,10 +4,8 @@
 body
   background: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/nagatanienn.png")
 
-*
-  border-color: #333
-
-palette(grass,  grass)
+palette_single(title-bar, grass, BROAD)
+palette_single(icons,     grass, BROAD)
 
 palette(stats,   foot)
 palette(header,   ash)

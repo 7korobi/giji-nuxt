@@ -1,8 +1,8 @@
 @import "./_theme.styl"
 @import "./_theme_film.styl"
 
-
-palette(grass,  grass)
+palette_single(title-bar, grass, BROAD)
+palette_single(icons,     grass, BROAD)
 
 palette(stats,   foot)
 palette(header,   ash)
@@ -17,8 +17,11 @@ palette(sepia,  metal)
   .chat
     border-style: solid
     border-radius: 0.5rem 0 0 0.5rem
-    border-width: 1px 4px 1px 1px
-    margin:  -1px 3px -1px -1px
+    border-width: 2px 7px 2px 2px
+    margin:  0 0 0 -2px
+
+.contentframe
+  background-image: none
 
 .outframe
   background: linear-gradient(90deg, hsla(210,96%,10%,0), hsla(190,96%,50%,0.7), hsla(210,96%,10%,0))

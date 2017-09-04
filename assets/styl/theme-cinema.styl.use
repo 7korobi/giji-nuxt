@@ -4,10 +4,8 @@
 body
   background-color: mix(spin(#ff0000,  2 * 18deg + 0deg), #777, 20%)
 
-*
-  border-color: #663
-
-palette(grass,  grass)
+palette_single(title-bar, grass, BROAD)
+palette_single(icons,     grass, BROAD)
 
 palette(stats,   foot)
 palette(header,   ash)
