@@ -44,6 +44,8 @@
   "scripts": {
     "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
     "api": "webpack --config config/webpack/index-node.coffee",
+    "styl": "ls assets/styl/*-*.styl.use | xargs stylus --compress --sourcemap --out assets/css/.",
+    "prod": "yarn run api && yarn run styl && yarn run build",
     "dev": "node server.js",
     "build": "nuxt build",
     "analyze": "nuxt build --analyze",

@@ -2045,6 +2045,10 @@ module.exports = {
       }
     },
     {
+      test: /\.styl\.css$/,
+      loader: 'style-loader/useable'
+    },
+    {
       test: /\.styl\.use$/,
       loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
     }

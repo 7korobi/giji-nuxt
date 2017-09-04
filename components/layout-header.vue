@@ -10,7 +10,7 @@ module.exports =
       watch: (val, key)->
         return unless window?
         @use[key]?.unuse()
-        @use[key] = require "~assets/styl/#{key}-#{val}.styl.use"
+        @use[key] = require "~assets/css/#{key}-#{val}.styl.css"
         @use[key].use()
   ]
   data: ->
