@@ -72,7 +72,7 @@ module.exports =
             btn.tooltip-top(@input="go_page(o.id, 0)", :data-tooltip="part_label(o.id)", :value="part_id", :as="o.id")
               | {{o.label}}
               sup {{ chats(o.id).all }}
-          td.l.form
+          th.l.form
             a.page.tooltip-top(v-for="(_, page_idx) in chats(o.id)" @click="go_page(o.id, page_idx)", :data-tooltip="page_label(o.id, page_idx)", :class="page_btn_class(o.id, page_idx)")
               | {{ page_idx + 1 }}
 

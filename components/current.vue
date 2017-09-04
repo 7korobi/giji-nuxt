@@ -1,11 +1,6 @@
 <script lang="coffee">
 module.exports = require("~components/chat.vue").component_class()
 </script>
-<style lang="stylus" scoped>
-.current
-  border-bottom-style: solid
-  border-bottom-width: 1px
-</style>
 
 <template lang="pug">
 .chat.current(@click="click", :key="id", :class="classname")
