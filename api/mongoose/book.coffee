@@ -1,6 +1,7 @@
 
-module.exports = (app, { model, Schema })->
-  Card = model 'Card', new Schema
+module.exports = (app, m)->
+  { Schema } = m
+  Card = m.model 'Card', new Schema
     write_at: Number
 
     role_id: String
@@ -9,7 +10,7 @@ module.exports = (app, { model, Schema })->
     idx: String
     _id: String
 
-  Stat = model 'Stat', new Schema
+  Stat = m.model 'Stat', new Schema
     write_at: Number
 
     role_id: String
@@ -19,7 +20,7 @@ module.exports = (app, { model, Schema })->
     idx: String
     _id: String
 
-  Potof = model 'Potof', new Schema
+  Potof = m.model 'Potof', new Schema
     write_at: Number
     open_at: Number
 
@@ -31,7 +32,7 @@ module.exports = (app, { model, Schema })->
     idx: Number
     _id: String
 
-  Book = model 'Book', new Schema
+  Book = m.model 'Book', new Schema
     write_at: Number
     open_at: Number
 
@@ -41,7 +42,7 @@ module.exports = (app, { model, Schema })->
     idx: Number
     _id: String
 
-  Part = model 'Part', new Schema
+  Part = m.model 'Part', new Schema
     write_at: Number
     open_at: Number
 
@@ -50,7 +51,7 @@ module.exports = (app, { model, Schema })->
     idx: Number
     _id: String
 
-  Phase = model 'Phase', new Schema
+  Phase = m.model 'Phase', new Schema
     write_at: Number
     
     label: String
@@ -62,7 +63,7 @@ module.exports = (app, { model, Schema })->
     idx: Number
     _id: String
 
-  Chat = model 'Chat', new Schema
+  Chat = m.model 'Chat', new Schema
     write_at: Number
 
     potof_id: String
