@@ -1,5 +1,6 @@
+ExtractTextPlugin = require 'extract-text-webpack-plugin'
+
 module.exports =
-  
   extend: (config, { isDev, isClient })->
     if isClient
       config.devtool = 'source-map'
@@ -35,10 +36,4 @@ module.exports =
     query:
       limit: 1000 # 1KO
       name: 'fonts/[name].[hash:7].[ext]'
-  ,
-    test: /\.styl\.css$/
-    loader: 'style-loader/useable'
-  ,
-    test: /\.styl\.use$/
-    loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
   ]

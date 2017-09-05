@@ -9,11 +9,12 @@ module.exports =
         font:  "std"
       watch: (val, key)->
         return unless window?
-        @use[key]?.unuse()
-        @use[key] = require "~assets/css/#{key}-#{val}.styl.css"
-        @use[key].use()
+        window[key + '2'].href = @href[key]
+        @$nextTick ->
+          window[key + '1'].href = @href[key]
   ]
   data: ->
+    font_old: "std"
     top:    0
     width:  0
     height: 0
@@ -29,6 +30,9 @@ module.exports =
       @$store.commit "menu/center", { @top, @left, @height, @width }
     body_class: ->
       [@theme, @font].join("~")
+    href: ->
+      font:  "/css/font-#{@font}.styl.css"
+      theme: "/css/theme-#{@theme}.styl.css"
 
   methods:
     poll: ->
@@ -39,6 +43,14 @@ module.exports =
       @width = innerWidth
       @height = innerHeight
       requestAnimationFrame @poll
+  
+  head: ->
+    link: [
+      { rel: 'stylesheet', type: 'text/css', id: 'font1'  }
+      { rel: 'stylesheet', type: 'text/css', id: 'font2'  }
+      { rel: 'stylesheet', type: 'text/css', id: 'theme1' }
+      { rel: 'stylesheet', type: 'text/css', id: 'theme2' }
+    ]
 
 </script>
 <template lang="pug">

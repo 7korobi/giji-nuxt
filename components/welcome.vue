@@ -111,6 +111,7 @@ module.exports =
     padding: 0 3px
 
 #welcome
+  object-fit: cover
   background-size:  cover
 
 .filmline
