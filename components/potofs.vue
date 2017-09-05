@@ -67,7 +67,7 @@
           td
             btn(v-model="hide_potof_ids", :as="full_off") クリア
 
-    portrate(v-for="o in potofs", :key="o.face_id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
+    portrate(v-for="o in potofs", :key="o.id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
       .bar(:class="bgc(o)")
 </template>
 

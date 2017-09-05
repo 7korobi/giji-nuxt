@@ -10,10 +10,12 @@ module.exports =
   mutations:
     join: (state, data)->
       book_id = data.stories[0]._id
+      potof_idx = 0
       for o, idx in data.potofs
         csid = o.csid
         csid = 'sf' if csid == 'SF'
-        potof_id = "#{o.event_id}-#{idx}"
+        potof_idx = idx
+        potof_id = "#{o.event_id}-#{potof_idx}"
         Set.stat.add
           _id: "#{o.event_id}"
 
@@ -87,15 +89,16 @@ module.exports =
         if o.story_id && face_id
           potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
           unless potof_id
+            potof_idx += 1
             Set.card.add
-              _id: [o.event_id, o.face_id, "live"].join("-")
+              _id: [o.event_id, potof_idx, "live"].join("-")
               role_id: "leave"
               date: 0
             Set.stat.add
-              _id: [o.event_id, o.face_id, "SSAY"].join("-")
+              _id: [o.event_id, potof_idx, "SSAY"].join("-")
               said: 0
             Set.potof.add
-              _id: [o.event_id, o.face_id].join("-")
+              _id: [o.event_id, potof_idx].join("-")
               face_id:  o.face_id
               job: Query.chr_jobs.find([csid, o.face_id].join("_"))?.job
               sign: o.sow_auth_id
