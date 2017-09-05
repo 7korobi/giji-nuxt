@@ -47,11 +47,7 @@ sow = head = mono = (text)->
       ""
     link(url) + suffix
 
-  .replace ///(\/\*)[\s\S]*(\*\/|$)///g, (human, head, tail, idx, src)->
+  .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
     """<del>#{human}</del>"""
-
-  .replace ///(^|\/\*)[\s\S]*(\*\/)///g, (human, head, tail, idx, src)->
-    """<del>#{human}</del>"""
-
 
 module.exports = { sow, head, mono, giji }
