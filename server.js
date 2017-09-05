@@ -143,13 +143,13 @@ module.exports = function(app) {
 
 var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(31);
+mongo = __webpack_require__(32);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(29);
+fs = __webpack_require__(30);
 
-_ = __webpack_require__(30);
+_ = __webpack_require__(31);
 
 ({MONGO_URL_SOW, API_URL} = process.env);
 
@@ -629,7 +629,7 @@ module.exports = function(app) {
 
 var MONGO_URL, mongoose;
 
-mongoose = __webpack_require__(32);
+mongoose = __webpack_require__(33);
 
 ({MONGO_URL} = process.env);
 
@@ -666,14 +666,14 @@ passport = __webpack_require__(1);
 
 auth = {
   slack: {
-    module: __webpack_require__(36).Strategy,
+    module: __webpack_require__(37).Strategy,
     attr: {
       clientID: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET
     }
   },
   google: {
-    module: __webpack_require__(35).Strategy,
+    module: __webpack_require__(36).Strategy,
     attr: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -681,21 +681,21 @@ auth = {
     }
   },
   facebook: {
-    module: __webpack_require__(33).Strategy,
+    module: __webpack_require__(34).Strategy,
     attr: {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET
     }
   },
   github: {
-    module: __webpack_require__(34).Strategy,
+    module: __webpack_require__(35).Strategy,
     attr: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }
   },
   twitter: {
-    module: __webpack_require__(37).Strategy,
+    module: __webpack_require__(38).Strategy,
     attr: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
@@ -2004,7 +2004,11 @@ module.exports = function(app, m) {
 
 /***/ }),
 /* 19 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var ExtractTextPlugin;
+
+ExtractTextPlugin = __webpack_require__(29);
 
 module.exports = {
   extend: function(config, {isDev, isClient}) {
@@ -2043,14 +2047,6 @@ module.exports = {
         limit: 1000, // 1KO
         name: 'fonts/[name].[hash:7].[ext]'
       }
-    },
-    {
-      test: /\.styl\.css$/,
-      loader: 'style-loader/useable'
-    },
-    {
-      test: /\.styl\.use$/,
-      loader: 'style-loader/useable!css-loader!stylus-loader?resolve url'
     }
   ]
 };
@@ -2267,52 +2263,58 @@ module.exports = require("express-session");
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = require("extract-text-webpack-plugin");
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("fs");
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = require("mongodb-bluebird");
+module.exports = require("lodash");
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = require("mongoose");
+module.exports = require("mongodb-bluebird");
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-facebook");
+module.exports = require("mongoose");
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-github2");
+module.exports = require("passport-facebook");
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-google-oauth2");
+module.exports = require("passport-github2");
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-slack");
+module.exports = require("passport-google-oauth2");
 
 /***/ }),
 /* 37 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-slack");
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
