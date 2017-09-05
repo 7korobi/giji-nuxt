@@ -4,5 +4,5 @@
   palette(stats, light)
 .potofs
   palette(says,  foot)
-palette(stats,    ash)
+palette(stats,   foot)
 palette(header,   ash)

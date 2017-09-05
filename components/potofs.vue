@@ -48,7 +48,7 @@
             abbr(:class="o.say_id(part.id)") {{ o.sign }}
           th.c(:class="o.winner_id")
             abbr(v-if="o.request", :class="o.winner_id") {{ o.request.role.label }}
-          td.c(:class="o.winner_id") {{ o.win }}
+          th.c(:class="o.winner_id") {{ o.win }}
           td.c(:class="o.winner_id") {{ o.winner && o.winner.label }}
           td.c(:class="o.winner_id") {{ o.role_labels.join("、") }}
           td.l(:class="o.winner_id") {{ o.text }}
