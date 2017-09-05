@@ -1,2 +1,0 @@
-webpackJsonp([19],{390:function(t,n,e){var r=e(0)(e(412),e(461),null,null,null);t.exports=r.exports},412:function(t,n,e){e(63),t.exports={default:{data:function(){return{}}}}},461:function(t,n){t.exports={render:function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("div",[e("layout-header"),e("nuxt"),e("layout-footer")],1)},staticRenderFns:[]}}});
-//# sourceMappingURL=19.nuxt.bundle.293417c4b7657ca8d89b.js.map

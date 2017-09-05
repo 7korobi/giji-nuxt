@@ -17,9 +17,7 @@ let layouts = {
 
   "_book": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
 
-  "_default": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */),
-
-  "_sow-log": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\sow-log.vue'  /* webpackChunkName: "layouts/sow-log" */)
+  "_default": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */)
 
 }
 
