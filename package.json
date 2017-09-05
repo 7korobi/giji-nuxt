@@ -46,7 +46,7 @@
     "api": "webpack --config config/webpack/index-node.coffee",
     "styl": "ls assets/styl/*-*.styl.use | xargs stylus --compress --sourcemap --out static/css/.",
     "prod": "yarn run api && yarn run styl && yarn run build",
-    "dev": "yarn run api && yarn run styl && node server.js",
+    "dev": "yarn run api && node server.js",
     "build": "nuxt build",
     "analyze": "nuxt build --analyze",
     "start": "nuxt start",

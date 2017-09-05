@@ -8,13 +8,21 @@ module.exports =
         theme: "cinema"
         font:  "std"
       watch: (val, key)->
+        key1 = key + 1
+        key2 = key + 2
+        href = @href[key]
         return unless window?
-        window[key + '2'].href = @href[key]
-        @$nextTick ->
-          window[key + '1'].href = @href[key]
+        window[key2].rel = 'stylesheet'
+        window[key2].href = href
+        setTimeout =>
+          window[key1].rel = 'stylesheet'
+          window[key1].href = href
+          setTimeout =>
+            window[key2].rel = 'prefetch'
+          , 100
+        , 100
   ]
   data: ->
-    font_old: "std"
     top:    0
     width:  0
     height: 0
@@ -46,10 +54,10 @@ module.exports =
   
   head: ->
     link: [
-      { rel: 'stylesheet', type: 'text/css', id: 'font1'  }
-      { rel: 'stylesheet', type: 'text/css', id: 'font2'  }
-      { rel: 'stylesheet', type: 'text/css', id: 'theme1' }
-      { rel: 'stylesheet', type: 'text/css', id: 'theme2' }
+      { rel: 'stylesheet', type: 'text/css', id: 'font1',  key: 'font1'  }
+      { rel: 'stylesheet', type: 'text/css', id: 'font2',  key: 'font2'  }
+      { rel: 'stylesheet', type: 'text/css', id: 'theme1', key: 'theme1' }
+      { rel: 'stylesheet', type: 'text/css', id: 'theme2', key: 'theme2' }
     ]
 
 </script>
