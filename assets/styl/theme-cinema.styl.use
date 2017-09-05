@@ -7,12 +7,9 @@ body
 palette_single(title-bar, grass, BROAD)
 palette_single(icons,     grass, BROAD)
 
-palette(header,   ash)
-
 palette(world,  black)
 palette(metal,  metal)
 
-palette(stats,  light)
 palette(says,   light)
 palette(sepia,   snow)
 
@@ -24,7 +21,7 @@ palette(sepia,   snow)
     margin:  0 7px 0 0
 
 .outframe
-  background: linear-gradient(90deg, hsla(35,21%,47%,1), hsla(40,66%,0%,1), hsla(35,21%,47%,1))
+  background: linear-gradient(90deg, hsla(35,21%,47%,0), hsla(40,66%,0%,1), hsla(35,21%,47%,0))
 
 .contentframe
   background-repeat: repeat

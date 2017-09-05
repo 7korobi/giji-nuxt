@@ -23,7 +23,7 @@
         page-part
 
     .inframe(v-if="mode == 'title' && book")
-      report.form(handle="MAKER" deco="head", :write_at="book.write_at", :head="book.head", :sign="book.sign", :log="book.log")
+      report.form(handle="MAKER" deco="head", :id="part_id", :key="part_id", :head="book.head", :sign="book.sign", :log="book.log")
 
     .inframe(v-if="mode == 'memo'")
       report.form(handle="footer")

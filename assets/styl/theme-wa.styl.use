@@ -7,12 +7,9 @@ body
 palette_single(title-bar, grass, BROAD)
 palette_single(icons,     grass, BROAD)
 
-palette(header,   ash)
-
 palette(world,  black)
 palette(metal,  metal)
 
-palette(stats,  light)
 palette(says,   light)
 palette(sepia,   snow)
 

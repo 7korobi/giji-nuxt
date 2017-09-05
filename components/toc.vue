@@ -61,7 +61,7 @@ module.exports =
 
 <template lang="pug">
 .inframe.TITLE(v-if="show")
-  h6 栞
+  hr
   .swipe
     page-mode(style="white-space: nowrap")
     hr

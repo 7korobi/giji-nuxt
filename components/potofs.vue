@@ -1,10 +1,13 @@
 <template lang="pug">
-.inframe.potofs.header(v-if="show")
-  h6 {{ part.label }}の参加者
+.inframe.header(v-if="show")
+  .TITLE
+    hr
+    h6 {{ part.label }}の参加者
+    hr
   .swipe
     table
-      tfoot
-        tr.btns
+      tfoot.TITLE
+        tr
           th(colspan="2")
             sup (スクロールします)
           th
@@ -32,7 +35,7 @@
             btn(v-model="sort" as="text", @toggle="reverse") 補足
           th
 
-      transition-group.tlist(name="list" tag="tbody")
+      transition-group.potofs.fine.tlist(name="list" tag="tbody")
         tr(v-for="o in potofs", :key="o.id" v-if="! o.hide")
           th.r(:class="o.live.role_id") {{ o.job }}
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
@@ -131,6 +134,9 @@ module.exports =
 
 </script>
 <style lang="stylus" scoped>
+th, td
+  border-radius: 0
+
 .r
   text-align: right
 .l

@@ -2090,11 +2090,6 @@ module.exports = {
   ],
   link: [
     {
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: "https://use.fontawesome.com/6348868528.css"
-    },
-    {
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'

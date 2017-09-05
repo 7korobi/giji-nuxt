@@ -10,7 +10,7 @@ store = require("~plugins/browser-store")
     switch key
       when "mode"
         focus.call @, @chat_id
-        @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
+        @page_idxs = [ @page_idx ]
 
 focus = (chat_id)->
   if chat_id? && window?
@@ -24,6 +24,8 @@ path store, "folder", "book", "part", "phase", "chat"
 Object.assign store.computed,
   page_all_contents: ->
     @chats(@part_id)
+  page_idx: ->
+    @page_all_contents?.page_idx?(@chat) ? 0
 
   mentions: ->
     @read_at
@@ -37,7 +39,7 @@ Object.assign store.computed,
     @now[@mode]
 
   back: ->
-    pages = 1 + @page_all_contents?.page_idx?(@chat) ? 0
+    pages = 1 + @page_idx
     [ @chat_id || @part_id, pages, @mode, @$route.name ].join(",")
 
   back_url: ->
@@ -60,7 +62,7 @@ Object.assign store.computed,
 
 store.watch.read_at = ->
   focus.call @, @chat_id
-  @page_idxs = [ @page_all_contents?.page_idx?(@chat) ? 0 ]
+  @page_idxs = [ @page_idx ]
   
 
 module.exports = store

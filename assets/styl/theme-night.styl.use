@@ -6,12 +6,9 @@ $border = #333
 palette_single(title-bar, grass, BROAD)
 palette_single(icons,     grass, BROAD)
 
-palette(header,   ash)
-
 palette(world,   foot)
 palette(metal,    ash)
 
-palette(stats,  night)
 palette(says,   night)
 palette(sepia,  metal)
 

@@ -1,0 +1,8 @@
+@import "./_theme.styl"
+
+.portrate
+  palette(stats, light)
+.potofs
+  palette(says,  foot)
+palette(stats,    ash)
+palette(header,   ash)
