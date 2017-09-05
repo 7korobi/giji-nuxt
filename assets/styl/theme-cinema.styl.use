@@ -2,17 +2,17 @@
 @import "./_theme_film.styl"
 
 body
-  background-color: mix(spin(#ff0000,  2 * 18deg + 0deg), #777, 20%)
+  background-color: hsla(35,21%,47%,1)
 
 palette_single(title-bar, grass, BROAD)
 palette_single(icons,     grass, BROAD)
 
-palette(stats,   foot)
 palette(header,   ash)
 
 palette(world,  black)
 palette(metal,  metal)
 
+palette(stats,  light)
 palette(says,   light)
 palette(sepia,   snow)
 
@@ -22,6 +22,9 @@ palette(sepia,   snow)
     border-style: none
     border-width: 0
     margin:  0 7px 0 0
+
+.outframe
+  background: linear-gradient(90deg, hsla(35,21%,47%,1), hsla(40,66%,0%,1), hsla(35,21%,47%,1))
 
 .contentframe
   background-repeat: repeat

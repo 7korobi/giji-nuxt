@@ -398,15 +398,15 @@ palette_single($bgTheme, $backT, key)
     h1, h2
       body &.{theme},
       .{theme} &
-        text-shadow: 0 3px 7px $edge , 0 -3px 7px $edge
-        color: $hide
+        text-shadow: 3px 0px 2px $emboss , -3px 0px 2px $emboss
+        color: $pen
         &:first-letter
-          color: $pen
+          color: $penHi
 
     h3, h4
       body &.{theme},
       .{theme} &
-        text-shadow: 3px 0px 7px $edge , -3px 0px 7px $edge
+        text-shadow: 3px 0px 2px $emboss , -3px 0px 2px $emboss
         color: $pen
         &:first-letter
           color: $penHi
