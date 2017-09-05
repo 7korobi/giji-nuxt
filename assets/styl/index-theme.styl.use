@@ -1,8 +1,8 @@
 @import "./_theme.styl"
 
-.portrate
-  palette(stats, light)
 .potofs
   palette(says,  foot)
+  palette(sepia,  ash)
+
 palette(stats,   foot)
 palette(header,   ash)
