@@ -14,6 +14,9 @@ inline($base, $inline, $family)
 font($small, $base, $family)
   $middle = ($small + $base) / 2
   $pad    = $base / 3
+  $hr_top = $base / 4 - 3px
+  $hr_btm = $base / 4
+
   $block  = $base * 1.5
   $inline = $base * 1.3
 
@@ -29,6 +32,9 @@ font($small, $base, $family)
     inline(0.83 * $base, 0.83 * $inline, $family)
   h6
     inline(0.67 * $base, 0.67 * $inline, $family)
+
+  hr
+    padding: $hr_top 0 $hr_btm 0
 
   width($base, 30 * $base + 130)
 

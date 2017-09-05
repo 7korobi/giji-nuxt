@@ -135,13 +135,19 @@ sup, sub
     margin: 4px 2px
 
 hr
-  height: 2px
-  margin:  0 0 3px 0
-  padding: 3px 0 0 0
+  clear: both
+  height:  5px
+  margin:  0
   -webkit-margin-before: 0
   -webkit-margin-after:  0
-  clear: both
+  border: none
+
+hr:before
+  content: ""
+  display: block
+  height: 3px
+  margin:  0
+  padding: 0
   border-style: solid none dashed none
   border-top: 1px solid
   border-bottom: 1px dashed
-
