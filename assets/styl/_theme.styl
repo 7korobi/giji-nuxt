@@ -188,6 +188,9 @@ _HSLA(key,SS,LL,AA)
   HH = hues[key]
   hsla(HH,SS,LL,AA)
 
+textBorder(dd, blur, col)
+  bb = - dd
+  text-shadow: dd dd blur col, 0 dd blur col, bb dd blur col, dd 0 blur col, bb 0 blur col, dd bb blur col, 0 bb blur col, bb bb blur col
 
 palette($themes, $backT)
   for key, $bgTheme in themes[$themes]
@@ -396,41 +399,54 @@ palette_single($bgTheme, $backT, key)
         :focus
           border-color: $focus
 
+    h1, h2, h3, h4, h5, h6
+      body &.{theme}:first-letter
+      .{theme} &:first-letter
+        color: $penHi
+
     h1, h2
       body &.{theme},
       .{theme} &
-        text-shadow: 4px 2px 0 $emboss , -4px 2px 0 $emboss , 4px -2px 0 $emboss, -4px -2px 0 $emboss
+        textBorder(3px, 0.5px, $bgHi)
         color: $pen
-        &:first-letter
-          color: $penHi
 
     h3, h4
       body &.{theme},
       .{theme} &
-        text-shadow: 3px 1px 0 $emboss , -3px 1px 0 $emboss , 3px -1px 0 $emboss, -3px -1px 0 $emboss
+        textBorder(2px, 0.5px, $bgHi)
         color: $pen
-        &:first-letter
-          color: $penHi
 
     h5,
     h6,
     strong
       body &.{theme},
       .{theme} &
-        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
+        textBorder(2px, 0.5px, $edge)
         color: $penHi
       .{theme}.focus &
-        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
+        textBorder(2px, 0.5px, $edge)
         color: $penHi
 
     em
       body &.{theme},
       .{theme} &
-        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
+        textBorder(1px, 0.5px, $edge)
         color: $pen
       .{theme}.focus &
-        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
+        textBorder(1px, 0.5px, $edge)
         color: $penHi
+
+    button,
+    [href],
+    [title],
+    [data-tooltip],
+    input[type=checkbox],
+    input[type=radio]
+      body &.{theme},
+      .{theme} &
+        &:hover,
+        &:visited
+          textBorder(2px, 3px, $focus)
 
     .bar,
     code,
@@ -465,6 +481,7 @@ palette_single($bgTheme, $backT, key)
       .{theme} &:before,
       body &.{theme}:after,
       .{theme} &:after
+        text-shadow: none
         color: $pen
         background-color: $bgHi
 
