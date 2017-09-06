@@ -399,7 +399,7 @@ palette_single($bgTheme, $backT, key)
     h1, h2
       body &.{theme},
       .{theme} &
-        text-shadow: 3px 0px 2px $emboss , -3px 0px 2px $emboss
+        text-shadow: 4px 2px 0 $emboss , -4px 2px 0 $emboss , 4px -2px 0 $emboss, -4px -2px 0 $emboss
         color: $pen
         &:first-letter
           color: $penHi
@@ -407,7 +407,7 @@ palette_single($bgTheme, $backT, key)
     h3, h4
       body &.{theme},
       .{theme} &
-        text-shadow: 3px 0px 2px $emboss , -3px 0px 2px $emboss
+        text-shadow: 3px 1px 0 $emboss , -3px 1px 0 $emboss , 3px -1px 0 $emboss, -3px -1px 0 $emboss
         color: $pen
         &:first-letter
           color: $penHi
@@ -417,19 +417,19 @@ palette_single($bgTheme, $backT, key)
     strong
       body &.{theme},
       .{theme} &
-        text-shadow: 3px 3px 7px $edge , -3px 3px 7px $edge , 3px -3px 7px $edge , -3px -3px 7px $edge
+        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
         color: $penHi
       .{theme}.focus &
-        text-shadow: 3px 3px 7px $focus , -3px 3px 7px $focus , 3px -3px 7px $focus , -3px -3px 7px $focus
+        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
         color: $penHi
 
     em
       body &.{theme},
       .{theme} &
-        text-shadow: 2px 2px 5px $edge , -2px 2px 5px $edge , 2px -2px 5px $edge , -2px -2px 5px $edge
+        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
         color: $pen
       .{theme}.focus &
-        text-shadow: 2px 2px 5px $focus , -2px 2px 5px $focus , 2px -2px 5px $focus , -2px -2px 5px $focus
+        text-shadow: 1px 1px 0 $emboss , -1px 1px 0 $emboss , 1px -1px 0 $emboss, -1px -1px 0 $emboss
         color: $penHi
 
     .bar,
