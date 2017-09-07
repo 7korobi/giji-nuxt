@@ -188,9 +188,16 @@ _HSLA(key,SS,LL,AA)
   HH = hues[key]
   hsla(HH,SS,LL,AA)
 
-textBorder(dd, blur, col)
-  bb = - dd
-  text-shadow: dd dd blur col, 0 dd blur col, bb dd blur col, dd 0 blur col, bb 0 blur col, dd bb blur col, 0 bb blur col, bb bb blur col
+Bold(a, blur, col)
+  b = 0 - a
+  text-shadow: a 0 blur col, b 0 blur col
+
+Glowing(a, blur, col)
+  b = 0 - a
+  text-shadow: 0 0 0.5px col, a a blur col, 0 a blur col, b a blur col, a 0 blur col, b 0 blur col, a b blur col, 0 b blur col, b b blur col
+
+Marker(size, col)
+  background: linear-gradient(transparent size, col 0)
 
 palette($themes, $backT)
   for key, $bgTheme in themes[$themes]
@@ -210,7 +217,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =   HSLA(key,  30%,40%,1)
     $pen =   _HSLA(key,  20%,66%,1)
-    $penHi = _HSLA(key,  20%,80%,1)
+    $penHi = _HSLA(key,  10%,85%,1)
     $good =  _HSLA(ALIEN,20%,66%,1)
     $warn =  _HSLA(P01,  20%,66%,1)
     $ban  =  _HSLA(WOLF, 20%,66%,1)
@@ -228,7 +235,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =  _HSLA(key,  20%,40%,1)
     $pen =   _HSLA(key,  25%,75%,1)
-    $penHi = _HSLA(key,  25%,80%,1)
+    $penHi = _HSLA(key,  15%,90%,1)
     $good =  _HSLA(ALIEN,25%,75%,1)
     $warn =  _HSLA(P01,  25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
@@ -264,7 +271,7 @@ palette_single($bgTheme, $backT, key)
     $off =    $bgLow
     $on =     $bgHi
 
-    $hide =  _HSLA(key,  40%,40%,1)
+    $hide =  _HSLA(key,  35%,40%,1)
     $pen =   _HSLA(key,  80%,15%,1)
     $penHi = _HSLA(key,  80%, 0%,1)
     $good =  _HSLA(ALIEN,80%,15%,1)
@@ -277,7 +284,7 @@ palette_single($bgTheme, $backT, key)
     $edge =  _HSLA(key,66%,40%,1)
     $focus = _HSLA(key,80%,30%,1)
 
-    $emboss = HSLA(key,50%,30%,1)
+    $emboss = HSLA(key,30%,30%,1)
     $bgLow =  HSLA(key,50%,20%,1)
     $bg =     HSLA(key,35%,15%,1)
     $bgHi =   HSLA(key,99%,10%,1)
@@ -286,7 +293,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =   HSLA(key,  30%,40%,1)
     $pen =   _HSLA(key,  20%,66%,1)
-    $penHi = _HSLA(key,  20%,80%,1)
+    $penHi = _HSLA(key,  10%,85%,1)
     $good =  _HSLA(ALIEN,20%,66%,1)
     $warn =  _HSLA(P01,  20%,66%,1)
     $ban  =  _HSLA(WOLF, 20%,66%,1)
@@ -304,7 +311,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =  _HSLA(key,  20%,40%,1)
     $pen =   _HSLA(key,  25%,75%,1)
-    $penHi = _HSLA(key,  25%,80%,1)
+    $penHi = _HSLA(key,  15%,90%,1)
     $good =  _HSLA(ALIEN,25%,75%,1)
     $warn =  _HSLA(P01,  25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
@@ -322,7 +329,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =   HSLA(key,  30%,40%,1)
     $pen =   _HSLA(key,  75%,66%,1)
-    $penHi = _HSLA(key,  75%,80%,1)
+    $penHi = _HSLA(key,  85%,85%,1)
     $good =  _HSLA(ALIEN,75%,66%,1)
     $warn =  _HSLA(P01,  75%,66%,1)
     $ban  =  _HSLA(WOLF, 75%,66%,1)
@@ -342,7 +349,7 @@ palette_single($bgTheme, $backT, key)
 
     $hide =  _HSLA(key,  20%,40%,1)
     $pen =   _HSLA(key,  25%,75%,1)
-    $penHi = _HSLA(key,  25%,80%,1)
+    $penHi = _HSLA(key,  15%,90%,1)
     $good =  _HSLA(ALIEN,25%,75%,1)
     $warn =  _HSLA(P01,  25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
@@ -399,7 +406,7 @@ palette_single($bgTheme, $backT, key)
         :focus
           border-color: $focus
 
-    h1, h2, h3, h4, h5, h6
+    h1, h2, h3, h4
       body &.{theme}:first-letter
       .{theme} &:first-letter
         color: $penHi
@@ -407,35 +414,36 @@ palette_single($bgTheme, $backT, key)
     h1, h2
       body &.{theme},
       .{theme} &
-        textBorder(3px, 0.5px, $bgHi)
+        Glowing(4.5px, 4px, $emboss)
         color: $pen
 
     h3, h4
       body &.{theme},
       .{theme} &
-        textBorder(2px, 0.5px, $bgHi)
+        Glowing(3px, 2.5px, $emboss)
         color: $pen
 
     h5,
-    h6,
+    h6
+      body &.{theme},
+      .{theme} &
+        Bold(1.5px, 1px, $emboss)
+        color: $penHi
+
     strong
       body &.{theme},
       .{theme} &
-        textBorder(2px, 0.5px, $edge)
-        color: $penHi
-      .{theme}.focus &
-        textBorder(2px, 0.5px, $edge)
+        Bold(1.5px, 1px, $edge)
         color: $penHi
 
     em
       body &.{theme},
       .{theme} &
-        textBorder(1px, 0.5px, $edge)
+        Bold(1px, 0.5px, $edge)
         color: $pen
-      .{theme}.focus &
-        textBorder(1px, 0.5px, $edge)
-        color: $penHi
 
+    em,
+    strong,
     button,
     [href],
     [title],
@@ -446,7 +454,8 @@ palette_single($bgTheme, $backT, key)
       .{theme} &
         &:hover,
         &:visited
-          textBorder(2px, 3px, $focus)
+          Bold(1.5px, 1px, $edge)
+          background-color: transparent
 
     .bar,
     code,
@@ -461,7 +470,7 @@ palette_single($bgTheme, $backT, key)
       body &.{theme},
       .{theme} &
         color: $pen
-        background-color: $off
+        Marker(40%, $off)
 
     [href],
     [title],
