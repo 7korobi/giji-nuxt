@@ -24,6 +24,6 @@ module.exports =
         commit "progress", data
 
     oldlog: ({ state, commit, rootState })->
-      axios.get "#{env.SOW_URL}/index.json.gz"
+      axios.get "#{env.SOW_URL}/index.json"
       .then ({ status, data })->
         commit "oldlog", data
