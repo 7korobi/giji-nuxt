@@ -2,7 +2,7 @@ mongo = require "mongodb-bluebird"
 sh = require 'child_process'
 fs = require 'fs'
 _ = require "lodash"
-{ MONGO_URL_SOW, API_URL } = process.env
+{ MONGO_URL_SOW, API_URL, BACKUP } = process.env
 
 ObjectId = false
 
@@ -146,6 +146,9 @@ mongo.connect MONGO_URL_SOW
       path = "./static/sow/index.json.gz"
       url = "#{API_URL}/story/oldlog"
       data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
+      data.push """
+        rsync -a --delete ./static/sow/ #{BACKUP}/static/sow/
+      """
       fs.writeFile './static/sow.sh', data.join("\n") , (err)->
         console.log err
       false
