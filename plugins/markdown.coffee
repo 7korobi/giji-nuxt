@@ -36,6 +36,8 @@ sow = head = mono = (text)->
   text
   .replace ///<br>///g, "\n"
 
+  .replace ///<strong>(.*?)<\/strong><sup>(.*?)</sup>///g, (tag, item, title, idx, src)->
+    """<strong title="#{title}">#{item}</strong>"""
   .replace ///<a\ title="(.*?)"><strong>(.*?)</strong></a>///g, (tag, title, item, idx, src)->
     """<strong title="#{title}">#{item}</strong>"""
 
