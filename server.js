@@ -141,7 +141,7 @@ module.exports = function(app) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var API_URL, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
+var API_URL, BACKUP, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
 mongo = __webpack_require__(32);
 
@@ -151,7 +151,7 @@ fs = __webpack_require__(30);
 
 _ = __webpack_require__(31);
 
-({MONGO_URL_SOW, API_URL} = process.env);
+({MONGO_URL_SOW, API_URL, BACKUP} = process.env);
 
 ObjectId = false;
 
@@ -361,6 +361,7 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
       path = "./static/sow/index.json.gz";
       url = `${API_URL}/story/oldlog`;
       data.push(` curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
+      data.push(`rsync -a --delete ./static/sow/ ${BACKUP}/static/sow/`);
       fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
         return console.log(err);
       });
@@ -2056,11 +2057,11 @@ module.exports = {
 /* 20 */
 /***/ (function(module, exports) {
 
-var API_URL, SOW_URL, STORE_URL, WEB_URL;
+var API_URL, BACKUP, SOW_URL, STORE_URL, WEB_URL;
 
-({WEB_URL, API_URL, SOW_URL, STORE_URL} = process.env);
+({WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP} = process.env);
 
-module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL};
+module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP};
 
 
 /***/ }),
