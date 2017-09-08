@@ -8,8 +8,6 @@
 <script>
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '~assets/styl/index.styl'
-
 import 'element-ui/lib/theme-default/index.css'
 
 

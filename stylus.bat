@@ -1,1 +1,1 @@
-ls assets/styl/*-*.styl.use | xargs stylus --compress --watch --sourcemap --out static/css/.
+ls assets/styl/*.styl.use | xargs stylus --compress --watch --sourcemap --out static/css/.
