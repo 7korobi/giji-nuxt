@@ -1537,7 +1537,7 @@ module.exports = {
   head: __webpack_require__(21),
   env: __webpack_require__(20),
   plugins: [],
-  css: ['~assets/styl/index.styl', 'element-ui/lib/theme-default/index.css'],
+  css: ['element-ui/lib/theme-default/index.css'],
   //####
   // Customize the progress-bar color
 
@@ -2101,7 +2101,6 @@ module.exports = {
   ],
   script: [
     {
-      // { src: '/ace/ace.js', type: 'text/javascript', charset: 'utf8' }
       src: '/monaco-editor/vs/loader.js',
       type: 'text/javascript',
       charset: 'utf8'

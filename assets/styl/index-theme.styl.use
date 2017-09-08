@@ -1,8 +1,0 @@
-@import "./_theme.styl"
-
-.potofs
-  palette(says,  foot)
-  palette(sepia,  ash)
-
-palette(stats,   foot)
-palette(header,   ash)

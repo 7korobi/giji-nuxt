@@ -8,7 +8,6 @@ module.exports =
 
   plugins: []
   css: [
-    '~assets/styl/index.styl'
     'element-ui/lib/theme-default/index.css'
   ]
   #####

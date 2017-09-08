@@ -2,10 +2,19 @@
 @import "./_tooltip.styl"
 @import "./_chat.styl"
 @import "./_frame.styl"
+@import "./_theme.styl"
+
+.potofs
+  palette(says,  foot)
+  palette(sepia,  ash)
+
+palette(stats,   foot)
+palette(header,   ash)
+
 
 .page-enter-active,
 .page-leave-active
-  transition: opacity .7s
+  transition: opacity .3s
 
 .page-enter,
 .page-leave-active

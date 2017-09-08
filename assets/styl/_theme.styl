@@ -430,10 +430,10 @@ palette_single($bgTheme, $backT, key)
         Bold(1.5px, 1px, $emboss)
         color: $penHi
 
+    b,
     strong
       body &.{theme},
       .{theme} &
-        Bold(1.5px, 1px, $edge)
         color: $penHi
 
     em
@@ -442,8 +442,6 @@ palette_single($bgTheme, $backT, key)
         Bold(1px, 0.5px, $edge)
         color: $pen
 
-    em,
-    strong,
     button,
     [href],
     [title],
@@ -503,14 +501,12 @@ palette_single($bgTheme, $backT, key)
         color: $bgLow
 
     a,
-    b,
     input,
     button
       body &.{theme},
       .{theme} &
         background-color: $off
     a,
-    b,
     input,
     button,
     .name,

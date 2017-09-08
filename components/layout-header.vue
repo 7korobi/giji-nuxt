@@ -54,7 +54,7 @@ module.exports =
   
   head: ->
     link: [
-      { rel: 'stylesheet', type: 'text/css', href: "/css/index-theme.styl.css" }
+      { rel: 'stylesheet', type: 'text/css', href: "/css/index.styl.css" }
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
       { rel: 'stylesheet', type: 'text/css', id: 'font1' }
       { rel: 'stylesheet', type: 'text/css', id: 'font2' }

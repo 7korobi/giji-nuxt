@@ -15,6 +15,5 @@ module.exports =
     { href: "mailto:7korobi@gmail.com" }
   ]
   script: [
-    # { src: '/ace/ace.js', type: 'text/javascript', charset: 'utf8' }
     { src: '/monaco-editor/vs/loader.js', type: 'text/javascript', charset: 'utf8' }
   ]
