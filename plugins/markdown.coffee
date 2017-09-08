@@ -36,10 +36,10 @@ sow = head = mono = (text)->
   text
   .replace ///<br>///g, "\n"
 
-  .replace ///<strong>(.*?)<\/strong><sup>(.*?)</sup>///g, (tag, item, title, idx, src)->
-    """<strong title="#{title}">#{item}</strong>"""
-  .replace ///<a\ title="(.*?)"><strong>(.*?)</strong></a>///g, (tag, title, item, idx, src)->
-    """<strong title="#{title}">#{item}</strong>"""
+  .replace ///<strong>([^<]*?)<\/strong><sup>([^<]*?)</sup>///g, (tag, item, title, idx, src)->
+    """<abbr title="#{title}">#{item}</abbr>"""
+  .replace ///<a\ title="([^"]*?)"><strong>([^<]*?)</strong></a>///g, (tag, title, item, idx, src)->
+    """<abbr title="#{title}">#{item}</abbr>"""
 
   .replace ///[a-z]+://[^\s<]+[^<.,:;"')\]\s]///g, (url, idx, src)->
     return url if '<a href="' == src[idx - 9 ... idx].toLowerCase()

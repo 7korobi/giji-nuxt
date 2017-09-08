@@ -42,10 +42,10 @@
       chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 
     .inframe
-      report(v-if="page_next_id" handle="footer" key="limitup")
+      report.form(v-if="page_next_id" handle="footer" key="limitup")
         .center
           scroll-mine(@input="page_add", :as="page_next_id") 次頁
-      report(v-else handle="footer" key="limitup")
+      report.form(v-else handle="footer" key="limitup")
         page-part
         page-mode
 

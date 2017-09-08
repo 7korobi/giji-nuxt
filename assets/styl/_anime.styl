@@ -1,7 +1,23 @@
+
+
+@keyframes border-hover
+  0%    { border-radius: 1em 3px 3px 3px / 3px 3px 1em 3px }
+  25%   { border-radius: 3px 3px 1em 3px / 1em 3px 3px 3px }
+  50%   { border-radius: 3px 1em 3px 3px / 3px 3px 3px 1em }
+  75%   { border-radius: 3px 3px 3px 1em / 3px 1em 3px 3px }
+
+
+.page-enter-active,
+.page-leave-active
+  transition: color      .2s
+  transition: background .2s
+
+*
+  transition: background-color .9s
+  transition: border-color     .9s
+
 .expand-transition
   transition: all .2s ease
-
-
 
 .icons,
 .list
