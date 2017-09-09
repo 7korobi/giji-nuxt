@@ -12,7 +12,7 @@ module.exports =
 </script>
 
 <template lang="pug">
-.inframe(v-if="show")
+.inframe.mentions(v-if="show")
   div.date(:class="chat.handle")
     hr
     span
@@ -28,7 +28,7 @@ module.exports =
     h6 参照されている
     hr
   table
-    transition-group.tlist(name="list" tag="tbody")
+    tbody.tlist
       tr-intro-chat(v-for="o in mentions" @anker="_events.anker", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")
 </template>
 

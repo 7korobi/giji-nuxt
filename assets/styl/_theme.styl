@@ -9,7 +9,7 @@ themes = {
     P04:    P04
     BROAD:  P03 SSAY MSAY
     VBROAD: P02 VSSAY VSAY
-    P01:    P01
+    LONE:   P01
     WOLF:   WSAY
     N01:    N01
     N02:    N02
@@ -22,16 +22,16 @@ themes = {
     N09:    N09
   }
   sepia: {
-    SPORT:  TSAY hide
+    SPORT:  Ssport
     P09:    SP09
     ELSE:   SP08
-    BRONZE: SP07
+    BRONZE: SP07 TSAY hide
     ALIEN:  SP06
     P05:    SP05
     P04:    SP04
     BROAD:  SP03
     VBROAD: SP02
-    P01:    SP01
+    LONE:   SP01
     WOLF:   S000
     N01:    SN01
     N02:    SN02
@@ -54,7 +54,7 @@ themes = {
     P04:    WP04
     BROAD:  WP03 public
     VBROAD: WP02
-    P01:    WP01
+    LONE:   WP01
     WOLF:   W000
     N01:    WN01
     N02:    WN02
@@ -74,14 +74,14 @@ themes = {
     ALIEN:  MP06
     P05:    MP05
     P04:    MP04
-    BROAD:  MP03 ADMIN
+    BROAD:  MP03
     VBROAD: MP02
-    P01:    MP01
+    LONE:   MP01
     WOLF:   M000
     N01:    MN01
     N02:    MN02
     VLOVE:  MN03
-    LOVE:   MN04
+    LOVE:   MN04 ADMIN
     N05:    MN05
     N06:    MN06
     VGRAVE: MN07
@@ -90,10 +90,13 @@ themes = {
   }
 
   stats: {
-    SPORT:  HATER LONEWOLF
-    ELSE:   PIXI GURU
+    SPORT:  HATER
+    ELSE:   PIXI
+    BRONZE: GURU
     ALIEN:  EVIL
-    BROAD:  HUMAN DISH live juror
+    BROAD:  HUMAN live juror
+    VBROAD: DISH
+    LONE:   LONEWOLF
     WOLF:   WOLF suicide victim cursed feared droop
     LOVE:   LOVER
     VBROAD: NONE MOB mob visiter grave alive
@@ -117,7 +120,7 @@ hues = {
   P04:     4 * 18deg
   BROAD:   3 * 18deg - 6deg
   VBROAD:  2 * 18deg
-  P01:     1 * 18deg
+  LONE:    1 * 18deg
   WOLF:    0
   N01:    -1 * 18deg
   N02:    -2 * 18deg + 5deg
@@ -141,7 +144,7 @@ saturates = {
   P04:    100%
   BROAD:  100%
   VBROAD: 100%
-  P01:    100%
+  LONE:   100%
   WOLF:   100%
   N01:    100%
   N02:    100%
@@ -164,7 +167,7 @@ lights = {
   P04:    100%
   BROAD:  100%
   VBROAD: 100%
-  P01:    100%
+  LONE:   100%
   WOLF:   100%
   N01:    100%
   N02:    100%
@@ -222,7 +225,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  15%,90%,1)
 
     $good =  _HSLA(ALIEN,20%,66%,1)
-    $warn =  _HSLA(P01,  20%,66%,1)
+    $warn =  _HSLA(LONE, 20%,66%,1)
     $ban  =  _HSLA(WOLF, 20%,66%,1)
 
   if ash == $backT
@@ -243,7 +246,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  15%,90%,1)
 
     $good =  _HSLA(ALIEN,25%,75%,1)
-    $warn =  _HSLA(P01,  25%,75%,1)
+    $warn =  _HSLA(LONE, 25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
 
 
@@ -266,7 +269,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  66%, 0%,1)
 
     $good =  _HSLA(ALIEN,66%,15%,1)
-    $warn =  _HSLA(P01,  66%,15%,1)
+    $warn =  _HSLA(LONE, 66%,15%,1)
     $ban =   _HSLA(WOLF, 66%,15%,1)
 
   if snow == $backT
@@ -287,7 +290,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  80%, 0%,1)
 
     $good =  _HSLA(ALIEN,80%,15%,1)
-    $warn =  _HSLA(P01,  80%,15%,1)
+    $warn =  _HSLA(LONE, 80%,15%,1)
     $ban =   _HSLA(WOLF, 80%,15%,1)
 
 
@@ -310,7 +313,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  15%,90%,1)
 
     $good =  _HSLA(ALIEN,20%,66%,1)
-    $warn =  _HSLA(P01,  20%,66%,1)
+    $warn =  _HSLA(LONE, 20%,66%,1)
     $ban  =  _HSLA(WOLF, 20%,66%,1)
 
   if metal == $backT
@@ -331,7 +334,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  15%,90%,1)
 
     $good =  _HSLA(ALIEN,25%,75%,1)
-    $warn =  _HSLA(P01,  25%,75%,1)
+    $warn =  _HSLA(LONE, 25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
 
   if night == $backT
@@ -352,7 +355,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  85%,90%,1)
 
     $good =  _HSLA(ALIEN,75%,66%,1)
-    $warn =  _HSLA(P01,  75%,66%,1)
+    $warn =  _HSLA(LONE, 75%,66%,1)
     $ban  =  _HSLA(WOLF, 75%,66%,1)
 
 
@@ -374,7 +377,7 @@ palette_single($bgTheme, $backT, key)
     $penHi = _HSLA(key,  15%,90%,1)
 
     $good =  _HSLA(ALIEN,25%,75%,1)
-    $warn =  _HSLA(P01,  25%,75%,1)
+    $warn =  _HSLA(LONE, 25%,75%,1)
     $ban  =  _HSLA(WOLF, 25%,75%,1)
 
 

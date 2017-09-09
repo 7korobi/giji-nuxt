@@ -11,12 +11,6 @@
 palette(stats,   foot)
 palette(header,   ash)
 
-.page-enter,
-.page-leave-active
-  color: #000
-  background-color: #000
-
-
 input[type=color],
 input[type=checkbox],
 input[type=radio],

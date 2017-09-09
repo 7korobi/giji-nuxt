@@ -12,10 +12,10 @@ module.exports =
         key2 = key + 2
         href = @href[key]
         return unless window?
+        window[key1].rel = 'stylesheet'
         window[key2].rel = 'stylesheet'
         window[key2].href = href
         setTimeout =>
-          window[key1].rel = 'stylesheet'
           window[key1].href = href
           setTimeout =>
             window[key2].rel = 'prefetch'
@@ -56,10 +56,10 @@ module.exports =
     link: [
       { rel: 'stylesheet', type: 'text/css', href: "/css/index.styl.css" }
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
-      { rel: 'stylesheet', type: 'text/css', id: 'font1' }
-      { rel: 'stylesheet', type: 'text/css', id: 'font2' }
-      { rel: 'stylesheet', type: 'text/css', id: 'theme1' }
-      { rel: 'stylesheet', type: 'text/css', id: 'theme2' }
+      { type: 'text/css', id: 'font1' }
+      { type: 'text/css', id: 'font2' }
+      { type: 'text/css', id: 'theme1' }
+      { type: 'text/css', id: 'theme2' }
     ]
 
 </script>

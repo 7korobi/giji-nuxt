@@ -3,6 +3,12 @@ body,
 p
   margin: 0
 
+.page-enter-active,
+.page-leave-active
+  .contentframe
+    .inframe
+      visibility: hidden
+
 body
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
   -webkit-overflow-scrolling: touch
@@ -12,7 +18,15 @@ body
   user-select: none
   overflow-wrap: break-word
   word-wrap:     break-word
-  z-index: -99
+
+  &:before,
+  &:after
+    content: ''
+    position: fixed
+    pointer-events: none
+    width:  100vw
+    height: 100vh
+    top: 0
 
 .swipe
   overflow-y: hidden
@@ -39,7 +53,6 @@ body
 .contentframe,
 .inframe
   box-sizing: content-box
-  transition: all 250ms ease
 
 .writeframe,
 .outframe
@@ -48,11 +61,9 @@ body
 .center-left,
 .center-right
   position: fixed
-  overflow-y: auto
   pointer-events: none
   z-index: -95
-  bottom: 50%
-  overflow-x: hidden
+  top: 50vh
   border-bottom-width: 2px
   border-bottom-style: solid
 
@@ -98,7 +109,7 @@ body
 .sideframe
   .icons
     width: 60px
-    margin: 0 0 0 auto
+    margin: 0 5px 5px auto
     overflow: hidden
     display: flex
     flex-direction: column

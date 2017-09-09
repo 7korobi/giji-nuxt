@@ -55,7 +55,7 @@ module.exports =
 </script>
 <template lang="pug">
 #welcome(:style="welcome_style")
-  table#export(:style="export_style")
+  table#export
     thead
       tr
         th.welcome-btns ロビー
@@ -98,7 +98,6 @@ module.exports =
 </template>
 <style lang="stylus" scoped>
 #export
-  transition: opacity 1s
   border-collapse: separate
   border-spacing: 3px
   padding: 30px
@@ -129,10 +128,11 @@ h2
   margin:   0
   padding: 25px 0 0 0
   white-space: pre
-  font-size: xx-large
   text-align: center
-  line-height: 1.1em
+  font-size:   35px
+  line-height: 50px
   a
-    font-size: xx-large
+    font-size:   35px
+    line-height: 50px
 
 </style>
