@@ -24,7 +24,7 @@ body
   z-index: -99
   background-color: #000
 body:after
-  animation: bg-pulse-fire 15s ease-in-out infinite alternate
+  // animation: bg-pulse-fire 15s ease-in-out infinite alternate
   background-repeat: repeat-y
   background-position: center top
   background-image: linear-gradient(90deg, hsla(35,99%,66%,0), hsla(35,99%,66%,.4), hsla(35,99%,50%,0))

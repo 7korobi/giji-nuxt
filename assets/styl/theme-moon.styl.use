@@ -23,7 +23,7 @@ palette(sepia,  metal)
 body
   z-index: -99
 body:after
-  animation: bg-pulse-fire 15s ease-in-out infinite alternate
+  // animation: bg-pulse-fire 15s ease-in-out infinite alternate
   background-repeat: repeat-y
   background-position: center top
   background-image: linear-gradient(90deg, hsla(0,96%,10%,.1), hsla(-10,96%,30%,1), hsla(0,96%,10%,.1))
