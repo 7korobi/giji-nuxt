@@ -15,24 +15,28 @@ module.exports =
 .inframe.mentions(v-if="show")
   div.date(:class="chat.handle")
     hr
-    span
+    span.pull-left
+      a(v-if="chat.phase && chat.phase.update") 訂正
       a(v-if="chat.part") {{ chat.part.label }}
       a p{{ 1 + page_idx}}
     span
-      a(v-if="chat.phase && chat.phase.update") 訂正
       a(v-if="chat.potof") {{ chat.potof.sign }}
-    span.pull-right
       em(v-if="chat.phase") {{ chat.phase.label }}
+    span.pull-right
       timeago(v-if="chat.write_at" :since="chat.write_at")
     hr
     h6 参照されている
     hr
-  table
-    tbody.tlist
-      tr-intro-chat(v-for="o in mentions" @anker="_events.anker", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")
+  .swipe
+    table
+      tbody.tlist
+        tr-intro-chat(v-for="o in mentions" @anker="_events.anker", :key="o.id", :id="o.id", :handle="o.phase.handle", :deco="o.deco", :log="o.log")
 </template>
 
 <style lang="stylus" scoped>
+
+.date
+  text-align: center
 
 table
   width: 100%
