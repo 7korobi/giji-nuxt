@@ -1,7 +1,7 @@
 {
   "publicPath": "/_nuxt/",
   "all": [
-    "manifest.0d5e5d3c30e37aae4422.js",
+    "manifest.5e4bcfbbecda5c110526.js",
     "fonts/element-icons.b02bdc1.ttf",
     "0.nuxt.bundle.ba2863ea88e01edf73a2.js",
     "1.nuxt.bundle.198d14253e44fe307126.js",
@@ -22,10 +22,10 @@
     "16.nuxt.bundle.50fa54c7925c6bd063f0.js",
     "17.nuxt.bundle.2104dcc6f3e57006977c.js",
     "18.nuxt.bundle.ad8ec1388d011e465ded.js",
-    "19.nuxt.bundle.6ae9ea9c10424bfea54c.js",
+    "19.nuxt.bundle.ef851460d07eec1d7cb7.js",
     "20.nuxt.bundle.8731f812d968f4b07b52.js",
-    "vendor.bundle.af5b5743c0f72474d743.js",
-    "nuxt.bundle.486bfc1c49ed2b6f1c0c.js",
+    "vendor.bundle.18f6334a5dd38076e099.js",
+    "nuxt.bundle.1afe7a07e844cba907e5.js",
     "fonts/element-icons.d2f69a9.woff",
     "0.nuxt.bundle.ba2863ea88e01edf73a2.js.map",
     "1.nuxt.bundle.198d14253e44fe307126.js.map",
@@ -46,17 +46,17 @@
     "16.nuxt.bundle.50fa54c7925c6bd063f0.js.map",
     "17.nuxt.bundle.2104dcc6f3e57006977c.js.map",
     "18.nuxt.bundle.ad8ec1388d011e465ded.js.map",
-    "19.nuxt.bundle.6ae9ea9c10424bfea54c.js.map",
+    "19.nuxt.bundle.ef851460d07eec1d7cb7.js.map",
     "20.nuxt.bundle.8731f812d968f4b07b52.js.map",
-    "vendor.bundle.af5b5743c0f72474d743.js.map",
-    "nuxt.bundle.486bfc1c49ed2b6f1c0c.js.map",
-    "manifest.0d5e5d3c30e37aae4422.js.map",
+    "vendor.bundle.18f6334a5dd38076e099.js.map",
+    "nuxt.bundle.1afe7a07e844cba907e5.js.map",
+    "manifest.5e4bcfbbecda5c110526.js.map",
     "index.html"
   ],
   "initial": [
-    "manifest.0d5e5d3c30e37aae4422.js",
-    "vendor.bundle.af5b5743c0f72474d743.js",
-    "nuxt.bundle.486bfc1c49ed2b6f1c0c.js"
+    "manifest.5e4bcfbbecda5c110526.js",
+    "vendor.bundle.18f6334a5dd38076e099.js",
+    "nuxt.bundle.1afe7a07e844cba907e5.js"
   ],
   "async": [
     "0.nuxt.bundle.ba2863ea88e01edf73a2.js",
@@ -78,7 +78,7 @@
     "16.nuxt.bundle.50fa54c7925c6bd063f0.js",
     "17.nuxt.bundle.2104dcc6f3e57006977c.js",
     "18.nuxt.bundle.ad8ec1388d011e465ded.js",
-    "19.nuxt.bundle.6ae9ea9c10424bfea54c.js",
+    "19.nuxt.bundle.ef851460d07eec1d7cb7.js",
     "20.nuxt.bundle.8731f812d968f4b07b52.js"
   ],
   "modules": {
