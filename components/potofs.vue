@@ -4,9 +4,9 @@
     hr
     h6 {{ part.label }}の参加者
     hr
-  .swipe
+  .swipe.fine
     table
-      tfoot.TITLE
+      tfoot.TITLE.form
         tr
           th(colspan="2")
             sup (スクロールします)
@@ -54,17 +54,16 @@
           td.l(:class="o.winner_id") {{ o.text }}
           td.last
   transition-group.swipe.list(v-if="part" name="list" tag="div")
-    table.btns(key="btns")
-      tbody
+    table.fine(key="ids")
+      tbody.TITLE.form
         tr
-          td
+          th
             btn(v-model="hide_potof_ids", :as="live_on")  参加者
-          td
+          th
             btn(v-model="hide_potof_ids", :as="live_off") リタイア
-        tr
-          td
+          th
             btn(v-model="hide_potof_ids", :as="full_on")  全表示
-          td
+          th
             btn(v-model="hide_potof_ids", :as="full_off") クリア
 
     portrate(v-for="o in potofs", :key="o.id", :face_id="o.face_id", :hide="o.hide", @click="toggle(o)")
@@ -137,6 +136,15 @@ module.exports =
 th, td
   border-radius: 0
 
+tfoot
+  a
+    height: 40px
+
+.form
+  a
+    padding: 0 4px
+    writing-mode: tb-rl
+
 .r
   text-align: right
 .l
@@ -155,7 +163,6 @@ th, td
 
 .list
   background: #000
-  padding: 2px
   display: flex
   flex-direction:  row
   flex-wrap:       nowrap
@@ -169,12 +176,10 @@ th, td
   .bar
     height:        3px
     border-radius: 3px
-  .btns
-    border-radius: 3px
-    max-height:   68px
-    height:       68px
-    margin-right: 4px
-    span
-      white-space: nowrap
+  .fine
+    a
+      flex-basis: auto
+      max-height:   68px
+      height:       68px
 </style>
 
