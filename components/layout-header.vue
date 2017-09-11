@@ -64,7 +64,7 @@ module.exports =
 
 </script>
 <template lang="pug">
-div(:class="body_class")
+.header(:class="body_class")
   welcome(:top="top")
     .btns
       span.font

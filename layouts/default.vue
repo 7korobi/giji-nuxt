@@ -13,7 +13,7 @@ div
   .outframe
     .center-left
     .center-right
-  nuxt
+  nuxt.page-active
   .outframe
     .contentframe
       .inframe

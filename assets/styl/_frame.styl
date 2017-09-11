@@ -3,12 +3,6 @@ body,
 p
   margin: 0
 
-.page-enter-active,
-.page-leave-active
-  .contentframe
-    .inframe
-      visibility: hidden
-
 body
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
   -webkit-overflow-scrolling: touch
@@ -19,6 +13,7 @@ body
   overflow-wrap: break-word
   word-wrap:     break-word
 
+.page-active
   &:before,
   &:after
     content: ''
@@ -27,6 +22,18 @@ body
     width:  100vw
     height: 100vh
     top: 0
+
+  &:before
+    z-index: -98
+  &:after
+    z-index: -97
+
+  &.page-enter-active,
+  &.page-leave-active
+    &:before
+      z-index: 99997
+    &:after
+      z-index: 99998
 
 .swipe
   overflow-y: hidden

@@ -21,14 +21,11 @@ palette(sepia,   snow)
 .center-right
   border-color: hsla(35,21%,47%,1)
 
-body
-  z-index: -99
-body:before
+.page-active:before
   // animation: bg-pulse-fire 5s ease-in-out infinite alternate
   background-repeat: repeat-y
   background-position: center top
   background-image: linear-gradient(90deg, hsla(35,21%,47%,1), hsla(40,66%,0%,1), hsla(35,21%,47%,1))
-  z-index: -98
 
 .contentframe
   background-repeat: repeat
