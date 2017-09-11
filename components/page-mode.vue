@@ -7,8 +7,13 @@ module.exports =
   ]
   methods:
     mode_to: (mode)->
+      switch @mode
+        when "title", "memo"
+          idx = @part_id
+        else
+          idx = @chat_id || @part_id
       name: "sow-village-idx-mode"
-      params: { mode, idx: @chat_id || @part_id }
+      params: { mode, idx }
       query: @$route.query
       hash:  @$route.hash
 

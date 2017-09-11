@@ -35,6 +35,9 @@ module.exports =
 
 <style lang="stylus" scoped>
 
+time
+  white-space: nowrap
+
 .date
   text-align: center
 
