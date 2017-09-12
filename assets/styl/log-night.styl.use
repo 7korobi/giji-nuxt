@@ -6,8 +6,9 @@ palette(metal,   ash)
 palette(say,   night)
 palette(note,  metal)
 
+palette(stat, foot)
+palette(leave, ash)
+
 .potofs
   palette(say,  foot)
   palette(note,  ash)
-  palette(stat, foot)
-  palette(leave, ash)
