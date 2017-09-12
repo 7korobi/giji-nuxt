@@ -8,19 +8,10 @@ module.exports =
         theme: "cinema"
         font:  "std"
       watch: (val, key)->
-        key1 = key + 1
-        key2 = key + 2
-        href = @href[key]
         return unless window?
-        window[key1].rel = 'stylesheet'
-        window[key2].rel = 'stylesheet'
-        window[key2].href = href
-        setTimeout =>
-          window[key1].href = href
-          setTimeout =>
-            window[key2].rel = 'prefetch'
-          , 100
-        , 100
+        @use_style key
+        return unless key == 'theme'
+        @use_style 'log'
   ]
   data: ->
     top:    0
@@ -37,12 +28,35 @@ module.exports =
     center: ->
       @$store.commit "menu/center", { @top, @left, @height, @width }
     body_class: ->
-      [@theme, @font].join("~")
+      [@log, @theme, @font]
     href: ->
-      font:  "/css/font-#{@font}.styl.css"
+      log: "/css/log-#{@log}.styl.css"
+      font: "/css/font-#{@font}.styl.css"
       theme: "/css/theme-#{@theme}.styl.css"
+    log: ->
+      switch @theme
+        when "snow"
+          "snow"
+        when "cinema", "wa"
+          "day"
+        else
+          "night"
 
   methods:
+    use_style: (key)->
+      key1 = key + 1
+      key2 = key + 2
+      href = @href[key]
+      window[key1].rel = 'stylesheet'
+      window[key2].rel = 'stylesheet'
+      window[key2].href = href
+      setTimeout =>
+        window[key1].href = href
+        setTimeout =>
+          window[key2].rel = 'prefetch'
+        , 100
+      , 100
+
     poll: ->
       if @top == scrollY && @left == scrollX
         @center
@@ -56,6 +70,8 @@ module.exports =
     link: [
       { rel: 'stylesheet', type: 'text/css', href: "/css/index.styl.css" }
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
+      { type: 'text/css', id: 'log1' }
+      { type: 'text/css', id: 'log2' }
       { type: 'text/css', id: 'font1' }
       { type: 'text/css', id: 'font2' }
       { type: 'text/css', id: 'theme1' }
@@ -64,7 +80,7 @@ module.exports =
 
 </script>
 <template lang="pug">
-.header(:class="body_class")
+div(:class="body_class")
   welcome(:top="top")
     .btns
       span.font

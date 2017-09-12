@@ -5,10 +5,8 @@
 @import "./_form.styl"
 @import "./_theme.styl"
 
-.potofs
-  palette(says,  foot)
-  palette(sepia,  ash)
+palette_single(title-bar, grass,  BROAD)
 
-palette(stats,   foot)
 palette(header,   ash)
+
 

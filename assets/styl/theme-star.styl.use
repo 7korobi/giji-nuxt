@@ -1,14 +1,7 @@
 @import "./_theme.styl"
 @import "./_theme_film.styl"
 
-palette_single(title-bar, grass, BROAD)
 palette_single(icons,      foot,   N09)
-
-palette(world,   foot)
-palette(metal,    ash)
-
-palette(says,   night)
-palette(sepia,  metal)
 
 .talk
   .chat
@@ -35,6 +28,3 @@ palette(sepia,  metal)
   background-position: right top
   background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/jupiter.png")
   background-color: hsla(210,96%,10%,1)
-
-.filmend
-  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")

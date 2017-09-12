@@ -1,0 +1,13 @@
+@import "./_theme.styl"
+
+palette(world,   foot)
+palette(metal,    ash)
+
+palette(says,   night)
+palette(sepia,  metal)
+
+.potofs
+  palette(says,  foot)
+  palette(sepia,  ash)
+  palette(stats, foot)
+  palette(leave,  ash)

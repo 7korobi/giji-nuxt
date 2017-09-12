@@ -1,14 +1,7 @@
 @import "./_theme.styl"
 @import "./_theme_film.styl"
 
-palette_single(title-bar, grass,  BROAD)
-palette_single(icons,      foot, VBROAD)
-
-palette(world,  black)
-palette(metal,  metal)
-
-palette(says,   light)
-palette(sepia,   snow)
+palette_single(icons, light, N09)
 
 .talk
   .chat
@@ -28,10 +21,4 @@ palette(sepia,   snow)
   background-image: linear-gradient(90deg, hsla(210,90%,99%,1), hsla(190,80%,66%,1), hsla(35,90%,99%,1))
 
 .contentframe
-  background-repeat: repeat-y
-  background-position: right
-  background-attachment: fixed
-  background-color: hsla(35,10%,80%,1)
-
-.filmend
-  background-image: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/film-end.png")
+  background-color: #FFF

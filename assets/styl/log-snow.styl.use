@@ -1,0 +1,10 @@
+@import "./_theme.styl"
+
+palette(world,   foot)
+palette(metal,    ash)
+
+palette(says,   light)
+palette(sepia,   snow)
+
+palette(stats,  light)
+palette(leave,   snow)
