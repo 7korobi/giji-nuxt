@@ -47,62 +47,62 @@ const _7d1a6377 = () => import('D:\\Dropbox\\www\\giji-nuxt\\pages\\book\\_idx\\
 
 
 const scrollBehavior = function (to, from, savedPosition) {
-      var basic, book, has_top;
-      book = function(idx_limit, has_top, to, from) {
-        [from, to] = [from, to].map(function(o) {
-          var name, part, ref;
-          name = o.params.mode || o.name;
-          part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
-          return `${name} ${part}`;
-        });
-        if (from !== to) {
-          console.log(`scroll to TOP (${from} != ${to})`);
+    var basic, book, has_top;
+    book = function(idx_limit, has_top, to, from) {
+      [from, to] = [from, to].map(function(o) {
+        var name, part, ref;
+        name = o.params.mode || o.name;
+        part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+        return `${name} ${part}`;
+      });
+      if (from !== to) {
+        console.log(`scroll to TOP (${from} != ${to})`);
+        return {
+          x: 0,
+          y: 0
+        };
+      }
+    };
+    basic = function(has_top, to) {
+      console.log({to, from});
+      switch (false) {
+        case from.path === to.path:
+          console.log(`scroll to TOP (${from.path} != ${to.path})`);
           return {
             x: 0,
             y: 0
           };
-        }
-      };
-      basic = function(has_top, to) {
-        console.log({to, from});
-        switch (false) {
-          case from.path === to.path:
-            console.log(`scroll to TOP (${from.path} != ${to.path})`);
-            return {
-              x: 0,
-              y: 0
-            };
-          case !has_top:
-            console.log("scroll to TOP (has scrollToTop)");
-            return {
-              x: 0,
-              y: 0
-            };
-        }
-      };
-      switch (false) {
-        case !savedPosition:
-          console.log("scroll restore", savedPosition);
-          return savedPosition;
-        case !to.hash:
-          console.log("scroll to " + to.hash);
+        case !has_top:
+          console.log("scroll to TOP (has scrollToTop)");
           return {
-            selector: to.hash
+            x: 0,
+            y: 0
           };
-        default:
-          has_top = to.matched.some(function(r) {
-            return r.components.default.options.scrollToTop;
-          });
-          switch (to.name) {
-            case "sow-village-idx-mode":
-              return book(2, has_top, to, from);
-            case "sow-village-idx-anker":
-              return book(1, has_top, to, from);
-            default:
-              return basic(has_top, to, from);
-          }
       }
+    };
+    switch (false) {
+      case !savedPosition:
+        console.log("scroll restore", savedPosition);
+        return savedPosition;
+      case !to.hash:
+        console.log("scroll to " + to.hash);
+        return {
+          selector: to.hash
+        };
+      default:
+        has_top = to.matched.some(function(r) {
+          return r.components.default.options.scrollToTop;
+        });
+        switch (to.name) {
+          case "sow-village-idx-mode":
+            return book(2, has_top, to, from);
+          case "sow-village-idx-anker":
+            return book(1, has_top, to, from);
+          default:
+            return basic(has_top, to, from);
+        }
     }
+  }
 
 
 export function createRouter () {

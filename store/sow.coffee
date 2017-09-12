@@ -117,10 +117,10 @@ module.exports =
             show = "talk"
           when "I"
             potof_id = undefined
-            if log.match(///。|、///g).length < 3
-              show = "post"
-            else
+            if log?.match(///。|、///g)?.length > 3
               show = "report"
+            else
+              show = "post"
           when "A", "B"
             potof_id = undefined
             show = "post"

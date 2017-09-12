@@ -1,4 +1,6 @@
 <script lang="coffee">
+moment = require '~plugins/moment'
+
 SECOND = 1000
 MINUTE = SECOND * 60
 HOUR = MINUTE * 60
@@ -8,21 +10,21 @@ MONTH = DAY * 30
 YEAR = DAY * 365
 
 locales = [
-  " %s 年後"
-  " %s ヶ月後"
-  " %s 週間後"
-  " %s 日後"
-  " %s 時間後"
-  " %s 分後"
-  " %s 秒後"
+  "%s年後"
+  "%sヶ月後"
+  "%s週間後"
+  "%s日後"
+  "%s時間後"
+  "%s分後"
+  "%s秒後"
   "今"
-  " %s 秒前"
-  " %s 分前"
-  " %s 時間前"
-  " %s 日前"
-  " %s 週間前"
-  " %s ヶ月前"
-  " %s 年前"
+  "%s秒前"
+  "%s分前"
+  "%s時間前"
+  "%s日前"
+  "%s週間前"
+  "%sヶ月前"
+  "%s年前"
 ]
 
 times = [
@@ -45,32 +47,17 @@ times = [
 for time, idx in times
   time[2] = locales[idx]
 
-suffix =
-  date: "頃"
-  short: ""
 
 format =
-  date: new Intl.DateTimeFormat 'ja-JP',
-    year:  "numeric"
-    month: "2-digit"
-    day:   "2-digit"
-    weekday: "short"
-    hour:    "2-digit"
+  date:
+    format: (since)->
+      moment since
+      .format('ll') + "頃"
 
-  short: new Intl.DateTimeFormat 'ja-JP',
-    year:  "numeric"
-    month: "2-digit"
-    day:   "2-digit"
-
-  num: new Intl.NumberFormat 'ja-JP',
-    style: 'decimal'
-    useGrouping: true
-    minimumIntegerDigits: 1
-    minimumSignificantDigits:  1
-    maximumSignificantDigits: 21
-    minimumFractionDigits: 0
-    maximumFractionDigits: 2
-
+  short:
+    format: (since)->
+      moment since
+      .format 'l'
 
 module.exports =
   data: ->
@@ -106,7 +93,7 @@ module.exports =
       if @maxTime && @msec > @maxTime
         clearInterval @interval
         @interval = null
-        return format[@format].format(@sinceTime) + suffix[@format]
+        return format[@format].format(@sinceTime)
 
       [_, base, text] = @time
       msec = Math.abs 100 + @msec

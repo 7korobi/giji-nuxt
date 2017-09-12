@@ -14,11 +14,9 @@ new Rule("potof").schema ->
 
   @scope (all)->
     catalog: (book_id, part_id, sort, order)->
-      switch sort
-        when "say.count"
-          sort = (o)-> o.say(part_id).count
-        when "say.all"
-          sort = (o)-> o.say(part_id).all
+      [a1, a2] = sort.split(".")
+      if "say" == a1
+        sort = (o)-> o.say(part_id)[a2]
       Query.books.find(book_id).potofs.sort(sort, order)
 
   class @model extends @model

@@ -1,10 +1,5 @@
 <script lang="coffee">
-format =
-  head: new Intl.DateTimeFormat 'ja-JP',
-    weekday: "short"
-    hour:    "2-digit"
-  tail: new Intl.DateTimeFormat 'ja-JP',
-    hour:    "2-digit"
+timerange = require "~components/filters/timerange"
 
 module.exports =
   mixins: [
@@ -12,30 +7,21 @@ module.exports =
     require('~plugins/pager') {}
   ]
   methods:
-    time_label: (first, last)->
-      span = last.write_at - first.write_at
-      first_str = format.head.format first.write_at
-      last_str  = format.head.format last.write_at
-      if first_str == last_str
-        first_str
-      else
-        if span < 23 * 3600 * 1000
-          last_str = format.tail.format last.write_at
-          first_str.replace "時", "-" + last_str
-        else
-          first_str + " - " + last_str
-
     part_label: (part_id)->
-      [ first,..., last ] = @chats(part_id)
-      return "" unless first
-      [ first, ...] = first
-      return "" unless last
-      [ ...,  last] = last
-      @time_label first, last
+      [ min,..., max ] = @chats(part_id)
+      return "" unless min
+      [ min, ...] = min
+      return "" unless max
+      [ ...,  max] = max
+      min = min.write_at
+      max = max.write_at
+      timerange { min, max }
 
     page_label: (part_id, page_idx)->
-      [ first,..., last ] = @chats(part_id)[page_idx]
-      @time_label first, last
+      [ min,..., max ] = @chats(part_id)[page_idx]
+      min = min.write_at
+      max = max.write_at
+      timerange { min, max }
 
     go_page: (part_id, page_idx)->
       return unless part_id && data = @chats(part_id)

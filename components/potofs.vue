@@ -6,7 +6,7 @@
     hr
   .swipe.fine
     table
-      tfoot.TITLE.form
+      tfoot.TITLE.form.tb-btn
         tr
           th(colspan="2")
             sup (スクロールします)
@@ -14,15 +14,22 @@
             btn(v-model="sort" as="live.date", @toggle="reverse") 日程
           th
             btn(v-model="sort" as="live.role_id", @toggle="reverse") 状態
-          th
-            btn(v-model="sort" as="say.count", @toggle="reverse") 発言
-          th
-            btn(v-model="sort" as="say.all", @toggle="reverse") 発言
+
           th
             btn(v-model="sort" as="give.give", @toggle="reverse") 促
           th
+            btn(v-model="sort" as="say.count", @toggle="reverse") 回数
+          th
+            btn(v-model="sort" as="say.all", @toggle="reverse") 字数
+          th
+            btn(v-model="sort" as="say.avg", @toggle="reverse") 平均
+          th
+            btn(v-model="sort" as="say.min", @toggle="reverse") 最初
+            btn(v-model="sort" as="say.max", @toggle="reverse") 最後
+          th
             btn(v-model="sort" as="sign", @toggle="reverse")
               i.fa.fa-user
+
           th
             btn(v-model="sort" as="request.role_id", @toggle="reverse") 希望
           th
@@ -41,11 +48,15 @@
           th.l(:class="o.live.role_id") {{ o.face && o.face.name }}
           td.r(:class="o.live.role_id") {{ o.live.date           | currency("日") }}
           td.c(:class="o.live.role_id") {{ o.live.role.label }}
+
+          th.r(:class="o.say_id(part.id)") {{ o.give && o.give.give | currency("回") }}
           td.r(:class="o.say_id(part.id)") {{ o.say(part.id).count  | currency("回") }}
           td.r(:class="o.say_id(part.id)") {{ o.say(part.id).all    | currency("字") }}
-          th.r(:class="o.say_id(part.id)") {{ o.give && o.give.give | currency("回") }}
+          th.r(:class="o.say_id(part.id)") {{ o.say(part.id).avg    | currency("字") }}
+          th.r(:class="o.say_id(part.id)") {{ o.say(part.id) | timerange }}
           th.c(:class="o.say_id(part.id)")
             abbr(:class="o.say_id(part.id)") {{ o.sign }}
+
           th.c(:class="o.winner_id")
             abbr(v-if="o.request", :class="o.winner_id") {{ o.request.role.label }}
           th.c(:class="o.winner_id") {{ o.win }}
@@ -55,7 +66,7 @@
           td.last
   transition-group.swipe.list(v-if="part" name="list" tag="div")
     table.fine(key="ids")
-      tbody.TITLE.form
+      tbody.TITLE.form.tb-btn
         tr
           th
             btn(v-model="hide_potof_ids", :as="live_on")  参加者
@@ -133,17 +144,10 @@ module.exports =
 
 </script>
 <style lang="stylus" scoped>
-th, td
-  border-radius: 0
-
-tfoot
-  a
-    height: 40px
-
-.form
-  a
-    padding: 0 4px
-    writing-mode: tb-rl
+.potofs
+  th, td
+    border-radius: 0
+    padding: 0 0.5ex
 
 .r
   text-align: right
@@ -160,6 +164,10 @@ tfoot
 .portrate
   flex-basis: auto
   margin: 2px
+
+tfoot
+  a
+    height: 40px
 
 .list
   background: #000
