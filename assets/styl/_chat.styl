@@ -7,22 +7,17 @@
   .right
     text-align: right
 
-  .name
+  .date
+    text-align: right
+
+  .name, .text, .date
     padding: 0
     margin: 0
-    font-weight: bold
-    sup,
-    sub
-      margin-right: -3px
 
   .text
     white-space: pre-wrap
-    padding: 0
-    margin: 0
     user-select: auto
     overflow: visible
-    ol
-      margin-top: 0
     &.mono
       white-space: pre
       font-family: monospace
@@ -32,11 +27,6 @@
       background: url("http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/grid.gif")
     *
       user-select: auto
-
-  .date
-    padding: 0
-    margin: 0
-    text-align: right
 
   textarea
     width: 99%
