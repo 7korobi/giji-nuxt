@@ -214,21 +214,21 @@ palette_single($bgTheme, $backT, key)
     $focus = _HSLA(key,75%,65%,1)
 
     $emboss = HSLA(key,60%,65%,1)
-    $bgLow =  HSLA(key,50%,80%,1)
-    $bg =     HSLA(key,75%,85%,1)
-    $bgHi =   HSLA(key,50%,90%,1)
+    $bgLow = _HSLA(key,50%,80%,1)
+    $bg =    _HSLA(key,75%,85%,1)
+    $bgHi =  _HSLA(key,50%,90%,1)
     $off =    $bgLow
     $on =     $bgHi
     $shade = _HSLA(key,50%,95%,1)
 
     $penEmb = $bgHi
     $hide =   HSLA(key,  33%,55%,1)
-    $pen =   _HSLA(key,  33%,33%,1)
-    $penHi = _HSLA(key,  33%,20%,1)
+    $pen =    HSLA(key,  33%,33%,1)
+    $penHi =  HSLA(key,  33%,20%,1)
 
-    $good =  _HSLA(ALIEN,33%,33%,1)
-    $warn =  _HSLA(LONE, 33%,33%,1)
-    $ban =   _HSLA(WOLF, 33%,33%,1)
+    $good =   HSLA(ALIEN,33%,33%,1)
+    $warn =   HSLA(LONE, 33%,33%,1)
+    $ban =    HSLA(WOLF, 33%,33%,1)
 
   if snow == $backT
     $edge =  _HSLA(key,15%,75%,1)
@@ -243,13 +243,13 @@ palette_single($bgTheme, $backT, key)
     $shade = _HSLA(key,15%,95%,1)
 
     $penEmb = $bgHi
-    $hide =  _HSLA(key,  33%,55%,1)
-    $pen =   _HSLA(key,  80%,33%,1)
-    $penHi = _HSLA(key,  80%,20%,1)
+    $hide =   HSLA(key,  33%,55%,1)
+    $pen =    HSLA(key,  80%,33%,1)
+    $penHi =  HSLA(key,  80%,20%,1)
 
-    $good =  _HSLA(ALIEN,80%,33%,1)
-    $warn =  _HSLA(LONE, 80%,33%,1)
-    $ban =   _HSLA(WOLF, 80%,33%,1)
+    $good =   HSLA(ALIEN,80%,33%,1)
+    $warn =   HSLA(LONE, 80%,33%,1)
+    $ban =    HSLA(WOLF, 80%,33%,1)
 
   if light == $backT
     $edge =  _HSLA(key,50%,50%,1)
