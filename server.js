@@ -354,13 +354,13 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
           id = ref[i];
           path = `./static/sow/${id}.json.gz`;
           url = `${API_URL}/story/oldlog/${id}`;
-          results.push(`  ls \"${path}\" || curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
+          results.push(`  ls "${path}" || curl "${url}" | gzip --stdout --best > "${path}"  `);
         }
         return results;
       })();
       path = "./static/sow/index.json.gz";
       url = `${API_URL}/story/oldlog`;
-      data.push(` curl \"${url}\" | gzip --stdout --best > \"${path}\"  `);
+      data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
       data.push(`rsync -a --delete ./static/sow/ ${BACKUP}/static/sow/`);
       fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
         return console.log(err);
@@ -1958,30 +1958,25 @@ module.exports = function(app, m) {
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var passport;
-
-passport = __webpack_require__(1);
-
-passport.serializeUser(function(o, done) {
-  var id;
-  id = [o.provider, o.account].join("-");
-  return Passport.findByIdAndUpdate(id, o, {
-    upsert: true
-  }).exec(function(err, doc) {
-    if (err) {
-      console.error(err);
-    }
-    return done(err, id);
-  });
-});
-
-passport.deserializeUser(function(id, done) {
-  return done(null, id);
-});
-
 module.exports = function(app, m) {
-  var Passport, Schema;
+  var Passport, Schema, passport;
   ({Schema} = m);
+  passport = __webpack_require__(1);
+  passport.serializeUser(function(o, done) {
+    var id;
+    id = [o.provider, o.account].join("-");
+    return Passport.findByIdAndUpdate(id, o, {
+      upsert: true
+    }).exec(function(err, doc) {
+      if (err) {
+        console.error(err);
+      }
+      return done(err, id);
+    });
+  });
+  passport.deserializeUser(function(id, done) {
+    return done(null, id);
+  });
   Passport = m.model('Passport', new Schema({
     _id: String,
     nick: String,

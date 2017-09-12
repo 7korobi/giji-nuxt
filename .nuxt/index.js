@@ -6,7 +6,7 @@ import { createRouter } from './router.js'
 import { createStore } from './store.js'
 import NuxtChild from './components/nuxt-child.js'
 import NuxtLink from './components/nuxt-link.js'
-import NuxtError from 'C:\\Dropbox\\www\\giji-nuxt\\layouts\\error.vue'
+import NuxtError from 'D:\\Dropbox\\www\\giji-nuxt\\layouts\\error.vue'
 import Nuxt from './components/nuxt.vue'
 import App from './App.vue'
 

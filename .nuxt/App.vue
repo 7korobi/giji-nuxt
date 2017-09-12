@@ -13,9 +13,9 @@ import 'element-ui/lib/theme-default/index.css'
 
 let layouts = {
 
-  "_book": () => import('C:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
+  "_book": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\book.vue'  /* webpackChunkName: "layouts/book" */),
 
-  "_default": () => import('C:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */)
+  "_default": () => import('D:\\Dropbox\\www\\giji-nuxt\\layouts\\default.vue'  /* webpackChunkName: "layouts/default" */)
 
 }
 
