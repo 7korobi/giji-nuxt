@@ -3,11 +3,11 @@
 palette(world,  black)
 palette(metal,  metal)
 
-palette(says,   light)
-palette(sepia,   snow)
+palette(say,   light)
+palette(note,  white)
 
 .potofs
-  palette(says,  foot)
-  palette(sepia,  ash)
-  palette(stats, foot)
-  palette(leave,  ash)
+  palette(say,  foot)
+  palette(note,  ash)
+  palette(stat, foot)
+  palette(leave, ash)

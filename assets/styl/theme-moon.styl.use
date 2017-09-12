@@ -1,14 +1,7 @@
 @import "./_theme.styl"
 @import "./_theme_wood.styl"
 
-palette_single(title-bar, grass, BROAD)
-palette_single(icons,     metal,   P04)
-
-palette(world,   foot)
-palette(metal,    ash)
-
-palette(says,   night)
-palette(sepia,  metal)
+palette_single(icons, metal, P04)
 
 .talk
   .chat

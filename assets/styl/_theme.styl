@@ -1,5 +1,5 @@
 themes = {
-  says: {
+  say: {
     SPORT:  SPORT
     P09:    P09
     ELSE:   P08 ELSE
@@ -21,7 +21,7 @@ themes = {
     GRAVE:  N08 GSAY
     N09:    N09
   }
-  sepia: {
+  note: {
     SPORT:  Ssport
     P09:    SP09
     ELSE:   SP08
@@ -89,7 +89,7 @@ themes = {
     N09:    MN09
   }
 
-  stats: {
+  stat: {
     SPORT:  HATER
     ELSE:   PIXI
     BRONZE: GURU
@@ -209,51 +209,7 @@ palette($themes, $backT)
     palette_single($bgTheme, $backT, key)
 
 palette_single($bgTheme, $backT, key)
-  if foot == $backT
-    $edge =  _HSLA(key,50%,50%,1)
-    $focus = _HSLA(key,30%,45%,1)
-
-    $bgLow =  HSLA(key,40%,33%,1)
-    $bg =     HSLA(key,35%,28%,1)
-    $bgHi =   HSLA(key,66%,23%,1)
-    $emboss = HSLA(key,75%,15%,1)
-    $off =    $bgLow
-    $on =     $bgHi
-    $shade = _HSLA(key,99%,10%,1)
-
-    $penEmb = $bgLow
-    $hide =   HSLA(key,  30%,40%,1)
-    $pen =   _HSLA(key,  20%,66%,1)
-    $penHi = _HSLA(key,  15%,90%,1)
-
-    $good =  _HSLA(ALIEN,20%,66%,1)
-    $warn =  _HSLA(LONE, 20%,66%,1)
-    $ban  =  _HSLA(WOLF, 20%,66%,1)
-
-  if ash == $backT
-    $edge =  _HSLA(key,15%,50%,1)
-    $focus = _HSLA(key,25%,40%,1)
-
-    $bgLow = _HSLA(key,15%,33%,1)
-    $bg =    _HSLA(key, 9%,28%,1)
-    $bgHi =  _HSLA(key,15%,23%,1)
-    $emboss = HSLA(key,50%,15%,1)
-    $off =    $bgLow
-    $on =     $bgHi
-    $shade = _HSLA(key,99%,10%,1)
-
-    $penEmb = $bgLow
-    $hide =  _HSLA(key,  20%,40%,1)
-    $pen =   _HSLA(key,  25%,75%,1)
-    $penHi = _HSLA(key,  15%,90%,1)
-
-    $good =  _HSLA(ALIEN,25%,75%,1)
-    $warn =  _HSLA(LONE, 25%,75%,1)
-    $ban  =  _HSLA(WOLF, 25%,75%,1)
-
-
-
-  if light == $backT
+  if pastel == $backT
     $edge =  _HSLA(key,50%,50%,1)
     $focus = _HSLA(key,75%,40%,1)
 
@@ -295,7 +251,89 @@ palette_single($bgTheme, $backT, key)
     $warn =  _HSLA(LONE, 80%,15%,1)
     $ban =   _HSLA(WOLF, 80%,15%,1)
 
+  if light == $backT
+    $edge =  _HSLA(key,50%,50%,1)
+    $focus = _HSLA(key,75%,40%,1)
 
+    $emboss = HSLA(key,40%,50%,1)
+    $bgLow =  HSLA(key,50%,60%,1)
+    $bg =     HSLA(key,35%,63%,1)
+    $bgHi =   HSLA(key,50%,66%,1)
+    $off =    $bgLow
+    $on =     $bgHi
+    $shade = _HSLA(key,50%,80%,1)
+
+    $penEmb = $bgHi
+    $hide =   HSLA(key,  66%,35%,1)
+    $pen =   _HSLA(key,  66%,15%,1)
+    $penHi = _HSLA(key,  66%, 0%,1)
+
+    $good =  _HSLA(ALIEN,66%,15%,1)
+    $warn =  _HSLA(LONE, 66%,15%,1)
+    $ban =   _HSLA(WOLF, 66%,15%,1)
+
+  if white == $backT
+    $edge =  _HSLA(key,15%,50%,1)
+    $focus = _HSLA(key,25%,40%,1)
+
+    $emboss = HSLA(key,15%,45%,1)
+    $bgLow = _HSLA(key,15%,60%,1)
+    $bg =    _HSLA(key, 9%,65%,1)
+    $bgHi =  _HSLA(key,15%,70%,1)
+    $off =    $bgLow
+    $on =     $bgHi
+    $shade = _HSLA(key,15%,80%,1)
+
+    $penEmb = $bgHi
+    $hide =  _HSLA(key,  35%,40%,1)
+    $pen =   _HSLA(key,  80%,15%,1)
+    $penHi = _HSLA(key,  80%, 0%,1)
+
+    $good =  _HSLA(ALIEN,80%,15%,1)
+    $warn =  _HSLA(LONE, 80%,15%,1)
+    $ban =   _HSLA(WOLF, 80%,15%,1)
+
+  if foot == $backT
+    $edge =  _HSLA(key,50%,50%,1)
+    $focus = _HSLA(key,30%,45%,1)
+
+    $bgLow =  HSLA(key,40%,33%,1)
+    $bg =     HSLA(key,35%,28%,1)
+    $bgHi =   HSLA(key,66%,23%,1)
+    $emboss = HSLA(key,75%,15%,1)
+    $off =    $bgLow
+    $on =     $bgHi
+    $shade = _HSLA(key,99%,10%,1)
+
+    $penEmb = $bgLow
+    $hide =   HSLA(key,  30%,40%,1)
+    $pen =   _HSLA(key,  20%,66%,1)
+    $penHi = _HSLA(key,  15%,90%,1)
+
+    $good =  _HSLA(ALIEN,20%,66%,1)
+    $warn =  _HSLA(LONE, 20%,66%,1)
+    $ban  =  _HSLA(WOLF, 20%,66%,1)
+
+  if ash == $backT
+    $edge =  _HSLA(key,15%,50%,1)
+    $focus = _HSLA(key,25%,40%,1)
+
+    $bgLow = _HSLA(key,15%,33%,1)
+    $bg =    _HSLA(key, 9%,28%,1)
+    $bgHi =  _HSLA(key,15%,23%,1)
+    $emboss = HSLA(key,50%,15%,1)
+    $off =    $bgLow
+    $on =     $bgHi
+    $shade = _HSLA(key,99%,10%,1)
+
+    $penEmb = $bgLow
+    $hide =  _HSLA(key,  20%,40%,1)
+    $pen =   _HSLA(key,  25%,75%,1)
+    $penHi = _HSLA(key,  15%,90%,1)
+
+    $good =  _HSLA(ALIEN,25%,75%,1)
+    $warn =  _HSLA(LONE, 25%,75%,1)
+    $ban  =  _HSLA(WOLF, 25%,75%,1)
 
   if black == $backT
     $edge =  _HSLA(key,66%,40%,1)
