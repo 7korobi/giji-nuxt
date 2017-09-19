@@ -169,14 +169,14 @@
 
 </template>
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
   mixins: [
-    require("~plugins/get-by-mount") "1h", "story/oldlog"
-    require('~plugins/pager')
+    require("~/plugins/get-by-mount") "1h", "story/oldlog"
+    require('~/plugins/pager')
       watch: (val, key)->
-    require("~plugins/browser-store")
+    require("~/plugins/browser-store")
       replace:
         order:  "vid"
         folder_id: []

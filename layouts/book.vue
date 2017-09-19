@@ -1,5 +1,5 @@
 <script lang="coffee">
-require "~components/vue.coffee"
+require "~/components/vue.coffee"
 
 module.exports =
   default:

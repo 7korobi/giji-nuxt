@@ -41,7 +41,7 @@ div(v-if="self")
 </style>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
   default:

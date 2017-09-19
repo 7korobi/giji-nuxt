@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = Mem = require "~plugins/memory-record"
+{ Set, Model, Query, Rule } = Mem = require "~/plugins/memory-record"
 
 monthry = new Intl.DateTimeFormat 'ja-JP',
   year:  "numeric"

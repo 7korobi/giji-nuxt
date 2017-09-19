@@ -1,7 +1,7 @@
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
-el = require "~plugins/dom"
-markdown = require "~plugins/markdown"
+{ Query } = require "~/plugins/memory-record"
+el = require "~/plugins/dom"
+markdown = require "~/plugins/markdown"
 
 module.exports =
   functional: true

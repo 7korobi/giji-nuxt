@@ -17,11 +17,11 @@
         nuxt-link(to="/") 戻る
 </template>
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
   mixins: [
-    require("~plugins/browser-store")
+    require("~/plugins/browser-store")
       replace:
         tag_id: "giji"
   ]

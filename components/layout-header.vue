@@ -3,7 +3,7 @@
 
 module.exports =
   mixins: [
-    require("~plugins/browser-store")
+    require("~/plugins/browser-store")
       cookie:
         theme: "cinema"
         font:  "std"

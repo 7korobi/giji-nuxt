@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = require "~plugins/memory-record"
+{ Set, Model, Query, Rule } = require "~/plugins/memory-record"
 
 new Rule("card").schema ->
   @order "write_at"

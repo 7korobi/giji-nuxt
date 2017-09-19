@@ -20,8 +20,8 @@ module.exports =
       '~pages':      path.join current, '/pages'
       '~static':     path.join current, '/static'
       '~assets':     path.join current, '/assets'
-      '~plugins':    path.join current, '/plugins'
-      '~components': path.join current, '/components'
+      '~/plugins':    path.join current, '/plugins'
+      '~/components': path.join current, '/components'
 
   module:
     loaders: [

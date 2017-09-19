@@ -43,11 +43,11 @@
         nuxt-link(to="/demo") 開発者用ページ
 </template>
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
   mixins: [
-    require("~plugins/get-by-mount") "1h", "story/progress"
+    require("~/plugins/get-by-mount") "1h", "story/progress"
   ]
   computed:
     user_url: ->

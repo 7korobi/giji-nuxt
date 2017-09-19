@@ -1,6 +1,6 @@
 <script lang="coffee">
 _ = require "lodash"
-el = require "~plugins/dom"
+el = require "~/plugins/dom"
 
 module.exports =
   props: ["as", "value"]

@@ -1,5 +1,5 @@
 <script lang="coffee">
-moment = require '~plugins/moment'
+moment = require '~/plugins/moment'
 
 SECOND = 1000
 MINUTE = SECOND * 60

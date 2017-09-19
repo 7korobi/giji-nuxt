@@ -45,13 +45,13 @@
 </template>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 _ = require "lodash"
 
 module.exports =
   mixins: [
-    require("~plugins/get-by-mount") "12h", "aggregate/faces"
-    require("~plugins/browser-store")
+    require("~/plugins/get-by-mount") "12h", "aggregate/faces"
+    require("~/plugins/browser-store")
       push:
         order: "date_max"
         tag_id:  "all"

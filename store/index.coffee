@@ -1,6 +1,6 @@
 require "../models/index"
 axios = require "axios"
-{ Model, Set, Query, Rule } = Mem = require "~plugins/memory-record"
+{ Model, Set, Query, Rule } = Mem = require "~/plugins/memory-record"
 
 if window?
   window.Mem = Mem
@@ -17,7 +17,7 @@ if window?
 
 module.exports =
   plugins: [
-    require("~plugins/get-by-mount").plugin
+    require("~/plugins/get-by-mount").plugin
       commit: "update"
   ]
   state: ->

@@ -1,7 +1,7 @@
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports = ({watch})->
-  store = require("~plugins/browser-store")
+  store = require("~/plugins/browser-store")
     push:
       pages: "1"
   store.watch.page_head_id = watch if watch

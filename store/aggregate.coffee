@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Finder } = Mem = require "~plugins/memory-record"
+{ Model, Query, Rule, Finder } = Mem = require "~/plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 

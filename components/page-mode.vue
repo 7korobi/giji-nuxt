@@ -1,9 +1,9 @@
 <script lang="coffee">
-{ relative_to } = require "~plugins/struct"
+{ relative_to } = require "~/plugins/struct"
 
 module.exports =
   mixins: [
-    require '~plugins/book'
+    require '~/plugins/book'
   ]
   methods:
     mode_to: (mode)->

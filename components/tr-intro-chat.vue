@@ -1,5 +1,5 @@
 <script lang="coffee">
-module.exports = require("~components/chat.vue").component_class()
+module.exports = require("~/components/chat.vue").component_class()
 </script>
 <style lang="stylus" scoped>
 

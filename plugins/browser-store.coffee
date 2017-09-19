@@ -1,5 +1,5 @@
 _ = require "lodash"
-{ types, relative_to } = require "~plugins/struct"
+{ types, relative_to } = require "~/plugins/struct"
 
 browser_store = bs = (method)->
   db = bs[method]

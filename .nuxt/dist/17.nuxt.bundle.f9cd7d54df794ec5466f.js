@@ -1,2 +1,0 @@
-webpackJsonp([17],{488:function(t,e,n){var r=n(1)(n(508),n(537),null,null,null);t.exports=r.exports},508:function(t,e){t.exports={default:{layout:"book"}}},537:function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"outframe"},[n("div",{staticClass:"contentframe"},[n("div",{staticClass:"inframe"},[n("report",{attrs:{handle:"footer",deco:"center"}},[n("nuxt-link",{attrs:{to:"/"}},[t._v("戻る")])],1)],1)])])},staticRenderFns:[]}}});
-//# sourceMappingURL=17.nuxt.bundle.f9cd7d54df794ec5466f.js.map

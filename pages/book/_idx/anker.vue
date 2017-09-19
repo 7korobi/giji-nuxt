@@ -20,13 +20,13 @@
 
 </template>
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
-{ uniq, relative_to } = require "~plugins/struct"
+{ Query } = require "~/plugins/memory-record"
+{ uniq, relative_to } = require "~/plugins/struct"
 
 module.exports =
   mixins: [
-    require("~plugins/get-by-mount") "24h", "sow/story", -> @book_id
-    require '~plugins/book'
+    require("~/plugins/get-by-mount") "24h", "sow/story", -> @book_id
+    require '~/plugins/book'
   ]
   mounted: ->
     @menus = [@menus..., "current"]

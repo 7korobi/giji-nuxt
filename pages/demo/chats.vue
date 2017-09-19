@@ -109,12 +109,11 @@
 </style>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
-  layout: "book"
   mixins: [
-    require("~plugins/browser-store")
+    require("~/plugins/browser-store")
       replace:
         chat_id: ""
         part_id: ""

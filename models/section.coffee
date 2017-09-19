@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "~plugins/memory-record"
+{ Model, Query, Rule } = require "~/plugins/memory-record"
 
 format =
   head: new Intl.DateTimeFormat 'ja-JP',

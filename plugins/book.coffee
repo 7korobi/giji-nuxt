@@ -1,7 +1,7 @@
-{ Query } = require "~plugins/memory-record"
-{ path, relative_to } = require "~plugins/struct"
+{ Query } = require "~/plugins/memory-record"
+{ path, relative_to } = require "~/plugins/struct"
 
-store = require("~plugins/browser-store")
+store = require("~/plugins/browser-store")
   push:
     mode: "full"
   replace:

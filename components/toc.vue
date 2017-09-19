@@ -1,10 +1,10 @@
 <script lang="coffee">
-timerange = require "~components/filters/timerange"
+timerange = require "~/components/filters/timerange"
 
 module.exports =
   mixins: [
-    require '~plugins/book'
-    require('~plugins/pager') {}
+    require '~/plugins/book'
+    require('~/plugins/pager') {}
   ]
   methods:
     part_label: (part_id)->

@@ -1,7 +1,7 @@
 <script lang="coffee">
 module.exports =
   mixins: [
-    require '~plugins/book'
+    require '~/plugins/book'
   ]
   methods:
     part_to: (part_id)->

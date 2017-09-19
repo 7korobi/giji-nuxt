@@ -2,8 +2,6 @@ ExtractTextPlugin = require 'extract-text-webpack-plugin'
 
 module.exports =
   extend: (config, { isDev, isClient })->
-    if isClient
-      config.devtool = 'source-map'
 
   babel:
     presets: [
@@ -20,8 +18,8 @@ module.exports =
   vendor: [
     'axios'
     'vee-validate'
-    '~components/vue.coffee'
-    '~plugins/memory-record.coffee'
+    '~/components/vue.coffee'
+    '~/plugins/memory-record.coffee'
   ]
 
   loaders: [

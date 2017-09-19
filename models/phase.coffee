@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "~plugins/memory-record"
+{ Model, Query, Rule } = require "~/plugins/memory-record"
 
 attrs =
   TITLE:   { mark: 'T', label: '表題' }

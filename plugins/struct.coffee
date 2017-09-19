@@ -1,4 +1,4 @@
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 to_x = (type, sp, nil)-> (u)->
   switch u?.constructor

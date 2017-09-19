@@ -1,9 +1,9 @@
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 
 module.exports =
   mixins: [
-    require '~plugins/book'
+    require '~/plugins/book'
   ]
   computed:
     show: ->

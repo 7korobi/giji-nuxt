@@ -1,4 +1,4 @@
-{ Model, Query, Rule } = require "~plugins/memory-record"
+{ Model, Query, Rule } = require "~/plugins/memory-record"
 
 new Rule("part").schema ->
   @order "chats.list.first.write_at"

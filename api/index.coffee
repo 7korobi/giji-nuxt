@@ -1,7 +1,7 @@
 bodyParser = require 'body-parser'
 express = require 'express'
 config = require '../config/webpack/index.coffee'
-Nuxt = require 'nuxt'
+{ Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
 
 { pm_id, HOST, ONLY_VUE } = process.env
 process.on 'unhandledRejection', console.dir
@@ -26,17 +26,17 @@ unless ONLY_VUE
 require("./test-data.coffee")(app)
 
 
-do ->
-  nuxt = await new Nuxt config
-  app.use nuxt.render
-  app.listen port, host
+console.log process.env
 
-  console.log process.env
-  console.log("Server is listening on http://#{host}:#{port}")
+nuxt = new Nuxt config
+if config.dev
+  try
+    builder = new Builder nuxt
+    builder.build()
+  catch err
+    console.error err
+    process.exit(1)
 
-  if config.dev
-    try
-      await nuxt.build()
-    catch err
-      console.error err
-      process.exit(1)
+app.use nuxt.render
+app.listen port, host
+console.log("Server is listening on http://#{host}:#{port}")

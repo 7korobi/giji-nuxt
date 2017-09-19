@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Set } = Mem = require "~plugins/memory-record"
+{ Model, Query, Rule, Set } = Mem = require "~/plugins/memory-record"
 { nation } = require "../yaml/rule.yml"
 axios = require "axios"
 _ = require "lodash"

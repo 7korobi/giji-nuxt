@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Set, Finder } = Mem = require "~plugins/memory-record"
+{ Model, Query, Rule, Set, Finder } = Mem = require "~/plugins/memory-record"
 axios = require "axios"
 
 module.exports =

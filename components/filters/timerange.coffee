@@ -1,4 +1,4 @@
-moment = require "~plugins/moment"
+moment = require "~/plugins/moment"
 
 module.exports = ({ min, max })->
   span = max - min

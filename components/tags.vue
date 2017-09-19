@@ -41,7 +41,7 @@ p.form
 </template>
 
 <script lang="coffee">
-{ Query } = require "~plugins/memory-record"
+{ Query } = require "~/plugins/memory-record"
 _ = require "lodash"
 
 module.exports =
