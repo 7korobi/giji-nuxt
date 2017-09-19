@@ -4,19 +4,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // Recursive find files in {srcDir}/store
-const files = require.context('@/store', true, /^\.\/.*\.(js|ts|coffee)$/)
+const files = require.context('~/store', true, /^\.\/.*\.(js|ts|coffee)$/)
 const filenames = files.keys()
 
 // Store
 let storeData = {}
 
 // Check if store/index.js exists
-let indexFilename
-filenames.forEach((filename) => {
-  if (filename.indexOf('./index.') !== -1) {
-    indexFilename = filename
-  }
-})
+const indexFilename = filenames.find((filename) => filename.includes('./index.'))
 if (indexFilename) {
   storeData = getModule(indexFilename)
 }
@@ -45,9 +40,7 @@ if (typeof storeData !== 'function') {
 
 // createStore
 export const createStore = storeData instanceof Function ? storeData : () => {
-  return new Vuex.Store(Object.assign({
-    strict: (process.env.NODE_ENV !== 'production'),
-  }, storeData, {
+  return new Vuex.Store(Object.assign({}, storeData, {
     state: storeData.state instanceof Function ? storeData.state() : {}
   }))
 }

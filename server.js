@@ -33,6 +33,9 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -60,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -79,338 +82,11 @@ module.exports = require("passport");
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Builder, Generator, HOST, Module, Nuxt, ONLY_VUE, Options, Renderer, Utils, app, bodyParser, builder, config, err, express, host, nuxt, pm_id, port;
-
-bodyParser = __webpack_require__(3);
-
-express = __webpack_require__(4);
-
-config = __webpack_require__(5);
-
-({Nuxt, Module, Renderer, Utils, Builder, Generator, Options} = __webpack_require__(12));
-
-({pm_id, HOST, ONLY_VUE} = process.env);
-
-process.on('unhandledRejection', console.dir);
-
-host = HOST || '127.0.0.1';
-
-port = 4000 + (pm_id - 0 || 0);
-
-app = express();
-
-app.use(bodyParser.json());
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  return next();
-});
-
-if (!ONLY_VUE) {
-  __webpack_require__(13)(app);
-  __webpack_require__(19)(app);
-  __webpack_require__(23)(app);
-  __webpack_require__(28)(app);
-  __webpack_require__(31)(app);
-}
-
-__webpack_require__(38)(app);
-
-console.log(process.env);
-
-nuxt = new Nuxt(config);
-
-if (config.dev) {
-  try {
-    builder = new Builder(nuxt);
-    builder.build();
-  } catch (error) {
-    err = error;
-    console.error(err);
-    process.exit(1);
-  }
-}
-
-app.use(nuxt.render);
-
-app.listen(port, host);
-
-console.log(`Server is listening on http://${host}:${port}`);
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("body-parser");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = {
-  dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(6),
-  router: __webpack_require__(7),
-  build: __webpack_require__(8),
-  head: __webpack_require__(10),
-  env: __webpack_require__(11),
-  plugins: [],
-  css: ['element-ui/lib/theme-default/index.css'],
-  //####
-  // Customize the progress-bar color
-
-  loading: {
-    color: '#3B8070'
-  }
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  static: {
-    maxAge: '1y',
-    setHeaders: function(res, path, stat) {
-      var atime, ctime, mtime, size;
-      if (/\.json\.gz$/.test(path)) {
-        ({atime, mtime, ctime, size} = stat);
-        console.log({mtime, size, path});
-        res.setHeader('Content-Type', 'application/javascript');
-        return res.setHeader('Content-Encoding', 'gzip');
-      }
-    }
-  },
-  gzip: {
-    threshold: 0
-  },
-  etag: {
-    weak: true
-  }
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-/*
-const scrollBehavior = (to, from, savedPosition) => {
-  // savedPosition は popState ナビゲーションでのみ利用できます
-  if (savedPosition) {
-    return savedPosition
-  } else {
-    let position = {}
-    // 子パスが見つからないとき
-    if (to.matched.length < 2) {
-      // ページのトップへスクロールする
-      position = { x: 0, y: 0 }
-    }
-    else if (to.matched.some((r) => r.components.default.options.scrollToTop)) {
-      // 子パスのひとつが scrollToTop オプションが true にセットされているとき
-      position = { x: 0, y: 0 }
-    }
-    // アンカーがあるときは、セレクタを返すことでアンカーまでスクロールする
-    if (to.hash) {
-      position = { selector: to.hash }
-    }
-    return position
-  }
-}
-*/
-module.exports = {
-  scrollBehavior: function(to, from, savedPosition) {
-    var basic, book, has_top;
-    book = function(idx_limit, has_top, to, from) {
-      [from, to] = [from, to].map(function(o) {
-        var name, part, ref;
-        name = o.params.mode || o.name;
-        part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
-        return `${name} ${part}`;
-      });
-      if (from !== to) {
-        console.log(`scroll to TOP (${from} != ${to})`);
-        return {
-          x: 0,
-          y: 0
-        };
-      }
-    };
-    basic = function(has_top, to) {
-      console.log({to, from});
-      switch (false) {
-        case from.path === to.path:
-          console.log(`scroll to TOP (${from.path} != ${to.path})`);
-          return {
-            x: 0,
-            y: 0
-          };
-        case !has_top:
-          console.log("scroll to TOP (has scrollToTop)");
-          return {
-            x: 0,
-            y: 0
-          };
-      }
-    };
-    switch (false) {
-      case !savedPosition:
-        console.log("scroll restore", savedPosition);
-        return savedPosition;
-      case !to.hash:
-        console.log("scroll to " + to.hash);
-        return {
-          selector: to.hash
-        };
-      default:
-        has_top = to.matched.some(function(r) {
-          return r.components.default.options.scrollToTop;
-        });
-        switch (to.name) {
-          case "sow-village-idx-mode":
-            return book(2, has_top, to, from);
-          case "sow-village-idx-anker":
-            return book(1, has_top, to, from);
-          default:
-            return basic(has_top, to, from);
-        }
-    }
-  }
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ExtractTextPlugin;
-
-ExtractTextPlugin = __webpack_require__(9);
-
-module.exports = {
-  extend: function(config, {isDev, isClient}) {},
-  babel: {
-    presets: [
-      "vue-app",
-      [
-        "env",
-        {
-          targets: {
-            browsers: ["> 5%"]
-          },
-          forceAllTransforms: true
-        }
-      ]
-    ]
-  },
-  vendor: ['axios', 'vee-validate', '~/components/vue.coffee', '~/plugins/memory-record.coffee'],
-  loaders: [
-    {
-      test: /\.(png|jpe?g|gif|svg)$/,
-      loader: 'url-loader',
-      query: {
-        limit: 1000, // 1KO
-        name: 'img/[name].[hash:7].[ext]'
-      }
-    },
-    {
-      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      loader: 'url-loader',
-      query: {
-        limit: 1000, // 1KO
-        name: 'fonts/[name].[hash:7].[ext]'
-      }
-    }
-  ]
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("extract-text-webpack-plugin");
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-//####
-// Headers of the page
-
-module.exports = {
-  title: '人狼議事',
-  meta: [
-    {
-      charset: 'utf-8'
-    },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
-    },
-    {
-      hid: 'description',
-      content: "Nuxt.js project"
-    },
-    {
-      href: "mailto:7korobi@gmail.com"
-    }
-  ],
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
-    },
-    {
-      href: "mailto:7korobi@gmail.com"
-    }
-  ],
-  script: [
-    {
-      src: '/monaco-editor/vs/loader.js',
-      type: 'text/javascript',
-      charset: 'utf8'
-    }
-  ]
-};
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-var API_URL, BACKUP, SOW_URL, STORE_URL, WEB_URL;
-
-({WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP} = process.env);
-
-module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP};
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = require("nuxt");
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var Agenda, Agendash, MONGO_URL, WEB_URL, agenda, jobs, pm_id, pno;
 
-Agenda = __webpack_require__(14);
+Agenda = __webpack_require__(25);
 
-Agendash = __webpack_require__(15);
+Agendash = __webpack_require__(26);
 
 ({pm_id, WEB_URL, MONGO_URL} = process.env);
 
@@ -418,7 +94,7 @@ pno = pm_id - 1 || 0;
 
 jobs = function(cb) {
   var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(16);
+  ctx = __webpack_require__(12);
   ref = ctx.keys();
   results = [];
   for (i = 0, len = ref.length; i < len; i++) {
@@ -462,105 +138,18 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = require("agenda");
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("agendash");
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./aggregate.coffee": 17,
-	"./process.coffee": 18
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 16;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(0);
-
-({API_URL} = process.env);
-
-module.exports = {
-  every: '12 hours',
-  define: function(job, done) {
-    return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
-      return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
-        if (err) {
-          return console.error(err);
-        } else {
-          return console.log(stderr);
-        }
-      });
-    });
-  }
-};
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(0);
-
-({API_URL} = process.env);
-
-module.exports = {
-  every: '2 minutes',
-  define: function(job, done) {
-    return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
-      if (err) {
-        console.error(err);
-        return console.error(stderr);
-      } else {
-        return console.log(stdout);
-      }
-    });
-  }
-};
-
-
-/***/ }),
-/* 19 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, BACKUP, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(20);
+mongo = __webpack_require__(32);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(21);
+fs = __webpack_require__(30);
 
-_ = __webpack_require__(22);
+_ = __webpack_require__(31);
 
 ({MONGO_URL_SOW, API_URL, BACKUP} = process.env);
 
@@ -1036,30 +625,12 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = require("mongodb-bluebird");
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
-
-/***/ }),
-/* 23 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MONGO_URL, mongoose;
 
-mongoose = __webpack_require__(24);
+mongoose = __webpack_require__(33);
 
 ({MONGO_URL} = process.env);
 
@@ -1073,7 +644,7 @@ mongoose.connect(MONGO_URL, function(err) {
 
 module.exports = function(app) {
   var ctx, fname, i, len, ref;
-  ctx = __webpack_require__(25);
+  ctx = __webpack_require__(13);
   ref = ctx.keys();
   for (i = 0, len = ref.length; i < len; i++) {
     fname = ref[i];
@@ -1083,363 +654,12 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-module.exports = require("mongoose");
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./book.coffee": 26,
-	"./passport.coffee": 27
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 25;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = function(app, m) {
-  var Book, Card, Chat, Part, Phase, Potof, Schema, Stat;
-  ({Schema} = m);
-  Card = m.model('Card', new Schema({
-    write_at: Number,
-    role_id: String,
-    date: Number,
-    idx: String,
-    _id: String
-  }));
-  Stat = m.model('Stat', new Schema({
-    write_at: Number,
-    role_id: String,
-    sw: Boolean,
-    give: Number,
-    idx: String,
-    _id: String
-  }));
-  Potof = m.model('Potof', new Schema({
-    write_at: Number,
-    open_at: Number,
-    face_id: String,
-    sign: String,
-    job: String,
-    idx: Number,
-    _id: String
-  }));
-  Book = m.model('Book', new Schema({
-    write_at: Number,
-    open_at: Number,
-    label: String,
-    sign: String,
-    idx: Number,
-    _id: String
-  }));
-  Part = m.model('Part', new Schema({
-    write_at: Number,
-    open_at: Number,
-    label: String,
-    idx: Number,
-    _id: String
-  }));
-  Phase = m.model('Phase', new Schema({
-    write_at: Number,
-    label: String,
-    handle: String,
-    group: String,
-    update: false,
-    chat_idx: Number,
-    idx: Number,
-    _id: String
-  }));
-  Chat = m.model('Chat', new Schema({
-    write_at: Number,
-    potof_id: String,
-    show: String,
-    deco: String,
-    log: String,
-    idx: Number,
-    _id: String
-  }));
-  app.post('/api/book', function(req, res, next) {
-    var at, book, part;
-    at = new Date() - 0;
-    ({book} = req.body);
-    book.write_at = at;
-    if (book.open_at == null) {
-      book.open_at = at;
-    }
-    part = {
-      _id: `${book._id}-0`,
-      idx: 0,
-      label: "プロローグ",
-      open_at: book.open_at,
-      write_at: book.write_at
-    };
-    return Promise.all([
-      Book.findByIdAndUpdate(book._id,
-      book,
-      {
-        upsert: true
-      }).exec(),
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec()
-    ]).then(function(book, part) {
-      res.json({book, part});
-      return next();
-    }).catch(function(err) {
-      console.error(err);
-      res.json({err});
-      return next();
-    });
-  });
-  app.post('/api/part', function(req, res, next) {
-    var at, idx, part, phases;
-    at = new Date() - 0;
-    ({part} = req.body);
-    part.write_at = at;
-    if (part.open_at == null) {
-      part.open_at = at;
-    }
-    idx = 0;
-    phases = [
-      {
-        label: "公開情報",
-        handle: "public",
-        group: "I",
-        update: false
-      },
-      {
-        label: "秘密情報",
-        handle: "private",
-        group: "I",
-        update: false
-      },
-      {
-        label: "管理",
-        handle: "MAKER",
-        group: "S",
-        update: true
-      },
-      {
-        label: "発言",
-        handle: "SSAY",
-        group: "S",
-        update: false
-      },
-      {
-        label: "発言",
-        handle: "VSSAY",
-        group: "S",
-        update: false
-      },
-      {
-        label: "内緒話",
-        handle: "AIM",
-        group: "S",
-        update: false
-      },
-      {
-        label: "独り言",
-        handle: "TSAY",
-        group: "S",
-        update: false
-      }
-    ].map(function(o) {
-      o.idx = idx;
-      o._id = `${part._id}-${idx++}`;
-      o.write_at = at;
-      return Phase.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    return Promise.all([
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec(),
-      ...phases
-    ]).then(function(part, phase) {
-      res.json({part, phase});
-      return next();
-    }).catch(function(err) {
-      console.error(err);
-      res.json({err});
-      return next();
-    });
-  });
-  return app.post('/api/potof', function(req, res, next) {
-    var at, cards, potof, stat, stats;
-    at = new Date() - 0;
-    ({potof, stat} = req.body);
-    potof.write_at = at;
-    if (potof.open_at == null) {
-      potof.open_at = at;
-    }
-    stats = [
-      stat,
-      {
-        idx: "give",
-        give: 1
-      }
-    ].map(function(o) {
-      o._id = `${potof._id}-${o.idx}`;
-      o.write_at = at;
-      return Stat.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    cards = [
-      {
-        idx: "request",
-        role_id: null
-      }
-    ].map(function(o) {
-      o._id = `${potof._id}-${o.idx}`;
-      o.write_at = at;
-      return Card.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    return Promise.all([
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec(),
-      ...stats,
-      ...cards
-    ]).then(function(part, phase) {
-      res.json({part, phase});
-      return next();
-    }).catch(function(err) {
-      console.error(err);
-      res.json({err});
-      return next();
-    });
-  });
-};
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = function(app, m) {
-  var Passport, Schema, passport;
-  ({Schema} = m);
-  passport = __webpack_require__(1);
-  passport.serializeUser(function(o, done) {
-    var id;
-    id = [o.provider, o.account].join("-");
-    return Passport.findByIdAndUpdate(id, o, {
-      upsert: true
-    }).exec(function(err, doc) {
-      if (err) {
-        console.error(err);
-      }
-      return done(err, id);
-    });
-  });
-  passport.deserializeUser(function(id, done) {
-    return done(null, id);
-  });
-  Passport = m.model('Passport', new Schema({
-    _id: String,
-    nick: String,
-    icon: String,
-    mail: String,
-    write_at: Number,
-    provider: String,
-    account: String,
-    token: String
-  }));
-  return app.get('/api/user/:id', function(req, res, next) {
-    var id;
-    ({id} = req.params);
-    return Passport.findById(id, function(err, doc) {
-      res.json(doc);
-      return next();
-    });
-  });
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
-
-session = __webpack_require__(29);
-
-MongoStore = __webpack_require__(30)(session);
-
-({MONGO_URL, SECRET_KEY_BASE} = process.env);
-
-interval = 7 * 24 * 3600;
-
-day = 24 * 3600;
-
-module.exports = function(app) {
-  app.use(session({
-    secret: SECRET_KEY_BASE,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      url: MONGO_URL,
-      ttl: interval,
-      autoRemove: 'native',
-      collection: 'sessions',
-      touchAfter: day,
-      stringify: false
-    }),
-    cookie: {
-      maxAge: interval * 1000
-    }
-  }));
-};
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-module.exports = require("express-session");
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-module.exports = require("connect-mongo");
-
-/***/ }),
-/* 31 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var WEB_URL, auth, config, passport;
 
-config = __webpack_require__(32);
+config = __webpack_require__(24);
 
 passport = __webpack_require__(1);
 
@@ -1447,14 +667,14 @@ passport = __webpack_require__(1);
 
 auth = {
   slack: {
-    module: __webpack_require__(33).Strategy,
+    module: __webpack_require__(37).Strategy,
     attr: {
       clientID: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET
     }
   },
   google: {
-    module: __webpack_require__(34).Strategy,
+    module: __webpack_require__(36).Strategy,
     attr: {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -1462,21 +682,21 @@ auth = {
     }
   },
   facebook: {
-    module: __webpack_require__(35).Strategy,
+    module: __webpack_require__(34).Strategy,
     attr: {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET
     }
   },
   github: {
-    module: __webpack_require__(36).Strategy,
+    module: __webpack_require__(35).Strategy,
     attr: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }
   },
   twitter: {
-    module: __webpack_require__(37).Strategy,
+    module: __webpack_require__(38).Strategy,
     attr: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET
@@ -1521,43 +741,43 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports) {
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("./nuxt.config.js");
+var MONGO_URL, MongoStore, SECRET_KEY_BASE, day, interval, session;
+
+session = __webpack_require__(28);
+
+MongoStore = __webpack_require__(27)(session);
+
+({MONGO_URL, SECRET_KEY_BASE} = process.env);
+
+interval = 7 * 24 * 3600;
+
+day = 24 * 3600;
+
+module.exports = function(app) {
+  app.use(session({
+    secret: SECRET_KEY_BASE,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      url: MONGO_URL,
+      ttl: interval,
+      autoRemove: 'native',
+      collection: 'sessions',
+      touchAfter: day,
+      stringify: false
+    }),
+    cookie: {
+      maxAge: interval * 1000
+    }
+  }));
+};
+
 
 /***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-slack");
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-google-oauth2");
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-facebook");
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-github2");
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-twitter");
-
-/***/ }),
-/* 38 */
+/* 7 */
 /***/ (function(module, exports) {
 
 var book, folder, part, section;
@@ -2304,6 +1524,791 @@ module.exports = function(app) {
   });
 };
 
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = {
+  dev: process.env.NODE_ENV !== 'production',
+  render: __webpack_require__(22),
+  router: __webpack_require__(23),
+  build: __webpack_require__(19),
+  head: __webpack_require__(21),
+  env: __webpack_require__(20),
+  plugins: [],
+  css: ['element-ui/lib/theme-default/index.css'],
+  //####
+  // Customize the progress-bar color
+
+  loading: {
+    color: '#3B8070'
+  }
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("body-parser");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("nuxt");
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./aggregate.coffee": 15,
+	"./process.coffee": 16
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 12;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./book.coffee": 17,
+	"./passport.coffee": 18
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 13;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var HOST, Nuxt, ONLY_VUE, app, bodyParser, builder, config, err, express, host, nuxt, pm_id, port;
+
+bodyParser = __webpack_require__(9);
+
+express = __webpack_require__(10);
+
+config = __webpack_require__(8);
+
+// { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
+Nuxt = __webpack_require__(11);
+
+({pm_id, HOST, ONLY_VUE} = process.env);
+
+process.on('unhandledRejection', console.dir);
+
+host = HOST || '127.0.0.1';
+
+port = 4000 + (pm_id - 0 || 0);
+
+app = express();
+
+app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  return next();
+});
+
+if (!ONLY_VUE) {
+  __webpack_require__(2)(app);
+  __webpack_require__(3)(app);
+  __webpack_require__(4)(app);
+  __webpack_require__(6)(app);
+  __webpack_require__(5)(app);
+}
+
+__webpack_require__(7)(app);
+
+console.log(process.env);
+
+nuxt = new Nuxt(config);
+
+if (config.dev) {
+  try {
+    // builder = new Builder nuxt
+    builder = nuxt;
+    builder.build();
+  } catch (error) {
+    err = error;
+    console.error(err);
+    process.exit(1);
+  }
+}
+
+app.use(nuxt.render);
+
+app.listen(port, host);
+
+console.log(`Server is listening on http://${host}:${port}`);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var API_URL, sh;
+
+sh = __webpack_require__(0);
+
+({API_URL} = process.env);
+
+module.exports = {
+  every: '12 hours',
+  define: function(job, done) {
+    return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
+      return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
+        if (err) {
+          return console.error(err);
+        } else {
+          return console.log(stderr);
+        }
+      });
+    });
+  }
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var API_URL, sh;
+
+sh = __webpack_require__(0);
+
+({API_URL} = process.env);
+
+module.exports = {
+  every: '2 minutes',
+  define: function(job, done) {
+    return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
+      if (err) {
+        console.error(err);
+        return console.error(stderr);
+      } else {
+        return console.log(stdout);
+      }
+    });
+  }
+};
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = function(app, m) {
+  var Book, Card, Chat, Part, Phase, Potof, Schema, Stat;
+  ({Schema} = m);
+  Card = m.model('Card', new Schema({
+    write_at: Number,
+    role_id: String,
+    date: Number,
+    idx: String,
+    _id: String
+  }));
+  Stat = m.model('Stat', new Schema({
+    write_at: Number,
+    role_id: String,
+    sw: Boolean,
+    give: Number,
+    idx: String,
+    _id: String
+  }));
+  Potof = m.model('Potof', new Schema({
+    write_at: Number,
+    open_at: Number,
+    face_id: String,
+    sign: String,
+    job: String,
+    idx: Number,
+    _id: String
+  }));
+  Book = m.model('Book', new Schema({
+    write_at: Number,
+    open_at: Number,
+    label: String,
+    sign: String,
+    idx: Number,
+    _id: String
+  }));
+  Part = m.model('Part', new Schema({
+    write_at: Number,
+    open_at: Number,
+    label: String,
+    idx: Number,
+    _id: String
+  }));
+  Phase = m.model('Phase', new Schema({
+    write_at: Number,
+    label: String,
+    handle: String,
+    group: String,
+    update: false,
+    chat_idx: Number,
+    idx: Number,
+    _id: String
+  }));
+  Chat = m.model('Chat', new Schema({
+    write_at: Number,
+    potof_id: String,
+    show: String,
+    deco: String,
+    log: String,
+    idx: Number,
+    _id: String
+  }));
+  app.post('/api/book', function(req, res, next) {
+    var at, book, part;
+    at = new Date() - 0;
+    ({book} = req.body);
+    book.write_at = at;
+    if (book.open_at == null) {
+      book.open_at = at;
+    }
+    part = {
+      _id: `${book._id}-0`,
+      idx: 0,
+      label: "プロローグ",
+      open_at: book.open_at,
+      write_at: book.write_at
+    };
+    return Promise.all([
+      Book.findByIdAndUpdate(book._id,
+      book,
+      {
+        upsert: true
+      }).exec(),
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec()
+    ]).then(function(book, part) {
+      res.json({book, part});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+  app.post('/api/part', function(req, res, next) {
+    var at, idx, part, phases;
+    at = new Date() - 0;
+    ({part} = req.body);
+    part.write_at = at;
+    if (part.open_at == null) {
+      part.open_at = at;
+    }
+    idx = 0;
+    phases = [
+      {
+        label: "公開情報",
+        handle: "public",
+        group: "I",
+        update: false
+      },
+      {
+        label: "秘密情報",
+        handle: "private",
+        group: "I",
+        update: false
+      },
+      {
+        label: "管理",
+        handle: "MAKER",
+        group: "S",
+        update: true
+      },
+      {
+        label: "発言",
+        handle: "SSAY",
+        group: "S",
+        update: false
+      },
+      {
+        label: "発言",
+        handle: "VSSAY",
+        group: "S",
+        update: false
+      },
+      {
+        label: "内緒話",
+        handle: "AIM",
+        group: "S",
+        update: false
+      },
+      {
+        label: "独り言",
+        handle: "TSAY",
+        group: "S",
+        update: false
+      }
+    ].map(function(o) {
+      o.idx = idx;
+      o._id = `${part._id}-${idx++}`;
+      o.write_at = at;
+      return Phase.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    return Promise.all([
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec(),
+      ...phases
+    ]).then(function(part, phase) {
+      res.json({part, phase});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+  return app.post('/api/potof', function(req, res, next) {
+    var at, cards, potof, stat, stats;
+    at = new Date() - 0;
+    ({potof, stat} = req.body);
+    potof.write_at = at;
+    if (potof.open_at == null) {
+      potof.open_at = at;
+    }
+    stats = [
+      stat,
+      {
+        idx: "give",
+        give: 1
+      }
+    ].map(function(o) {
+      o._id = `${potof._id}-${o.idx}`;
+      o.write_at = at;
+      return Stat.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    cards = [
+      {
+        idx: "request",
+        role_id: null
+      }
+    ].map(function(o) {
+      o._id = `${potof._id}-${o.idx}`;
+      o.write_at = at;
+      return Card.findByIdAndUpdate(o._id, o, {
+        upsert: true
+      }).exec();
+    });
+    return Promise.all([
+      Part.findByIdAndUpdate(part._id,
+      part,
+      {
+        upsert: true
+      }).exec(),
+      ...stats,
+      ...cards
+    ]).then(function(part, phase) {
+      res.json({part, phase});
+      return next();
+    }).catch(function(err) {
+      console.error(err);
+      res.json({err});
+      return next();
+    });
+  });
+};
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = function(app, m) {
+  var Passport, Schema, passport;
+  ({Schema} = m);
+  passport = __webpack_require__(1);
+  passport.serializeUser(function(o, done) {
+    var id;
+    id = [o.provider, o.account].join("-");
+    return Passport.findByIdAndUpdate(id, o, {
+      upsert: true
+    }).exec(function(err, doc) {
+      if (err) {
+        console.error(err);
+      }
+      return done(err, id);
+    });
+  });
+  passport.deserializeUser(function(id, done) {
+    return done(null, id);
+  });
+  Passport = m.model('Passport', new Schema({
+    _id: String,
+    nick: String,
+    icon: String,
+    mail: String,
+    write_at: Number,
+    provider: String,
+    account: String,
+    token: String
+  }));
+  return app.get('/api/user/:id', function(req, res, next) {
+    var id;
+    ({id} = req.params);
+    return Passport.findById(id, function(err, doc) {
+      res.json(doc);
+      return next();
+    });
+  });
+};
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ExtractTextPlugin;
+
+ExtractTextPlugin = __webpack_require__(29);
+
+module.exports = {
+  extend: function(config, {isDev, isClient}) {},
+  babel: {
+    presets: [
+      "vue-app",
+      [
+        "env",
+        {
+          targets: {
+            browsers: ["> 5%"]
+          },
+          forceAllTransforms: true
+        }
+      ]
+    ]
+  },
+  vendor: ['axios', 'vee-validate', '~/components/vue.coffee', '~/plugins/memory-record.coffee'],
+  loaders: [
+    {
+      test: /\.(png|jpe?g|gif|svg)$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1000, // 1KO
+        name: 'img/[name].[hash:7].[ext]'
+      }
+    },
+    {
+      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1000, // 1KO
+        name: 'fonts/[name].[hash:7].[ext]'
+      }
+    }
+  ]
+};
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+var API_URL, BACKUP, SOW_URL, STORE_URL, WEB_URL;
+
+({WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP} = process.env);
+
+module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP};
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+//####
+// Headers of the page
+
+module.exports = {
+  title: '人狼議事',
+  meta: [
+    {
+      charset: 'utf-8'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
+    },
+    {
+      hid: 'description',
+      content: "Nuxt.js project"
+    },
+    {
+      href: "mailto:7korobi@gmail.com"
+    }
+  ],
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    },
+    {
+      href: "mailto:7korobi@gmail.com"
+    }
+  ],
+  script: [
+    {
+      src: '/monaco-editor/vs/loader.js',
+      type: 'text/javascript',
+      charset: 'utf8'
+    }
+  ]
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  static: {
+    maxAge: '1y',
+    setHeaders: function(res, path, stat) {
+      var atime, ctime, mtime, size;
+      if (/\.json\.gz$/.test(path)) {
+        ({atime, mtime, ctime, size} = stat);
+        console.log({mtime, size, path});
+        res.setHeader('Content-Type', 'application/javascript');
+        return res.setHeader('Content-Encoding', 'gzip');
+      }
+    }
+  },
+  gzip: {
+    threshold: 0
+  },
+  etag: {
+    weak: true
+  }
+};
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+/*
+const scrollBehavior = (to, from, savedPosition) => {
+  // savedPosition は popState ナビゲーションでのみ利用できます
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    let position = {}
+    // 子パスが見つからないとき
+    if (to.matched.length < 2) {
+      // ページのトップへスクロールする
+      position = { x: 0, y: 0 }
+    }
+    else if (to.matched.some((r) => r.components.default.options.scrollToTop)) {
+      // 子パスのひとつが scrollToTop オプションが true にセットされているとき
+      position = { x: 0, y: 0 }
+    }
+    // アンカーがあるときは、セレクタを返すことでアンカーまでスクロールする
+    if (to.hash) {
+      position = { selector: to.hash }
+    }
+    return position
+  }
+}
+*/
+module.exports = {
+  scrollBehavior: function(to, from, savedPosition) {
+    var basic, book, has_top;
+    book = function(idx_limit, has_top, to, from) {
+      [from, to] = [from, to].map(function(o) {
+        var name, part, ref;
+        name = o.params.mode || o.name;
+        part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
+        return `${name} ${part}`;
+      });
+      if (from !== to) {
+        console.log(`scroll to TOP (${from} != ${to})`);
+        return {
+          x: 0,
+          y: 0
+        };
+      }
+    };
+    basic = function(has_top, to) {
+      console.log({to, from});
+      switch (false) {
+        case from.path === to.path:
+          console.log(`scroll to TOP (${from.path} != ${to.path})`);
+          return {
+            x: 0,
+            y: 0
+          };
+        case !has_top:
+          console.log("scroll to TOP (has scrollToTop)");
+          return {
+            x: 0,
+            y: 0
+          };
+      }
+    };
+    switch (false) {
+      case !savedPosition:
+        console.log("scroll restore", savedPosition);
+        return savedPosition;
+      case !to.hash:
+        console.log("scroll to " + to.hash);
+        return {
+          selector: to.hash
+        };
+      default:
+        has_top = to.matched.some(function(r) {
+          return r.components.default.options.scrollToTop;
+        });
+        switch (to.name) {
+          case "sow-village-idx-mode":
+            return book(2, has_top, to, from);
+          case "sow-village-idx-anker":
+            return book(1, has_top, to, from);
+          default:
+            return basic(has_top, to, from);
+        }
+    }
+  }
+};
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = require("./nuxt.config.js");
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("agenda");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = require("agendash");
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = require("connect-mongo");
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-session");
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+module.exports = require("extract-text-webpack-plugin");
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = require("mongodb-bluebird");
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-facebook");
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-github2");
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-google-oauth2");
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-slack");
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-twitter");
 
 /***/ })
 /******/ ]);
