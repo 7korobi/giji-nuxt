@@ -64,7 +64,7 @@ export function getContext (context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {"WEB_URL":"http://giji.f5.si","API_URL":"http://giji.f5.si/api","SOW_URL":"http://giji.f5.si/sow","STORE_URL":"http://s3-ap-northeast-1.amazonaws.com/giji-assets","BACKUP":"7korobi@195.181.242.80:/home/7korobi/giji-nuxt"},
+    env: {"WEB_URL":"http://giji.f5.si","API_URL":"//giji.f5.si/api","SOW_URL":"//giji.f5.si/sow","STORE_URL":"//s3-ap-northeast-1.amazonaws.com/giji-assets"},
     hotReload: context.hotReload || false
   }
   const next = context.next

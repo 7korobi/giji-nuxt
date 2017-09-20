@@ -146,9 +146,6 @@ mongo.connect MONGO_URL_SOW
       path = "./static/sow/index.json.gz"
       url = "#{API_URL}/story/oldlog"
       data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
-      data.push """
-        rsync -a --delete ./static/sow/ #{BACKUP}/static/sow/
-      """
       fs.writeFile './static/sow.sh', data.join("\n") , (err)->
         console.log err
       false
