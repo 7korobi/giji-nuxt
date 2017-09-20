@@ -35,10 +35,8 @@ module.exports =
 
       if id = req.session?.passport?.user
         commit "login", id
-
-        axios.get "#{env.API_URL}/user/#{id}"
+        axios.get "http:#{env.API_URL}/user/#{id}"
         .then ({ status, data })->
-          console.log "HTTP :: /api/books/#{id}"
           commit "update",
             profile: data
 
