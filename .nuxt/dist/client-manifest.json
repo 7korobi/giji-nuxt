@@ -25,14 +25,14 @@
     "19.nuxt.bundle.6f7cf7cb3dfb0ed3dfe4.js",
     "20.nuxt.bundle.d052e89a3f3620c6d6cb.js",
     "vendor.bundle.071319f59017ec50ee87.js",
-    "nuxt.bundle.9dc93b9a3fca157b3ec9.js",
-    "manifest.2852c8991a6962c30de4.js",
+    "nuxt.bundle.c45030d597fd309a4105.js",
+    "manifest.036e6ebcec1c474df65f.js",
     "index.html"
   ],
   "initial": [
-    "manifest.2852c8991a6962c30de4.js",
+    "manifest.036e6ebcec1c474df65f.js",
     "vendor.bundle.071319f59017ec50ee87.js",
-    "nuxt.bundle.9dc93b9a3fca157b3ec9.js"
+    "nuxt.bundle.c45030d597fd309a4105.js"
   ],
   "async": [
     "11.nuxt.bundle.5c469edf523433a2ef60.js",
