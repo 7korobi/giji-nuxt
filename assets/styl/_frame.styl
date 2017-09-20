@@ -22,6 +22,7 @@ body
     width:  100vw
     height: 100vh
     top: 0
+    opacity: 1
 
   &:before
     z-index: -98
@@ -30,6 +31,10 @@ body
 
   &.page-enter-active,
   &.page-leave-active
+    &:before,
+    &:after
+      opacity: 0.5
+
     &:before
       z-index: 99997
     &:after
