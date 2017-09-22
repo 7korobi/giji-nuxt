@@ -51,13 +51,13 @@
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk(v-for="folder in face.folders" handle="VSAY", :face_id="face.id", :head="folder.nation", :key="folder[0][0]")
+      talk.form(v-for="folder in face.folders" :handle="folder_handle(folder[0][0])", :face_id="face.id", :head="folder.nation", :key="folder[0][0]")
         | {{ folder.length }}回登場しました
         .flex
           nuxt-link.label-mini(v-for="id in folder", :to="log_url(id)", :key="id.join('-')") {{ id[1] }}
 
 
-      report(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
+      report.form(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
         btn(as="story_ids.length" v-model="order") 参加村数
         btn(as="count" v-model="order") 総発言回数
         btn(as="all" v-model="order") 総発言文字数
@@ -87,6 +87,27 @@
 { Query } = require "~/plugins/memory-record"
 _ = require "lodash"
 
+folder_handle =
+  offparty: 'ELSE'
+  lobby:    'ELSE'
+  test:     'ELSE'
+  pan:      'ELSE'
+
+  wolf:     'PSAY'
+  allstar:  'PSAY'
+  ultimate: 'PSAY'
+
+  cabala:   'SSAY'
+  morphe:   'SSAY'
+
+  rp:       'VSAY'
+  pretense: 'VSAY'
+  soybean:  'VSAY'
+  crazy:    'VSAY'
+  perjury:  'VSAY'
+  xebec:    'VSAY'
+  ciel:     'VSAY'
+
 module.exports =
   mixins: [
     require("~/plugins/get-by-mount") "12h", "aggregate/face", -> @id
@@ -97,6 +118,9 @@ module.exports =
   ]
 
   methods:
+    folder_handle: (folder_id)->
+      folder_handle[folder_id]
+
     log_url: (book_id)->
       name: "sow-village-idx-mode"
       params: { mode: "title", idx: [book_id..., 0].join("-") }
