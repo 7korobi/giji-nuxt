@@ -9,7 +9,7 @@ palette_single(icons, metal, P04)
     border-style: solid
     border-width: 2px 0 2px 0
 
-.center-left,
+.center-left
 .center-right
   border-color: hsla(0,96%,10%,1)
 

@@ -6,11 +6,11 @@ width($font, $center)
   $limit3 = $center + 2 * ( $gap + 160px )
   $half   = ( $center + $gap ) / 2
 
-  .writeframe,
+  .writeframe
   .outframe
     width: 100%
 
-  .center-left,
+  .center-left
   .center-right
     width: "calc( (50% - %s) / 3 )" % $half
 
@@ -32,14 +32,14 @@ width($font, $center)
       width: 80px
 
   @media screen and (min-width: $limit1)
-    .writeframe,
+    .writeframe
     .outframe
       .contentframe
         width: $center
         margin: 0 auto
 
   @media screen and (max-width: $limit1)
-    .writeframe,
+    .writeframe
     .outframe
       .contentframe
         margin: 0 5%

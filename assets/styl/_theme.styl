@@ -443,8 +443,8 @@ palette_single($bgTheme, $backT, key)
       &.baloon
         border-color: $baloon
 
-      hr,
-      hr:after,
+      hr
+      hr:after
       hr:before
         border-color: $emboss
         background-color: $bg
@@ -452,8 +452,8 @@ palette_single($bgTheme, $backT, key)
       blockquote
         border-color: $edge
       
-      del,
-      .name,
+      del
+      .name
       .date
         color: $hide
 
@@ -465,92 +465,92 @@ palette_single($bgTheme, $backT, key)
         color: $ban
 
     textarea
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         color:            $pen
         background-color: $bg
         border-color:     $edge
-        :hover,
+        :hover
         :focus
           border-color: $focus
 
     h1, h2
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         Glowing(2px, 1.5px, $shade)
         color: $penHi
 
-    h3,
-    h4,
+    h3
+    h4
     strong
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         Glowing(1px, 0.5px, $shade)
         color: $penHi
 
-    h5,
-    h6,
-    em,
+    h5
+    h6
+    em
     b
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         Glowing(1px, 0.5px, $shade)
         color: $pen
 
-    .bar,
-    code,
+    .bar
+    code
     td
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         color: $pen
         background-color: $bgHi
 
-    rt,
-    abbr,
+    rt
+    abbr
     label
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         background-color: $emboss
         color: $penEmb
 
-    input[type=checkbox],
+    input[type=checkbox]
     input[type=radio]
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         color: $pen
         Marker(40%, $off)
 
-    [title],
-    [data-tooltip],
-      body &.{theme}:before,
-      .{theme} &:before,
-      body &.{theme}:after,
+    [title]
+    [data-tooltip]
+      body &.{theme}:before
+      .{theme} &:before
+      body &.{theme}:after
       .{theme} &:after
         text-shadow: none
         color: $pen
         background-color: $bgHi
 
-    a,
-    input,
-    button,
-    [href],
-    [title],
+    a
+    input
+    button
+    [href]
+    [title]
     [data-tooltip]
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         color: $pen
         border-color:     $off
         background-color: $off
 
-        &:hover,
+        &:hover
         &:focus
           border-color:  $focus
 
-        &.nuxt-link-exact-active,
-        &.active,
+        &.nuxt-link-exact-active
+        &.active
         &:checked
           background-color: $on
-        &:visited,
+        &:visited
         &:link
           color: $penHi
         sup, sub, abbr
@@ -559,7 +559,7 @@ palette_single($bgTheme, $backT, key)
           text-shadow: none
 
     .name
-      body &.{theme},
+      body &.{theme}
       .{theme} &
         sup, sub, abbr
           background-color: $emboss

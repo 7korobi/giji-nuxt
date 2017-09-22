@@ -10,7 +10,7 @@ palette_single(icons, foot, N09)
     border-width: 2px 7px 2px 2px
     margin:  0 0 0 -2px
 
-.center-left,
+.center-left
 .center-right
   border-color: hsla(210,96%,10%,1)
 

@@ -4,10 +4,10 @@
 [data-tooltip]:after
   content: attr(data-tooltip)
 
-[title],
+[title]
 [data-tooltip]
   position: relative
-  &:after,
+  &:after
   &:before
     // Position
     position: absolute
@@ -34,16 +34,16 @@
     border-color: transparent
     border-radius: 6px
 
-[title],
-.tooltip-bottom,
-.tooltip-right,
-.tooltip-left,
+[title]
+.tooltip-bottom
+.tooltip-right
+.tooltip-left
 .tooltip-top
-  &.tap:after,
-  &:hover:after,
-  &:focus:after,
-  &.tap:before,
-  &:hover:before,
+  &.tap:after
+  &:hover:after
+  &:focus:after
+  &.tap:before
+  &:hover:before
   &:focus:before
     display: block
     opacity: 1
@@ -52,7 +52,7 @@
 
 // Bottom
 .tooltip-bottom
-  &:after,
+  &:after
   &:before
     top: 85%
     left: 0
@@ -62,9 +62,9 @@
     left: 15px
 
 // Top
-[title],
+[title]
 .tooltip-top
-  &:after,
+  &:after
   &:before
     top: auto
     bottom: 85%
@@ -76,7 +76,7 @@
 
 // Right
 .tooltip-right
-  &:after,
+  &:after
   &:before
     left: 100%
     margin-left: 6px
@@ -89,7 +89,7 @@
 
 // Left
 .tooltip-left
-  &:after,
+  &:after
   &:before
     right: 100%
     margin-right: 6px

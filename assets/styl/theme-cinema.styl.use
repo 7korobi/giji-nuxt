@@ -10,7 +10,7 @@ palette_single(icons, foot, VBROAD)
     border-width: 0
     margin:  0 7px 0 0
 
-.center-left,
+.center-left
 .center-right
   border-color: hsla(35,21%,47%,1)
 

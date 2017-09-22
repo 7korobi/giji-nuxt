@@ -3,12 +3,13 @@
 
 clicker($base, $inline, $family)
   $gap = $inline - $base
-  $height = $base + 2 * $gap
-  $margin  = $gap * -0.8
-  $padding = $gap *  0.5
+  $mu = $gap * -.5 + 1px
+  $md = $gap * -.5
+  $pu = $gap *  .5 - 3px
+  $pd = $gap *  .5 - 2px
 
-  margin:  $margin 2px
-  padding: $padding
+  margin:  $mu 2px $md 2px
+  padding: $pu $pd $pd $pd
 
 inline($base, $inline, $family)
   font-family: $family
@@ -58,98 +59,98 @@ font($small, $base, $family)
     line-height:    $small + 2px
 
 
-  body,
-  .links,
-  .name,
-  .text,
-  dfn,
-  abbr,
-  input,
-  select,
-  button,
-  textarea,
-  strong,
-  time,
-  code,
-  kbd,
-  em,
-  a,
-  b,
+  body
+  .links
+  .name
+  .text
+  dfn
+  abbr
+  input
+  select
+  button
+  textarea
+  strong
+  time
+  code
+  kbd
+  em
+  a
+  b
   p
     inline($base,  $block,  $family)
 
-  input,
-  button,
-  [href],
-  [chat_id],
-  [title],
-  [data-tooltip],
+  input
+  button
+  [href]
+  [chat_id]
+  [title]
+  [data-tooltip]
   .btn
     clicker($base,  $block,  $family)
 
   .form
-    input,
-    button,
-    [href],
-    [chat_id],
-    [title],
-    [data-tooltip],
+    input
+    button
+    [href]
+    [chat_id]
+    [title]
+    [data-tooltip]
     .btn
       margin: 2px
 
-  .fine,
+  .fine
   .date
     inline($small, $middle, $family)
-    dfn,
-    abbr,
-    input,
-    select,
-    button,
-    textarea,
-    strong,
-    time,
-    code,
-    kbd,
-    em,
-    a,
-    b,
+    dfn
+    abbr
+    input
+    select
+    button
+    textarea
+    strong
+    time
+    code
+    kbd
+    em
+    a
+    b
     p
       inline($small, $middle, $family)
 
   .date
-    input,
-    button,
-    [href],
-    [chat_id],
-    [title],
-    [data-tooltip],
+    input
+    button
+    [href]
+    [chat_id]
+    [title]
+    [data-tooltip]
     .btn
       clicker($small, $block, $family)
 
 
   .chrblank
     inline(12px, 15px, $family)
-    dfn,
-    abbr,
-    input,
-    select,
-    button,
-    textarea,
-    strong,
-    time,
-    code,
-    kbd,
-    em,
-    a,
-    b,
+    dfn
+    abbr
+    input
+    select
+    button
+    textarea
+    strong
+    time
+    code
+    kbd
+    em
+    a
+    b
     p
       inline(12px, 15px, $family)
-    input,
-    button,
-    [href],
-    [chat_id],
-    [title],
-    [data-tooltip],
+    input
+    button
+    [href]
+    [chat_id]
+    [title]
+    [data-tooltip]
     .btn
       clicker(12px, 15px, $family)
 
