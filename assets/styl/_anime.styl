@@ -38,6 +38,11 @@
 
 
 @keyframes border-hover
+  0%    { border-radius: 1em }
+  80%   { border-radius: 0   }
+  100%  { border-radius: 1em }
+
+@keyframes border-shake
   0%    { border-radius: 1em 3px 3px 3px / 3px 3px 1em 3px }
   25%   { border-radius: 3px 3px 1em 3px / 1em 3px 3px 3px }
   50%   { border-radius: 3px 1em 3px 3px / 3px 3px 3px 1em }

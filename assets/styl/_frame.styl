@@ -29,17 +29,6 @@ body
   &:after
     z-index: -97
 
-  &.page-enter-active,
-  &.page-leave-active
-    &:before,
-    &:after
-      opacity: 0.5
-
-    &:before
-      z-index: 99997
-    &:after
-      z-index: 99998
-
 .chat
   box-sizing: border-box
   display: block
@@ -136,6 +125,7 @@ body
     justify-content: space-around
 
     .item
+      box-sizing: content-box
       flex-basis: auto
       text-align: center
       width:     40px
@@ -144,3 +134,83 @@ body
       border-radius: 5px
     .fa
       margin: 10px auto
+
+
+.post
+  padding-right: 12px
+  margin 0 0 6px 7px
+  border-style: solid none solid solid
+  border-width: 2px 0 2px 18px
+
+.talk
+  width: 100%
+  table-layout: fixed
+  border-collapse: collapse
+  border-spacing:  0
+  margin: 0 0 6px 0
+  thead, tfoot, tbody, th, td
+    border:  0
+    padding: 0
+    background: transparent
+  td
+    vertical-align: middle
+    position: relative
+  th
+    width: 125px
+    vertical-align: top
+    .portrate
+      margin:  0 19px 0 16px
+
+.report
+  border-style: double dotted
+  border-width: 4px 1px
+  margin: 0 -10px 6px -10px
+  padding: 1px 8px 1px 10px
+  .name
+    margin-left: 127px
+    margin-right: 13px
+  .date
+    margin-right: 13px
+
+.contentframe
+  .chat
+    z-index:  2
+
+  .post
+    margin 0 0 6px 107px
+    // box-shadow: inset -30px 0px 45px -38px #222
+    // 罫線にshadowが乗らない。
+
+  .baloon
+    z-index: 1
+    position: absolute
+    content: ''
+    width:  0
+    height: 0
+    top:   60px
+    left:  -6px
+    border-style: solid
+    border-width:  6px
+    border-radius: 6px 0 0 6px
+    border-right-width 1px
+
+  .report
+    position: relative
+
+    &::before,
+    &::after
+      top: -8px
+      content: ""
+      position: absolute
+      border-style: solid
+      border-width: 1px
+      border-top-color: transparent
+      background-color: transparent
+
+    &::before
+      border-width: 4px 8px 0 0
+      left: 0
+
+    &::after
+      border-width: 4px 0 0 8px
+      right: 0

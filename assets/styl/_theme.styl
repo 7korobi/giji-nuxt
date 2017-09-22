@@ -539,19 +539,20 @@ palette_single($bgTheme, $backT, key)
       body &.{theme},
       .{theme} &
         color: $pen
+        border-color:     $off
         background-color: $off
+
+        &:hover,
+        &:focus
+          border-color:  $focus
 
         &.nuxt-link-exact-active,
         &.active,
         &:checked
           background-color: $on
-        &:hover
-          background-color: $off
         &:visited,
         &:link
           color: $penHi
-        &:focus
-          background-color: $focus
         sup, sub, abbr
           background-color: $emboss
           color: $penEmb

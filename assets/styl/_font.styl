@@ -1,6 +1,15 @@
 @import "./_width.styl"
 
 
+clicker($base, $inline, $family)
+  $gap = $inline - $base
+  $height = $base + 2 * $gap
+  $margin  = $gap * -0.8
+  $padding = $gap *  0.5
+
+  margin:  $margin 2px
+  padding: $padding
+
 inline($base, $inline, $family)
   font-family: $family
   if sans-serif == $family
@@ -17,8 +26,8 @@ font($small, $base, $family)
   $hr_top = $base / 4 - 3px
   $hr_btm = $base / 4
 
-  $block  = $base * 1.5
-  $inline = $base * 1.3
+  $block    = $base * 1.5
+  $inline   = $base * 1.3
 
   h1
     inline(2.00 * $base, 2.00 * $inline, $family)
@@ -48,8 +57,8 @@ font($small, $base, $family)
     font-size:      $small
     line-height:    $small + 2px
 
+
   body,
-  .btns,
   .links,
   .name,
   .text,
@@ -68,6 +77,25 @@ font($small, $base, $family)
   b,
   p
     inline($base,  $block,  $family)
+
+  input,
+  button,
+  [href],
+  [chat_id],
+  [title],
+  [data-tooltip],
+  .btn
+    clicker($base,  $block,  $family)
+
+  .form
+    input,
+    button,
+    [href],
+    [chat_id],
+    [title],
+    [data-tooltip],
+    .btn
+      margin: 2px
 
   .fine,
   .date
@@ -88,6 +116,17 @@ font($small, $base, $family)
     p
       inline($small, $middle, $family)
 
+  .date
+    input,
+    button,
+    [href],
+    [chat_id],
+    [title],
+    [data-tooltip],
+    .btn
+      clicker($small, $block, $family)
+
+
   .chrblank
     inline(12px, 15px, $family)
     dfn,
@@ -105,4 +144,12 @@ font($small, $base, $family)
     b,
     p
       inline(12px, 15px, $family)
+    input,
+    button,
+    [href],
+    [chat_id],
+    [title],
+    [data-tooltip],
+    .btn
+      clicker(12px, 15px, $family)
 

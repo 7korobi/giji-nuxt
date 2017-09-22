@@ -65,18 +65,10 @@ module.exports =
 </template>
 
 <style lang="stylus" scoped>
-.nuxt-link-exact-active
 .page
-  min-width: 2.5ex
   text-align: center
 
 .header
   padding-left: 20px
-.r
-  text-align: right
-.l
-  text-align: left
-.c
-  text-align: center
 
 </style>

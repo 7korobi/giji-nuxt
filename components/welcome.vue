@@ -55,7 +55,7 @@ module.exports =
 </script>
 <template lang="pug">
 #welcome(:style="welcome_style")
-  table#export
+  table.form#export
     thead
       tr
         th.welcome-btns ロビー

@@ -82,7 +82,7 @@ module.exports =
 <template lang="pug">
 div(:class="body_class")
   welcome(:top="top")
-    .btns
+    .btns.form
       span.font
         btn(v-model="font" as="large") 大判
         btn(v-model="font" as="novel") 明朝

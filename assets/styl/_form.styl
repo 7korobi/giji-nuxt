@@ -1,4 +1,9 @@
-
+.r
+  text-align: right
+.l
+  text-align: left
+.c
+  text-align: center
 
 .btns
   text-align: center
@@ -6,12 +11,21 @@
     margin: 0 6px
 
 .form
+  abbr,
   a,
-  .btn
-    margin: 4px 2px
+  input,
+  button,
+  [href],
+  [title],
+  [data-tooltip]
+    min-width:  30px
+    min-height: 36px
+    vertical-align: middle
 
 .tb-btn
-  a
+  a,
+  button,
+  .btn
     writing-mode: tb-rl
 
 input[type=color],
@@ -27,6 +41,7 @@ input[type=reset],
 a,
 b,
 em,
+abbr,
 strong,
 kbd,
 code,
@@ -41,9 +56,8 @@ textarea,
   box-sizing: border-box
   vertical-align: baseline
   text-decoration: none
-  margin:    0   2px
   padding:   2px
-  border-radius: 3px
+  border-radius: 5px
   border-width:  0
   border-style: outset
   align-items: flex-start
@@ -56,11 +70,25 @@ textarea,
   text-shadow:    none
   text-indent: 0px
 
+a,
+input,
+button,
 [href],
 [title],
 [data-tooltip]
+  border: 2px solid
   &:hover
-    animation: border-hover .4s ease-out infinite normal
+    border-radius: 0
+  &:hover,
+  &:focus
+    border: 2px dashed
+
+[href],
+[chat_id]
+  .focus &
+    animation: border-hover  1s ease-in-out infinite normal
+  &:hover
+    animation: border-hover .4s ease-in-out infinite normal
 
 .pull-left
   float: left

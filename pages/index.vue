@@ -5,24 +5,24 @@
       br
       post(handle="XSAY", :write_at="1169852700003") 祝！人狼議事10周年！
       report(handle="footer" deco="center" v-if="user_url") ロビー
-      post(handle="TSAY" v-if="user_url")
+      post.form(handle="TSAY" v-if="user_url")
         nuxt-link(:to="user_url") あなたの情報
       report(handle="footer" deco="center") みんなの情報
-      post(handle="SSAY")
+      post.form(handle="SSAY")
         a(href="https://github.com/7korobi/giji-nuxt/commits/master") 総合トップ
         a(href="https://github.com/7korobi/sow-giji/commits/cabala") ゲーム
         a(href="https://github.com/7korobi/sow-giji/commits/show-fix") ゲーム（新）
         .card 人狼議事を構成するプログラムの、更新履歴はこちら。
-      post(handle="SSAY")
+      post.form(handle="SSAY")
         nuxt-link(to="/rule-guide") 人狼議事のルール
         br
         .card 人狼議事を遊ぶとき、従うべきルールはこちら。
-      post(handle="VSAY")
+      post.form(handle="VSAY")
         nuxt-link(to="/character-tag") キャラクター一覧表
         br
         .card 人狼議事で遊ぶことができるキャラクターはこちら。
 
-      post(handle="VSAY")
+      post.form(handle="VSAY")
         nuxt-link(to="/summary/faces") キャラクター活躍記録
         br
         .card どこかの村で活躍したことのあるキャラクターはこちら。
