@@ -50,10 +50,11 @@ const scrollBehavior = function (to, from, savedPosition) {
       var basic, book, has_top;
       book = function(idx_limit, has_top, to, from) {
         [from, to] = [from, to].map(function(o) {
-          var name, part, ref;
+          var name, page, part, ref;
           name = o.params.mode || o.name;
           part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
-          return `${name} ${part}`;
+          page = o.query.page;
+          return `${name} ${part} ${page}`;
         });
         if (from !== to) {
           console.log(`scroll to TOP (${from} != ${to})`);
