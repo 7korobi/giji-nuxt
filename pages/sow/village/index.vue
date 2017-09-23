@@ -165,7 +165,7 @@
 
     .inframe
       report(handle="footer" key="limitup")
-        scroll-mine(v-if="page_next_id" @input="page_add", :as="page_next_id") 次頁
+        scroll-mine(v-if="page_next_idx" @input="page_add", :as="page_next_idx") 次頁
 
 </template>
 <script lang="coffee">
@@ -175,7 +175,6 @@ module.exports =
   mixins: [
     require("~/plugins/get-by-mount") "1h", "story/oldlog"
     require('~/plugins/pager')
-      watch: (val, key)->
     require("~/plugins/browser-store")
       replace:
         order:  "vid"
@@ -209,7 +208,6 @@ module.exports =
     book_url: (book_id, mode)->
       name: "sow-village-idx-mode"
       params: { mode, idx: [book_id, 0].join("-") }
-      query: { pages: 1 }
 
     rating_img: (rating)->
       "#{env.STORE_URL}/images/icon/cd_#{rating}.png"

@@ -26,7 +26,8 @@
 module.exports =
   mixins: [
     require("~/plugins/get-by-mount") "24h", "sow/story", -> @book_id
-    require '~/plugins/book'
+    require('~/plugins/book')
+      loader: true
   ]
   mounted: ->
     @menus = [@menus..., "current"]

@@ -42,9 +42,9 @@
       chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 
     .inframe
-      report.form(v-if="page_next_id" handle="footer" key="limitup")
+      report.form(v-if="page_next_idx" handle="footer" key="limitup")
         .center
-          scroll-mine(@input="page_add", :as="page_next_id") 次頁
+          scroll-mine(@input="page_add", :as="page_next_idx") 次頁
       report.form(v-else handle="footer" key="limitup")
         page-part
         page-mode
@@ -59,13 +59,9 @@
 module.exports =
   mixins: [
     require("~/plugins/get-by-mount") "24h", "sow/story", -> @book_id
-    require '~/plugins/book'
     require('~/plugins/pager')
-      watch: (val, key)->
-        { chat_id } = @
-        if chat_id
-          @$nextTick ->
-            @$store.commit "menu/focus", chat_id
+    require('~/plugins/book')
+      loader: true
   ]
   methods:
     focus: (@idx)->

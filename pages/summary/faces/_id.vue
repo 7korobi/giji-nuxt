@@ -124,7 +124,6 @@ module.exports =
     log_url: (book_id)->
       name: "sow-village-idx-mode"
       params: { mode: "title", idx: [book_id..., 0].join("-") }
-      query: { pages: 1 }
 
     label_size: (str)->
       width  = 0.8 * (str.match(/[iIjl]/g) ? []).length

@@ -3,7 +3,7 @@
 
 module.exports =
   mixins: [
-    require '~/plugins/book'
+    require('~/plugins/book')()
   ]
   computed:
     show: ->

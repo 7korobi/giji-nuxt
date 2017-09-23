@@ -1,53 +1,34 @@
-{ Query } = require "~/plugins/memory-record"
+Vue = require 'vue'
 
-module.exports = ({watch})->
-  store = require("~/plugins/browser-store")
-    push:
-      pages: "1"
-  store.watch.page_head_id = watch if watch
+if window?
+  Vue = Vue.default
 
-  Object.assign store.methods,
+pager = new Vue
+  data: ->
+    head_idx: 0
+    tail_idx: 0
+
+module.exports =
+  data: ->
+    { pager }
+  methods:
     page_add: (tail)->
-      head = @page_idxs[0]
-      @page_idxs = [head, tail]
+      @pager.tail_idx = Number(tail)
 
-    pages_calc: ([head, ..., tail])->
-      if head == tail
-        "#{1 + head}"
-      else
-        [1 + head, 1 + tail].join("-")
-    
-  Object.assign store.computed,
+  computed:
     page_idxs:
       get: ->
-        [head, tail] = "#{@pages}".split("-").map (o)-> Number(o) - 1
-        [Number(head) .. Number(tail ? head)]
+        [@pager.head_idx .. @pager.tail_idx]
 
-      set: (idxs)->
-        @pages = @pages_calc idxs
+      set: ([head, ..., tail])->
+        @pager.head_idx = Number(head)
+        @pager.tail_idx = Number(tail)
 
-    page_ids: ->
-      @page_idxs.map (idx)=>
-        "#{@part_id}-#{idx}"
-
-    page_head_id: ->
-      [head, ...] = @page_idxs
-      head
-
-    page_tail_id: ->
-      [..., last] = @page_idxs
-      last
-
-    page_next_id: ->
+    page_next_idx: ->
+      next = @pager.tail_idx + 1
       all = @page_all_contents ? [[]]
-      if @page_tail_id? && @page_tail_id + 1 < all.length
-        @page_tail_id + 1
+      next if next < all.length
 
     page_contents: ->
       all = @page_all_contents ? [[]]
       @page_idxs.map (page)-> all[page]
-
-    all_contents: ->
-      @page_all_contentes?.from ? []
-
-  store

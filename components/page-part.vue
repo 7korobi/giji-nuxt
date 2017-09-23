@@ -1,24 +1,15 @@
 <script lang="coffee">
 module.exports =
   mixins: [
-    require '~/plugins/book'
+    require('~/plugins/book')()
+    require('~/plugins/pager')
   ]
-  methods:
-    part_to: (part_id)->
-      return unless part_id && data = @chats(part_id)
-
-      path: "../#{part_id}/#{@mode}"
-
   computed:
-    part_prev: ->
-      @part_to @part_prev_id
     part_prev_id: ->
       ids = @book.parts.pluck('id')
       idx = ids.indexOf @part_id
       ids[idx - 1]
 
-    part_next: ->
-      @part_to @part_next_id
     part_next_id: ->
       ids = @book.parts.pluck('id')
       idx = ids.indexOf @part_id
@@ -31,7 +22,9 @@ module.exports =
 
 <template lang="pug">
 .center(v-if="show")
-  nuxt-link(v-if="part_prev_id" :to="part_prev") 前の日へ
-  nuxt-link(v-if="part_next_id" :to="part_next") 次の日へ
+  nuxt-link(v-if="part_prev_id" :to="page_url(part_prev_id, 0)") 前の日へ
+  | &nbsp;
+  nuxt-link(v-if="part_next_id" :to="page_url(part_next_id, 0)") 次の日へ
+
 </template>
 

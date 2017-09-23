@@ -3,8 +3,8 @@ timerange = require "~/components/filters/timerange"
 
 module.exports =
   mixins: [
-    require '~/plugins/book'
-    require('~/plugins/pager') {}
+    require('~/plugins/book')()
+    require('~/plugins/pager')
   ]
   methods:
     part_label: (part_id)->
@@ -23,19 +23,8 @@ module.exports =
       max = max.write_at
       timerange { min, max }
 
-    go_page: (part_id, page_idx)->
-      return unless part_id && data = @chats(part_id)
-
-      pages = 1 + page_idx
-
-      if window?
-        window.scrollTo 0, 0
-      @$router.push
-        path: "../#{part_id}/#{@mode}"
-        query: { pages }
-
     page_btn_class: (part_id, page_idx)->
-      if @part_id == part_id && page_idx in @page_idxs
+      if @part_id == part_id && @pager.head_idx <= page_idx <= @pager.tail_idx
         ["nuxt-link-exact-active"]
       else
         []
@@ -55,11 +44,11 @@ module.exports =
       tbody
         tr(v-for="(o, line) in book.parts.list", :key="o.id")
           th.r.form
-            btn.tooltip-top(@input="go_page(o.id, 0)", :data-tooltip="part_label(o.id)", :value="part_id", :as="o.id")
+            nuxt-link.tooltip-top(replace, :to="page_url(o.id, 0)", :data-tooltip="part_label(o.id)", :class="{ active: o.id === part_id }")
               | {{o.label}}
               sup {{ chats(o.id).all }}
           th.l.form
-            a.page.tooltip-top(v-for="(_, page_idx) in chats(o.id)" @click="go_page(o.id, page_idx)", :data-tooltip="page_label(o.id, page_idx)", :class="page_btn_class(o.id, page_idx)")
+            nuxt-link.page.tooltip-top(v-for="(_, page_idx) in chats(o.id)" replace, :to="page_url(o.id, page_idx)", :data-tooltip="page_label(o.id, page_idx)", :class="page_btn_class(o.id, page_idx)", :key=" o.id + page_idx ")
               | {{ page_idx + 1 }}
 
 </template>

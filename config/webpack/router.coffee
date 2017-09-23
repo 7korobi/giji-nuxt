@@ -30,7 +30,8 @@ module.exports =
       [from, to] = [from, to].map (o)->
         name = o.params.mode || o.name
         part = o.params.idx?.split("-")[0..idx_limit].join("-")
-        "#{name} #{part}"
+        page = o.query.page
+        "#{name} #{part} #{page}"
 
       if from != to
         console.log "scroll to TOP (#{from} != #{to})"

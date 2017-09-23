@@ -47,7 +47,7 @@ module.exports =
             when "finish"
               to =
                 path: "/sow/village"
-                query: { folder_id, pages: 1 }
+                query: { folder_id }
               m "p", [
                 m "nuxt-link",{ attrs: { to }}, children
               ]
