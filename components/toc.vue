@@ -49,7 +49,7 @@ module.exports =
 .inframe.TITLE(v-if="show")
   hr
   .swipe
-    page-mode(style="white-space: nowrap")
+    page-mode.form(style="white-space: nowrap")
     hr
     table
       tbody
