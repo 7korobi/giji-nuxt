@@ -46,4 +46,5 @@ module.exports =
 
     update: (state, o)->
       for key, val of state when o[key]
-        state[key] = { o[key]..., val... }
+        state[key] = { val..., o[key]... }
+      return
