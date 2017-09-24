@@ -530,9 +530,11 @@ palette_single($bgTheme, $backT, key)
         color: $pen
         background-color: $bgHi
 
-    a
     input
+    select
     button
+    textarea
+    .btn
     [href]
     [title]
     [data-tooltip]
@@ -542,6 +544,7 @@ palette_single($bgTheme, $backT, key)
         border-color:     $off
         background-color: $off
 
+        .focus &
         &:hover
         &:focus
           border-color:  $focus
