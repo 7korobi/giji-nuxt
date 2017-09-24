@@ -92,7 +92,8 @@ textarea
 [chat_id]
   .focus &
     border-radius: 0
-    //  battery too loss
+    transition-property: border-radius, border-color
+    transition-duration: 1s
   &:focus
     animation: border-hover  1s ease-in-out infinite normal
   &:hover
