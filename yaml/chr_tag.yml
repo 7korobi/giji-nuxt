@@ -7,6 +7,7 @@ all:
 giji:
   label: 人狼議事
   long: 「人狼議事」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - animal
@@ -16,6 +17,7 @@ giji:
 shoji:
   label: てやんでえ
   long: 「和の国てやんでえ」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - wa
@@ -23,6 +25,7 @@ shoji:
 travel:
   label: 帰還者議事
   long: 「帰還者議事」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - time
@@ -30,6 +33,7 @@ travel:
 stratos:
   label: 明後日への道標
   long: 「明後日への道標」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - SF
@@ -37,6 +41,7 @@ stratos:
 myth:
   label: はおうのひろば
   long: 「はおうのひろば」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - changed
@@ -44,6 +49,7 @@ myth:
 asia:
   label: 大陸議事
   long: 「大陸議事」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - ger
@@ -51,6 +57,7 @@ asia:
 marchen:
   label: 狂騒議事
   long: 「狂騒議事」のキャラクター
+  tag_id: all
   chr_set_ids:
     - all
     - mad
@@ -58,6 +65,7 @@ marchen:
 kid:
   label: (児童)
   long: 児童のキャラクター
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -67,6 +75,7 @@ kid:
 young:
   label: (若者)
   long: 若者のキャラクター
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -76,6 +85,7 @@ young:
 middle:
   label: (中年)
   long: 中年のキャラクター
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -85,6 +95,7 @@ middle:
 elder:
   label: (老人)
   long: 老人のキャラクター
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -95,6 +106,7 @@ elder:
 river:
   label: -運河-
   long: 往く人来る人休む人
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -104,6 +116,7 @@ river:
 road:
   label: -往来-
   long: 往く人来る人休む人
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -113,6 +126,7 @@ road:
 immoral:
   label: -裏道-
   long: 街灯の裏の背徳達
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -123,6 +137,7 @@ immoral:
 guild:
   label: -商工会-
   long: 商人と職人の集うギルド
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -132,6 +147,7 @@ guild:
 elegant:
   label: -舞踏会-
   long: 瀟洒な館の舞踏会
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -141,6 +157,7 @@ elegant:
 ecclesia:
   label: -公教会-
   long: 信仰と道徳と学識の源泉
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -151,6 +168,7 @@ ecclesia:
 medical:
   label: -施療院-
   long: 病苦毒霊と戦う砦
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -160,6 +178,7 @@ medical:
 market:
   label: -歌劇酒場-
   long: 芸の極みに華が咲く
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -169,6 +188,7 @@ market:
 apartment:
   label: -自室の窓-
   long: 窓から外を眺めると
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -178,6 +198,7 @@ apartment:
 servant:
   label: -使用人-
   long: 良家を支えるスタッフ
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -187,6 +208,7 @@ servant:
 farm:
   label: -森の農場-
   long: 森に接する田畑
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -196,6 +218,7 @@ farm:
 government:
   label: -統治公共-
   long: 所領を治める権能者
+  tag_id: giji
   chr_set_ids:
     - all
     - animal
@@ -205,5 +228,6 @@ government:
 god:
   label: -かみさま-
   long: かみさま
+  tag_id: all
   chr_set_ids:
     - all

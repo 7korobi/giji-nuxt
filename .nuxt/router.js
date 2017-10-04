@@ -10,27 +10,29 @@ const _26460e66 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\index.vue' /
 
 const _d988a500 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\rule-guide.vue' /* webpackChunkName: "pages/rule-guide" */)
 
-const _58095ef8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\book\\index.vue' /* webpackChunkName: "pages/book" */)
-
 const _8471841e = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\character-tag.vue' /* webpackChunkName: "pages/character-tag" */)
+
+const _58095ef8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\book\\index.vue' /* webpackChunkName: "pages/book" */)
 
 const _126e656c = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\index.vue' /* webpackChunkName: "pages/demo" */)
 
-const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
-
-const _486a8927 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages/demo-markdown" */)
-
-const _6fbb897d = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
+const _eef29fda = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
 
 const _718150c0 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\names.vue' /* webpackChunkName: "pages/demo-names" */)
 
-const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
+const _486a8927 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages/demo-markdown" */)
 
-const _eef29fda = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\chats.vue' /* webpackChunkName: "pages/demo-chats" */)
+const _3f090d08 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
+
+const _6fbb897d = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages/summary-faces" */)
+
+const _42ad62d8 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages/demo-timeago" */)
+
+const _74156ee2 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages/demo-oauth" */)
 
 const _beb3c9bc = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\demo\\books.vue' /* webpackChunkName: "pages/demo-books" */)
 
-const _3f090d08 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages/sow-village" */)
+const _7012b248 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\book\\edit.vue' /* webpackChunkName: "pages/book-edit" */)
 
 const _4aa7c725 = () => import('C:\\Dropbox\\www\\giji-nuxt\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages/summary-faces-id" */)
 
@@ -125,14 +127,14 @@ export function createRouter () {
 			name: "rule-guide"
 		},
 		{
-			path: "/book",
-			component: _58095ef8,
-			name: "book"
-		},
-		{
 			path: "/character-tag",
 			component: _8471841e,
 			name: "character-tag"
+		},
+		{
+			path: "/book",
+			component: _58095ef8,
+			name: "book"
 		},
 		{
 			path: "/demo",
@@ -140,19 +142,9 @@ export function createRouter () {
 			name: "demo"
 		},
 		{
-			path: "/demo/timeago",
-			component: _42ad62d8,
-			name: "demo-timeago"
-		},
-		{
-			path: "/demo/markdown",
-			component: _486a8927,
-			name: "demo-markdown"
-		},
-		{
-			path: "/summary/faces",
-			component: _6fbb897d,
-			name: "summary-faces"
+			path: "/demo/chats",
+			component: _eef29fda,
+			name: "demo-chats"
 		},
 		{
 			path: "/demo/names",
@@ -160,14 +152,29 @@ export function createRouter () {
 			name: "demo-names"
 		},
 		{
+			path: "/demo/markdown",
+			component: _486a8927,
+			name: "demo-markdown"
+		},
+		{
+			path: "/sow/village",
+			component: _3f090d08,
+			name: "sow-village"
+		},
+		{
+			path: "/summary/faces",
+			component: _6fbb897d,
+			name: "summary-faces"
+		},
+		{
+			path: "/demo/timeago",
+			component: _42ad62d8,
+			name: "demo-timeago"
+		},
+		{
 			path: "/demo/oauth",
 			component: _74156ee2,
 			name: "demo-oauth"
-		},
-		{
-			path: "/demo/chats",
-			component: _eef29fda,
-			name: "demo-chats"
 		},
 		{
 			path: "/demo/books",
@@ -175,9 +182,9 @@ export function createRouter () {
 			name: "demo-books"
 		},
 		{
-			path: "/sow/village",
-			component: _3f090d08,
-			name: "sow-village"
+			path: "/book/edit",
+			component: _7012b248,
+			name: "book-edit"
 		},
 		{
 			path: "/summary/faces/:id",

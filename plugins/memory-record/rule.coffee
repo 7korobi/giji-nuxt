@@ -177,6 +177,7 @@ module.exports = class Rule
         all[key](@[ik])
 
   relation_tree: (key, ik)->
+    console.log key, ik
     all = @all
     @use_cache key, (_id, n)->
       if n

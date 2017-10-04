@@ -16,6 +16,7 @@ order = [
 
 new Rule("tag").schema ->
   @habtm "chr_sets"
+  @tree()
   @scope (all)->
     enable: ->
       all.where (o)->

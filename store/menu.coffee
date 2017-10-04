@@ -45,4 +45,5 @@ module.exports =
       return unless rect = el.getBoundingClientRect()
       rect_center = rect.top + rect.height / 2
       top = rect_center - state.horizon
+      # console.log " go to #{chat_id} as #{top}px"
       window.scrollBy 0, top

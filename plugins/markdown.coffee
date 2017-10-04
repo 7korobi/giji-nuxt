@@ -26,7 +26,7 @@ giji_options =
   smartLists: true
   smartypants: true
 
-giji = (text)->
+center = giji = (text)->
   lexer = new marked.Lexer giji_options
   tokens = lexer.lex text
   marked text, giji_options
@@ -52,4 +52,4 @@ sow = head = mono = (text)->
   .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
     """<del>#{human}</del>"""
 
-module.exports = { sow, head, mono, giji }
+module.exports = { sow, head, mono, giji, center }

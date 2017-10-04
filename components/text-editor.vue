@@ -1,7 +1,7 @@
 
 <template lang="pug">
 .text-editor
-  textarea(ref="input", @input="input", :value="value", :rows="areaRow")
+  textarea(ref="input", @input="input", :value="value", :rows="areaRow", :placeholder="placeholder")
   i.fa(:class="mark")
     | {{size}}/
     span.per {{maxSize}}字
@@ -51,6 +51,9 @@ module.exports =
       minRow:
         type: Number
         default: 1
+      placeholder:
+        type: String
+        default: ""
 
     data: ->
       caret: {}
