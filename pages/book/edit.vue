@@ -31,13 +31,13 @@
               th.r
                 label(for="players") 参加者
               td
-                input#players(type="number" min="4" max="50")
+                input#players(type="number" min="4" max="50" v-model="size.player")
                 | 名
             tr
               th.r
                 label(for="mobs") 見物人
               td
-                input#mobs(type="number" min="0" max="20")
+                input#mobs(type="number" min="0" max="20" v-model="size.mob")
                 | 名
             tr
               th.r
@@ -48,9 +48,19 @@
               th.r
                 label 更新間隔
               td
-                btn(v-model="interval", :as="1") 一日
-                btn(v-model="interval", :as="2") 二日
-                btn(v-model="interval", :as="3") 三日
+                span
+                  btn(v-model="interval", :as="1") 一日
+                  btn(v-model="interval", :as="2") 二日
+                  btn(v-model="interval", :as="3") 三日
+            tr
+              th.r
+                label 夜
+              td
+                span
+                  btn(v-model="night",  :as="0") なし
+                  btn(v-model="night",  :as="5")  5分
+                  btn(v-model="night", :as="20") 20分
+                  btn(v-model="night", :as="60") 60分
 
       post.form(handle="SSAY" deco="giji")
         h4 設定-会話
@@ -76,48 +86,52 @@
               th.r
                 label 仲間との会話
               td
-                check.AIM(v-model="option" as="talk_aim" title="個人的な耳打ちができる。") 内緒話
-                check.WSAY(v-model="option" as="talk_secret_grave" title="狼・妖精と死者との間で会話ができる。") 幽界トーク
-                check.VSAY(v-model="option" as="talk_mob_grave" title="見物人と死者との間で会話ができる。") 裏方見物人
-                check.VSAY(v-model="option" as="talk_mob_alive" title="見物人と生存者、死者との間で会話ができる。") 舞台見物人
+                span
+                  check.AIM(v-model="option" as="talk_aim" title="個人的な耳打ちができる。") 内緒話
+                  check.WSAY(v-model="option" as="talk_secret_grave" title="狼・妖精と死者との間で会話ができる。") 幽界トーク
+                span
+                  check.VSAY(v-model="option" as="talk_mob_grave" title="見物人と死者との間で会話ができる。") 裏方見物人
+                  check.VSAY(v-model="option" as="talk_mob_alive" title="見物人と生存者、死者との間で会話ができる。") 舞台見物人
             tr
               th.r
                 label キャラクター
-                | {{ faces.list.length }}名
               td
-                span.tag
+                | {{ faces.list.length }}名を選択中
+            tr
+              td(colspan="2")
+                span
                   btn(v-model="tags", :as="tags_all") {{ tag("all").label }}
                   btn(v-model="tags", :as="tags_giji") {{ tag("giji").label }}
                   btn(v-model="tags", :as="[]") なし
-                span.tag
+                span
                   check(v-model="tags" as="shoji") {{ tag("shoji").label }}
                   check(v-model="tags" as="travel") {{ tag("travel").label }}
                   check(v-model="tags" as="stratos") {{ tag("stratos").label }}
                   check(v-model="tags" as="myth") {{ tag("myth").label }}
                   check(v-model="tags" as="asia") {{ tag("asia").label }}
                   check(v-model="tags" as="marchen") {{ tag("marchen").label }}
-                span.tag
+                span
                   check(v-model="tags" as="kid") {{ tag("kid").label }}
                   check(v-model="tags" as="young") {{ tag("young").label }}
                   check(v-model="tags" as="middle") {{ tag("middle").label }}
                   check(v-model="tags" as="elder") {{ tag("elder").label }}
-                span.tag
+                span
                   check(v-model="tags" as="river") {{ tag("river").label }}
                   check(v-model="tags" as="road") {{ tag("road").label }}
                   check(v-model="tags" as="immoral") {{ tag("immoral").label }}
-                span.tag
+                span
                   check(v-model="tags" as="guild") {{ tag("guild").label }}
                   check(v-model="tags" as="elegant") {{ tag("elegant").label }}
                   check(v-model="tags" as="ecclesia") {{ tag("ecclesia").label }}
-                span.tag
+                span
                   check(v-model="tags" as="medical") {{ tag("medical").label }}
                   check(v-model="tags" as="market") {{ tag("market").label }}
-                span.tag
+                span
                   check(v-model="tags" as="apartment") {{ tag("apartment").label }}
                   check(v-model="tags" as="servant") {{ tag("servant").label }}
                   check(v-model="tags" as="farm") {{ tag("farm").label }}
                   check(v-model="tags" as="government") {{ tag("government").label }}
-                span.tag
+                span
                   check(v-model="tags" as="god") {{ tag("god").label }}
             tr
               th.r
@@ -150,9 +164,9 @@
               th.r
                 label 投票権
               td
-                check(v-model="option" as="vote_by_live") 生存者
-                check(v-model="option" as="vote_by_mob") 陪審員
-                check(v-model="option" as="vote_by_grave") 死者
+                check(v-model="vote_by" as="live") 生存者
+                check(v-model="vote_by" as="mob") 見物陪審員
+                check(v-model="vote_by" as="grave") 墓下陪審員
             tr
               th.r
                 label 役職
@@ -169,6 +183,7 @@
 <script lang="coffee">
 { Query } = require "~/plugins/memory-record"
 { nation, village } = require "../../yaml/rule.yml"
+NPC = require "../../yaml/npc.yml"
 
 module.exports =
   data: ->
@@ -176,13 +191,20 @@ module.exports =
     v_rules += ( "#{idx + 1}. #{head}" for {head}, idx in village.list )
     .join "\n"
 
-    npc =
+    npc:
       face_id: null
       chr_job_id: null
       say: ["", ""]
-    maker = ["", v_rules, ""]
-
-    { npc, maker, interval: 1, vote: "sign", option: ["vote_by_live"], tags: ["god"] }
+    size:
+      player: 4
+      mob:    0
+    maker: ["", v_rules, ""]
+    interval: 1
+    night:    5
+    vote: "sign"
+    vote_by: ["live"]
+    option: ["vote_by_live"]
+    tags: ["god"]
   
   methods:
     tag: (id)->
@@ -205,4 +227,8 @@ module.exports =
 </script>
 
 <style lang="stylus" scoped>
+th.t
+  vertical-align: top
+label
+  white-space: nowrap
 </style>
