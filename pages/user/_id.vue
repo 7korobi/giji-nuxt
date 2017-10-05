@@ -8,7 +8,7 @@
         a(:href="profile.token") token
       
       post(v-if="user" handle="SSAY" deco="giji")
-        nuxt-link(to="/book/new") 新しい村を作成する。
+        nuxt-link(to="/book/edit") 新しい村を作成する。
 
 
 </template>

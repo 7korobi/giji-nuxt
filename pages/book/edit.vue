@@ -100,9 +100,9 @@
             tr
               td(colspan="2")
                 span
-                  btn(v-model="tags", :as="tags_all") {{ tag("all").label }}
-                  btn(v-model="tags", :as="tags_giji") {{ tag("giji").label }}
-                  btn(v-model="tags", :as="[]") なし
+                  check(set v-model="tags", :as="tags_all") {{ tag("all").label }}
+                  check(set v-model="tags", :as="tags_giji") {{ tag("giji").label }}
+                  check(set v-model="tags", :as="[]") なし
                 span
                   check(v-model="tags" as="shoji") {{ tag("shoji").label }}
                   check(v-model="tags" as="travel") {{ tag("travel").label }}

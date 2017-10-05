@@ -89,9 +89,10 @@ module.exports = (args1)->
         $browser[key] = value
 
     setter.pack computed, type, key, value
-    watch[key] = (newVal, oldVal)->
-      return if _.isEqual newVal, oldVal
-      cb?.call @, newVal, key
+    if cb?
+      watch[key] = (newVal, oldVal)->
+        return if _.isEqual newVal, oldVal
+        cb.call @, newVal, key
 
   for method, args2 of args1
     for key, val of args2

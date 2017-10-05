@@ -2,24 +2,30 @@
 _ = require "lodash"
 
 module.exports =
-  props: ["as", "value"]
+  props: ["as", "value", "set"]
   methods:
     tap: ->
-      idx = @value.indexOf(@as)
-      newVal =
-        if idx < 0
-          [@as, @value...]
-        else
-          head = @value[...idx]
-          tail = @value[idx + 1 ..]
-          [head..., tail...]
-      @$emit 'input', newVal
-
+      @$emit 'input', @tap_value
 
   computed:
+    equal: ->
+      ! _.xor(@value, @as).length    
+
+    tap_value: ->
+      if @set
+        if @equal
+          []
+        else
+          @as
+      else
+        _.xor @value, [@as]
+
     btn: ->
-      idx = @value.indexOf(@as)
-      bool = !(idx < 0)
+      if @set
+        bool = @equal
+      else
+        idx = @value.indexOf(@as)
+        bool = !(idx < 0)
       if bool
         ["active"]
       else
