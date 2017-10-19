@@ -3,6 +3,7 @@
 @import "./_chat.styl"
 @import "./_frame.styl"
 @import "./_form.styl"
+@import "./_markdown.styl"
 @import "./_theme.styl"
 
 palette_single(title-bar, grass,  BROAD)

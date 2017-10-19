@@ -18,12 +18,18 @@
 .expand-transition
   transition: all .2s ease
 
+.editframe
+  transition-property: height, width
+  transition-duration: .2s   , .2s
+  transition-delay:    .1s   , 0s
+  transition-timing-function: ease
+
 .icons
 .list
   &-move
-    transition: transform 0.3s
+    transition: transform .3s
   &-enter-to
-    transition: all 0.2s ease 0.1s
+    transition: all .2s ease .1s
   &-enter, &-leave-to
     opacity: 0
   &-leave-to
@@ -33,7 +39,7 @@
 .timeline
   &-enter, &leave-to
     opacity: 0
-    transition: all 0.2s ease 0.1s
+    transition: all .2s ease .1s
 
 .portrates
   background: #000

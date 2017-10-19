@@ -1,5 +1,5 @@
-html,
-body,
+html
+body
 p
   margin: 0
 
@@ -13,8 +13,19 @@ body
   overflow-wrap: break-word
   word-wrap:     break-word
 
+.summary
+.sideframe
+.writeframe
+.center-left
+.center-right
+  pointer-events: none
+
+.editframe
+.inframe
+  pointer-events: auto
+
 .page-active
-  &:before,
+  &:before
   &:after
     content: ''
     position: fixed
@@ -42,7 +53,7 @@ body
 
   table
     border-collapse: collapse
-  td,
+  td
   th
     margin:  0
     padding: 0
@@ -52,21 +63,20 @@ body
 .fullframe
   margin: 0
 
-.summary,
-.fullframe,
-.outframe,
-.contentframe,
+.summary
 .inframe
+.outframe
+.fullframe
+.contentframe
   box-sizing: content-box
 
-.writeframe,
+.writeframe
 .outframe
   margin: 0 auto
 
-.center-left,
+.center-left
 .center-right
   position: fixed
-  pointer-events: none
   z-index: -95
   top: 50vh
   border-bottom-width: 2px
@@ -78,12 +88,12 @@ body
 .center-right
   right:   0
 
-.summary,
-.sideframe,
+.summary
+.editframe
+.sideframe
 .writeframe
   position: fixed
   overflow-y: auto
-  pointer-events: none
   z-index: 10
   &:hover
     z-index: 30
@@ -108,8 +118,10 @@ body
   bottom: 0
   overflow-x: visible
 
-.inframe
-  pointer-events: auto
+.editframe
+  right: 0
+  top:  0
+  overflow-x: hidden
 
 .sideframe
   .icons
@@ -197,7 +209,7 @@ body
   .report
     position: relative
 
-    &::before,
+    &::before
     &::after
       top: -8px
       content: ""

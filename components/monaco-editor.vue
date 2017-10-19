@@ -1,5 +1,5 @@
 <template lang="pug">
-div(v-once, :style="style")
+div(v-once)
 </template>
 
 <script lang="coffee">
@@ -13,9 +13,6 @@ module.exports =
   default:
     props:
       value: String
-      maxRow:
-        type: Number
-        default: 1
 
     data: ->
       value_past: ""
@@ -83,9 +80,9 @@ module.exports =
           @$emit "input", @editor.getValue
             preserveBOM: false
         @editor.onDidChangeCursorPosition (e)=>
-          console.log e
+          console.log arguments
         @editor.onDidChangeCursorSelection (e)=>
-          console.log e
+          console.log arguments
         
 
     beforeDestroy: ->
@@ -102,8 +99,6 @@ module.exports =
         console.log newStr, oldStr
         @editor.setValue newStr
 
-    computed:
-      style: ->
-        height: "#{ 16 * @maxRow }px"
+    computed: {}
 
 </script>

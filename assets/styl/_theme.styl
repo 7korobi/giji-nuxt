@@ -222,9 +222,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  33%,33%,1)
     $penHi =  HSLA(key,  33%,20%,1)
 
-    $good =   HSLA(ALIEN,33%,33%,1)
-    $warn =   HSLA(LONE, 33%,33%,1)
-    $ban =    HSLA(WOLF, 33%,33%,1)
+    $good =   HSLA(ALIEN,33%,40%,1)
+    $warn =   HSLA(LONE, 33%,40%,1)
+    $ban =    HSLA(WOLF, 33%,40%,1)
 
   if snow == $backT
     $edge =   HSLA(key,15%,75%,1)
@@ -243,9 +243,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  80%,33%,1)
     $penHi =  HSLA(key,  80%,20%,1)
 
-    $good =   HSLA(ALIEN,80%,33%,1)
-    $warn =   HSLA(LONE, 80%,33%,1)
-    $ban =    HSLA(WOLF, 80%,33%,1)
+    $good =   HSLA(ALIEN,80%,40%,1)
+    $warn =   HSLA(LONE, 80%,40%,1)
+    $ban =    HSLA(WOLF, 80%,40%,1)
 
   if light == $backT
     $edge =   HSLA(key,50%,50%,1)
@@ -264,9 +264,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  66%,15%,1)
     $penHi =  HSLA(key,  66%, 0%,1)
 
-    $good =   HSLA(ALIEN,66%,15%,1)
-    $warn =   HSLA(LONE, 66%,15%,1)
-    $ban =    HSLA(WOLF, 66%,15%,1)
+    $good =   HSLA(ALIEN,66%,25%,1)
+    $warn =   HSLA(LONE, 66%,25%,1)
+    $ban =    HSLA(WOLF, 66%,25%,1)
 
   if white == $backT
     $edge =   HSLA(key,15%,50%,1)
@@ -285,9 +285,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  80%,15%,1)
     $penHi =  HSLA(key,  80%, 0%,1)
 
-    $good =   HSLA(ALIEN,80%,15%,1)
-    $warn =   HSLA(LONE, 80%,15%,1)
-    $ban =    HSLA(WOLF, 80%,15%,1)
+    $good =   HSLA(ALIEN,80%,25%,1)
+    $warn =   HSLA(LONE, 80%,25%,1)
+    $ban =    HSLA(WOLF, 80%,25%,1)
 
   if foot == $backT
     $edge =   HSLA(key,50%,50%,1)
@@ -348,9 +348,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  20%,66%,1)
     $penHi =  HSLA(key,  15%,90%,1)
 
-    $good =   HSLA(ALIEN,20%,66%,1)
-    $warn =   HSLA(LONE, 20%,66%,1)
-    $ban  =   HSLA(WOLF, 20%,66%,1)
+    $good =   HSLA(ALIEN,40%,66%,1)
+    $warn =   HSLA(LONE, 40%,66%,1)
+    $ban  =   HSLA(WOLF, 40%,66%,1)
 
   if metal == $backT
     $edge =   HSLA(key,15%,40%,1)
@@ -369,9 +369,9 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  25%,75%,1)
     $penHi =  HSLA(key,  15%,90%,1)
 
-    $good =   HSLA(ALIEN,25%,75%,1)
-    $warn =   HSLA(LONE, 25%,75%,1)
-    $ban  =   HSLA(WOLF, 25%,75%,1)
+    $good =   HSLA(ALIEN,35%,75%,1)
+    $warn =   HSLA(LONE, 35%,75%,1)
+    $ban  =   HSLA(WOLF, 35%,75%,1)
 
   if night == $backT
     $edge =   HSLA(key,66%,40%,1)
@@ -505,9 +505,14 @@ palette_single($bgTheme, $backT, key)
         color: $pen
         background-color: $bgHi
 
-    rt
-    abbr
     label
+    rt
+      body &.{theme}
+      .{theme} &
+        color: $pen
+        background-color: $bgLow
+
+    abbr
       body &.{theme}
       .{theme} &
         background-color: $emboss
