@@ -35,4 +35,3 @@ module.exports =
     return cb() if coffee.test req
     return cb() if vue.test req
     cb null, 'commonjs2 ' + req
-

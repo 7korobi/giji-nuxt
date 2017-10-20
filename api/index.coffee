@@ -2,7 +2,7 @@ bodyParser = require 'body-parser'
 express = require 'express'
 config = require '../config/webpack/index.coffee'
 # { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
-Nuxt = require 'nuxt'
+{ Nuxt, Builder } = require 'nuxt'
 
 { pm_id, HOST, ONLY_VUE } = process.env
 process.on 'unhandledRejection', console.dir
@@ -32,8 +32,8 @@ console.log process.env
 nuxt = new Nuxt config
 if config.dev
   try
-    # builder = new Builder nuxt
-    builder = nuxt
+    builder = new Builder nuxt
+    # builder = nuxt
     builder.build()
   catch err
     console.error err
