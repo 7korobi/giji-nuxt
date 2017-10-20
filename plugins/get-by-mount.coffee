@@ -1,4 +1,6 @@
-base = ([time_num..., time_tail], name, calc)->
+base = (timestr, name, calc)->
+  time_tail = timestr[-1..]
+  time_num = timestr[..-2]
   timeout =
     switch time_tail
       when "s"
@@ -21,20 +23,20 @@ base = ([time_num..., time_tail], name, calc)->
     { payload, key, name }
 
   mounted: ->
-    { commit, timer, read_at } = base.root
+    { timer, read_at } = @$store.state
     { payload, key, name } = capture @
     o =
       timer: {}
       read_at: {}
     o.timer[key] = timeout
-    commit base.arg.commit, o
+    @$store.commit "update", o
     if Date.now() - timeout < read_at[key]
       new Promise (ok)-> ok()
     else
       @$store.dispatch name, payload
-      .then ->
+      .then =>
         o.read_at[key] = Date.now()
-        commit base.arg.commit, o
+        @$store.commit "update", o
 
   computed:
     read_at: ->

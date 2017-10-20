@@ -16,10 +16,6 @@ if window?
 ###
 
 module.exports =
-  plugins: [
-    require("~/plugins/get-by-mount").plugin
-      commit: "update"
-  ]
   state: ->
     user: null
     profile: null

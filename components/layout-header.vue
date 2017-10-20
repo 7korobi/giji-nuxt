@@ -26,6 +26,7 @@ module.exports =
 
   computed:
     center: ->
+      console.log "poll stay"
       @$store.commit "menu/center", { @top, @left, @height, @width }
     body_class: ->
       [@log, @theme, @font]

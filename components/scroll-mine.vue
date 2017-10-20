@@ -8,8 +8,8 @@ module.exports =
   computed:
     el_adjust: el.adjust
     btn: ->
-      if window? && @el_adjust
-        requestAnimationFrame =>
+      if @el_adjust
+        @$nextTick ->
           @$emit 'input', @as
       [@el_adjust]
 

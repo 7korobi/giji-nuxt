@@ -16,9 +16,8 @@ store = require("~/plugins/browser-store")
   replace:
     idx: []
   watch: (val, key)->
-    switch key
-      when "mode"
-        @page_reset()
+    return
+    console.log key, val
 
 path store, "folder", "book", "part", "phase", "chat"
 
@@ -29,8 +28,16 @@ _.merge store,
     page_idx: ->
       @page_all_contents?.page_idx?(@chat) ? 0
     page_tmp: ->
-      @$route.query.page
-
+      { page } = @$route.query
+      if page
+        if Number(page)
+          @page_idxs = [page - 1]
+        else
+          @page_reset()
+        query = { @$route.query..., page: undefined }
+        @$router.replace { query }
+        console.log page
+      page
 
     mentions: ->
       @read_at
@@ -80,13 +87,6 @@ _.merge store,
       @page_reset()
 
     page_tmp: (page, old)->
-      if page
-        if Number(page)
-          @page_idxs = [page - 1]
-        else
-          @page_reset()
-        query = { @$route.query..., page: undefined }
-        @$router.replace { query }
 
 module.exports = (o)->
   if o?.loader
