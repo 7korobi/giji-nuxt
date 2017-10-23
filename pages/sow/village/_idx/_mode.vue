@@ -64,6 +64,11 @@ module.exports =
       loader: true
   ]
 
+  head: ->
+    labels = [@part, @book].map (o)-> o?.label
+    labels.push "人狼議事"
+    title: labels.join(' ')
+
   methods:
     focus: (@idx)->
     anker: (book_id, a)->

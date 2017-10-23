@@ -18,17 +18,17 @@ browser_store = bs = (method)->
         o[key] = newVal
         @$data.$browser = { @$data.$browser..., o... }
 
+get_value_by_route = (src, by_url, key, val)->
+  value = src.params[key] || src.query[key]
+  if value
+    by_url value
+  else
+    val
 
 router = (method)->
   pack: (computed, {by_url}, key, val)->
     computed[key] =
-      get: ->
-        value = @$route.params[key] || @$route.query[key]
-        if value
-          by_url value
-        else
-          val
-
+      get: -> get_value_by_route @$route, by_url, key, val
       set: (newVal)->
         @$router[method] relative_to @$route,
           "#{key}": newVal
@@ -69,10 +69,19 @@ module.exports = (args1)->
 
   cb = args1.watch
 
-  created = ->
-    for method, args2 of args1
-      for key, val of args2
-        cb?.call @, @[key], key
+  routes = []
+  beforeRouteUpdate = (newRoute, oldRoute, next)->
+    next()
+    for key, { by_url, value } of routes
+      newVal = get_value_by_route newRoute, by_url, key, value
+      oldVal = get_value_by_route oldRoute, by_url, key, value
+      unless newVal == oldVal
+        cb?.call @, newVal, oldVal, key
+
+  mounted = ->
+    for key, val of @$data.$browser
+      cb?.call @, @[key], val, key
+
   data = ->
     { $browser }
 
@@ -82,6 +91,9 @@ module.exports = (args1)->
     switch method
       when "replace", "push"
         setter = router(method)
+        routes[key] =
+          by_url: type.by_url
+          value:  value
 
       when "cookie", "local", "session"
         setter = browser_store(method)
@@ -92,10 +104,10 @@ module.exports = (args1)->
     if cb?
       watch[key] = (newVal, oldVal)->
         return if _.isEqual newVal, oldVal
-        cb.call @, newVal, key
+        cb.call @, newVal, oldVal, key
 
   for method, args2 of args1
     for key, val of args2
       pack method, key, val
 
-  { data, watch, computed, methods, created }
+  { data, watch, computed, methods, mounted, beforeRouteUpdate }

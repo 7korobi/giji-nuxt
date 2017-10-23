@@ -7,13 +7,14 @@ module.exports =
 
 </script>
 <template lang="pug">
-div
+no-ssl
   layout-header
   .outframe
     .center-left
     .center-right
     monaco-frame
-  nuxt.page-active
+  keep-alive
+    nuxt.page-active
   .outframe
     .contentframe
       .inframe

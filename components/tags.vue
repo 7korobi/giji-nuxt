@@ -45,6 +45,6 @@ p.form
 _ = require "lodash"
 
 module.exports =
-  default: _.merge {}, require("./tag.vue").parent, {}
+  default: require("./tag.vue").default.parent
 
 </script>

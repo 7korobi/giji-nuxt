@@ -13,17 +13,6 @@
         text-editor(v-model="maker[0]", :maxSize="500", :maxRow="30")
 
       post.form(handle="public" deco="giji")
-        h4 村のルール
-        hr
-        text-editor(v-model="maker[1]", :maxSize="500", :maxRow="30")
-
-      post.form(handle="public" deco="giji")
-        h4 国のルール
-        hr
-        ul
-          li(v-for="rule in n_rules") {{ rule.head }}
-
-      post.form(handle="public" deco="giji")
         h4 設定-基本
         table
           tbody
@@ -133,6 +122,11 @@
                   check(v-model="tags" as="government") {{ tag("government").label }}
                 span
                   check(v-model="tags" as="god") {{ tag("god").label }}
+
+      post.form(handle="SSAY" deco="giji")
+        h4 設定-会話
+        table
+          tbody
             tr
               th.r
                 label 最初の犠牲者
@@ -147,6 +141,18 @@
 
       talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
         text-editor(placeholder="１日目の発言" v-model="npc.say[1]")
+
+
+      post.form(handle="public" deco="giji")
+        h4 村のルール
+        hr
+        text-editor(v-model="maker[1]", :maxSize="500", :maxRow="30")
+
+      post.form(handle="public" deco="giji")
+        h4 国のルール
+        hr
+        ul
+          li(v-for="rule in n_rules") {{ rule.head }}
 
 
       post.form(handle="private" deco="giji")

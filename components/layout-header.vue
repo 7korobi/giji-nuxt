@@ -7,7 +7,7 @@ module.exports =
       cookie:
         theme: "cinema"
         font:  "std"
-      watch: (val, key)->
+      watch: (val, old, key)->
         return unless window?
         @use_style key
         return unless key == 'theme'
@@ -18,6 +18,20 @@ module.exports =
     width:  0
     height: 0
     use: {}
+    new:
+      rel:
+        log: "stylesheet"
+        font: "stylesheet"
+        theme: "stylesheet"
+    old:
+      rel:
+        log: "stylesheet"
+        font: "stylesheet"
+        theme: "stylesheet"
+      href:
+        log: ""
+        font: ""
+        theme: ""
 
   created: ->
     return unless window?
@@ -26,7 +40,6 @@ module.exports =
 
   computed:
     center: ->
-      console.log "poll stay"
       @$store.commit "menu/center", { @top, @left, @height, @width }
     body_class: ->
       [@log, @theme, @font]
@@ -45,16 +58,11 @@ module.exports =
 
   methods:
     use_style: (key)->
-      key1 = key + 1
-      key2 = key + 2
-      href = @href[key]
-      window[key1].rel = 'stylesheet'
-      window[key2].rel = 'stylesheet'
-      window[key2].href = href
+      @new.rel[key] = 'stylesheet'
       setTimeout =>
-        window[key1].href = href
+        @old.href[key] = @href[key]
         setTimeout =>
-          window[key2].rel = 'prefetch'
+          @new.rel[key] = 'prefetch'
         , 100
       , 100
 
@@ -71,12 +79,12 @@ module.exports =
     link: [
       { rel: 'stylesheet', type: 'text/css', href: "/css/index.styl.css" }
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
-      { type: 'text/css', id: 'log1' }
-      { type: 'text/css', id: 'log2' }
-      { type: 'text/css', id: 'font1' }
-      { type: 'text/css', id: 'font2' }
-      { type: 'text/css', id: 'theme1' }
-      { type: 'text/css', id: 'theme2' }
+      { rel: @new.rel.log,   type: 'text/css', href: @href.log }
+      { rel: @new.rel.font,  type: 'text/css', href: @href.font }
+      { rel: @new.rel.theme, type: 'text/css', href: @href.theme }
+      { rel: @old.rel.log,   type: 'text/css', href: @old.href.log }
+      { rel: @old.rel.font,  type: 'text/css', href: @old.href.font }
+      { rel: @old.rel.theme, type: 'text/css', href: @old.href.theme }
     ]
 
 </script>

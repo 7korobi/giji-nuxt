@@ -5,7 +5,7 @@ module.exports =
     require("~/plugins/browser-store")
       local:
         text: "(自由帳)"
-      watch: (val, key)->
+      watch: (val, old, key)->
   ]
 
   data: ->
