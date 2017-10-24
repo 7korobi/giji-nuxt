@@ -47,14 +47,14 @@
     "yaml-loader": "latest"
   },
   "scripts": {
+    "dev": "yarn run cp-monaco && yarn run api && node server.js",
+    "prod": "yarn run cp-monaco && yarn run api && yarn run styl && yarn run build",
+    "w.styl": "ls assets/styl/*.styl.use | xargs stylus --compress --watch --sourcemap --out static/css/.",
     "cp-monaco": "rm -rf static/monaco-editor && cp -r node_modules/monaco-editor/min static/monaco-editor",
     "api": "webpack --config config/webpack/index-node.coffee",
-    "styl": "ls assets/styl/*.styl.use | xargs stylus --compress --sourcemap --out static/css/.",
-    "prod": "yarn run cp-monaco && yarn run api && yarn run styl && yarn run build",
-    "dev": "yarn run cp-monaco && yarn run api && node server.js",
+    "styl": "ls assets/styl/*.styl.use | xargs stylus --compress --sourcemap --out static/css/. | rm static/css/*.css.gz | gzip -9 static/css/*.css",
     "build": "nuxt build",
     "analyze": "nuxt build --analyze",
-    "start": "nuxt start",
     "generate": "nuxt generate"
   }
 }
