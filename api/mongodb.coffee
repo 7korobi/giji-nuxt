@@ -140,11 +140,11 @@ mongo.connect MONGO_URL_SOW
     .then ([o])->
       data = for id in o.story_ids
         path = "./static/sow/#{id}.json.gz"
-        url = "#{API_URL}/story/oldlog/#{id}"
+        url = "http:#{API_URL}/story/oldlog/#{id}"
         """  ls "#{path}" || curl "#{url}" | gzip --stdout --best > "#{path}"  """
 
       path = "./static/sow/index.json.gz"
-      url = "#{API_URL}/story/oldlog"
+      url = "http:#{API_URL}/story/oldlog"
       data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
       fs.writeFile './static/sow.sh', data.join("\n") , (err)->
         console.log err

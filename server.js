@@ -518,7 +518,7 @@ sh = __webpack_require__(0);
 module.exports = {
   every: '12 hours',
   define: function(job, done) {
-    return sh.exec(`curl ${API_URL}/aggregate/job`, function(err, stdout, stderr) {
+    return sh.exec(`curl http:${API_URL}/aggregate/job`, function(err, stdout, stderr) {
       return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
         if (err) {
           return console.error(err);
@@ -772,13 +772,13 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
         for (i = 0, len = ref.length; i < len; i++) {
           id = ref[i];
           path = `./static/sow/${id}.json.gz`;
-          url = `${API_URL}/story/oldlog/${id}`;
+          url = `http:${API_URL}/story/oldlog/${id}`;
           results.push(`  ls "${path}" || curl "${url}" | gzip --stdout --best > "${path}"  `);
         }
         return results;
       })();
       path = "./static/sow/index.json.gz";
-      url = `${API_URL}/story/oldlog`;
+      url = `http:${API_URL}/story/oldlog`;
       data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
       fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
         return console.log(err);
