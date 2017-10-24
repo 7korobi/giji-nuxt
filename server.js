@@ -351,6 +351,10 @@ module.exports = require("extract-text-webpack-plugin");
 //####
 // Headers of the page
 
+var host;
+
+host = "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt";
+
 module.exports = {
   title: '人狼議事',
   meta: [
@@ -381,7 +385,7 @@ module.exports = {
   ],
   script: [
     {
-      src: '/monaco-editor/vs/loader.js',
+      src: host + '/monaco-editor/vs/loader.js',
       type: 'text/javascript',
       charset: 'utf8'
     }

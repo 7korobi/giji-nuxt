@@ -1,5 +1,6 @@
 <script lang="coffee">
 
+host = "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt"
 
 module.exports =
   mixins: [
@@ -44,9 +45,9 @@ module.exports =
     body_class: ->
       [@log, @theme, @font]
     href: ->
-      log: "/css/log-#{@log}.styl.css"
-      font: "/css/font-#{@font}.styl.css"
-      theme: "/css/theme-#{@theme}.styl.css"
+      log: host + "/css/log-#{@log}.styl.css"
+      font: host + "/css/font-#{@font}.styl.css"
+      theme: host + "/css/theme-#{@theme}.styl.css"
     log: ->
       switch @theme
         when "snow"
@@ -77,7 +78,7 @@ module.exports =
   
   head: ->
     link: [
-      { rel: 'stylesheet', type: 'text/css', href: "/css/index.styl.css" }
+      { rel: 'stylesheet', type: 'text/css', href: host + "/css/index.styl.css" }
       { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
       { rel: @new.rel.log,   type: 'text/css', href: @href.log }
       { rel: @new.rel.font,  type: 'text/css', href: @href.font }
