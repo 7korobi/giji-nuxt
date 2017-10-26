@@ -26,11 +26,12 @@ const scrollBehavior = (to, from, savedPosition) => {
 
 module.exports =
   scrollBehavior: (to, from, savedPosition)->
-    book = (idx_limit, has_top, to, from)->
+    book = (idx_limit, to, from)->
       [from, to] = [from, to].map (o)->
         name = o.params.mode || o.name
         part = o.params.idx?.split("-")[0..idx_limit].join("-")
         page = o.query.page
+        page = undefined if 'back' == page
         "#{name} #{part} #{page}"
 
       if from != to
@@ -39,10 +40,11 @@ module.exports =
         y: 0
 
     basic = (has_top, to)->
-      console.log { to, from }
+      [from, to] = [from, to].map (o)->
+        o.path
       switch
-        when from.path != to.path
-          console.log "scroll to TOP (#{from.path} != #{to.path})"
+        when from != to
+          console.log "scroll to TOP (#{from} != #{to})"
           x: 0
           y: 0
         when has_top
@@ -58,11 +60,11 @@ module.exports =
         console.log "scroll to " + to.hash
         selector: to.hash
       else
-        has_top = to.matched.some (r)-> r.components.default.options.scrollToTop
         switch to.name
           when "sow-village-idx-mode"
-            book  2, has_top, to, from
+            book  2, to, from
           when "sow-village-idx-anker"
-            book  1, has_top, to, from
+            book  1, to, from
           else
+            has_top = to.matched.some (r)-> r.components.default.options.scrollToTop
             basic has_top, to, from

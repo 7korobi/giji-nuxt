@@ -6,6 +6,7 @@ focus = (chat_id)->
   if chat_id? && window?
     @$nextTick =>
       if window[chat_id]
+        # console.log "page_reset()", chat_id
         @$store.commit "menu/focus", chat_id
       else
         console.log chat_id
@@ -21,21 +22,26 @@ store = require("~/plugins/browser-store")
 
 path store, "folder", "book", "part", "phase", "chat"
 
+{ mounted } = store
 _.merge store,
+  mounted: ->
+    mounted.call @
+    { page } = @$route.query
+    if page
+      if Number(page)
+        @page_idxs = [page - 1]
+      else
+        @page_reset()
+      query = { @$route.query..., page: undefined }
+      @$router.replace { query }
+
   computed:
     page_all_contents: ->
       @chats(@part_id)
     page_idx: ->
       @page_all_contents?.page_idx?(@chat) ? 0
-    page_tmp: ->
+    page: ->
       { page } = @$route.query
-      if page
-        if Number(page)
-          @page_idxs = [page - 1]
-        else
-          @page_reset()
-        query = { @$route.query..., page: undefined }
-        @$router.replace { query }
       page
 
     mentions: ->
@@ -72,8 +78,8 @@ _.merge store,
 
   methods:
     page_reset: ->
-      focus.call @, @chat_id
       @page_idxs = [ @page_idx ]
+      focus.call @, @chat_id
 
     page_url: (part_id, page_idx)->
       return unless part_id && data = @chats(part_id)
@@ -84,13 +90,22 @@ _.merge store,
   watch:
     read_at: ->
       @page_reset()
+    
+    chat_id: (newVal, oldVal)->
+      console.log "chat_id", newVal, oldVal
 
-    page_tmp: (page, old)->
+    page: (page, old)->
+      # not work?
+      console.log "watch page", page, old
 
 module.exports = (o)->
   if o?.loader
     store
   else
-    Object.assign {}, store,
-      created: undefined
-      watch:   undefined
+    _.merge {}, store,
+      mounted: mounted
+      watch: {}
+      computed:
+        page: ->
+          { page } = @$route.query
+          page

@@ -12,6 +12,7 @@ module.exports =
     { href: "mailto:7korobi@gmail.com" }
   ]
   link: [
+    { rel: 'manifest', href: '/manifest.json'}
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     { href: "mailto:7korobi@gmail.com" }
   ]
