@@ -28,12 +28,15 @@ const _57865a76 = () => import('..\\pages\\book\\_idx\\_mode.vue' /* webpackChun
 
 const scrollBehavior = function (to, from, savedPosition) {
       var basic, book, has_top;
-      book = function(idx_limit, has_top, to, from) {
+      book = function(idx_limit, to, from) {
         [from, to] = [from, to].map(function(o) {
           var name, page, part, ref;
           name = o.params.mode || o.name;
           part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
           page = o.query.page;
+          if ('back' === page) {
+            page = void 0;
+          }
           return `${name} ${part} ${page}`;
         });
         if (from !== to) {
@@ -45,10 +48,12 @@ const scrollBehavior = function (to, from, savedPosition) {
         }
       };
       basic = function(has_top, to) {
-        console.log({to, from});
+        [from, to] = [from, to].map(function(o) {
+          return o.path;
+        });
         switch (false) {
-          case from.path === to.path:
-            console.log(`scroll to TOP (${from.path} != ${to.path})`);
+          case from === to:
+            console.log(`scroll to TOP (${from} != ${to})`);
             return {
               x: 0,
               y: 0
@@ -71,15 +76,15 @@ const scrollBehavior = function (to, from, savedPosition) {
             selector: to.hash
           };
         default:
-          has_top = to.matched.some(function(r) {
-            return r.components.default.options.scrollToTop;
-          });
           switch (to.name) {
             case "sow-village-idx-mode":
-              return book(2, has_top, to, from);
+              return book(2, to, from);
             case "sow-village-idx-anker":
-              return book(1, has_top, to, from);
+              return book(1, to, from);
             default:
+              has_top = to.matched.some(function(r) {
+                return r.components.default.options.scrollToTop;
+              });
               return basic(has_top, to, from);
           }
       }
