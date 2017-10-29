@@ -1224,7 +1224,7 @@ module.exports = function(app, m) {
       if (!idx) {
         idx = (await Book.count({folder_id}).exec());
         book.idx = idx;
-        book._id = `${folder}-${idx}`;
+        book._id = `${folder_id}-${idx}`;
       }
       part = {
         _id: `${book._id}-0`,
