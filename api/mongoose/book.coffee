@@ -115,8 +115,6 @@ module.exports = (app, m)->
       console.error err
       res.json { err }
 
-    next()
-
 
   app.post '/api/part', (req, res, next)->
     at = new Date() - 0
@@ -126,58 +124,57 @@ module.exports = (app, m)->
     part.open_at ?= at
 
     idx = 0
-    phases = [
-      label: "公開情報"
-      handle: "public"
-      group: "I"
-      update: false
-    ,
-      label: "秘密情報"
-      handle: "private"
-      group: "I"
-      update: false
-    ,
-      label: "管理"
-      handle: "MAKER"
-      group: "S"
-      update: true
-    ,
-      label: "発言"
-      handle: "SSAY"
-      group: "S"
-      update: false
-    ,
-      label: "発言"
-      handle: "VSSAY"
-      group: "S"
-      update: false
-    ,
-      label: "内緒話"
-      handle: "AIM"
-      group: "S"
-      update: false
-    ,
-      label: "独り言"
-      handle: "TSAY"
-      group: "S"
-      update: false
-    ].map (o)->
-      o.idx = idx
-      o._id = "#{part._id}-#{idx++}"
-      o.write_at = at
-      Phase.findByIdAndUpdate(o._id, o, { upsert: true }).exec()
+    try
+      phase = [
+        label: "公開情報"
+        handle: "public"
+        group: "I"
+        update: false
+      ,
+        label: "秘密情報"
+        handle: "private"
+        group: "I"
+        update: false
+      ,
+        label: "管理"
+        handle: "MAKER"
+        group: "S"
+        update: true
+      ,
+        label: "発言"
+        handle: "SSAY"
+        group: "S"
+        update: false
+      ,
+        label: "発言"
+        handle: "VSSAY"
+        group: "S"
+        update: false
+      ,
+        label: "内緒話"
+        handle: "AIM"
+        group: "S"
+        update: false
+      ,
+        label: "独り言"
+        handle: "TSAY"
+        group: "S"
+        update: false
+      ].map (o)->
+        o.idx = idx
+        o._id = "#{part._id}-#{idx++}"
+        o.write_at = at
+        Phase.findByIdAndUpdate(o._id, o, { upsert: true }).exec()
 
-    Promise.all [
-      Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
-      phases...
-    ]
-    .then (part, phase)->
+      [ part, phase... ] = await Promise.all [
+        Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
+        phase...
+      ]
       res.json { part, phase }
-      next()
-    .catch (err)->
+    catch err
       console.error err
       res.json { err }
-      next()
+
 
   app.post '/api/potof', (req, res, next)->
     at = new Date() - 0
@@ -202,15 +199,14 @@ module.exports = (app, m)->
       o.write_at = at
       Card.findByIdAndUpdate(o._id, o, { upsert: true }).exec()
 
-    Promise.all [
-      Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
-      stats...
-      cards...
-    ]
-    .then (part, phase)->
-      res.json { part, phase }
-      next()
-    .catch (err)->
+    try
+      [ part, potof ] = await Promise.all [
+        Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
+        stats...
+        cards...
+      ]
+      res.json { part, potof }
+    catch err
       console.error err
       res.json { err }
-      next()
+

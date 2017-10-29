@@ -1235,16 +1235,15 @@ module.exports = function(app, m) {
           upsert: true
         }).exec()
       ]));
-      res.json({book, part});
+      return res.json({book, part});
     } catch (error) {
       err = error;
       console.error(err);
-      res.json({err});
+      return res.json({err});
     }
-    return next();
   });
-  app.post('/api/part', function(req, res, next) {
-    var at, idx, part, phases;
+  app.post('/api/part', async function(req, res, next) {
+    var at, err, idx, part, phase;
     at = new Date() - 0;
     ({part} = req.body);
     part.write_at = at;
@@ -1252,75 +1251,75 @@ module.exports = function(app, m) {
       part.open_at = at;
     }
     idx = 0;
-    phases = [
-      {
-        label: "公開情報",
-        handle: "public",
-        group: "I",
-        update: false
-      },
-      {
-        label: "秘密情報",
-        handle: "private",
-        group: "I",
-        update: false
-      },
-      {
-        label: "管理",
-        handle: "MAKER",
-        group: "S",
-        update: true
-      },
-      {
-        label: "発言",
-        handle: "SSAY",
-        group: "S",
-        update: false
-      },
-      {
-        label: "発言",
-        handle: "VSSAY",
-        group: "S",
-        update: false
-      },
-      {
-        label: "内緒話",
-        handle: "AIM",
-        group: "S",
-        update: false
-      },
-      {
-        label: "独り言",
-        handle: "TSAY",
-        group: "S",
-        update: false
-      }
-    ].map(function(o) {
-      o.idx = idx;
-      o._id = `${part._id}-${idx++}`;
-      o.write_at = at;
-      return Phase.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    return Promise.all([
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec(),
-      ...phases
-    ]).then(function(part, phase) {
-      res.json({part, phase});
-      return next();
-    }).catch(function(err) {
+    try {
+      phase = [
+        {
+          label: "公開情報",
+          handle: "public",
+          group: "I",
+          update: false
+        },
+        {
+          label: "秘密情報",
+          handle: "private",
+          group: "I",
+          update: false
+        },
+        {
+          label: "管理",
+          handle: "MAKER",
+          group: "S",
+          update: true
+        },
+        {
+          label: "発言",
+          handle: "SSAY",
+          group: "S",
+          update: false
+        },
+        {
+          label: "発言",
+          handle: "VSSAY",
+          group: "S",
+          update: false
+        },
+        {
+          label: "内緒話",
+          handle: "AIM",
+          group: "S",
+          update: false
+        },
+        {
+          label: "独り言",
+          handle: "TSAY",
+          group: "S",
+          update: false
+        }
+      ].map(function(o) {
+        o.idx = idx;
+        o._id = `${part._id}-${idx++}`;
+        o.write_at = at;
+        return Phase.findByIdAndUpdate(o._id, o, {
+          upsert: true
+        }).exec();
+      });
+      [part, ...phase] = (await Promise.all([
+        Part.findByIdAndUpdate(part._id,
+        part,
+        {
+          upsert: true
+        }).exec(),
+        ...phase
+      ]));
+      return res.json({part, phase});
+    } catch (error) {
+      err = error;
       console.error(err);
-      res.json({err});
-      return next();
-    });
+      return res.json({err});
+    }
   });
-  return app.post('/api/potof', function(req, res, next) {
-    var at, cards, potof, stat, stats;
+  return app.post('/api/potof', async function(req, res, next) {
+    var at, cards, err, part, potof, stat, stats;
     at = new Date() - 0;
     ({potof, stat} = req.body);
     potof.write_at = at;
@@ -1352,22 +1351,22 @@ module.exports = function(app, m) {
         upsert: true
       }).exec();
     });
-    return Promise.all([
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec(),
-      ...stats,
-      ...cards
-    ]).then(function(part, phase) {
-      res.json({part, phase});
-      return next();
-    }).catch(function(err) {
+    try {
+      [part, potof] = (await Promise.all([
+        Part.findByIdAndUpdate(part._id,
+        part,
+        {
+          upsert: true
+        }).exec(),
+        ...stats,
+        ...cards
+      ]));
+      return res.json({part, potof});
+    } catch (error) {
+      err = error;
       console.error(err);
-      res.json({err});
-      return next();
-    });
+      return res.json({err});
+    }
   });
 };
 
