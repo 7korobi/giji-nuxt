@@ -1194,26 +1194,27 @@ module.exports = function(app, m) {
     _id: String
   }));
   app.post('/api/book', async function(req, res, next) {
-    var at, book, book_idx, err, folder, label, old_book, part, profile;
+    var at, book, err, folder, idx, label, old_book, part, profile;
     ({book, profile} = req.body);
     at = new Date() - 0;
     folder = "test";
+    ({label, idx} = book);
     book.write_at = at;
     if (book.open_at == null) {
       book.open_at = at;
     }
     book.passport_id = profile.id;
     try {
-      if (!book._id) {
-        ({label} = book);
-        old_book = (await Book.findOne({label, folder}).exec());
-        console.log(old_book);
-        if (old_book) {
-          console.log("duplicated");
-          throw new Error(`${old_book.id} ${old_book.label} は作成済みです。`);
-        }
-        book_idx = (await Book.count({folder}).exec());
-        book._id = `${folder}-${book_idx}`;
+      old_book = (await Book.findOne({label, folder}).exec());
+      console.log(old_book);
+      if (old_book) {
+        console.log("duplicated");
+        throw new Error(`${old_book.id} ${old_book.label} は作成済みです。`);
+      }
+      if (!idx) {
+        idx = (await Book.count({folder}).exec());
+        book.idx = idx;
+        book._id = `${folder}-${idx}`;
       }
       part = {
         _id: `${book._id}-0`,
