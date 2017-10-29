@@ -1137,27 +1137,27 @@ module.exports = function(app, m) {
   ({Schema} = m);
   Card = m.model('Card', new Schema({
     write_at: Number,
+    part_id: String,
     role_id: String,
-    date: Number,
     idx: String,
     _id: String
   }));
   Stat = m.model('Stat', new Schema({
     write_at: Number,
     role_id: String,
-    sw: Boolean,
-    give: Number,
     idx: String,
-    _id: String
+    _id: String,
+    sw: Boolean,
+    give: Number
   }));
   Potof = m.model('Potof', new Schema({
     write_at: Number,
     open_at: Number,
     face_id: String,
-    sign: String,
-    job: String,
     idx: Number,
-    _id: String
+    _id: String,
+    sign: String,
+    job: String
   }));
   Book = m.model('Book', new Schema({
     write_at: Number,
@@ -1184,35 +1184,35 @@ module.exports = function(app, m) {
   Part = m.model('Part', new Schema({
     write_at: Number,
     open_at: Number,
-    label: String,
     phase_idx: Number,
     book_id: String,
     idx: Number,
-    _id: String
+    _id: String,
+    label: String
   }));
   Phase = m.model('Phase', new Schema({
     write_at: Number,
-    label: String,
-    handle: String,
-    group: String,
-    update: false,
     chat_idx: Number,
     part_id: String,
     idx: Number,
-    _id: String
+    _id: String,
+    label: String,
+    handle: String,
+    group: String,
+    update: false
   }));
   Chat = m.model('Chat', new Schema({
     write_at: Number,
     potof_id: String,
-    show: String,
-    deco: String,
-    log: String,
     phase_id: String,
     idx: Number,
-    _id: String
+    _id: String,
+    show: String,
+    deco: String,
+    log: String
   }));
   app.post('/api/book', async function(req, res, next) {
-    var at, book, debug, err, folder_id, idx, label, old_book, part, profile;
+    var at, book, debug, folder_id, idx, label, message, old_book, part, profile;
     ({book, profile} = req.body);
     at = new Date() - 0;
     folder_id = "test";
@@ -1259,9 +1259,9 @@ module.exports = function(app, m) {
       ]));
       return res.json({book, part, debug});
     } catch (error) {
-      err = error;
-      console.error(err);
-      return res.json({err});
+      ({message} = error);
+      console.error(message);
+      return res.json({message});
     }
   });
   app.post('/api/part', async function(req, res, next) {

@@ -4,38 +4,38 @@ module.exports = (app, m)->
   Card = m.model 'Card', new Schema
     write_at: Number
 
+    part_id: String
     role_id: String
-    date: Number
-
     idx: String
     _id: String
+
 
   Stat = m.model 'Stat', new Schema
     write_at: Number
 
     role_id: String
+    idx: String
+    _id: String
+
     sw: Boolean
     give: Number
 
-    idx: String
-    _id: String
 
   Potof = m.model 'Potof', new Schema
     write_at: Number
     open_at: Number
 
     face_id: String
+    idx: Number
+    _id: String
 
     sign: String
     job: String
 
-    idx: Number
-    _id: String
 
   Book = m.model 'Book', new Schema
     write_at: Number
     open_at: Number
-
     part_idx: Number
 
     passport_id: String
@@ -55,44 +55,44 @@ module.exports = (app, m)->
     option: [String]
     label: String
 
+
   Part = m.model 'Part', new Schema
     write_at: Number
     open_at: Number
-
-    label: String
-
     phase_idx: Number
 
     book_id: String
     idx: Number
     _id: String
 
+    label: String
+
+
   Phase = m.model 'Phase', new Schema
     write_at: Number
-    
-    label: String
-    handle: String
-    group: String
-    update: false
-
     chat_idx: Number
 
     part_id: String
     idx: Number
     _id: String
 
+    label: String
+    handle: String
+    group: String
+    update: false
+
+
   Chat = m.model 'Chat', new Schema
     write_at: Number
 
     potof_id: String
+    phase_id: String
+    idx: Number
+    _id: String
 
     show: String
     deco: String
     log: String
-
-    phase_id: String
-    idx: Number
-    _id: String
 
 
   app.post '/api/book', (req, res, next)->
@@ -132,9 +132,9 @@ module.exports = (app, m)->
         Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
       ]
       res.json { book, part, debug }
-    catch err
-      console.error err
-      res.json { err }
+    catch { message }
+      console.error message
+      res.json { message }
 
 
   app.post '/api/part', (req, res, next)->
