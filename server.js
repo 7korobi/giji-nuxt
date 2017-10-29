@@ -1223,6 +1223,7 @@ module.exports = function(app, m) {
         open_at: book.open_at,
         write_at: book.write_at
       };
+      old_book = book;
       [book, part] = (await Promise.all([
         Book.findByIdAndUpdate(book._id,
         book,
@@ -1235,7 +1236,11 @@ module.exports = function(app, m) {
           upsert: true
         }).exec()
       ]));
-      return res.json({book, part});
+      return res.json({
+        book,
+        part,
+        req: {old_book, profile}
+      });
     } catch (error) {
       err = error;
       console.error(err);
