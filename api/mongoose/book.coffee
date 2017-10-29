@@ -96,7 +96,7 @@ module.exports = (app, m)->
 
 
   app.post '/api/book', (req, res, next)->
-    { book, profile } = req.body
+    { book } = req.body
     at = new Date() - 0
     folder_id = "test"
     { label, idx } = book
@@ -105,7 +105,6 @@ module.exports = (app, m)->
     book.open_at ?= at
     book.write_at = at
     book.folder_id   = folder_id
-    book.passport_id = profile._id
 
     try
       old_book = await Book.findOne({ label, folder_id }).exec()
@@ -132,12 +131,11 @@ module.exports = (app, m)->
         open_at: book.open_at
         write_at: book.write_at
 
-      debug = { book, part, profile }
-      [ book, part ] = await Promise.all [
+      [ old_book, old_part ] = await Promise.all [
         Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
         Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
       ]
-      res.json { book, part, debug }
+      res.json { book, part, old_book, old_part }
     catch { message }
       console.error message
       res.json { message }
