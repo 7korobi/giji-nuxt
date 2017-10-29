@@ -14,8 +14,6 @@ import '..\\node_modules\\element-ui\\lib\\theme-default\\index.css'
 
 let layouts = {
 
-  "_book": () => import('..\\layouts\\book.vue'  /* webpackChunkName: "layouts\\book" */).then(m => m.default || m),
-
   "_default": () => import('..\\layouts\\default.vue'  /* webpackChunkName: "layouts\\default" */).then(m => m.default || m)
 
 }
