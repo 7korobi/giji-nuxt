@@ -77,30 +77,42 @@ module.exports = (app, m)->
 
 
   app.post '/api/book', (req, res, next)->
+    { book, profile } = req.body
     at = new Date() - 0
+    folder = "test"
 
-    { book } = req.body
     book.write_at = at
     book.open_at ?= at
+    book.passport_id = profile.id
 
-    part =
-      _id: "#{book._id}-0"
-      idx: 0
-      label: "プロローグ"
-      open_at: book.open_at
-      write_at: book.write_at
+    try
+      unless book._id
+        { label } = book
+        res = await Book.findOne({ label, folder }).exec()
+        console.log res
+        if res
+          console.log "duplicated"
+          throw new Error "#{res.id} #{res.label} は作成済みです。"
+        book_idx = await Book.count({ folder }).exec()
+        book._id = "#{folder}-#{book_idx}"
 
-    Promise.all [
-      Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
-      Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
-    ]
-    .then (book, part)->
+      part =
+        _id: "#{book._id}-0"
+        idx: 0
+        label: "プロローグ"
+        open_at: book.open_at
+        write_at: book.write_at
+
+      [book, part] = await Promise.all [
+        Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
+        Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
+      ]
       res.json { book, part }
-      next()
-    .catch (err)->
+    catch err
       console.error err
       res.json { err }
-      next()
+
+    next()
 
 
   app.post '/api/part', (req, res, next)->

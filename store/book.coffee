@@ -46,6 +46,11 @@ module.exports =
       state.hide_potof_ids = ids
 
   actions:
+    create: ({ commit, rootState }, book)->
+      { profile } = rootState
+      { status, data } = await axios.post "#{env.API_URL}/book", { book, profile }
+      console.log data
+
     books: ({commit}, folder)->
       axios.get "/api/books", { folder }
       .then ({ status, data })->

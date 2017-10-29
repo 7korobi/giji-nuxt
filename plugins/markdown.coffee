@@ -1,19 +1,42 @@
 marked = require 'marked'
 
 nop = (text)-> text
-link = (href, title, text)->
-  if text && href != text
-    title ?= text
-  else
-    [text, hostname] = href.split(///\://|/|\?|\#///g)
-    title = [text, hostname].join("\n")
-  switch href
-    when null, undefined, "", "#"
-      """<b title="#{title}">#{text}</b>"""
-    else
-      """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
+block = (tag)-> (text)-> "<#{tag}>#{text}</#{tag}>"
 
-giji_renderer = Object.assign new marked.Renderer(), { link }
+giji_lexer = 
+
+giji_renderer = Object.assign new marked.Renderer(),
+  link: (href, title, text)->
+    if text && href != text
+      title ?= text
+    else
+      [text, hostname] = href.split(///\://|/|\?|\#///g)
+      title = [text, hostname].join("\n")
+    switch href
+      when null, undefined, "", "#"
+        """<b title="#{title}">#{text}</b>"""
+      else
+        if href.match  ///(#{text}|:\/\/|^\/)///g
+          """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
+        else
+          """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
+
+  #heading: (text, level, raw)->
+
+  code: ->
+
+  table: (head, body)->
+    """<table><thead>#{head}</thead>#{body}<tbody></tbody></table>"""
+
+  list: (body, ordered)->
+    tag = if ordered then 'ol' else 'ul'
+    block(tag)(body)
+
+  hr: -> "<hr>"
+  listitem: block "li"
+  paragraph: block "p"
+  blockquote: block "blockquote"
+
 
 giji_options =
   renderer: giji_renderer
@@ -22,7 +45,7 @@ giji_options =
   tables: true
   breaks: true
   pedantic: false
-  sanitize: false
+  sanitize: true
   smartLists: true
   smartypants: true
 

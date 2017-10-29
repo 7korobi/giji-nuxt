@@ -4,6 +4,8 @@
     .inframe
       br
       post(:write_at="Date.now()", handle="TSAY")
+        nuxt-link(to="/demo/marked") Markdown Talk
+      post(:write_at="Date.now()", handle="TSAY")
         nuxt-link(to="/demo/markdown") Markdown vue
       post(:write_at="Date.now()", handle="TSAY")
         nuxt-link.button(to="/demo/oauth") OpenID

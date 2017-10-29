@@ -1193,40 +1193,54 @@ module.exports = function(app, m) {
     idx: Number,
     _id: String
   }));
-  app.post('/api/book', function(req, res, next) {
-    var at, book, part;
+  app.post('/api/book', async function(req, res, next) {
+    var at, book, book_idx, err, folder, label, part, profile;
+    ({book, profile} = req.body);
     at = new Date() - 0;
-    ({book} = req.body);
+    folder = "test";
     book.write_at = at;
     if (book.open_at == null) {
       book.open_at = at;
     }
-    part = {
-      _id: `${book._id}-0`,
-      idx: 0,
-      label: "プロローグ",
-      open_at: book.open_at,
-      write_at: book.write_at
-    };
-    return Promise.all([
-      Book.findByIdAndUpdate(book._id,
-      book,
-      {
-        upsert: true
-      }).exec(),
-      Part.findByIdAndUpdate(part._id,
-      part,
-      {
-        upsert: true
-      }).exec()
-    ]).then(function(book, part) {
+    book.passport_id = profile.id;
+    try {
+      if (!book._id) {
+        ({label} = book);
+        res = (await Book.findOne({label, folder}).exec());
+        console.log(res);
+        if (res) {
+          console.log("duplicated");
+          throw new Error(`${res.id} ${res.label} は作成済みです。`);
+        }
+        book_idx = (await Book.count({folder}).exec());
+        book._id = `${folder}-${book_idx}`;
+      }
+      part = {
+        _id: `${book._id}-0`,
+        idx: 0,
+        label: "プロローグ",
+        open_at: book.open_at,
+        write_at: book.write_at
+      };
+      [book, part] = (await Promise.all([
+        Book.findByIdAndUpdate(book._id,
+        book,
+        {
+          upsert: true
+        }).exec(),
+        Part.findByIdAndUpdate(part._id,
+        part,
+        {
+          upsert: true
+        }).exec()
+      ]));
       res.json({book, part});
-      return next();
-    }).catch(function(err) {
+    } catch (error) {
+      err = error;
       console.error(err);
       res.json({err});
-      return next();
-    });
+    }
+    return next();
   });
   app.post('/api/part', function(req, res, next) {
     var at, idx, part, phases;
