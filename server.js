@@ -1194,7 +1194,7 @@ module.exports = function(app, m) {
     _id: String
   }));
   app.post('/api/book', async function(req, res, next) {
-    var at, book, err, folder, idx, label, old_book, part, profile;
+    var at, book, debug, err, folder, idx, label, old_book, part, profile;
     ({book, profile} = req.body);
     at = new Date() - 0;
     folder = "test";
@@ -1206,7 +1206,6 @@ module.exports = function(app, m) {
     book.passport_id = profile.id;
     try {
       old_book = (await Book.findOne({label, folder}).exec());
-      console.log(old_book);
       if (old_book) {
         console.log("duplicated");
         throw new Error(`${old_book.id} ${old_book.label} は作成済みです。`);
@@ -1223,7 +1222,7 @@ module.exports = function(app, m) {
         open_at: book.open_at,
         write_at: book.write_at
       };
-      old_book = book;
+      debug = {book, part, profile};
       [book, part] = (await Promise.all([
         Book.findByIdAndUpdate(book._id,
         book,
@@ -1236,11 +1235,7 @@ module.exports = function(app, m) {
           upsert: true
         }).exec()
       ]));
-      return res.json({
-        book,
-        part,
-        req: {old_book, profile}
-      });
+      return res.json({book, part, debug});
     } catch (error) {
       err = error;
       console.error(err);

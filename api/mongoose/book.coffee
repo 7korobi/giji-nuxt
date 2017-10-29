@@ -88,7 +88,6 @@ module.exports = (app, m)->
 
     try
       old_book = await Book.findOne({ label, folder }).exec()
-      console.log old_book
 
       if old_book
         console.log "duplicated"
@@ -106,12 +105,12 @@ module.exports = (app, m)->
         open_at: book.open_at
         write_at: book.write_at
 
-      old_book = book
+      debug = { book, part, profile }
       [ book, part ] = await Promise.all [
         Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
         Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
       ]
-      res.json { book, part, req: { old_book, profile } }
+      res.json { book, part, debug }
     catch err
       console.error err
       res.json { err }
