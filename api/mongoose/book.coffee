@@ -36,9 +36,16 @@ module.exports = (app, m)->
     write_at: Number
     open_at: Number
 
+    chat: Object
+    game: Object
+    tags: Array
+    option: Array
     label: String
-    sign: String
 
+    part_idx: Number
+
+    passport_id: String
+    folder_id: String
     idx: Number
     _id: String
 
@@ -48,6 +55,9 @@ module.exports = (app, m)->
 
     label: String
 
+    phase_idx: Number
+
+    book_id: String
     idx: Number
     _id: String
 
@@ -60,6 +70,8 @@ module.exports = (app, m)->
     update: false
 
     chat_idx: Number
+
+    part_id: String
     idx: Number
     _id: String
 
@@ -72,6 +84,7 @@ module.exports = (app, m)->
     deco: String
     log: String
 
+    phase_id: String
     idx: Number
     _id: String
 
@@ -79,22 +92,23 @@ module.exports = (app, m)->
   app.post '/api/book', (req, res, next)->
     { book, profile } = req.body
     at = new Date() - 0
-    folder = "test"
+    folder_id = "test"
     { label, idx } = book
 
     book.write_at = at
     book.open_at ?= at
+    book.folder_id   = folder_id
     book.passport_id = profile.id
 
     try
-      old_book = await Book.findOne({ label, folder }).exec()
+      old_book = await Book.findOne({ label, folder_id }).exec()
 
       if old_book
         console.log "duplicated"
         throw new Error "#{old_book.id} #{old_book.label} は作成済みです。"
 
       unless idx
-        idx = await Book.count({ folder }).exec()
+        idx = await Book.count({ folder_id }).exec()
         book.idx = idx
         book._id = "#{folder}-#{idx}"
 
