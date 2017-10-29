@@ -88,11 +88,11 @@ module.exports = (app, m)->
     try
       unless book._id
         { label } = book
-        res = await Book.findOne({ label, folder }).exec()
-        console.log res
-        if res
+        old_book = await Book.findOne({ label, folder }).exec()
+        console.log old_book
+        if old_book
           console.log "duplicated"
-          throw new Error "#{res.id} #{res.label} は作成済みです。"
+          throw new Error "#{old_book.id} #{old_book.label} は作成済みです。"
         book_idx = await Book.count({ folder }).exec()
         book._id = "#{folder}-#{book_idx}"
 
