@@ -36,18 +36,24 @@ module.exports = (app, m)->
     write_at: Number
     open_at: Number
 
-    chat: Object
-    game: Object
-    tags: Array
-    option: Array
-    label: String
-
     part_idx: Number
 
     passport_id: String
     folder_id: String
     idx: Number
     _id: String
+
+    chat:
+      interval: Number
+      night: Number
+      player: Number
+      mob: Number
+    game:
+      vote: String
+      vote_by: [String]
+    tags: [String]
+    option: [String]
+    label: String
 
   Part = m.model 'Part', new Schema
     write_at: Number
@@ -95,17 +101,18 @@ module.exports = (app, m)->
     folder_id = "test"
     { label, idx } = book
 
-    book.write_at = at
+    book.part_idx ?= 0
     book.open_at ?= at
+    book.write_at = at
     book.folder_id   = folder_id
     book.passport_id = profile.id
 
     try
       old_book = await Book.findOne({ label, folder_id }).exec()
 
-      if old_book
+      if old_book && idx != old_book.idx
         console.log "duplicated"
-        throw new Error "#{old_book.id} #{old_book.label} は作成済みです。"
+        throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
 
       unless idx
         idx = await Book.count({ folder_id }).exec()
