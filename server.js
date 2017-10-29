@@ -1212,8 +1212,8 @@ module.exports = function(app, m) {
     log: String
   }));
   app.post('/api/book', async function(req, res, next) {
-    var at, book, debug, folder_id, idx, label, message, old_book, part, profile;
-    ({book, profile} = req.body);
+    var at, book, folder_id, idx, label, message, old_book, old_part, part;
+    ({book} = req.body);
     at = new Date() - 0;
     folder_id = "test";
     ({label, idx} = book);
@@ -1225,7 +1225,6 @@ module.exports = function(app, m) {
     }
     book.write_at = at;
     book.folder_id = folder_id;
-    book.passport_id = profile._id;
     try {
       old_book = (await Book.findOne({label, folder_id}).exec());
       if (old_book) {
@@ -1249,8 +1248,7 @@ module.exports = function(app, m) {
         open_at: book.open_at,
         write_at: book.write_at
       };
-      debug = {book, part, profile};
-      [book, part] = (await Promise.all([
+      [old_book, old_part] = (await Promise.all([
         Book.findByIdAndUpdate(book._id,
         book,
         {
@@ -1262,7 +1260,7 @@ module.exports = function(app, m) {
           upsert: true
         }).exec()
       ]));
-      return res.json({book, part, debug});
+      return res.json({book, part, old_book, old_part});
     } catch (error) {
       ({message} = error);
       console.error(message);
