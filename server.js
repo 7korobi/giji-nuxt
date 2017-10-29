@@ -1225,13 +1225,17 @@ module.exports = function(app, m) {
     }
     book.write_at = at;
     book.folder_id = folder_id;
-    book.passport_id = profile.id;
+    book.passport_id = profile._id;
     try {
       old_book = (await Book.findOne({label, folder_id}).exec());
-      if (old_book && idx !== old_book.idx) {
-        console.log("duplicated");
-        throw new Error(`${old_book._id} ${old_book.label} は作成済みです。`);
+      if (old_book) {
+        idx = old_book.idx;
       }
+      /*
+      if old_book && idx != old_book.idx
+      console.log "duplicated"
+      throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
+      */
       if (!idx) {
         idx = (await Book.count({folder_id}).exec());
         book.idx = idx;
