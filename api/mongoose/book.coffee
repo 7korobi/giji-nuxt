@@ -112,7 +112,8 @@ module.exports = (app, m)->
 
 
       if old_book
-        idx = old_book.idx
+        book.idx = idx = old_book.idx
+        book._id = old_book._id
       ###
       if old_book && idx != old_book.idx
         console.log "duplicated"

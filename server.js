@@ -1229,7 +1229,8 @@ module.exports = function(app, m) {
     try {
       old_book = (await Book.findOne({label, folder_id}).exec());
       if (old_book) {
-        idx = old_book.idx;
+        book.idx = idx = old_book.idx;
+        book._id = old_book._id;
       }
       /*
       if old_book && idx != old_book.idx
