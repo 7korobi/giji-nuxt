@@ -3,24 +3,23 @@ marked = require 'marked'
 nop = (text)-> text
 block = (tag)-> (text)-> "<#{tag}>#{text}</#{tag}>"
 
-giji_lexer = 
+link = (href, title, text)->
+  if text && href != text
+    title ?= text
+  else
+    [text, hostname] = href.split(///\://|/|\?|\#///g)
+    title = [text, hostname].join("\n")
+  switch href
+    when null, undefined, "", "#"
+      """<b title="#{title}">#{text}</b>"""
+    else
+      if href.match  ///(#{text}|:\/\/|^\/)///g
+        """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
+      else
+        """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
 
 giji_renderer = Object.assign new marked.Renderer(),
-  link: (href, title, text)->
-    if text && href != text
-      title ?= text
-    else
-      [text, hostname] = href.split(///\://|/|\?|\#///g)
-      title = [text, hostname].join("\n")
-    switch href
-      when null, undefined, "", "#"
-        """<b title="#{title}">#{text}</b>"""
-      else
-        if href.match  ///(#{text}|:\/\/|^\/)///g
-          """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
-        else
-          """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
-
+  link: link
   #heading: (text, level, raw)->
 
   code: ->
