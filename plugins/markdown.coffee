@@ -5,8 +5,9 @@ mermaidAPI = mermaid.mermaidAPI
 mermaidAPI.initialize
   startOnLoad: false
 
-nop = (text)-> text
-block = (tag)-> (text)-> "<#{tag}>#{text}</#{tag}>"
+block = (tag)-> (text)->
+  console.log tag, text
+  "<#{tag}>#{text}</#{tag}>"
 
 link = (href, title, text)->
   if text && href != text
@@ -30,26 +31,10 @@ link = (href, title, text)->
         if title == text
           """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
         else
-          """<ruby title="#{title}">#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
+          """<span title="#{title}"><ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby></span>"""
 
 giji_renderer = Object.assign new marked.Renderer(),
   link: link
-  #heading: (text, level, raw)->
-
-  code: ->
-
-  table: (head, body)->
-    """<table><thead>#{head}</thead>#{body}<tbody></tbody></table>"""
-
-  list: (body, ordered)->
-    tag = if ordered then 'ol' else 'ul'
-    block(tag)(body)
-
-  hr: -> "<hr>"
-  listitem: block "li"
-  paragraph: block "p"
-  blockquote: block "blockquote"
-
 
 giji_options =
   renderer: giji_renderer
@@ -64,9 +49,7 @@ giji_options =
 
 idx = 0
 mermaid = (text, el)->
-  console.log text
   mermaidAPI.render "mermaid-#{idx++}", text, (svg)->
-    console.log svg
     el.innerHTML = svg
 
 center = giji = (text, el)->
