@@ -30,36 +30,7 @@ module.exports = function (options) {
         }
       }))
     }
-
-    config.module.rules.push({
-      test: /\.coffee$/,
-      loader: 'coffee-loader'
-    })
-    config.module.rules.push({
-      test: /\.yml$/,
-      loader: 'json-loader!yaml-loader'
-    })
-    config.module.rules.push({
-      test: /\.pug$/,
-      loader: 'pug-html-loader',
-      query: {
-        pretty: true
-      }
-    })
-    config.module.rules.push({
-      test: /\.md$/,
-      loader: 'markdown-loader',
-      options: {
-        tag: 'div',
-        gfm: true,
-        tables: true,
-        breaks: true,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: true
-      }
-    })
+    console.log(config.module.rules)
     for (rule of config.module.rules) {
       if (rule.loader === 'vue-loader') {
         rule.options.loaders.coffee = loader('coffee-loader')

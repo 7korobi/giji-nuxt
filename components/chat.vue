@@ -73,6 +73,10 @@ module.exports =
           if chk?.value == "confirm" && confirm "open?\n#{url}"
             open url, "_blank"
 
+    mounted: ->
+      unless @$slots.default
+        if @$refs.text
+          markdown[@deco](@log, @$refs.text)
     computed: {
       el_adjust: el.adjust
 
@@ -92,13 +96,6 @@ module.exports =
             "#{prefix}#{mark}#{chat.idx}"
           else
             ""
-
-      log_mention: ->
-        @log_html.replace ///<br>///g, " "
-
-      log_html: ->
-        return "" unless @log
-        markdown[@deco](@log)
 
       current: ->
         { idx } = @$route.params

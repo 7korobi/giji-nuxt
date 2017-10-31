@@ -358,7 +358,7 @@ module.exports = require("extract-text-webpack-plugin");
 
 var host;
 
-host = "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt";
+host = "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt";
 
 module.exports = {
   title: '人狼議事',

@@ -1,4 +1,9 @@
 marked = require 'marked'
+mermaid = require 'mermaid'
+
+mermaidAPI = mermaid.mermaidAPI
+mermaidAPI.initialize
+  startOnLoad: false
 
 nop = (text)-> text
 block = (tag)-> (text)-> "<#{tag}>#{text}</#{tag}>"
@@ -11,12 +16,21 @@ link = (href, title, text)->
     title = [text, hostname].join("\n")
   switch href
     when null, undefined, "", "#"
-      """<b title="#{title}">#{text}</b>"""
+      if title == text
+        """<b>#{text}</b>"""
+      else
+        """<b title="#{title}">#{text}</b>"""
     else
       if href.match  ///(#{text}|:\/\/|^\/)///g
-        """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
+        if title == text
+          """<b chk="confirm" href="#{href}">#{text}</b>"""
+        else
+          """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
       else
-        """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
+        if title == text
+          """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
+        else
+          """<ruby title="#{title}">#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
 
 giji_renderer = Object.assign new marked.Renderer(),
   link: link
@@ -48,14 +62,20 @@ giji_options =
   smartLists: true
   smartypants: true
 
-center = giji = (text)->
+idx = 0
+mermaid = (text, el)->
+  console.log text
+  mermaidAPI.render "mermaid-#{idx++}", text, (svg)->
+    console.log svg
+    el.innerHTML = svg
+
+center = giji = (text, el)->
   lexer = new marked.Lexer giji_options
   tokens = lexer.lex text
-  marked text, giji_options
+  el.innerHTML = marked text, giji_options
 
-
-sow = head = mono = (text)->
-  text
+sow = head = mono = (text, el)->
+  el.innerHTML = text
   .replace ///<br>///g, "\n"
 
   .replace ///<strong>([^<]*?)<\/strong><sup>([^<]*?)</sup>///g, (tag, item, title, idx, src)->
@@ -74,4 +94,4 @@ sow = head = mono = (text)->
   .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
     """<del>#{human}</del>"""
 
-module.exports = { sow, head, mono, giji, center }
+module.exports = { sow, head, mono, giji, center, mermaid }

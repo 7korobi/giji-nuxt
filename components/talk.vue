@@ -13,8 +13,7 @@ table.talk(:id="id", :key="id")
         .chat(@click="click", :key="id", :class="classname")
           chat-head(v-if="head", :full="full", :head="head", :to="to", :sign="sign")
           hr(v-if="head")
-          .text(:class="deco" v-if="$slots.default")
+          .text(ref="text", :class="deco")
             slot
-          .text(:class="deco" v-html="log_html" v-else)
           chat-foot(v-if="anker", :full="full", :chat_id="id", :anker="anker", :write_at="write_at")
 </template>
