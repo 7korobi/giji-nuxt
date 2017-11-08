@@ -23,11 +23,12 @@ module.exports =
 </script>
 
 <template lang="pug">
-.editframe(@mouseenter="enterlog" @mouseleave="leavelog")
-  .inframe
-    .icons
-      p テキスト
-    .swipe
-      monaco-editor(v-model="text" style="height: 90vh")
+keep-alive
+  .editframe(@mouseenter="enterlog" @mouseleave="leavelog")
+    .inframe
+      .icons
+        p テキスト
+      .swipe
+        monaco-editor(v-model="text" style="height: 90vh")
 
 </template>

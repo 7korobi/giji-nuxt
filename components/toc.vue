@@ -30,7 +30,7 @@ module.exports =
         []
   computed:
     show: ->
-      @$store.state.menu.set.toc && @book?.parts
+      @book?.parts && "toc" in @$store.state.menu.shows
 
 </script>
 

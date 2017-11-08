@@ -6,11 +6,11 @@
       .icons.form
         nuxt-link.item.active(replace, :to="back_url")
           i.fa.fa-map-marker
-        check.item(v-model="menus" as="current")
+        check.item(v-model="shows" as="mentions")
           i.fa.fa-map-pin
-        check.item(v-model="menus" as="toc")
+        check.item(v-model="shows" as="toc")
           i.fa.fa-film
-        check.item(v-model="menus" as="potof")
+        check.item(v-model="shows" as="potof")
           i.fa.fa-users
   .summary(name="list" tag="div" key="summary")
     mentions(key="1" @anker="anker")

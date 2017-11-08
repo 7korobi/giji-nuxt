@@ -13,20 +13,14 @@ module.exports =
     height:  0
     width:   0
 
-    set:
-      pin: false
-      toc: false
-      potof: false
-      current: false
+    potofs:
+      sort: "live"
+      order: "asc"
+
+    shows: [] # pin, toc, potof, current
     target: null
 
   mutations:
-    mode: (state, list)->
-      for id of state.set
-        state.set[id] = false
-      for id in list
-        state.set[id] = true
-
     center: (state, { top, left, height, width })->
       state.height  = parseInt height
       state.horizon = parseInt height / 2
@@ -47,3 +41,12 @@ module.exports =
       top = rect_center - state.horizon
       # console.log " go to #{chat_id} as #{top}px"
       window.scrollBy 0, top
+
+    shows: (state, a)->
+      state.shows = a
+      return
+
+    update: (state, o)->
+      for key, val of state when o[key]
+        state[key] = { val..., o[key]... }
+      return

@@ -7,7 +7,7 @@ module.exports =
   ]
   computed:
     show: ->
-      @$store.state.menu.set.current && @chat
+      @chat && "mentions" in @$store.state.menu.shows
 
 </script>
 

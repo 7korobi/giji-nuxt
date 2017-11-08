@@ -70,11 +70,11 @@ _.merge store,
       set: (ids)->
         @$store.commit "book/hide_potof_ids", ids
 
-    menus:
+    shows:
       get: ->
-        key for key, val of @$store.state.menu.set when val
-      set: (menus)->
-        @$store.commit "menu/mode", menus
+        @$store.state.menu.shows
+      set: (shows)->
+        @$store.commit "menu/shows", shows
 
   methods:
     page_reset: ->

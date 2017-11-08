@@ -90,11 +90,7 @@ module.exports =
     require('~/plugins/book')()
   ]
 
-  data: ->
-    sort: "live"
-    order: "asc"
-    full_mode: true
-    live_mode: true
+  data: -> {}
 
   computed:
     full_on:  ->  @potof_ids -> false
@@ -102,13 +98,23 @@ module.exports =
     live_on:  ->  @potof_ids (o)-> ! o.commit
     live_off: ->  @potof_ids (o)-> o.commit
 
+    order:
+      get: ->
+        @$store.state.menu.potofs.order
+      set: (order)->
+        @$store.commit "menu/update", potofs: { order }
+    sort:
+      get: ->
+        @$store.state.menu.potofs.sort
+      set: (sort)->
+        @$store.commit "menu/update", potofs: { sort }
+
     potofs: ->
-      hides = @hide_potof_ids
       if @part
         { list } = Query.potofs.catalog(@book_id, @part_id, @sort, @order)
         for o in list
           o.hide = false
-        for id in hides
+        for id in @hide_potof_ids
           Query.potofs.find(id).hide = true
         list
       else
@@ -122,7 +128,7 @@ module.exports =
           (o)-> o.live.role_id
 
     show: ->
-      @$store.state.menu.set.potof && @part
+      @part && "potof" in @$store.state.menu.shows
 
   methods:
     potof_ids: (f)->

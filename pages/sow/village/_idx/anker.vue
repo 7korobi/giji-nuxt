@@ -30,7 +30,7 @@ module.exports =
       loader: true
   ]
   mounted: ->
-    @menus = [@menus..., "current"]
+    @shows = [@shows..., "current"]
 
   methods:
     focus: (idx)->

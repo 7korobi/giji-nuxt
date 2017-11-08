@@ -81,7 +81,7 @@ module.exports =
       el_adjust: el.adjust
 
       full: ->
-        ! @$store.state.menu.set.current
+        ! @$store.state.menu.shows.current
 
       anker: ->
         if chat = @chat
