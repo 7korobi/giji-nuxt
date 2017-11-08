@@ -5,7 +5,7 @@
       .icons.form
   .contentframe
     transition-group.inframe(name="list" tag="div")
-      post.form(handle="btns" key="form")
+      c-post.form(handle="btns" key="form")
         span
           btn(as="" @input="reset()" value="order")
             i.fa.fa-eraser
@@ -59,7 +59,7 @@
         sub(style="width: 100%")
           | {{ page_all_contents.all | currency }}村があてはまります。
 
-      post.form(v-if="drill" handle="btns" key="subform")
+      c-post.form(v-if="drill" handle="btns" key="subform")
         p(v-if="order === 'vid'")
           check(v-for="o in summary('folder_id')" v-model="folder_id", :as="o.id", :key="o.id")
             | {{ o.id }}
@@ -120,51 +120,52 @@
             | {{ o.label }}
             sup(v-if="1 < o.count") {{ o.count }}
 
-    .inframe(v-for="(villages, idx) in page_contents", :key="idx")
-      report(handle="MAKER", v-for="o in villages", :write_at="o.write_at", :id="o._id", :key="o._id")
-        .name
-          sup.pull-right {{ o.sow_auth_id }}
-          nuxt-link(:to="book_url(o.id, 'title')") {{ o.name }}
-        .cards
-          table.btns.card(style="width: 33%")
-            tbody
-              tr
-                td(style="text-align: right" colspan="2")
-                  nuxt-link(:to="book_url(o.id, 'normal')") {{ o.id }}
-                  kbd(style="width: 40px")
-                    img(:src="rating_img(o.q.rating)")
-              tr
-                th 更新
-                td {{ o.q.upd_range }}毎 {{ o.q.upd_at }}
-              tr
-                th 規模
-                td {{ o.q.size }}人 {{ o.say.CAPTION }}
-          .card(style="width: 66%")
-            p
-              a.label(v-if="o.mob", :class="o.mob.win") {{ o.mob.label }}
-              a.label(v-if="o.game") {{ o.game.label }}
-              a(v-for="opt in o.option_datas.list")
-               .label {{ opt.label }}
-            p
-              a(v-if="role" v-for="role in o.roles.config", :class="role.win")
-               .label
-                 | {{ role.label }}
-                 sup(v-if="1 < role.count") {{ role.count }}
-            hr
-            p
-              a(v-if="role" v-for="role in o.roles.event", :class="role.win")
-               .label
-                 | {{ role.label }}
-                 sup(v-if="1 < role.count") {{ role.count }}
-            p
-              a(v-if="role" v-for="role in o.roles.discard", :class="role.win")
-               .label
-                 | {{ role.label }}
-                 sup(v-if="1 < role.count") {{ role.count }}
+    no-ssr
+      .inframe(v-for="(villages, idx) in page_contents", :key="idx")
+        c-report(handle="MAKER", v-for="o in villages", :write_at="o.write_at", :id="o._id", :key="o._id")
+          .name
+            sup.pull-right {{ o.sow_auth_id }}
+            nuxt-link(:to="book_url(o.id, 'title')") {{ o.name }}
+          .cards
+            table.btns.card(style="width: 33%")
+              tbody
+                tr
+                  td(style="text-align: right" colspan="2")
+                    nuxt-link(:to="book_url(o.id, 'normal')") {{ o.id }}
+                    kbd(style="width: 40px")
+                      img(:src="rating_img(o.q.rating)")
+                tr
+                  th 更新
+                  td {{ o.q.upd_range }}毎 {{ o.q.upd_at }}
+                tr
+                  th 規模
+                  td {{ o.q.size }}人 {{ o.say.CAPTION }}
+            .card(style="width: 66%")
+              p
+                a.label(v-if="o.mob", :class="o.mob.win") {{ o.mob.label }}
+                a.label(v-if="o.game") {{ o.game.label }}
+                a(v-for="opt in o.option_datas.list")
+                .label {{ opt.label }}
+              p
+                a(v-if="role" v-for="role in o.roles.config", :class="role.win")
+                .label
+                  | {{ role.label }}
+                  sup(v-if="1 < role.count") {{ role.count }}
+              hr
+              p
+                a(v-if="role" v-for="role in o.roles.event", :class="role.win")
+                .label
+                  | {{ role.label }}
+                  sup(v-if="1 < role.count") {{ role.count }}
+              p
+                a(v-if="role" v-for="role in o.roles.discard", :class="role.win")
+                .label
+                  | {{ role.label }}
+                  sup(v-if="1 < role.count") {{ role.count }}
 
 
     .inframe
-      report(handle="footer" key="limitup")
+      c-report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_idx" @input="page_add", :as="page_next_idx") 次頁
 
 </template>

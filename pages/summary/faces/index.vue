@@ -3,16 +3,16 @@
 .outframe
   .contentframe
     .inframe
-      post(handle="SSAY")
+      c-post(handle="SSAY")
         | {{ faces.list.length }}人を表示しています。
         ul
           li 人気度
           li
             a キャラクター名（詳細へリンク）
           li ♥ いちばん沢山、そのキャラクターで遊んだプレイヤー
-      report(handle="header" deco="center")
+      c-report(handle="header" deco="center")
         tags(v-model="tag_id")
-      report(handle="header" deco="center")
+      c-report(handle="header" deco="center")
         btn(as="order"        v-model="order") 基本
         btn(as="story_length" v-model="order") 登場回数
         btn(as="fav_count"    v-model="order") 偏愛度
@@ -39,7 +39,7 @@
 
   .contentframe
     .inframe
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 
 </template>

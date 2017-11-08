@@ -12,25 +12,25 @@
         i.fa.fa-pin
       h6 一日目の参加者
     .inframe.hover
-      potofs
+      a-potofs
 
   .contentframe
     .inframe
       br
 
-      report(v-for="handle in handles" :key="'A' + handle" :handle="handle" deco="center")
+      c-report(v-for="handle in handles" :key="'A' + handle" :handle="handle" deco="center")
         | 二日目
         .date
           abbr
             | {{handle}}
 
-      post(v-for="handle in handles" :key="'C' + handle" :handle="handle" deco="giji")
+      c-post(v-for="handle in handles" :key="'C' + handle" :handle="handle" deco="giji")
         .name
           abbr {{handle}}
         hr
         | アクション、ト書きサンプル
 
-      talk(v-for="(handle, idx) in handles" :key="'E' + handle" :face_id="'c' + (10 + idx)", :write_at="now - 3600000", to="おきる" sign="ななころび" :head="handle" :handle="handle")
+      c-talk(v-for="(handle, idx) in handles" :key="'E' + handle" :face_id="'c' + (10 + idx)", :write_at="now - 3600000", to="おきる" sign="ななころび" :head="handle" :handle="handle")
         sup 霜草蒼蒼
         a(title="Hello World") 人絶獨出
         sub 門前望野
@@ -67,41 +67,41 @@
 
       br
       chat(v-for="o in chats", :id="o._id", :key="o._id")
-      talk(:write_at="now - 20000", face_id="t10" head="ねるねるねるね ねる" sign="ななころび" handle="VSAY" deco="").
+      c-talk(:write_at="now - 20000", face_id="t10" head="ねるねるねるね ねる" sign="ななころび" handle="VSAY" deco="").
         モブのセリフがちょっとなやむ。
-      post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="VSAY")
+      c-post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="VSAY")
         nuxt-link(to="/demo/timeago") About page
 
-      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="GSAY" face_id="c31").
+      c-talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="GSAY" face_id="c31").
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      post(:write_at="now - 24 * 3600000", head="ねるねる" sign="ななころび" handle="SPSAY" deco="head").
+      c-post(:write_at="now - 24 * 3600000", head="ねるねる" sign="ななころび" handle="SPSAY" deco="head").
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
+      c-post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM")
         nuxt-link(to="/timeago") About page
-      report(handle="GSAY" deco="center") 一日目
-      post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" deco="mono")
+      c-report(handle="GSAY" deco="center") 一日目
+      c-post(:write_at="now - 3600000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" deco="mono")
         nuxt-link(to="/timeago") About page
-      talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face_id="c32" log="ねろねろねろねろ")
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" deco="mono" face_id="c91").
+      c-talk(:write_at="now - 20000", head="ねるねるねるね ねる" sign="ななころび" handle="WSAY" face_id="c32" log="ねろねろねろねろ")
+      c-talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="XSAY" deco="mono" face_id="c91").
         123456789012345678901234567890123456789012345678901234567890
         123456789012345678901234567890123456789012345678901234567890
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face_id="c101").
+      c-talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="SPSAY" face_id="c101").
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
         ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="GSAY" face_id="c111").
+      c-talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="GSAY" face_id="c111").
         あいうえおかきくけこさしすせそたちつてとなにぬねのやゆよ
         あいうえおかきくけこさしすせそたちつてとなにぬねのやゆよ
-      talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="VSAY" face_id="w30").
+      c-talk(:write_at="now - 24 * 3600000", sign="ななころび" handle="VSAY" face_id="w30").
         アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
         アイウエオカキクケコサシスセソタチ、ツテトナニヌネノヤユヨ
-      post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM").
+      c-post(:write_at="now - 3600000", head="ねるねるねるね ねる" to="おきる" sign="ななころび" handle="AIM").
         ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
 
-      myself(v-if="! show_write", :self_id="self_id")
+      a-myself(v-if="! show_write", :self_id="self_id")
 
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 </template>
 

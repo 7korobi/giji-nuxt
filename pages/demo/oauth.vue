@@ -19,16 +19,16 @@
 
 
       br
-      post(:write_at="Date.now()", handle="SSAY")
+      c-post(:write_at="Date.now()", handle="SSAY")
         a(href="/auth/facebook") facebook
-      post(:write_at="Date.now()", handle="SSAY")
+      c-post(:write_at="Date.now()", handle="SSAY")
         a(href="/auth/twitter") twitter
-      post(:write_at="Date.now()", handle="SSAY")
+      c-post(:write_at="Date.now()", handle="SSAY")
         a(href="/auth/slack") slack
       br
-      post(:write_at="Date.now()", handle="TSAY")
+      c-post(:write_at="Date.now()", handle="TSAY")
         a(href="/auth/github") github
-      post(:write_at="Date.now()", handle="TSAY")
+      c-post(:write_at="Date.now()", handle="TSAY")
         a(href="/auth/google") google
 </template>
 <script lang="coffee">

@@ -79,7 +79,7 @@ new Rule("chat").schema ->
         sort: ["max_is.write_at", "desc"]
         page_by: 25
       emit "list",
-        sort: ["write_at"]
+        sort: ["write_at", "asc"]
         page_by: 25
       emit "mention", anker
       for mention_id in o.q.mention_ids

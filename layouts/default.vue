@@ -8,16 +8,15 @@ module.exports =
 </script>
 <template lang="pug">
 no-ssl
-  layout-header
+  a-header
   .outframe
     .center-left
     .center-right
-    monaco-frame
-  keep-alive
-    nuxt.page-active
+    a-monaco
+  nuxt.page-active
   .outframe
     .contentframe
       .inframe
-        report(handle="footer", :write_at="854319600000")
-          layout-footer
+        c-report(handle="footer", :write_at="854319600000")
+          a-footer
 </template>

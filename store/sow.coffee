@@ -68,13 +68,16 @@ module.exports =
           handle: "MAKER"
           group:  "A"
           update: false
+        "#{book_id}-0-mS":
+          handle: "MAKER"
+          group:  "A"
+          update: false
 
       write_at = 0
-      chat_tail = null
 
-      _.sortBy data.messages, (o)-> o.write_at = new Date o.date
-      .map (o)->
-        { face_id, to, log, write_at, csid } = o
+      data.messages.map (o)->
+        { face_id, to, log, date, csid } = o
+        write_at = new Date(date) - 0
         csid = 'sf' if csid == 'SF'
         face_id = undefined if face_id in ["maker", "admin", "c06"]
         o.event_id ?= o._id.split("-")[0..2].join("-")
@@ -87,7 +90,7 @@ module.exports =
         phase_idx = o.logid[0..1]
         idx = Number o.logid[2..-1]
         if o.story_id && face_id
-          potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list.first?.id
+          potof_id = Query.potofs.where(sign: o.sow_auth_id, face_id: face_id, book_id: o.story_id).list[0]?.id
           unless potof_id
             potof_idx += 1
             Set.card.add
@@ -154,6 +157,7 @@ module.exports =
         phase_id = "#{o.event_id}-#{phase_idx}"
         _id = "#{phase_id}-#{idx}"
         deco = o.style ? "sow"
+        head = potof_id && o.name
 
         phases[phase_id] ?=
           handle: handle
@@ -161,8 +165,8 @@ module.exports =
           type:  phase_type
           group: phase_group
           update: false
-        Set.chat.add { _id, potof_id, phase_id, write_at, to, show, deco, log, handle }
-        chat_tail = o
+        Set.chat.add { _id, potof_id, phase_id, write_at, to, show, deco, log, head, handle }
+        o
 
       Set.phase.merge phases
 
@@ -171,22 +175,58 @@ module.exports =
         label: o.name ? "#{o.turn}日目"
 
       o = data.stories[0]
-      chat_head = Query.chats.find o._id + "-0-II-0"
-      n_rules = for {head}, idx in nation.list
-        "#{idx + 1}. #{head}"
-      log = """
-        #{o.comment}
-        ■国のルール
-        #{n_rules.join("\n")}
-      """
+      sign = o.sow_auth_id.replace(/\./g, '&#2e')
+      [[chat_head, ...], ..., [..., chat_foot]] = chats = Query.chats.where(book_id: o._id).list
+
       Set.book.add
         _id: o._id
         label: o.name
         winner_id: data.events[-1..][0].winner?[4..]
         potof_size: Query.potofs.where({book_id}).list.length
-        log: log
-        sign: o.sow_auth_id.replace(/\./g, '&#2e')
-        write_at: chat_tail.write_at
+        sign: sign
+        write_at: chat_head.write_at - 4
+
+      [welcome = "", v_rules = ""] = o.comment.split(/<br>■村のルール<br>/)
+
+      Set.chat.add
+        _id: o._id + "-0-mS-welcome"
+        phase_id: o._id + "-0-mS"
+        write_at: chat_head.write_at - 3
+        handle: "MAKER"
+        show: "report"
+        deco: "head"
+        sign: sign
+        head: "#{o.vid}: #{o.name}"
+        log: welcome
+
+      Set.chat.add
+        _id: o._id + "-0-mS-vrule"
+        phase_id: o._id + "-0-mS"
+        write_at: chat_head.write_at - 2
+        handle: "MAKER"
+        show: "report"
+        deco: "giji"
+        sign: sign
+        log: """
+          ### 村のルール
+          #{v_rules.split("<br>").join("\n")}
+        """
+
+      n_rules = for {head}, idx in nation.list
+        "#{idx + 1}. #{head}"
+      Set.chat.add
+        _id: o._id + "-0-mS-nrule"
+        phase_id: o._id + "-0-mS"
+        write_at: chat_head.write_at - 1
+        handle: "MAKER"
+        show: "report"
+        deco: "giji"
+        sign: sign
+        log: """
+          ### 国のルール
+          #{n_rules.join("\n")}
+        """
+
 
   actions:
     story: ({ state, commit, rootState }, story_id)->

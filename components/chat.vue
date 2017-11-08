@@ -24,6 +24,7 @@ module.exports =
       handle: chat.handle
       show: show ? chat.show
       deco: chat.deco
+      head: chat.head
       log: chat.log
       to: chat.to
 
@@ -33,13 +34,12 @@ module.exports =
       Object.assign attrs,
         face_id: o.face_id
         sign: o.sign
-        head: o.head
 
     if o = chat.phase
       Object.assign attrs,
         handle: chat.handle ? o.handle
 
-    m attrs.show, { attrs, key, on: ctx.data.on }
+    m "c-" + attrs.show, { attrs, key, on: ctx.data.on }
 
   component_class: ->
     props:
@@ -73,10 +73,6 @@ module.exports =
           if chk?.value == "confirm" && confirm "open?\n#{url}"
             open url, "_blank"
 
-    mounted: ->
-      unless @$slots.default
-        if @$refs.text
-          markdown[@deco](@log, @$refs.text)
     computed: {
       el_adjust: el.adjust
 
@@ -93,7 +89,7 @@ module.exports =
                 ""
               else
                 "#{chat.part.idx}:"
-            "#{prefix}#{mark}#{chat.idx}"
+            "#{mark}#{prefix}#{chat.idx}"
           else
             ""
 
@@ -110,5 +106,10 @@ module.exports =
         if id && "focus" == @el_adjust
           @$emit "focus", id
         [@handle, @el_adjust]
+
+      log_html: ->
+        text = @log
+        markdown[@deco] @log, (html)-> text = html
+        text
     }
 </script>

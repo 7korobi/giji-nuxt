@@ -17,7 +17,7 @@ module.exports =
       sort: "live"
       order: "asc"
 
-    shows: [] # pin, toc, potof, current
+    shows: [] # pin, toc, potof, current, search
     target: null
 
   mutations:

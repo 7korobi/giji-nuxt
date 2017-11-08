@@ -47,18 +47,16 @@ giji_options =
   smartLists: true
   smartypants: true
 
+
 idx = 0
-mermaid = (text, el)->
-  mermaidAPI.render "mermaid-#{idx++}", text, (svg)->
-    el.innerHTML = svg
+mermaid = (text, cb)->
+  mermaidAPI.render "mermaid-#{idx++}", text, cb
 
-center = giji = (text, el)->
-  lexer = new marked.Lexer giji_options
-  tokens = lexer.lex text
-  el.innerHTML = marked text, giji_options
+center = giji = (text, cb)->
+  cb marked text, giji_options
 
-sow = head = mono = (text, el)->
-  el.innerHTML = text
+sow = head = mono = (text, cb)->
+  text = text
   .replace ///<br>///g, "\n"
 
   .replace ///<strong>([^<]*?)<\/strong><sup>([^<]*?)</sup>///g, (tag, item, title, idx, src)->
@@ -76,5 +74,7 @@ sow = head = mono = (text, el)->
 
   .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
     """<del>#{human}</del>"""
+  cb text
+  return
 
 module.exports = { sow, head, mono, giji, center, mermaid }

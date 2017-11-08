@@ -7,15 +7,15 @@
           i.fa.fa-map-marker
 
   .summary(name="list" tag="div" key="summary")
-    mentions(key="1" @anker="anker")
+    a-mentions(key="1" @anker="anker")
   .contentframe
     .inframe
-      report.form(handle="footer" key="finder")
+      c-report.form(handle="footer" key="finder")
         page-mode
     .inframe
       chat(v-for="o in anker_chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
     .inframe
-      report.form(handle="footer" key="finder")
+      c-report.form(handle="footer" key="finder")
         page-mode
 
 </template>

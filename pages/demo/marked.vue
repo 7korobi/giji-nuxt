@@ -1,12 +1,13 @@
 
 <template lang="pug">
-.outframe
-  .contentframe
-    .inframe
-      br
-      div(v-for="o in talks")
-        talk(:head="o.head", :deco="o.deco", :handle="o.handle", :face_id="o.face_id", :write_at="o.write_at", :log="o.log")
-        report(:head="o.deco", :deco="o.deco", :handle="o.handle", :write_at="o.write_at") {{ o.log }}
+no-ssr
+  .outframe
+    .contentframe
+      .inframe
+        br
+        div(v-for="o in talks")
+          c-talk(:head="o.head", :deco="o.deco", :handle="o.handle", :face_id="o.face_id", :write_at="o.write_at", :log="o.log")
+          c-report(:head="o.deco", :deco="o.deco", :handle="o.handle", :write_at="o.write_at") {{ o.log }}
 </template>
 
 <script lang="coffee">

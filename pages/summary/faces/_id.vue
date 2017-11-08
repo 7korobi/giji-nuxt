@@ -3,11 +3,11 @@
 .outframe
   .contentframe
     .inframe(v-if="face.story_length")
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         h1 {{ face.name }}の活躍
         .date
           | #[timeago(:since="face.date_min")] ～ #[timeago(:since="face.date_max")]
-      talk(handle="TSAY" deco="", :face_id="face.id", :head="face.name")
+      c-talk(handle="TSAY" deco="", :face_id="face.id", :head="face.name")
         | #[b {{ face.lives.sum }}]人が村にいました。
         .flex
           a.label3(v-for="o in face.lives", :class="o._id.live")
@@ -20,7 +20,7 @@
             .count {{ o.story_ids.length }}回
 
 
-      report(handle="footer")
+      c-report(handle="footer")
         table
           thead
             tr
@@ -36,7 +36,7 @@
               td {{ o.count | currency }} 回
 
 
-      report(handle="footer")
+      c-report(handle="footer")
         table
           thead
             tr
@@ -51,13 +51,13 @@
               td {{ o.all / o.per | currency }} 字
               td {{ o.count / o.per | currency }} 回
 
-      talk.form(v-for="folder in face.folders" :handle="folder_handle(folder[0][0])", :face_id="face.id", :head="folder.nation", :key="folder[0][0]")
+      c-talk.form(v-for="folder in face.folders" :handle="folder_handle(folder[0][0])", :face_id="face.id", :head="folder.nation", :key="folder[0][0]")
         | {{ folder.length }}回登場しました
         .flex
           nuxt-link.label-mini(v-for="id in folder", :to="log_url(id)", :key="id.join('-')") {{ id[1] }}
 
 
-      report.form(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
+      c-report.form(handle="VGSAY" deco="center", :head="face.name + 'で活躍した人達'")
         btn(as="story_ids.length" v-model="order") 参加村数
         btn(as="count" v-model="order") 総発言回数
         btn(as="all" v-model="order") 総発言文字数
@@ -78,7 +78,7 @@
               td.timer
                 timeago.count(:since="o.date_max")
 
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to=".") 戻る
 
 </template>

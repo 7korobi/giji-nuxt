@@ -2,7 +2,7 @@
 .outframe
   .contentframe
     .inframe
-      report(handle="header" deco="center")
+      c-report(handle="header" deco="center")
         tags(v-model="tag_id")
         sub(style="width: 100%")
           | {{ chrs.length }}人の{{ set.long }}を表示しています。
@@ -13,7 +13,7 @@
         p {{ chr.name }}
   .contentframe
     .inframe
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 </template>
 <script lang="coffee">

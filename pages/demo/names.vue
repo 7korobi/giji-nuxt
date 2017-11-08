@@ -2,17 +2,17 @@
 .outframe
   .contentframe
     .inframe
-      report(handle="header" deco="center")
+      c-report(handle="header" deco="center")
         tags(v-model="tag_id")
-      report(handle="header" deco="center") 0人
-      post(handle="TSAY")
+      c-report(handle="header" deco="center") 0人
+      c-post(handle="TSAY")
         span(v-for="name in name_blanks") <{{name}}>
       div(v-for="group, count in name_counts" v-if="0 < count", :key="count")
         transition-group.posts(name="list" tag="div")
-          report(handle="header" deco="center", :key="'h'+count") {{count}}人
-          post(v-for="map in group" handle="SSAY", :key="map.id")
+          c-report(handle="header" deco="center", :key="'h'+count") {{count}}人
+          c-post(v-for="map in group" handle="SSAY", :key="map.id")
             | <{{map.id}}> {{ map.set.join("、") }}
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 </template>
 

@@ -2,9 +2,9 @@
 .outframe
   .contentframe
     .inframe
-      report(head="リアルクロックテスト" sign="ななころび" handle="SSAY")
+      c-report(head="リアルクロックテスト" sign="ななころび" handle="SSAY")
         timeago(v-for="(time, idx) in times", :key="idx", :since="time.at")
-      report(handle="footer" deco="center")
+      c-report(handle="footer" deco="center")
         nuxt-link(to="/") 戻る
 </template>
 
