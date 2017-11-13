@@ -28,6 +28,7 @@ static/images/portrate
 
 # auto-generated
 .awspublish-giji-assets
+.nuxt/dist
 static/nuxt
 static/sow
 static/sow.sh

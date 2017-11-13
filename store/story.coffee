@@ -19,11 +19,9 @@ module.exports =
 
   actions:
     progress: ({state, commit, rootState })->
-      axios.get "#{env.API_URL}/story/progress"
-      .then ({ status, data })->
-        commit "progress", data
+      { status, data } = await axios.get "#{env.API_URL}/story/progress"
+      commit "progress", data
 
     oldlog: ({ state, commit, rootState })->
-      axios.get "#{env.SOW_URL}/index.json"
-      .then ({ status, data })->
-        commit "oldlog", data
+      { status, data } = await axios.get "#{env.STORE_URL}/sow/index.json"
+      commit "oldlog", data

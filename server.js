@@ -790,6 +790,10 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
       path = "./static/sow/index.json.gz";
       url = `http:${API_URL}/story/oldlog`;
       data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
+      path = "./static/aggregate/faces/index.json.gz";
+      url = `http:${API_URL}/aggregate/faces`;
+      data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
+      data.push(" gulp amazon:gz ");
       fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
         return console.log(err);
       });

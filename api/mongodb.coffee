@@ -146,6 +146,13 @@ mongo.connect MONGO_URL_SOW
       path = "./static/sow/index.json.gz"
       url = "http:#{API_URL}/story/oldlog"
       data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
+
+      path = "./static/aggregate/faces/index.json.gz"
+      url = "http:#{API_URL}/aggregate/faces"
+      data.push """ curl "#{url}" | gzip --stdout --best > "#{path}"  """
+
+      data.push """ gulp amazon:gz """
+
       fs.writeFile './static/sow.sh', data.join("\n") , (err)->
         console.log err
       false
