@@ -307,6 +307,7 @@ ExtractTextPlugin = __webpack_require__(9);
 
 module.exports = {
   extend: function(config, {isDev, isClient}) {},
+  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist',
   babel: {
     presets: [
       "vue-app",
@@ -321,7 +322,7 @@ module.exports = {
       ]
     ]
   },
-  vendor: ['axios', 'vee-validate', '~/components/vue.coffee', '~/plugins/memory-record.coffee'],
+  vendor: ['d3', 'axios', 'lodash', 'vee-validate', '~/components/vue.coffee', '~/plugins/memory-record.coffee'],
   loaders: [
     {
       test: /\.(png|jpe?g|gif|svg)$/,
@@ -1133,7 +1134,7 @@ webpackContext.id = 25;
 /***/ (function(module, exports) {
 
 module.exports = function(app, m) {
-  var Book, Card, Chat, Part, Phase, Potof, Schema, Stat;
+  var Book, Card, Chat, Part, Phase, Potof, Schema, Stat, up_book, up_part, up_phase;
   ({Schema} = m);
   Card = m.model('Card', new Schema({
     write_at: Number,
@@ -1211,11 +1212,9 @@ module.exports = function(app, m) {
     deco: String,
     log: String
   }));
-  app.post('/api/book', async function(req, res, next) {
-    var at, book, folder_id, idx, label, message, old_book, old_part, part;
-    ({book} = req.body);
+  up_book = async function(book) {
+    var at, folder_id, idx, label, old_book;
     at = new Date() - 0;
-    folder_id = "test";
     ({label, idx} = book);
     if (book.part_idx == null) {
       book.part_idx = 0;
@@ -1224,42 +1223,51 @@ module.exports = function(app, m) {
       book.open_at = at;
     }
     book.write_at = at;
-    book.folder_id = folder_id;
+    book.folder_id = folder_id = "test";
+    old_book = (await Book.findOne({label, folder_id}).exec());
+    if (old_book) {
+      book.idx = idx = old_book.idx;
+      book._id = old_book._id;
+    }
+    /*
+    if old_book && idx != old_book.idx
+    console.log "duplicated"
+    throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
+    */
+    if (!idx) {
+      idx = (await Book.count({folder_id}).exec());
+      book.idx = idx;
+      book._id = `${folder_id}-${idx}`;
+    }
+    return Book.findByIdAndUpdate(book._id, book, {
+      upsert: true
+    }).exec();
+  };
+  up_part = function(book, part) {
+    var at;
+    at = new Date() - 0;
+    part.write_at = at;
+    if (part.open_at == null) {
+      part.open_at = at;
+    }
+    return Part.findByIdAndUpdate(part._id, part, {
+      upsert: true
+    }).exec();
+  };
+  up_phase = function(book, part, phase) {
+    var at;
+    return at = new Date() - 0;
+  };
+  app.post('/api/book', async function(req, res, next) {
+    var book, message, old_book, old_part, part;
+    ({book} = req.body);
+    part = {
+      _id: `${book._id}-0`,
+      idx: 0,
+      label: "プロローグ"
+    };
     try {
-      old_book = (await Book.findOne({label, folder_id}).exec());
-      if (old_book) {
-        book.idx = idx = old_book.idx;
-        book._id = old_book._id;
-      }
-      /*
-      if old_book && idx != old_book.idx
-      console.log "duplicated"
-      throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
-      */
-      if (!idx) {
-        idx = (await Book.count({folder_id}).exec());
-        book.idx = idx;
-        book._id = `${folder_id}-${idx}`;
-      }
-      part = {
-        _id: `${book._id}-0`,
-        idx: 0,
-        label: "プロローグ",
-        open_at: book.open_at,
-        write_at: book.write_at
-      };
-      [old_book, old_part] = (await Promise.all([
-        Book.findByIdAndUpdate(book._id,
-        book,
-        {
-          upsert: true
-        }).exec(),
-        Part.findByIdAndUpdate(part._id,
-        part,
-        {
-          upsert: true
-        }).exec()
-      ]));
+      [old_book, old_part] = (await Promise.all([up_book(book), up_part(book, part)]));
       return res.json({book, part, old_book, old_part});
     } catch (error) {
       ({message} = error);
@@ -1268,13 +1276,8 @@ module.exports = function(app, m) {
     }
   });
   app.post('/api/part', async function(req, res, next) {
-    var at, err, idx, part, phase;
-    at = new Date() - 0;
+    var err, idx, part, phase;
     ({part} = req.body);
-    part.write_at = at;
-    if (part.open_at == null) {
-      part.open_at = at;
-    }
     idx = 0;
     try {
       phase = [

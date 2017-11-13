@@ -8,20 +8,22 @@ const _d988a500 = () => import('..\\pages\\rule-guide.vue' /* webpackChunkName: 
 const _126e656c = () => import('..\\pages\\demo\\index.vue' /* webpackChunkName: "pages\\demo\\index" */).then(m => m.default || m)
 const _8471841e = () => import('..\\pages\\character-tag.vue' /* webpackChunkName: "pages\\character-tag" */).then(m => m.default || m)
 const _58095ef8 = () => import('..\\pages\\book\\index.vue' /* webpackChunkName: "pages\\book\\index" */).then(m => m.default || m)
-const _718150c0 = () => import('..\\pages\\demo\\names.vue' /* webpackChunkName: "pages\\demo\\names" */).then(m => m.default || m)
-const _3f090d08 = () => import('..\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages\\sow\\village\\index" */).then(m => m.default || m)
-const _42ad62d8 = () => import('..\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages\\demo\\timeago" */).then(m => m.default || m)
-const _74156ee2 = () => import('..\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages\\demo\\oauth" */).then(m => m.default || m)
 const _eef29fda = () => import('..\\pages\\demo\\chats.vue' /* webpackChunkName: "pages\\demo\\chats" */).then(m => m.default || m)
-const _486a8927 = () => import('..\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages\\demo\\markdown" */).then(m => m.default || m)
-const _beb3c9bc = () => import('..\\pages\\demo\\books.vue' /* webpackChunkName: "pages\\demo\\books" */).then(m => m.default || m)
+const _42ad62d8 = () => import('..\\pages\\demo\\timeago.vue' /* webpackChunkName: "pages\\demo\\timeago" */).then(m => m.default || m)
 const _6fbb897d = () => import('..\\pages\\summary\\faces\\index.vue' /* webpackChunkName: "pages\\summary\\faces\\index" */).then(m => m.default || m)
-const _0bc1fc38 = () => import('..\\pages\\demo\\marked.vue' /* webpackChunkName: "pages\\demo\\marked" */).then(m => m.default || m)
+const _3f090d08 = () => import('..\\pages\\sow\\village\\index.vue' /* webpackChunkName: "pages\\sow\\village\\index" */).then(m => m.default || m)
+const _718150c0 = () => import('..\\pages\\demo\\names.vue' /* webpackChunkName: "pages\\demo\\names" */).then(m => m.default || m)
+const _beb3c9bc = () => import('..\\pages\\demo\\books.vue' /* webpackChunkName: "pages\\demo\\books" */).then(m => m.default || m)
+const _486a8927 = () => import('..\\pages\\demo\\markdown.vue' /* webpackChunkName: "pages\\demo\\markdown" */).then(m => m.default || m)
 const _7012b248 = () => import('..\\pages\\book\\edit.vue' /* webpackChunkName: "pages\\book\\edit" */).then(m => m.default || m)
+const _0bc1fc38 = () => import('..\\pages\\demo\\marked.vue' /* webpackChunkName: "pages\\demo\\marked" */).then(m => m.default || m)
+const _74156ee2 = () => import('..\\pages\\demo\\oauth.vue' /* webpackChunkName: "pages\\demo\\oauth" */).then(m => m.default || m)
 const _4aa7c725 = () => import('..\\pages\\summary\\faces\\_id.vue' /* webpackChunkName: "pages\\summary\\faces\\_id" */).then(m => m.default || m)
 const _08e1dd12 = () => import('..\\pages\\sow\\village\\_idx\\anker.vue' /* webpackChunkName: "pages\\sow\\village\\_idx\\anker" */).then(m => m.default || m)
+const _75f2aa9e = () => import('..\\pages\\sow\\village\\_idx\\editor.vue' /* webpackChunkName: "pages\\sow\\village\\_idx\\editor" */).then(m => m.default || m)
 const _3c51e96e = () => import('..\\pages\\sow\\village\\_idx\\_mode.vue' /* webpackChunkName: "pages\\sow\\village\\_idx\\_mode" */).then(m => m.default || m)
 const _80025d6c = () => import('..\\pages\\user\\_id.vue' /* webpackChunkName: "pages\\user\\_id" */).then(m => m.default || m)
+const _10605aa9 = () => import('..\\pages\\book\\_idx\\editor.vue' /* webpackChunkName: "pages\\book\\_idx\\editor" */).then(m => m.default || m)
 const _16c3827f = () => import('..\\pages\\book\\_idx\\anker.vue' /* webpackChunkName: "pages\\book\\_idx\\anker" */).then(m => m.default || m)
 const _57865a76 = () => import('..\\pages\\book\\_idx\\_mode.vue' /* webpackChunkName: "pages\\book\\_idx\\_mode" */).then(m => m.default || m)
 
@@ -126,14 +128,9 @@ export function createRouter () {
 			name: "book"
 		},
 		{
-			path: "/demo/names",
-			component: _718150c0,
-			name: "demo-names"
-		},
-		{
-			path: "/sow/village",
-			component: _3f090d08,
-			name: "sow-village"
+			path: "/demo/chats",
+			component: _eef29fda,
+			name: "demo-chats"
 		},
 		{
 			path: "/demo/timeago",
@@ -141,19 +138,19 @@ export function createRouter () {
 			name: "demo-timeago"
 		},
 		{
-			path: "/demo/oauth",
-			component: _74156ee2,
-			name: "demo-oauth"
+			path: "/summary/faces",
+			component: _6fbb897d,
+			name: "summary-faces"
 		},
 		{
-			path: "/demo/chats",
-			component: _eef29fda,
-			name: "demo-chats"
+			path: "/sow/village",
+			component: _3f090d08,
+			name: "sow-village"
 		},
 		{
-			path: "/demo/markdown",
-			component: _486a8927,
-			name: "demo-markdown"
+			path: "/demo/names",
+			component: _718150c0,
+			name: "demo-names"
 		},
 		{
 			path: "/demo/books",
@@ -161,9 +158,14 @@ export function createRouter () {
 			name: "demo-books"
 		},
 		{
-			path: "/summary/faces",
-			component: _6fbb897d,
-			name: "summary-faces"
+			path: "/demo/markdown",
+			component: _486a8927,
+			name: "demo-markdown"
+		},
+		{
+			path: "/book/edit",
+			component: _7012b248,
+			name: "book-edit"
 		},
 		{
 			path: "/demo/marked",
@@ -171,9 +173,9 @@ export function createRouter () {
 			name: "demo-marked"
 		},
 		{
-			path: "/book/edit",
-			component: _7012b248,
-			name: "book-edit"
+			path: "/demo/oauth",
+			component: _74156ee2,
+			name: "demo-oauth"
 		},
 		{
 			path: "/summary/faces/:id",
@@ -186,6 +188,11 @@ export function createRouter () {
 			name: "sow-village-idx-anker"
 		},
 		{
+			path: "/sow/village/:idx/editor",
+			component: _75f2aa9e,
+			name: "sow-village-idx-editor"
+		},
+		{
 			path: "/sow/village/:idx/:mode?",
 			component: _3c51e96e,
 			name: "sow-village-idx-mode"
@@ -194,6 +201,11 @@ export function createRouter () {
 			path: "/user/:id?",
 			component: _80025d6c,
 			name: "user-id"
+		},
+		{
+			path: "/book/:idx/editor",
+			component: _10605aa9,
+			name: "book-idx-editor"
 		},
 		{
 			path: "/book/:idx/anker",

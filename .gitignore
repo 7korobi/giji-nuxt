@@ -9,6 +9,10 @@ prod
 
 spec
 
+
+# settings
+config/default.yml
+
 # mac
 .DS_Store
 
@@ -24,3 +28,4 @@ static/images/portrate
 static/sow
 dist/images/portrate
 dist/sow
+static/nuxt
