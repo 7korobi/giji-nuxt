@@ -7,7 +7,7 @@ div(v-once)
 if window?
   window.require.config
     paths:
-      vs: '/monaco-editor/vs'
+      vs: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/monaco-editor/vs'
 
 module.exports =
   default:
