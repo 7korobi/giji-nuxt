@@ -10,6 +10,8 @@
       c-post(v-if="user" handle="SSAY" deco="giji")
         nuxt-link(to="/book/edit") 新しい村を作成する。
 
+      c-post(handle="footer")
+        bread-crumb
 
 </template>
 <script lang="coffee">

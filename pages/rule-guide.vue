@@ -3,7 +3,7 @@ no-ssr
   .outframe
     .contentframe
       .inframe
-        c-post(handle="TSAY")
+        c-post(handle="footer")
           nuxt-link(to="#nation") 国のルール
           nuxt-link(to="#village") 村のルール
           nuxt-link(to="#player") プレーヤー
@@ -108,8 +108,8 @@ no-ssr
             村を建てるとき気をつけると良いことを心構えに纏めました。
             ぜひご覧ください。
         c-report(v-for="o, idx in maker.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
-        c-report(handle="footer" deco="center")
-          nuxt-link(to="/") 戻る
+        c-post(handle="footer")
+          bread-crumb
 
 </template>
 

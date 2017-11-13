@@ -4,6 +4,8 @@
   .sideframe
     .inframe
       .icons.form
+        nuxt-link.item.active(replace, :to="editor_url")
+          i.fa.fa-file-text
         nuxt-link.item.active(replace, :to="back_url")
           i.fa.fa-map-marker
         check.item(v-model="shows" as="mentions")
@@ -18,6 +20,11 @@
     a-potofs(key="3")
   .contentframe
     .inframe
+      c-post(handle="footer" key="breadcrumb")
+        bread-crumb
+          li
+            nuxt-link(:to="folder_url") 終了した村一覧
+
       c-report.form(handle="footer" key="finder")
         page-mode
         page-part
@@ -45,6 +52,11 @@
       c-report.form(v-else handle="footer" key="limitup")
         page-part
         page-mode
+
+      c-post(handle="footer" key="breadcrumb")
+        bread-crumb
+          li
+            nuxt-link(:to="folder_url") 終了した村一覧
 
 </template>
 
@@ -74,6 +86,14 @@ module.exports =
         query: { a, @back }
 
   computed:
+    editor_url: ->
+      back = @$route.query.back
+      back ?= @back
+      path: "./editor"
+      query: { back }
+
+    folder_url: ->
+      "/sow/village?folder_id=#{@folder_id}"
     page_all_contents: ->
       @chats(@part_id)
 

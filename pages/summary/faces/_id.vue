@@ -3,6 +3,10 @@
 .outframe
   .contentframe
     .inframe(v-if="face.story_length")
+      c-post(handle="footer")
+        bread-crumb
+          li
+            nuxt-link(to="/summary/faces") キャラクター活躍記録
       c-report(handle="footer" deco="center")
         h1 {{ face.name }}の活躍
         .date
@@ -78,9 +82,10 @@
               td.timer
                 timeago.count(:since="o.date_max")
 
-      c-report(handle="footer" deco="center")
-        nuxt-link(to=".") 戻る
-
+      c-post(handle="footer")
+        bread-crumb
+          li
+            nuxt-link(to="/summary/faces") キャラクター活躍記録
 </template>
 
 <script lang="coffee">

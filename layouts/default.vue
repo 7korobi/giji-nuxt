@@ -12,7 +12,6 @@ no-ssl
   .outframe
     .center-left
     .center-right
-    a-monaco
   nuxt.page-active
   .outframe
     .contentframe

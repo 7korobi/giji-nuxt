@@ -2,6 +2,8 @@
 .outframe
   .contentframe
     .inframe
+      c-post(handle="footer")
+        bread-crumb
       c-report(handle="header" deco="center")
         tags(v-model="tag_id")
         sub(style="width: 100%")
@@ -13,8 +15,8 @@
         p {{ chr.name }}
   .contentframe
     .inframe
-      c-report(handle="footer" deco="center")
-        nuxt-link(to="/") 戻る
+      c-post(handle="footer")
+        bread-crumb
 </template>
 <script lang="coffee">
 { Query } = require "~/plugins/memory-record"

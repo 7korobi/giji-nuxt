@@ -5,6 +5,8 @@
       .icons.form
   .contentframe
     transition-group.inframe(name="list" tag="div")
+      c-post(handle="footer" key="breadcrumb")
+        bread-crumb
       c-post.form(handle="btns" key="form")
         span
           btn(as="" @input="reset()" value="order")
@@ -167,6 +169,8 @@
     .inframe
       c-report(handle="footer" key="limitup")
         scroll-mine(v-if="page_next_idx" @input="page_add", :as="page_next_idx") 次頁
+      c-post(handle="footer")
+        bread-crumb
 
 </template>
 <script lang="coffee">

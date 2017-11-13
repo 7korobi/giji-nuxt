@@ -63,7 +63,7 @@ _.merge store,
       name: name
       params: { idx, mode }
       query: { page: 'back' }
-
+    
     hide_potof_ids:
       get: ->
         @$store.state.book.hide_potof_ids

@@ -39,8 +39,8 @@
 
   .contentframe
     .inframe
-      c-report(handle="footer" deco="center")
-        nuxt-link(to="/") 戻る
+      c-post(handle="footer")
+        bread-crumb
 
 </template>
 

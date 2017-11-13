@@ -3,8 +3,6 @@
   .sideframe
     .inframe
       .icons.form
-        nuxt-link.item.active(replace, :to="editor_url")
-          i.fa.fa-file-text
         nuxt-link.item.active(replace, :to="back_url")
           i.fa.fa-map-marker
 
@@ -12,13 +10,7 @@
     a-mentions(key="1" @anker="anker")
   .contentframe
     .inframe
-      c-report.form(handle="footer" key="finder")
-        page-mode
-    .inframe
-      chat(v-for="o in anker_chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
-    .inframe
-      c-report.form(handle="footer" key="finder")
-        page-mode
+      a-monaco
 
 </template>
 <script lang="coffee">
@@ -35,25 +27,8 @@ module.exports =
     @shows = [@shows..., "current"]
 
   methods:
-    focus: (idx)->
-      { name, params, query } = @$route
-      params = { params..., idx }
-      @$router.replace { name, params, query }
-    
     anker: (book_id, a)->
       a = uniq @$route.query.a, a
       @$router.replace relative_to @$route, { a }
-
-  computed:
-    editor_url: ->
-      back = @$route.query.back
-      back ?= @back
-      path: "./editor"
-      query: { back }
-
-    anker_chats: ->
-      @read_at
-      a = uniq @$route.query.a
-      Query.chats.ankers(@book_id, a).list
 
 </script>

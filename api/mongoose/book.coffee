@@ -95,45 +95,55 @@ module.exports = (app, m)->
     log: String
 
 
-  app.post '/api/book', (req, res, next)->
-    { book } = req.body
+  up_book = (book)->
     at = new Date() - 0
-    folder_id = "test"
     { label, idx } = book
 
     book.part_idx ?= 0
     book.open_at ?= at
     book.write_at = at
-    book.folder_id   = folder_id
+    book.folder_id = folder_id = "test"
+
+    old_book = await Book.findOne({ label, folder_id }).exec()
+    if old_book
+      book.idx = idx = old_book.idx
+      book._id = old_book._id
+    ###
+    if old_book && idx != old_book.idx
+      console.log "duplicated"
+      throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
+    ###
+
+    unless idx
+      idx = await Book.count({ folder_id }).exec()
+      book.idx = idx
+      book._id = "#{folder_id}-#{idx}"
+
+    Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
+
+  up_part = (book, part)->
+    at = new Date() - 0
+
+    part.write_at = at
+    part.open_at ?= at
+
+    Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
+
+  up_phase = (book, part, phase)->
+    at = new Date() - 0
+
+
+  app.post '/api/book', (req, res, next)->
+    { book } = req.body
+    part =
+      _id: "#{book._id}-0"
+      idx: 0
+      label: "プロローグ"
 
     try
-      old_book = await Book.findOne({ label, folder_id }).exec()
-
-
-      if old_book
-        book.idx = idx = old_book.idx
-        book._id = old_book._id
-      ###
-      if old_book && idx != old_book.idx
-        console.log "duplicated"
-        throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
-      ###
-
-      unless idx
-        idx = await Book.count({ folder_id }).exec()
-        book.idx = idx
-        book._id = "#{folder_id}-#{idx}"
-
-      part =
-        _id: "#{book._id}-0"
-        idx: 0
-        label: "プロローグ"
-        open_at: book.open_at
-        write_at: book.write_at
-
       [ old_book, old_part ] = await Promise.all [
-        Book.findByIdAndUpdate(book._id, book, { upsert: true }).exec()
-        Part.findByIdAndUpdate(part._id, part, { upsert: true }).exec()
+        up_book( book )
+        up_part( book, part )
       ]
       res.json { book, part, old_book, old_part }
     catch { message }
@@ -142,11 +152,7 @@ module.exports = (app, m)->
 
 
   app.post '/api/part', (req, res, next)->
-    at = new Date() - 0
-
     { part } = req.body
-    part.write_at = at
-    part.open_at ?= at
 
     idx = 0
     try

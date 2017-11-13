@@ -1,9 +1,6 @@
 <script lang="coffee">
 _ = require "lodash"
 
-methods =
-  undefined: _.isEqual
-
 module.exports =
   props:
     as:

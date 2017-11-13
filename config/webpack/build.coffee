@@ -3,6 +3,8 @@ ExtractTextPlugin = require 'extract-text-webpack-plugin'
 module.exports =
   extend: (config, { isDev, isClient })->
 
+  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist'
+
   babel:
     presets: [
       "vue-app"
@@ -16,7 +18,9 @@ module.exports =
     ]
 
   vendor: [
+    'd3'
     'axios'
+    'lodash'
     'vee-validate'
     '~/components/vue.coffee'
     '~/plugins/memory-record.coffee'
