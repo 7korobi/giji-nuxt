@@ -25,7 +25,8 @@ yarn-error.log
 
 # Copyright
 static/images/portrate
-static/sow
-dist/images/portrate
-dist/sow
+
+# auto-generated
+.awspublish-giji-assets
 static/nuxt
+dist
