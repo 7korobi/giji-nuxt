@@ -1,5 +1,5 @@
 {
-  "publicPath": "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist",
+  "publicPath": "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/",
   "all": [
     "pages\\summary\\faces\\index.bfb446e9240503e2cee1.js.map",
     "fonts/element-icons.d2f69a9.woff",
@@ -29,7 +29,7 @@
     "pages\\book\\_idx\\editor.0129687c0d95f7b096d4.js",
     "common.c2f4d6bc83bbd864b42e.js",
     "app.6c7874d46354c729d320.js",
-    "manifest.a15b82976ae0d1c11dea.js",
+    "manifest.ef1eabec341fcc7d9b51.js",
     "fonts/element-icons.b02bdc1.ttf",
     "pages\\summary\\faces\\_id.ee582e3cf9133e5f0ca0.js.map",
     "pages\\sow\\village\\index.54e8f776829f8876e783.js.map",
@@ -56,12 +56,12 @@
     "pages\\book\\_idx\\editor.0129687c0d95f7b096d4.js.map",
     "common.c2f4d6bc83bbd864b42e.js.map",
     "app.6c7874d46354c729d320.js.map",
-    "manifest.a15b82976ae0d1c11dea.js.map",
+    "manifest.ef1eabec341fcc7d9b51.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.a15b82976ae0d1c11dea.js",
+    "manifest.ef1eabec341fcc7d9b51.js",
     "common.c2f4d6bc83bbd864b42e.js",
     "app.6c7874d46354c729d320.js"
   ],

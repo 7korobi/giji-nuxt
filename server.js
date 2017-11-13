@@ -307,7 +307,7 @@ ExtractTextPlugin = __webpack_require__(9);
 
 module.exports = {
   extend: function(config, {isDev, isClient}) {},
-  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist',
+  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/',
   babel: {
     presets: [
       "vue-app",
