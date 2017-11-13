@@ -54,10 +54,11 @@
   "scripts": {
     "w.styl": "ls assets/styl/*.styl.use | xargs stylus --compress --watch --sourcemap --out static/nuxt/css/.",
     "dev": "yarn run api && node server.js",
-    "prod": "yarn run cp && yarn run api && yarn run styl && yarn run build && yarn run gzip",
+    "prod": "yarn run cp && yarn run api && yarn run styl && yarn run build && yarn run cp.nuxt && yarn run gzip",
+    "upload": "yarn run cp.portrate && gulp amazon:face",
     "api": "webpack --config config/webpack/index-node.coffee",
     "gzip": "gzip -9rf static/nuxt",
-    "cp": "yarn run cp.nuxt && yarn run cp.portrate && yarn run cp.monaco",
+    "cp": "yarn run cp.portrate && yarn run cp.monaco",
     "cp.nuxt": "rm -rf static/nuxt/dist && cp -r .nuxt/dist static/nuxt/.",
     "cp.portrate": "cp ../../*/web_work/images/portrate/* static/images/portrate/.",
     "cp.monaco": "rm -rf static/nuxt/monaco-editor && cp -r node_modules/monaco-editor/min static/nuxt/monaco-editor",

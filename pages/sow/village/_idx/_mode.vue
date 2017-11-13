@@ -93,7 +93,7 @@ module.exports =
       query: { back }
 
     folder_url: ->
-      "/sow/village?folder_id=#{@folder_id}"
+      "/sow/village?folder_id=#{@folder_id.toUpperCase()}"
     page_all_contents: ->
       @chats(@part_id)
 
