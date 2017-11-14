@@ -1,15 +1,15 @@
 <template lang="pug">
 .inframe
   br
-  talk(v-if="profile" handle="VSAY" deco="center", :head="profile.nick", :sign="profile.provider", :write_at="profile.write_at", :img_src="profile.icon")
+  c-talk(v-if="profile" handle="VSAY" deco="center", :head="profile.nick", :sign="profile.provider", :write_at="profile.write_at", :img_src="profile.icon")
     a(v-if="profile.mail", :href="'mailto:' + profile.mail") mail
     a(:href="profile.token") token
-  report.form(handle="MAKER" deco="giji")
+  c-report.form(handle="MAKER" deco="giji")
     input(v-model="label" placeholder="わかりやすく名前をつけよう！" size="25")
     hr
     text-editor(v-model="maker[0]", :maxSize="500", :maxRow="30")
 
-  post.form(handle="public" deco="giji")
+  c-post.form(handle="public" deco="giji")
     h4 設定-基本
     table
       tbody
@@ -48,7 +48,7 @@
               btn(v-model="chat.night", :as="20") 20分
               btn(v-model="chat.night", :as="60") 60分
 
-  post.form(handle="SSAY" deco="giji")
+  c-post.form(handle="SSAY" deco="giji")
     h4 設定-会話
     table
       tbody
@@ -120,7 +120,7 @@
             span
               check(v-model="tags" as="god") {{ tag("god").label }}
 
-  post.form(handle="SSAY" deco="giji")
+  c-post.form(handle="SSAY" deco="giji")
     h4 設定-会話
     table
       tbody
@@ -133,26 +133,26 @@
             select(v-model="npc.chr_job_id")
               option(v-for="npc_job in npc_jobs.list", :value="npc_job.id") {{ npc_job.job }}
 
-  talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
+  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
     text-editor(placeholder="冒頭の発言" v-model="npc.say[0]")
 
-  talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
+  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
     text-editor(placeholder="１日目の発言" v-model="npc.say[1]")
 
 
-  post.form(handle="public" deco="giji")
+  c-post.form(handle="public" deco="giji")
     h4 村のルール
     hr
     text-editor(v-model="maker[1]", :maxSize="500", :maxRow="30")
 
-  post.form(handle="public" deco="giji")
+  c-post.form(handle="public" deco="giji")
     h4 国のルール
     hr
     ul
       li(v-for="rule in n_rules") {{ rule.head }}
 
 
-  post.form(handle="private" deco="giji")
+  c-post.form(handle="private" deco="giji")
     h4 設定-ゲーム
     table
       tbody
@@ -176,10 +176,10 @@
           td
             check(v-model="option" as="role_select") 希望を募る
 
-  report.form(handle="MAKER" deco="giji")
+  c-report.form(handle="MAKER" deco="giji")
     h4 カード配分
 
-  report.form(handle="MAKER" deco="giji")
+  c-report.form(handle="MAKER" deco="giji")
     a.btn(@click="commit")
       slot
 

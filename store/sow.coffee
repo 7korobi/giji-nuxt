@@ -186,7 +186,7 @@ module.exports =
         sign: sign
         write_at: chat_head.write_at - 4
 
-      [welcome = "", v_rules = ""] = o.comment.split(/<br>■村のルール<br>/)
+      [welcome = "", v_rules] = o.comment.split(/(<br>|^)■村のルール<br>/)
 
       Set.chat.add
         _id: o._id + "-0-mS-welcome"
@@ -199,18 +199,19 @@ module.exports =
         head: "#{o.vid}: #{o.name}"
         log: welcome
 
-      Set.chat.add
-        _id: o._id + "-0-mS-vrule"
-        phase_id: o._id + "-0-mS"
-        write_at: chat_head.write_at - 2
-        handle: "MAKER"
-        show: "report"
-        deco: "giji"
-        sign: sign
-        log: """
-          ### 村のルール
-          #{v_rules.split("<br>").join("\n")}
-        """
+      if v_rules
+        Set.chat.add
+          _id: o._id + "-0-mS-vrule"
+          phase_id: o._id + "-0-mS"
+          write_at: chat_head.write_at - 2
+          handle: "MAKER"
+          show: "report"
+          deco: "giji"
+          sign: sign
+          log: """
+            ### 村のルール
+            #{v_rules.split("<br>").join("\n")}
+          """
 
       n_rules = for {head}, idx in nation.list
         "#{idx + 1}. #{head}"
