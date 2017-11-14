@@ -186,7 +186,7 @@ module.exports =
         sign: sign
         write_at: chat_head.write_at - 4
 
-      [welcome = "", v_rules] = o.comment.split(/(<br>|^)■村のルール<br>/)
+      [welcome = "", v_rules] = o.comment.split(/■村のルール<br>/)
 
       Set.chat.add
         _id: o._id + "-0-mS-welcome"
