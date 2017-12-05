@@ -3,19 +3,19 @@
   .contentframe
     .inframe
       br
-      table.talk(v-if="profile")
+      table.talk(v-if="passport")
         tbody
           tr
             th
-              img.portrate(width="90", v-if="profile.icon", :src="profile.icon")
+              img.portrate(width="90", v-if="passport.icon", :src="passport.icon")
             td
               .baloon.VSAY
               .chat.VSAY
-                chat-head(:head="profile.nick", :sign="profile.provider")
+                chat-head(:head="passport.nick", :sign="passport.provider")
                 .text.center
-                  a(v-if="profile.mail", :href="'mailto:' + profile.mail") mail
-                  a(:href="profile.token") token
-                chat-foot(:write_at="profile.write_at")
+                  a(v-if="passport.mail", :href="'mailto:' + passport.mail") mail
+                  a(:href="passport.token") token
+                chat-foot(:write_at="passport.write_at")
 
 
       br
@@ -37,8 +37,7 @@ module.exports =
   data: -> {}
 
   computed:
-    profile: -> @$store.state.profile
-    user:    -> @$store.state.user
+    passport: -> @$store.state.passport
     
 </script>
 

@@ -3,11 +3,11 @@
   .contentframe
     .inframe
       br
-      c-talk(v-if="profile" handle="VSAY" deco="center", :head="profile.nick", :sign="profile.provider", :write_at="profile.write_at", :img_src="profile.icon")
-        a(v-if="profile.mail", :href="'mailto:' + profile.mail") mail
-        a(:href="profile.token") token
+      c-talk(v-if="passport" handle="VSAY" deco="center", :head="passport.nick", :sign="passport.provider", :write_at="passport.write_at", :img_src="passport.icon")
+        a(v-if="passport.mail", :href="'mailto:' + passport.mail") mail
+        a(:href="passport.token") token
       
-      c-post(v-if="user" handle="SSAY" deco="giji")
+      c-post(v-if="passport" handle="SSAY" deco="giji")
         nuxt-link(to="/book/edit") 新しい村を作成する。
 
       c-post(handle="footer")
@@ -20,8 +20,7 @@ module.exports =
   data: -> {}
 
   computed:
-    profile: -> @$store.state.profile
-    user:    -> @$store.state.user
+    passport: -> @$store.state.passport
     
 </script>
 

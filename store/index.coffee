@@ -17,8 +17,7 @@ if window?
 
 module.exports =
   state: ->
-    user: null
-    profile: null
+    passport: null
     env: {}
     read_at: {}
     timer: {}
@@ -32,7 +31,7 @@ module.exports =
       if isDev
         id = "local-test-user"
         commit "update",
-          profile:
+          passport:
             id: id
             nick: "テスト中"
             mail: "7korobi.sys@gmail.com"
@@ -41,17 +40,11 @@ module.exports =
             account: "user"
             provider: "local-test"
             write_at: new Date - 0
-          user: { id: id, sign: "俺俺" }
 
-      if id = req.session?.passport?.user
-        commit "login", id
-        commit "update",
-          profile: data
+      if passport = req.session?.passport?.user
+        commit "update", { passport }
 
   mutations:
-    login: (state, id)->
-      state.user = { id }
-
     update: (state, o)->
       for key, val of state when o[key]
         state[key] = { val..., o[key]... }
