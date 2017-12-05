@@ -1,8 +1,6 @@
 Agenda = require "agenda"
 Agendash = require 'agendash'
 
-{ pm_id, WEB_URL, MONGO_URL } = process.env
-pno = (pm_id - 1 || 0)
 
 jobs = (cb)->
   ctx = require.context "./jobs", true, ///(.+)\.coffee$///
@@ -10,24 +8,25 @@ jobs = (cb)->
     name = fname[2..-8]
     cb name, ctx fname
 
-agenda = new Agenda
-  db:
-    address: MONGO_URL
-    collection: "jobCollectionName"
-    options:
-      server:
-        auto_reconnect: true
+module.exports = (app, { pm_id, MONGO_URL })->
+  pno = (pm_id - 1 || 0)
+  agenda = new Agenda
+    db:
+      address: MONGO_URL
+      collection: "jobCollectionName"
+      options:
+        server:
+          auto_reconnect: true
 
-jobs (name, ctx)->
-  agenda.define name, ctx.define
+  jobs (name, ctx)->
+    agenda.define name, ctx.define
 
-agenda.on 'ready', ->
-  unless pno
-    jobs (name, ctx)->
-      if ctx.every
-        agenda.every ctx.every, name
-  agenda.start()
+  agenda.on 'ready', ->
+    unless pno
+      jobs (name, ctx)->
+        if ctx.every
+          agenda.every ctx.every, name
+    agenda.start()
 
-module.exports = (app)->
   app.use '/agendash', Agendash agenda
   return

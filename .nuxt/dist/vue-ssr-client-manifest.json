@@ -20,16 +20,16 @@
     "pages\\demo\\timeago.c04816c19ea8e6582119.js",
     "pages\\demo\\names.0acce81e70f5ddbad9a4.js",
     "pages\\demo\\marked.b8aa204f6eabc3a9b286.js",
-    "pages\\demo\\markdown.175b3a69da179258d422.js",
+    "pages\\demo\\markdown.5ffc8409cc7d73084435.js",
     "pages\\demo\\index.d4398c20b264a061325a.js",
     "pages\\book\\edit.d2f8def890bd23bdaf7d.js",
     "layouts\\default.9d6039380674e0b917bc.js",
     "pages\\demo\\books.ac90a71de84b4a389216.js",
     "pages\\book\\index.e81d3843158af9ef408d.js",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js",
-    "common.2304ebe2f91ce424e635.js",
+    "common.7798b9a85e5c2b00d7cf.js",
     "app.96b70ba16b155423bf8e.js",
-    "manifest.f4fd5ed4baf41e817c6c.js",
+    "manifest.e0ca99dac9da5a9b7c63.js",
     "fonts/element-icons.b02bdc1.ttf",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js.map",
     "pages\\sow\\village\\index.d85ecbc694f0a0dd5886.js.map",
@@ -47,22 +47,22 @@
     "pages\\demo\\timeago.c04816c19ea8e6582119.js.map",
     "pages\\demo\\names.0acce81e70f5ddbad9a4.js.map",
     "pages\\demo\\marked.b8aa204f6eabc3a9b286.js.map",
-    "pages\\demo\\markdown.175b3a69da179258d422.js.map",
+    "pages\\demo\\markdown.5ffc8409cc7d73084435.js.map",
     "pages\\demo\\index.d4398c20b264a061325a.js.map",
     "pages\\book\\edit.d2f8def890bd23bdaf7d.js.map",
     "layouts\\default.9d6039380674e0b917bc.js.map",
     "pages\\demo\\books.ac90a71de84b4a389216.js.map",
     "pages\\book\\index.e81d3843158af9ef408d.js.map",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js.map",
-    "common.2304ebe2f91ce424e635.js.map",
+    "common.7798b9a85e5c2b00d7cf.js.map",
     "app.96b70ba16b155423bf8e.js.map",
-    "manifest.f4fd5ed4baf41e817c6c.js.map",
+    "manifest.e0ca99dac9da5a9b7c63.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.f4fd5ed4baf41e817c6c.js",
-    "common.2304ebe2f91ce424e635.js",
+    "manifest.e0ca99dac9da5a9b7c63.js",
+    "common.7798b9a85e5c2b00d7cf.js",
     "app.96b70ba16b155423bf8e.js"
   ],
   "async": [
@@ -83,7 +83,7 @@
     "pages\\demo\\timeago.c04816c19ea8e6582119.js",
     "pages\\demo\\names.0acce81e70f5ddbad9a4.js",
     "pages\\demo\\marked.b8aa204f6eabc3a9b286.js",
-    "pages\\demo\\markdown.175b3a69da179258d422.js",
+    "pages\\demo\\markdown.5ffc8409cc7d73084435.js",
     "pages\\demo\\index.d4398c20b264a061325a.js",
     "pages\\book\\edit.d2f8def890bd23bdaf7d.js",
     "layouts\\default.9d6039380674e0b917bc.js",
@@ -1264,7 +1264,7 @@
       26,
       53
     ],
-    "ca8336c0": [
+    "082b21bf": [
       27,
       54,
       1,
@@ -2844,7 +2844,7 @@
       1,
       29
     ],
-    "4c330b14": [
+    "4523c512": [
       27,
       54,
       1,
