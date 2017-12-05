@@ -1,4 +1,13 @@
 {
+  "ava": {
+    "files": [
+      "spec/**"
+    ],
+    "source": [
+      "api/**",
+      "spec/**"
+    ]
+  },
   "name": "giji-nuxt",
   "version": "1.0.0",
   "description": "人狼議事",
@@ -13,7 +22,7 @@
     "babel-preset-env": "^1.6.1",
     "body-parser": "^1.18.1",
     "coffee-loader": "latest",
-    "coffeescript": "latest",
+    "coffeescript": "^2.0.3",
     "config": "^1.28.1",
     "connect-mongo": "^2.0.0",
     "element-ui": "^1.4.7",
@@ -45,7 +54,7 @@
     "style-loader": "^0.19.0",
     "stylus": "latest",
     "stylus-loader": "latest",
-    "tiny-cookie": "latest",
+    "tiny-cookie": "^2.1.0",
     "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
     "vee-validate": "^2.0.0-rc.17",
     "webpack-bundle-analyzer": "^2.9.1",
@@ -62,9 +71,16 @@
     "cp.nuxt": "rm -rf static/nuxt/dist && cp -r .nuxt/dist static/nuxt/.",
     "cp.portrate": "cp ../../*/web_work/images/portrate/* static/images/portrate/.",
     "cp.monaco": "rm -rf static/nuxt/monaco-editor && cp -r node_modules/monaco-editor/min static/nuxt/monaco-editor",
+    "test": "ava  --verbose --color",
+    "dev-test": "ava  --verbose --color -w",
     "styl": "ls assets/styl/*.styl.use | xargs stylus --compress --sourcemap --out static/nuxt/css/.",
     "build": "nuxt build",
     "analyze": "nuxt build --analyze",
     "generate": "nuxt generate"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "supertest": "^3.0.0",
+    "supertest-session": "^3.1.0"
   }
 }

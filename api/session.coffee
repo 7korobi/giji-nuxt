@@ -1,12 +1,10 @@
 session = require 'express-session'
 MongoStore = require('connect-mongo')(session)
-{ MONGO_URL, SECRET_KEY_BASE } = process.env
-
 
 interval = 7 * 24 * 3600
 day =          24 * 3600
 
-module.exports = (app)->
+module.exports = (app, { MONGO_URL, SECRET_KEY_BASE })->
   app.use session
     secret: SECRET_KEY_BASE
     resave: false

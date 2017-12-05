@@ -1,7 +1,10 @@
 mongoose = require "mongoose"
 { MONGO_URL } = process.env
 
-mongoose.connect MONGO_URL, (err)->
+mongoose.connect MONGO_URL,
+  config:
+    autoIndex: false
+, (err)->
   if err
     console.error "no #{MONGO_URL}. disabled (passport, session)"
   else

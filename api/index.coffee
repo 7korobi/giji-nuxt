@@ -17,14 +17,13 @@ app.use (req, res, next)->
   res.header "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"
   next()
 
-
 unless ONLY_VUE
-  require("./agenda.coffee")(app)
-  require("./mongodb.coffee")(app)
-  require("./mongoose.coffee")(app)
-  require("./session.coffee")(app)
-  require("./passport.coffee")(app)
-require("./test-data.coffee")(app)
+  require("./agenda.coffee")(app, process.env)
+  require("./mongodb.coffee")(app, process.env)
+  require("./mongoose.coffee")(app, process.env)
+  require("./session.coffee")(app, process.env)
+  require("./passport.coffee")(app, process.env)
+require("./test-data.coffee")(app, process.env)
 
 
 console.log process.env

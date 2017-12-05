@@ -1084,7 +1084,11 @@ mongoose = __webpack_require__(24);
 
 ({MONGO_URL} = process.env);
 
-mongoose.connect(MONGO_URL, function(err) {
+mongoose.connect(MONGO_URL, {
+  config: {
+    autoIndex: false
+  }
+}, function(err) {
   if (err) {
     return console.error(`no ${MONGO_URL}. disabled (passport, session)`);
   } else {
@@ -1137,271 +1141,7 @@ webpackContext.id = 25;
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = function(app, m) {
-  var Book, Card, Chat, Part, Phase, Potof, Schema, Stat, up_book, up_part, up_phase;
-  ({Schema} = m);
-  Card = m.model('Card', new Schema({
-    write_at: Number,
-    part_id: String,
-    role_id: String,
-    idx: String,
-    _id: String
-  }));
-  Stat = m.model('Stat', new Schema({
-    write_at: Number,
-    role_id: String,
-    idx: String,
-    _id: String,
-    sw: Boolean,
-    give: Number
-  }));
-  Potof = m.model('Potof', new Schema({
-    write_at: Number,
-    open_at: Number,
-    face_id: String,
-    idx: Number,
-    _id: String,
-    sign: String,
-    job: String
-  }));
-  Book = m.model('Book', new Schema({
-    write_at: Number,
-    open_at: Number,
-    part_idx: Number,
-    passport_id: String,
-    folder_id: String,
-    idx: Number,
-    _id: String,
-    chat: {
-      interval: Number,
-      night: Number,
-      player: Number,
-      mob: Number
-    },
-    game: {
-      vote: String,
-      vote_by: [String]
-    },
-    tags: [String],
-    option: [String],
-    label: String
-  }));
-  Part = m.model('Part', new Schema({
-    write_at: Number,
-    open_at: Number,
-    phase_idx: Number,
-    book_id: String,
-    idx: Number,
-    _id: String,
-    label: String
-  }));
-  Phase = m.model('Phase', new Schema({
-    write_at: Number,
-    chat_idx: Number,
-    part_id: String,
-    idx: Number,
-    _id: String,
-    label: String,
-    handle: String,
-    group: String,
-    update: false
-  }));
-  Chat = m.model('Chat', new Schema({
-    write_at: Number,
-    potof_id: String,
-    phase_id: String,
-    idx: Number,
-    _id: String,
-    show: String,
-    deco: String,
-    log: String
-  }));
-  up_book = async function(book) {
-    var at, folder_id, idx, label, old_book;
-    at = new Date() - 0;
-    ({label, idx} = book);
-    if (book.part_idx == null) {
-      book.part_idx = 0;
-    }
-    if (book.open_at == null) {
-      book.open_at = at;
-    }
-    book.write_at = at;
-    book.folder_id = folder_id = "test";
-    old_book = (await Book.findOne({label, folder_id}).exec());
-    if (old_book) {
-      book.idx = idx = old_book.idx;
-      book._id = old_book._id;
-    }
-    /*
-    if old_book && idx != old_book.idx
-    console.log "duplicated"
-    throw new Error "#{old_book._id} #{old_book.label} は作成済みです。"
-    */
-    if (!idx) {
-      idx = (await Book.count({folder_id}).exec());
-      book.idx = idx;
-      book._id = `${folder_id}-${idx}`;
-    }
-    return Book.findByIdAndUpdate(book._id, book, {
-      upsert: true
-    }).exec();
-  };
-  up_part = function(book, part) {
-    var at;
-    at = new Date() - 0;
-    part.write_at = at;
-    if (part.open_at == null) {
-      part.open_at = at;
-    }
-    return Part.findByIdAndUpdate(part._id, part, {
-      upsert: true
-    }).exec();
-  };
-  up_phase = function(book, part, phase) {
-    var at;
-    return at = new Date() - 0;
-  };
-  app.post('/api/book', async function(req, res, next) {
-    var book, message, old_book, old_part, part;
-    ({book} = req.body);
-    part = {
-      _id: `${book._id}-0`,
-      idx: 0,
-      label: "プロローグ"
-    };
-    try {
-      [old_book, old_part] = (await Promise.all([up_book(book), up_part(book, part)]));
-      return res.json({book, part, old_book, old_part});
-    } catch (error) {
-      ({message} = error);
-      console.error(message);
-      return res.json({message});
-    }
-  });
-  app.post('/api/part', async function(req, res, next) {
-    var err, idx, part, phase;
-    ({part} = req.body);
-    idx = 0;
-    try {
-      phase = [
-        {
-          label: "公開情報",
-          handle: "public",
-          group: "I",
-          update: false
-        },
-        {
-          label: "秘密情報",
-          handle: "private",
-          group: "I",
-          update: false
-        },
-        {
-          label: "管理",
-          handle: "MAKER",
-          group: "S",
-          update: true
-        },
-        {
-          label: "発言",
-          handle: "SSAY",
-          group: "S",
-          update: false
-        },
-        {
-          label: "発言",
-          handle: "VSSAY",
-          group: "S",
-          update: false
-        },
-        {
-          label: "内緒話",
-          handle: "AIM",
-          group: "S",
-          update: false
-        },
-        {
-          label: "独り言",
-          handle: "TSAY",
-          group: "S",
-          update: false
-        }
-      ].map(function(o) {
-        o.idx = idx;
-        o._id = `${part._id}-${idx++}`;
-        o.write_at = at;
-        return Phase.findByIdAndUpdate(o._id, o, {
-          upsert: true
-        }).exec();
-      });
-      [part, ...phase] = (await Promise.all([
-        Part.findByIdAndUpdate(part._id,
-        part,
-        {
-          upsert: true
-        }).exec(),
-        ...phase
-      ]));
-      return res.json({part, phase});
-    } catch (error) {
-      err = error;
-      console.error(err);
-      return res.json({err});
-    }
-  });
-  return app.post('/api/potof', async function(req, res, next) {
-    var at, cards, err, part, potof, stat, stats;
-    at = new Date() - 0;
-    ({potof, stat} = req.body);
-    potof.write_at = at;
-    if (potof.open_at == null) {
-      potof.open_at = at;
-    }
-    stats = [
-      stat,
-      {
-        idx: "give",
-        give: 1
-      }
-    ].map(function(o) {
-      o._id = `${potof._id}-${o.idx}`;
-      o.write_at = at;
-      return Stat.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    cards = [
-      {
-        idx: "request",
-        role_id: null
-      }
-    ].map(function(o) {
-      o._id = `${potof._id}-${o.idx}`;
-      o.write_at = at;
-      return Card.findByIdAndUpdate(o._id, o, {
-        upsert: true
-      }).exec();
-    });
-    try {
-      [part, potof] = (await Promise.all([
-        Part.findByIdAndUpdate(part._id,
-        part,
-        {
-          upsert: true
-        }).exec(),
-        ...stats,
-        ...cards
-      ]));
-      return res.json({part, potof});
-    } catch (error) {
-      err = error;
-      console.error(err);
-      return res.json({err});
-    }
-  });
-};
-
+throw new Error("Module build failed: Error: C:\\Dropbox\\www\\giji-nuxt\\api\\mongoose\\book.coffee:309:13: error: unexpected indentation\n        sign\u001b[1;31m:\u001b[0m\r\n\u001b[1;31m            ^\u001b[0m\n    L308:         sign:\r\n                     ^\n\n    at Object.module.exports (C:\\Dropbox\\www\\giji-nuxt\\node_modules\\coffee-loader\\index.js:38:9)");
 
 /***/ }),
 /* 27 */
@@ -1410,32 +1150,33 @@ module.exports = function(app, m) {
 module.exports = function(app, m) {
   var Passport, Schema, passport;
   ({Schema} = m);
-  passport = __webpack_require__(1);
-  passport.serializeUser(function(o, done) {
-    var id;
-    id = [o.provider, o.account].join("-");
-    return Passport.findByIdAndUpdate(id, o, {
-      upsert: true
-    }).exec(function(err, doc) {
-      if (err) {
-        console.error(err);
-      }
-      return done(err, id);
-    });
-  });
-  passport.deserializeUser(function(id, done) {
-    return done(null, id);
-  });
   Passport = m.model('Passport', new Schema({
     _id: String,
     nick: String,
     icon: String,
     mail: String,
+    sign: String,
     write_at: Number,
     provider: String,
     account: String,
     token: String
   }));
+  passport = __webpack_require__(1);
+  passport.serializeUser(function(o, done) {
+    var _id, ref;
+    _id = [o.provider, o.account].join("-");
+    return Passport.findByIdAndUpdate(_id, o, {
+      $setOnInsert: {
+        sign: (ref = o.mail) != null ? ref : o.nick
+      },
+      upsert: true
+    }).exec(function(err) {
+      return done(err, _id);
+    });
+  });
+  passport.deserializeUser(function(_id, done) {
+    return done(null, _id);
+  });
   return app.get('/api/user/:id', function(req, res, next) {
     var id;
     ({id} = req.params);
