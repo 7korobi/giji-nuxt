@@ -4,13 +4,13 @@ MongoStore = require('connect-mongo')(session)
 interval = 7 * 24 * 3600
 day =          24 * 3600
 
-module.exports = (app, { MONGO_URL, SECRET_KEY_BASE })->
+module.exports = (app, { session_key, db })->
   app.use session
-    secret: SECRET_KEY_BASE
+    secret: session_key
     resave: false
     saveUninitialized: false
     store: new MongoStore
-      url: MONGO_URL
+      url: db.mongo
       ttl: interval
       autoRemove: 'native'
       collection: 'sessions'

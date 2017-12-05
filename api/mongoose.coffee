@@ -1,12 +1,12 @@
 mongoose = require "mongoose"
 
-module.exports = (app, { MONGO_URL })->
-  mongoose.connect MONGO_URL,
+module.exports = (app, { db })->
+  mongoose.connect db.mongo,
     config:
       autoIndex: false
   , (err)->
     if err
-      console.error "no #{MONGO_URL}. disabled (passport, session)"
+      console.error "no #{db.mongo}. disabled (passport, session)"
     else
       console.log "mongoose connected."
 

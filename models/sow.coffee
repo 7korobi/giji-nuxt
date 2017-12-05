@@ -76,7 +76,7 @@ new Rule("sow_village").schema ->
 
       @folder = Query.folders.find @q.folder_id
       if @is_epilogue && @is_finish
-        @href = "#{env.STORE_URL}/stories/#{@_id}"
+        @href = "#{env.url.store}/stories/#{@_id}"
         @mode = "oldlog"
       else
         if @turns.list.first

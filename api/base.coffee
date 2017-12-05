@@ -1,6 +1,6 @@
 bodyParser = require 'body-parser'
 
-module.exports = (app, env)->
+module.exports = (app)->
   app.use bodyParser.json()
   app.use (req, res, next)->
     res.header "Access-Control-Allow-Origin", "*"

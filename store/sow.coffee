@@ -231,5 +231,5 @@ module.exports =
 
   actions:
     story: ({ state, commit, rootState }, story_id)->
-      { status, data } = await axios.get "#{env.STORE_URL}/sow/#{story_id}.json"
+      { status, data } = await axios.get "#{env.url.store}/sow/#{story_id}.json"
       commit "join", data

@@ -23,7 +23,7 @@ module.exports =
         when @img_src
           @img_src
         when face
-          "#{env.STORE_URL}/images/portrate/#{ face.id }.jpg"
+          "#{env.url.store}/images/portrate/#{ face.id }.jpg"
 
   methods:
     click: ->

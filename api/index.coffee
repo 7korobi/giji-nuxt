@@ -1,26 +1,27 @@
 express = require 'express'
 app = express()
+conf = require 'config'
 
-{ pm_id, HOST, ONLY_VUE } = process.env
+{ pm_id } = process.env
+Object.assign conf, { pm_id }
 process.on 'unhandledRejection', console.dir
 
 
-require("./base.coffee")(app, process.env)
-unless ONLY_VUE
-  require("./agenda.coffee"  )(app, process.env)
-  require("./mongoose.coffee")(app, process.env)
-  require("./session.coffee" )(app, process.env)
-  require("./passport.coffee")(app, process.env)
+require("./base.coffee")(app, conf)
+if conf.use_api
+  require("./agenda.coffee"  )(app, conf)
+  require("./mongoose.coffee")(app, conf)
+  require("./session.coffee" )(app, conf)
+  require("./passport.coffee")(app, conf)
 
   # for only legacy jinrogiji
-  require("./mongodb.coffee" )(app)
-require("./test-data.coffee" )(app, process.env)
+  require("./mongodb.coffee" )(app, conf)
+require("./test-data.coffee" )(app, conf)
 
-console.log process.env
-require("./nuxt.coffee")(app, process.env)
+require("./nuxt.coffee")(app, conf)
 
-host = HOST || '127.0.0.1'
-port = 4000 + (pm_id - 0 || 0)
+host = ( conf.host || '127.0.0.1' )
+port = ( conf.port || 4000 ) + (pm_id - 0 || 0)
 
 app.listen port, host
 console.log("Server is listening on http://#{host}:#{port}")

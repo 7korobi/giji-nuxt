@@ -84,9 +84,9 @@ module.exports =
 
   actions:
     faces: ({ dispatch, state, commit, rootState })->
-      { status, data } = await axios.get "#{env.STORE_URL}/aggregate/faces/index.json"
+      { status, data } = await axios.get "#{env.url.store}/aggregate/faces/index.json"
       commit "faces", { data }
 
     face: ({ state, commit, rootState }, id)->
-      { status, data } = await axios.get "#{env.API_URL}/aggregate/faces/#{id}"
+      { status, data } = await axios.get "#{env.url.api}/aggregate/faces/#{id}"
       commit "face", { data, id }

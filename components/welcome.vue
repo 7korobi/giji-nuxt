@@ -10,7 +10,7 @@ module.exports =
 
     computed:
       root_path: ->
-        env.WEB_URL
+        env.url.web
       export_style: ->
         height = @$el?.clientHeight ? 500
         switch
@@ -19,7 +19,7 @@ module.exports =
           else
             opacity: 0
       welcome_style: ->
-        backgroundImage: "url(#{env.STORE_URL}/images/bg/fhd-giji.png)"
+        backgroundImage: "url(#{env.url.store}/images/bg/fhd-giji.png)"
         backgroundPosition: "left 50% top #{ -@top / 3 }px"
 
     components:

@@ -13,5 +13,5 @@ if config.dev
     console.error err
     process.exit(1)
 
-module.exports = (app, env)->
+module.exports = (app)->
   app.use nuxt.render

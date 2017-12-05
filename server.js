@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,42 +73,56 @@ module.exports = require("child_process");
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport");
+module.exports = require("config");
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var HOST, ONLY_VUE, app, express, host, pm_id, port;
+var app, conf, express, host, pm_id, port;
 
-express = __webpack_require__(3);
+express = __webpack_require__(5);
 
 app = express();
 
-({pm_id, HOST, ONLY_VUE} = process.env);
+conf = __webpack_require__(1);
+
+({pm_id} = process.env);
+
+Object.assign(conf, {pm_id});
 
 process.on('unhandledRejection', console.dir);
 
-__webpack_require__(4)(app, process.env);
+__webpack_require__(6)(app, conf);
 
-if (!ONLY_VUE) {
-  __webpack_require__(6)(app, process.env);
-  __webpack_require__(12)(app, process.env);
-  __webpack_require__(17)(app, process.env);
-  __webpack_require__(20)(app, process.env);
+if (conf.use_api) {
+  __webpack_require__(8)(app, conf);
+  __webpack_require__(14)(app, conf);
+  __webpack_require__(19)(app, conf);
+  __webpack_require__(22)(app, conf);
   // for only legacy jinrogiji
-  __webpack_require__(27)(app);
+  __webpack_require__(28)(app, conf);
 }
 
-__webpack_require__(31)(app, process.env);
+__webpack_require__(31)(app, conf);
 
-console.log(process.env);
+__webpack_require__(32)(app, conf);
 
-__webpack_require__(32)(app, process.env);
+host = conf.host || '127.0.0.1';
 
-host = HOST || '127.0.0.1';
-
-port = 4000 + (pm_id - 0 || 0);
+port = (conf.port || 4000) + (pm_id - 0 || 0);
 
 app.listen(port, host);
 
@@ -116,20 +130,20 @@ console.log(`Server is listening on http://${host}:${port}`);
 
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var bodyParser;
 
-bodyParser = __webpack_require__(5);
+bodyParser = __webpack_require__(7);
 
-module.exports = function(app, env) {
+module.exports = function(app) {
   app.use(bodyParser.json());
   return app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -140,24 +154,24 @@ module.exports = function(app, env) {
 
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("body-parser");
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Agenda, Agendash, jobs;
 
-Agenda = __webpack_require__(7);
+Agenda = __webpack_require__(9);
 
-Agendash = __webpack_require__(8);
+Agendash = __webpack_require__(10);
 
 jobs = function(cb) {
   var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(9);
+  ctx = __webpack_require__(11);
   ref = ctx.keys();
   results = [];
   for (i = 0, len = ref.length; i < len; i++) {
@@ -168,12 +182,12 @@ jobs = function(cb) {
   return results;
 };
 
-module.exports = function(app, {pm_id, MONGO_URL}) {
+module.exports = function(app, {pm_id, db}) {
   var agenda, pno;
   pno = pm_id - 1 || 0;
   agenda = new Agenda({
     db: {
-      address: MONGO_URL,
+      address: db.mongo,
       collection: "jobCollectionName",
       options: {
         server: {
@@ -200,24 +214,24 @@ module.exports = function(app, {pm_id, MONGO_URL}) {
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("agendash");
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./aggregate.coffee": 10,
-	"./process.coffee": 11
+	"./aggregate.coffee": 12,
+	"./process.coffee": 13
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -233,10 +247,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 9;
+webpackContext.id = 11;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -262,7 +276,7 @@ module.exports = {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -287,27 +301,27 @@ module.exports = {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mongoose;
 
-mongoose = __webpack_require__(13);
+mongoose = __webpack_require__(15);
 
-module.exports = function(app, {MONGO_URL}) {
+module.exports = function(app, {db}) {
   var ctx, fname, i, len, ref;
-  mongoose.connect(MONGO_URL, {
+  mongoose.connect(db.mongo, {
     config: {
       autoIndex: false
     }
   }, function(err) {
     if (err) {
-      return console.error(`no ${MONGO_URL}. disabled (passport, session)`);
+      return console.error(`no ${db.mongo}. disabled (passport, session)`);
     } else {
       return console.log("mongoose connected.");
     }
   });
-  ctx = __webpack_require__(14);
+  ctx = __webpack_require__(16);
   ref = ctx.keys();
   for (i = 0, len = ref.length; i < len; i++) {
     fname = ref[i];
@@ -317,18 +331,18 @@ module.exports = function(app, {MONGO_URL}) {
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./book.coffee": 15,
-	"./passport.coffee": 16
+	"./book.coffee": 17,
+	"./passport.coffee": 18
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -344,10 +358,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 14;
+webpackContext.id = 16;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 var folder_id;
@@ -842,7 +856,7 @@ module.exports = function(app, m) {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = function(app, m) {
@@ -859,7 +873,7 @@ module.exports = function(app, m) {
     account: String,
     token: String
   }));
-  passport = __webpack_require__(1);
+  passport = __webpack_require__(2);
   passport.serializeUser(function(o, done) {
     var _id, ref;
     _id = [o.provider, o.account].join("-");
@@ -879,26 +893,26 @@ module.exports = function(app, m) {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MongoStore, day, interval, session;
 
-session = __webpack_require__(18);
+session = __webpack_require__(20);
 
-MongoStore = __webpack_require__(19)(session);
+MongoStore = __webpack_require__(21)(session);
 
 interval = 7 * 24 * 3600;
 
 day = 24 * 3600;
 
-module.exports = function(app, {MONGO_URL, SECRET_KEY_BASE}) {
+module.exports = function(app, {session_key, db}) {
   app.use(session({
-    secret: SECRET_KEY_BASE,
+    secret: session_key,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-      url: MONGO_URL,
+      url: db.mongo,
       ttl: interval,
       autoRemove: 'native',
       collection: 'sessions',
@@ -913,67 +927,37 @@ module.exports = function(app, {MONGO_URL, SECRET_KEY_BASE}) {
 
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mongo");
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var config, passport;
+var _, passport, plugins;
 
-config = __webpack_require__(21);
+_ = __webpack_require__(3);
 
-passport = __webpack_require__(1);
+passport = __webpack_require__(2);
 
-module.exports = function(app, env) {
-  var attr, auth, module, provider;
-  auth = {
-    slack: {
-      module: __webpack_require__(22).Strategy,
-      attr: {
-        clientID: env.SLACK_CLIENT_ID,
-        clientSecret: env.SLACK_CLIENT_SECRET
-      }
-    },
-    google: {
-      module: __webpack_require__(23).Strategy,
-      attr: {
-        clientID: env.GOOGLE_CLIENT_ID,
-        clientSecret: env.GOOGLE_CLIENT_SECRET,
-        passReqToCallback: true
-      }
-    },
-    facebook: {
-      module: __webpack_require__(24).Strategy,
-      attr: {
-        clientID: env.FACEBOOK_APP_ID,
-        clientSecret: env.FACEBOOK_APP_SECRET
-      }
-    },
-    github: {
-      module: __webpack_require__(25).Strategy,
-      attr: {
-        clientID: env.GITHUB_CLIENT_ID,
-        clientSecret: env.GITHUB_CLIENT_SECRET
-      }
-    },
-    twitter: {
-      module: __webpack_require__(26).Strategy,
-      attr: {
-        consumerKey: env.TWITTER_CONSUMER_KEY,
-        consumerSecret: env.TWITTER_CONSUMER_SECRET
-      }
-    }
-  };
+plugins = {
+  facebook: __webpack_require__(23),
+  twitter: __webpack_require__(24),
+  slack: __webpack_require__(25),
+  github: __webpack_require__(26),
+  google: __webpack_require__(27)
+};
+
+module.exports = function(app, {auth, url}) {
+  var Strategy, attr, provider;
   app.use(passport.initialize());
   app.use(passport.session());
   app.get("/logout", function(req, res) {
@@ -981,9 +965,10 @@ module.exports = function(app, env) {
     return res.redirect('/');
   });
   for (provider in auth) {
-    ({attr, module} = auth[provider]);
-    attr.callbackURL = `${env.WEB_URL}/auth/${provider}/callback`;
-    passport.use(new module(attr, function(accessToken, refreshToken, {provider, id, displayName, emails, photos}, done) {
+    ({attr, Strategy} = auth[provider]);
+    ({Strategy} = plugins[provider]);
+    attr.callbackURL = `${url.web}/auth/${provider}/callback`;
+    passport.use(new Strategy(attr, function(accessToken, refreshToken, {provider, id, displayName, emails, photos}, done) {
       var profile;
       profile = {
         icon: photos != null ? photos[0].value : void 0,
@@ -1009,294 +994,223 @@ module.exports = function(app, env) {
 
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-module.exports = require("./nuxt.config.js");
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-slack");
-
-/***/ }),
 /* 23 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-google-oauth2");
-
-/***/ }),
-/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-github2");
-
-/***/ }),
-/* 26 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
 
 /***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-slack");
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-github2");
+
+/***/ }),
 /* 27 */
+/***/ (function(module, exports) {
+
+module.exports = require("passport-google-oauth2");
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var API_URL, BACKUP, MONGO_URL_SOW, ObjectId, _, fs, giji, mongo, sh;
+var ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(28);
+mongo = __webpack_require__(29);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(29);
+fs = __webpack_require__(30);
 
-_ = __webpack_require__(30);
-
-({MONGO_URL_SOW, API_URL, BACKUP} = process.env);
+_ = __webpack_require__(3);
 
 ObjectId = false;
 
 giji = {};
 
-mongo.connect(MONGO_URL_SOW).then(function(db) {
-  var end;
-  end = function(err, o) {
-    return console.log(err, o);
-  };
-  giji.find = function(id, query, projection) {
-    return db.collection(id, {ObjectId}).find(query, projection);
-  };
-  giji.aggregate_message = function() {
-    var cmd;
-    cmd = function(out, keys, ...ext) {
-      return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
-        ...ext,
-        {
-          $group: {
-            _id: keys,
-            date_min: {
-              $min: "$date_min"
-            },
-            date_max: {
-              $max: "$date_max"
-            },
-            max: {
-              $max: "$max"
-            },
-            all: {
-              $sum: "$all"
-            },
-            count: {
-              $sum: "$count"
-            },
-            story_ids: {
-              $addToSet: "$_id.story_id"
-            }
-          }
-        },
-        {
-          $out: out
-        }
-      ], {ObjectId});
+module.exports = function(app, {url, db}) {
+  mongo.connect(db.mongo_sow).then(function(db) {
+    var end;
+    end = function(err, o) {
+      return console.log(err, o);
     };
-    return Promise.all([
-      cmd("message_for_face",
-      {
-        face_id: "$_id.face_id"
-      }),
-      cmd("message_for_face_sow_auth",
-      {
-        face_id: "$_id.face_id",
-        sow_auth_id: "$_id.sow_auth_id"
-      }),
-      cmd("message_for_face_mestype",
-      {
-        face_id: "$_id.face_id",
-        mestype: "$_id.mestype"
-      })
-    ]);
-  };
-  giji.aggregate_potof = function() {
-    var cmd;
-    cmd = function(out, keys, ...ext) {
-      return db.collection("potofs", {ObjectId}).aggregate([
-        ...ext,
-        {
-          $match: {
-            sow_auth_id: {
-              $exists: 1,
-              $nin: [null,
-        "master",
-        "admin"]
-            },
-            face_id: {
-              $exists: 1,
-              $ne: null
-            }
-          }
-        },
-        {
-          $group: {
-            _id: keys,
-            date_min: {
-              $min: "$timer.entrieddt"
-            },
-            date_max: {
-              $max: "$timer.entrieddt"
-            },
-            story_ids: {
-              $addToSet: "$story_id"
-            }
-          }
-        },
-        {
-          $out: out
-        }
-      ], {ObjectId});
+    giji.find = function(id, query, projection) {
+      return db.collection(id, {ObjectId}).find(query, projection);
     };
-    return Promise.all([
-      cmd("potof_for_face",
-      {
-        face_id: "$face_id"
-      }),
-      cmd("potof_for_face_live",
-      {
-        face_id: "$face_id",
-        live: "$live"
-      }),
-      cmd("potof_for_face_sow_auth",
-      {
-        face_id: "$face_id",
-        sow_auth_id: "$sow_auth_id"
-      }),
-      cmd("potof_for_face_role",
-      {
-        face_id: "$face_id",
-        role_id: "$role"
-      },
-      {
-        $unwind: "$role"
-      })
-    ]);
-  };
-  giji.aggregate_max = function() {
-    return db.collection("potof_for_face_sow_auth_max", {ObjectId}).remove({}).then(function() {
-      return db.collection("potof_for_face_sow_auth", {ObjectId}).aggregate([
-        {
-          $project: {
-            _id: 1,
-            count: {
-              $size: "$story_ids"
+    giji.aggregate_message = function() {
+      var cmd;
+      cmd = function(out, keys, ...ext) {
+        return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
+          ...ext,
+          {
+            $group: {
+              _id: keys,
+              date_min: {
+                $min: "$date_min"
+              },
+              date_max: {
+                $max: "$date_max"
+              },
+              max: {
+                $max: "$max"
+              },
+              all: {
+                $sum: "$all"
+              },
+              count: {
+                $sum: "$count"
+              },
+              story_ids: {
+                $addToSet: "$_id.story_id"
+              }
             }
+          },
+          {
+            $out: out
           }
+        ], {ObjectId});
+      };
+      return Promise.all([
+        cmd("message_for_face",
+        {
+          face_id: "$_id.face_id"
+        }),
+        cmd("message_for_face_sow_auth",
+        {
+          face_id: "$_id.face_id",
+          sow_auth_id: "$_id.sow_auth_id"
+        }),
+        cmd("message_for_face_mestype",
+        {
+          face_id: "$_id.face_id",
+          mestype: "$_id.mestype"
+        })
+      ]);
+    };
+    giji.aggregate_potof = function() {
+      var cmd;
+      cmd = function(out, keys, ...ext) {
+        return db.collection("potofs", {ObjectId}).aggregate([
+          ...ext,
+          {
+            $match: {
+              sow_auth_id: {
+                $exists: 1,
+                $nin: [null,
+          "master",
+          "admin"]
+              },
+              face_id: {
+                $exists: 1,
+                $ne: null
+              }
+            }
+          },
+          {
+            $group: {
+              _id: keys,
+              date_min: {
+                $min: "$timer.entrieddt"
+              },
+              date_max: {
+                $max: "$timer.entrieddt"
+              },
+              story_ids: {
+                $addToSet: "$story_id"
+              }
+            }
+          },
+          {
+            $out: out
+          }
+        ], {ObjectId});
+      };
+      return Promise.all([
+        cmd("potof_for_face",
+        {
+          face_id: "$face_id"
+        }),
+        cmd("potof_for_face_live",
+        {
+          face_id: "$face_id",
+          live: "$live"
+        }),
+        cmd("potof_for_face_sow_auth",
+        {
+          face_id: "$face_id",
+          sow_auth_id: "$sow_auth_id"
+        }),
+        cmd("potof_for_face_role",
+        {
+          face_id: "$face_id",
+          role_id: "$role"
         },
         {
-          $group: {
-            _id: {
-              face_id: "$_id.face_id"
-            },
-            count: {
-              $max: "$count"
+          $unwind: "$role"
+        })
+      ]);
+    };
+    giji.aggregate_max = function() {
+      return db.collection("potof_for_face_sow_auth_max", {ObjectId}).remove({}).then(function() {
+        return db.collection("potof_for_face_sow_auth", {ObjectId}).aggregate([
+          {
+            $project: {
+              _id: 1,
+              count: {
+                $size: "$story_ids"
+              }
+            }
+          },
+          {
+            $group: {
+              _id: {
+                face_id: "$_id.face_id"
+              },
+              count: {
+                $max: "$count"
+              }
             }
           }
-        }
-      ], {ObjectId});
-    }).then(function(data) {
-      return Promise.all(data.map(function(o) {
-        return giji.find("potof_for_face_sow_auth", {
-          "_id.face_id": o._id.face_id,
-          story_ids: {
-            $size: o.count
-          }
-        }).then(function(list) {
-          var top;
-          [top] = _.sortBy(list, function(a) {
-            return a.date_min;
+        ], {ObjectId});
+      }).then(function(data) {
+        return Promise.all(data.map(function(o) {
+          return giji.find("potof_for_face_sow_auth", {
+            "_id.face_id": o._id.face_id,
+            story_ids: {
+              $size: o.count
+            }
+          }).then(function(list) {
+            var top;
+            [top] = _.sortBy(list, function(a) {
+              return a.date_min;
+            });
+            o.date_min = top.date_min;
+            o.date_max = top.date_max;
+            o._id = top._id;
+            return o;
           });
-          o.date_min = top.date_min;
-          o.date_max = top.date_max;
-          o._id = top._id;
-          return o;
-        });
-      }));
-    }).then(function(data) {
-      return db.collection("potof_for_face_sow_auth_max", {ObjectId}).insert(data);
-    });
-  };
-  giji.oldlog = function() {
-    return db.collection("stories", {ObjectId}).aggregate([
-      {
-        $match: {
-          is_finish: {
-            $eq: true
-          }
-        }
-      },
-      {
-        $project: {
-          _id: 1
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          story_ids: {
-            $addToSet: "$_id"
-          }
-        }
-      }
-    ], {ObjectId}).then(function([o]) {
-      var data, id, path, url;
-      data = (function() {
-        var i, len, ref, results;
-        ref = o.story_ids;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          id = ref[i];
-          path = `./static/sow/${id}.json.gz`;
-          url = `http:${API_URL}/story/oldlog/${id}`;
-          results.push(`  ls "${path}" || curl "${url}" | gzip --stdout --best > "${path}"  `);
-        }
-        return results;
-      })();
-      path = "./static/sow/index.json.gz";
-      url = `http:${API_URL}/story/oldlog`;
-      data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
-      path = "./static/aggregate/faces/index.json.gz";
-      url = `http:${API_URL}/aggregate/faces`;
-      data.push(` curl "${url}" | gzip --stdout --best > "${path}"  `);
-      data.push(" gulp amazon:gz ");
-      fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
-        return console.log(err);
+        }));
+      }).then(function(data) {
+        return db.collection("potof_for_face_sow_auth_max", {ObjectId}).insert(data);
       });
-      return false;
-    });
-  };
-  giji.scan = function() {
-    return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
-      {
-        $group: {
-          _id: null,
-          story_ids: {
-            $addToSet: "$_id.story_id"
-          }
-        }
-      }
-    ], {ObjectId}).then(function([o]) {
-      var list, ref;
-      list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
+    };
+    giji.oldlog = function() {
       return db.collection("stories", {ObjectId}).aggregate([
         {
           $match: {
-            _id: {
-              $nin: list
-            },
             is_finish: {
               $eq: true
             }
@@ -1315,97 +1229,159 @@ mongo.connect(MONGO_URL_SOW).then(function(db) {
             }
           }
         }
-      ], {ObjectId});
-    }).then(function([o]) {
-      var id, list, ref, set_bases;
-      list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
-      console.log("step B");
-      console.log(list);
-      set_bases = (function() {
-        var i, len, results;
-        results = [];
-        for (i = 0, len = list.length; i < len; i++) {
-          id = list[i];
-          results.push(giji.set_base(id));
-        }
-        return results;
-      })();
-      return Promise.all(set_bases);
-    });
-  };
-  return giji.set_base = function(story_id) {
-    return db.collection("messages", {ObjectId}).aggregate([
-      {
-        $match: {
-          story_id: story_id,
-          sow_auth_id: {
-            $exists: 1,
-            $ne: null
-          },
-          face_id: {
-            $exists: 1,
-            $ne: null
-          },
-          logid: {
-            $exists: 1,
-            $ne: null
-          },
-          log: {
-            $exists: 1,
-            $ne: null
+      ], {ObjectId}).then(function([o]) {
+        var data, dst, id, src;
+        data = (function() {
+          var i, len, ref, results;
+          ref = o.story_ids;
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            id = ref[i];
+            dst = `./static/sow/${id}.json.gz`;
+            src = `http:${url.api}/story/oldlog/${id}`;
+            results.push(`  ls "${dst}" || curl "${src}" | gzip --stdout --best > "${dst}"  `);
+          }
+          return results;
+        })();
+        dst = "./static/sow/index.json.gz";
+        src = `http:${url.api}/story/oldlog`;
+        data.push(` curl "${src}" | gzip --stdout --best > "${dst}"  `);
+        dst = "./static/aggregate/faces/index.json.gz";
+        src = `http:${url.api}/aggregate/faces`;
+        data.push(` curl "${src}" | gzip --stdout --best > "${dst}"  `);
+        data.push(" gulp amazon:gz ");
+        fs.writeFile('./static/sow.sh', data.join("\n"), function(err) {
+          return console.log(err);
+        });
+        return false;
+      });
+    };
+    giji.scan = function() {
+      return db.collection("message_by_story_for_face", {ObjectId}).aggregate([
+        {
+          $group: {
+            _id: null,
+            story_ids: {
+              $addToSet: "$_id.story_id"
+            }
           }
         }
-      },
-      {
-        $project: {
-          sow_auth_id: 1,
-          story_id: 1,
-          face_id: 1,
-          logid: 1,
-          date: 1,
-          size: {
-            $strLenCP: "$log"
-          }
-        }
-      },
-      {
-        $group: {
-          _id: {
-            sow_auth_id: "$sow_auth_id",
-            story_id: "$story_id",
-            face_id: "$face_id",
-            mestype: {
-              $substr: ["$logid",
-      0,
-      2]
+      ], {ObjectId}).then(function([o]) {
+        var list, ref;
+        list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
+        return db.collection("stories", {ObjectId}).aggregate([
+          {
+            $match: {
+              _id: {
+                $nin: list
+              },
+              is_finish: {
+                $eq: true
+              }
             }
           },
-          date_min: {
-            $min: "$date"
+          {
+            $project: {
+              _id: 1
+            }
           },
-          date_max: {
-            $max: "$date"
-          },
-          max: {
-            $max: "$size"
-          },
-          all: {
-            $sum: "$size"
-          },
-          count: {
-            $sum: 1
+          {
+            $group: {
+              _id: null,
+              story_ids: {
+                $addToSet: "$_id"
+              }
+            }
+          }
+        ], {ObjectId});
+      }).then(function([o]) {
+        var id, list, ref, set_bases;
+        list = (ref = o != null ? o.story_ids : void 0) != null ? ref : [];
+        console.log("step B");
+        console.log(list);
+        set_bases = (function() {
+          var i, len, results;
+          results = [];
+          for (i = 0, len = list.length; i < len; i++) {
+            id = list[i];
+            results.push(giji.set_base(id));
+          }
+          return results;
+        })();
+        return Promise.all(set_bases);
+      });
+    };
+    return giji.set_base = function(story_id) {
+      return db.collection("messages", {ObjectId}).aggregate([
+        {
+          $match: {
+            story_id: story_id,
+            sow_auth_id: {
+              $exists: 1,
+              $ne: null
+            },
+            face_id: {
+              $exists: 1,
+              $ne: null
+            },
+            logid: {
+              $exists: 1,
+              $ne: null
+            },
+            log: {
+              $exists: 1,
+              $ne: null
+            }
+          }
+        },
+        {
+          $project: {
+            sow_auth_id: 1,
+            story_id: 1,
+            face_id: 1,
+            logid: 1,
+            date: 1,
+            size: {
+              $strLenCP: "$log"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              sow_auth_id: "$sow_auth_id",
+              story_id: "$story_id",
+              face_id: "$face_id",
+              mestype: {
+                $substr: ["$logid",
+        0,
+        2]
+              }
+            },
+            date_min: {
+              $min: "$date"
+            },
+            date_max: {
+              $max: "$date"
+            },
+            max: {
+              $max: "$size"
+            },
+            all: {
+              $sum: "$size"
+            },
+            count: {
+              $sum: 1
+            }
           }
         }
-      }
-    ], {ObjectId}).then(function(data) {
-      return db.collection("message_by_story_for_face").insert(data);
-    });
-  };
-}).catch(function() {
-  return console.log("!!! mongodb connect error !!!");
-});
-
-module.exports = function(app) {
+      ], {ObjectId}).then(function(data) {
+        return db.collection("message_by_story_for_face").insert(data);
+      });
+    };
+  }).catch(function() {
+    return console.log("!!! mongodb connect error !!!");
+  });
   app.get('/api/aggregate/job', function(req, res, next) {
     return giji.scan().then(function() {
       return giji.aggregate_message();
@@ -1535,22 +1511,16 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("fs");
 
 /***/ }),
 /* 31 */
@@ -2326,7 +2296,7 @@ if (config.dev) {
   }
 }
 
-module.exports = function(app, env) {
+module.exports = function(app) {
   return app.use(nuxt.render);
 };
 
@@ -2583,13 +2553,13 @@ module.exports = {
 
 /***/ }),
 /* 39 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var API_URL, BACKUP, SOW_URL, STORE_URL, WEB_URL;
+var url;
 
-({WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP} = process.env);
+({url} = __webpack_require__(1));
 
-module.exports = {WEB_URL, API_URL, SOW_URL, STORE_URL, BACKUP};
+module.exports = {url};
 
 
 /***/ }),

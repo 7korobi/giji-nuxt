@@ -215,7 +215,7 @@ module.exports =
       params: { mode, idx: [book_id, 0].join("-") }
 
     rating_img: (rating)->
-      "#{env.STORE_URL}/images/icon/cd_#{rating}.png"
+      "#{env.url.store}/images/icon/cd_#{rating}.png"
 
     submenu: (as)->
       @drill = ! @drill

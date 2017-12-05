@@ -49,7 +49,7 @@ module.exports =
     create: ({ commit, rootState }, book)->
       { profile } = rootState
       book.passport_id = profile._id
-      { status, data } = await axios.post "#{env.API_URL}/book", { book }
+      { status, data } = await axios.post "#{env.url.api}/book", { book }
       console.log data
 
     books: ({commit}, folder)->

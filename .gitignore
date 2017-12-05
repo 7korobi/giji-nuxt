@@ -1,17 +1,8 @@
-ssh-dti-node.bat
-ssh-time4-node.bat
-dev.bat
-prod.bat
-dev.sh
-prod.sh
-dev
-prod
-
 spec
-
 
 # settings
 config/default.yml
+config/production.yml
 
 # mac
 .DS_Store

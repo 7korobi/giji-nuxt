@@ -5,7 +5,7 @@
     "fonts/element-icons.d2f69a9.woff",
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js",
-    "pages\\sow\\village\\index.d85ecbc694f0a0dd5886.js",
+    "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js",
     "pages\\sow\\village\\_idx\\_mode.e76f0ce0b62083e13db5.js",
     "pages\\index.90882bf6467f0ad01f17.js",
     "pages\\book\\_idx\\_mode.fd83bb8821f72cd6f88a.js",
@@ -27,12 +27,12 @@
     "pages\\demo\\books.ac90a71de84b4a389216.js",
     "pages\\book\\index.e81d3843158af9ef408d.js",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js",
-    "common.7798b9a85e5c2b00d7cf.js",
-    "app.96b70ba16b155423bf8e.js",
-    "manifest.e0ca99dac9da5a9b7c63.js",
+    "common.58272b5ebc636846688d.js",
+    "app.ed036e24d38c8cb9c425.js",
+    "manifest.9d45f1797ef0dd290371.js",
     "fonts/element-icons.b02bdc1.ttf",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js.map",
-    "pages\\sow\\village\\index.d85ecbc694f0a0dd5886.js.map",
+    "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js.map",
     "pages\\sow\\village\\_idx\\_mode.e76f0ce0b62083e13db5.js.map",
     "pages\\index.90882bf6467f0ad01f17.js.map",
     "pages\\book\\_idx\\_mode.fd83bb8821f72cd6f88a.js.map",
@@ -54,21 +54,21 @@
     "pages\\demo\\books.ac90a71de84b4a389216.js.map",
     "pages\\book\\index.e81d3843158af9ef408d.js.map",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js.map",
-    "common.7798b9a85e5c2b00d7cf.js.map",
-    "app.96b70ba16b155423bf8e.js.map",
-    "manifest.e0ca99dac9da5a9b7c63.js.map",
+    "common.58272b5ebc636846688d.js.map",
+    "app.ed036e24d38c8cb9c425.js.map",
+    "manifest.9d45f1797ef0dd290371.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.e0ca99dac9da5a9b7c63.js",
-    "common.7798b9a85e5c2b00d7cf.js",
-    "app.96b70ba16b155423bf8e.js"
+    "manifest.9d45f1797ef0dd290371.js",
+    "common.58272b5ebc636846688d.js",
+    "app.ed036e24d38c8cb9c425.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js",
-    "pages\\sow\\village\\index.d85ecbc694f0a0dd5886.js",
+    "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js",
     "pages\\sow\\village\\_idx\\_mode.e76f0ce0b62083e13db5.js",
     "pages\\index.90882bf6467f0ad01f17.js",
     "pages\\book\\_idx\\_mode.fd83bb8821f72cd6f88a.js",
@@ -480,10 +480,6 @@
       26,
       53
     ],
-    "6f322a38": [
-      26,
-      53
-    ],
     "756dbc52": [
       27,
       54,
@@ -578,10 +574,6 @@
       26,
       53
     ],
-    "2e172db4": [
-      26,
-      53
-    ],
     "18eecadb": [
       26,
       53
@@ -595,6 +587,10 @@
       54,
       1,
       29
+    ],
+    "7d231a0a": [
+      26,
+      53
     ],
     "0733b062": [
       26,
@@ -856,6 +852,10 @@
       26,
       53
     ],
+    "3d9a09a4": [
+      4,
+      31
+    ],
     "217c6a59": [
       27,
       54,
@@ -879,10 +879,6 @@
       53
     ],
     "4451feda": [
-      26,
-      53
-    ],
-    "9ae579ac": [
       26,
       53
     ],
@@ -995,6 +991,10 @@
     "20a0ab15": [
       26,
       53
+    ],
+    "8b665bc0": [
+      4,
+      31
     ],
     "6be9ad28": [
       27,
@@ -1136,10 +1136,6 @@
       26,
       53
     ],
-    "8d0ddc9c": [
-      4,
-      31
-    ],
     "cd82b550": [
       27,
       54,
@@ -1209,10 +1205,6 @@
     "3c7f4d73": [
       26,
       53
-    ],
-    "f14fed78": [
-      4,
-      31
     ],
     "50ff4b71": [
       27,
@@ -1524,6 +1516,10 @@
       1,
       29
     ],
+    "472da47c": [
+      26,
+      53
+    ],
     "00b93b9b": [
       27,
       54,
@@ -1734,10 +1730,6 @@
       1,
       29
     ],
-    "44b01fd2": [
-      26,
-      53
-    ],
     "7dc12b97": [
       26,
       53
@@ -1847,10 +1839,6 @@
       53
     ],
     "6558f560": [
-      26,
-      53
-    ],
-    "b71b4dca": [
       26,
       53
     ],
@@ -2236,6 +2224,10 @@
       1,
       29
     ],
+    "7d94ca78": [
+      26,
+      53
+    ],
     "d8cde4ce": [
       11,
       38
@@ -2301,10 +2293,6 @@
     "16cb8e62": [
       26,
       53
-    ],
-    "040ad1c0": [
-      4,
-      31
     ],
     "7bbfb69f": [
       26,
@@ -2634,6 +2622,10 @@
       1,
       29
     ],
+    "3646c946": [
+      26,
+      53
+    ],
     "8d4e1d62": [
       26,
       53
@@ -2822,6 +2814,10 @@
       26,
       53
     ],
+    "69db0a12": [
+      4,
+      31
+    ],
     "56d4e669": [
       26,
       53
@@ -2878,6 +2874,10 @@
       1,
       29
     ],
+    "73402aed": [
+      26,
+      53
+    ],
     "0f3c430d": [
       27,
       54,
@@ -2905,10 +2905,6 @@
     "213e5d6d": [
       11,
       38
-    ],
-    "fec523aa": [
-      26,
-      53
     ],
     "392a8285": [
       26,
@@ -3510,6 +3506,10 @@
       26,
       53
     ],
+    "1e123259": [
+      26,
+      53
+    ],
     "8e9e914a": [
       26,
       53
@@ -3521,6 +3521,10 @@
       29
     ],
     "0a9521da": [
+      26,
+      53
+    ],
+    "f69fa21e": [
       26,
       53
     ],
@@ -3547,10 +3551,6 @@
       39
     ],
     "6c98ce18": [
-      26,
-      53
-    ],
-    "f69fa21e": [
       26,
       53
     ],

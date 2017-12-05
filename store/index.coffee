@@ -45,7 +45,7 @@ module.exports =
 
       if id = req.session?.passport?.user
         commit "login", id
-        axios.get "http:#{env.API_URL}/user/#{id}"
+        axios.get "http:#{env.url.api}/user/#{id}"
         .then ({ status, data })->
           commit "update",
             profile: data
