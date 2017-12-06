@@ -980,6 +980,7 @@ module.exports = function(app, {auth, url}) {
         token: accessToken
       };
       return process.nextTick(function() {
+        console.log("profile", profile);
         return done(null, profile);
       });
     }));

@@ -29,10 +29,9 @@ module.exports =
       # { cookie, passport } = req.session
 
       if isDev
-        id = "local-test-user"
         commit "update",
           passport:
-            id: id
+            id: "local-test-user"
             nick: "テスト中"
             mail: "7korobi.sys@gmail.com"
             icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
@@ -48,4 +47,5 @@ module.exports =
     update: (state, o)->
       for key, val of state when o[key]
         state[key] = { val..., o[key]... }
+        console.log key, state[key]
       return

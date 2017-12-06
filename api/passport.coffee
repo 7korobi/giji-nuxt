@@ -30,6 +30,7 @@ module.exports = (app, { auth, url })->
         token: accessToken
 
       process.nextTick ->
+        console.log "profile", profile
         done null, profile
 
     console.log "#{provider} authenticate set."

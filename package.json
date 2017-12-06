@@ -69,9 +69,10 @@
   "scripts": {
     "test": "ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
-    "build": "set NODE_ENV=true && nuxt build",
-    "analyze": "set NODE_ENV=true && nuxt build --analyze",
-    "generate": "set NODE_ENV=true && nuxt generate"
+    "prod": "nuxt build && gulp prod",
+    "build": "nuxt build",
+    "analyze": "nuxt build --analyze",
+    "generate": "nuxt generate"
   },
   "devDependencies": {
     "ava": "^0.24.0",

@@ -43,7 +43,7 @@ gulp.task "default", [], ->
 
 
 
-gulp.task "prod", ["api", "build", "cp:dist", "cp", "stylus"], $.shell.task [
+gulp.task "prod", ["api", "cp", "stylus"], $.shell.task [
   "gzip -9rf static/nuxt"
 ]
 gulp.task "dev", ["api"], $.shell.task [
@@ -55,10 +55,13 @@ gulp.task "test", $.shell.task [
 gulp.task "api", $.shell.task [
   "yarn run api"
 ]
-gulp.task "build", ["del"], $.shell.task [
-  "yarn run build"
-]
 
+gulp.task "del", ->
+  del [
+    "static/nuxt/dist/*"
+    "static/nuxt/css/*.gz"
+    "static/nuxt/monaco-editor/*"
+  ]
 
 gulp.task "stylus", ->
   cp
@@ -71,25 +74,13 @@ gulp.task "stylus", ->
       $.sourcemaps.write "."
     ]
 
-
-gulp.task "del", [], ->
-  del [
-    "static/nuxt/dist/*"
-    "static/nuxt/monaco-editor/*"
-    "static/nuxt/css/*.gz"
-  ]
-
-
-gulp.task "cp", ["del", "cp:monaco", "cp:portrate"]
-gulp.task "cp:portrate", ->
+gulp.task "cp", ["del"], ->
   cp
     src: "../../人狼議事 チーム フォルダ/web_work/images/portrate/*"
     dst: "static/images/portrate/."
-gulp.task "cp:monaco", ["del"], ->
   cp
     src: "node_modules/monaco-editor/min/**"
     dst: "static/nuxt/monaco-editor/."
-gulp.task "cp:dist", ["del", "build"], ->
   cp
     src: ".nuxt/dist/**"
     dst: "static/nuxt/dist/."
@@ -106,7 +97,7 @@ gulp.task "amazon:gz", [], ->
       $.rename extname: ""
     ]
 
-gulp.task "amazon:face", ["cp:portrate"], ->
+gulp.task "amazon:face", [], ->
   amazon
     src: 'static/{images}/**/*'
     headers:
