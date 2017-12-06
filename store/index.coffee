@@ -40,7 +40,7 @@ module.exports =
             provider: "local-test"
             write_at: new Date - 0
 
-      if passport = req.session?.passport?.user
+      if passport = req.session?.passport
         commit "update", { passport }
 
   mutations:
