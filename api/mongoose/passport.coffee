@@ -23,7 +23,7 @@ module.exports = (app, m)->
         sign: o.mail ? o.nick
       upsert: true
     .exec (err)->
-      done err, _id
+      done err, o
 
-  passport.deserializeUser (_id, done)->
-    done null, _id
+  passport.deserializeUser (o, done)->
+    done null, o

@@ -883,11 +883,11 @@ module.exports = function(app, m) {
       },
       upsert: true
     }).exec(function(err) {
-      return done(err, _id);
+      return done(err, o);
     });
   });
-  return passport.deserializeUser(function(_id, done) {
-    return done(null, _id);
+  return passport.deserializeUser(function(o, done) {
+    return done(null, o);
   });
 };
 
