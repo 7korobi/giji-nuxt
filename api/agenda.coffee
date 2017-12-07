@@ -28,4 +28,4 @@ module.exports = (app, { pm_id, db })->
     agenda.start()
 
   app.use '/agendash', Agendash agenda
-  return
+  console.log "agenda use #{db.mongo}"

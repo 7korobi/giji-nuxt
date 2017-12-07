@@ -28,8 +28,8 @@
     "pages\\book\\index.e81d3843158af9ef408d.js",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js",
     "common.9bd46ff0e5f7f47d388f.js",
-    "app.a0a315e6e6fbd1cc8d3e.js",
-    "manifest.4f06104e82ba5b3623da.js",
+    "app.ef8c6439aa87537ec159.js",
+    "manifest.8a29a7873c421bd1ccf0.js",
     "fonts/element-icons.b02bdc1.ttf",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js.map",
     "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js.map",
@@ -55,15 +55,15 @@
     "pages\\book\\index.e81d3843158af9ef408d.js.map",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js.map",
     "common.9bd46ff0e5f7f47d388f.js.map",
-    "app.a0a315e6e6fbd1cc8d3e.js.map",
-    "manifest.4f06104e82ba5b3623da.js.map",
+    "app.ef8c6439aa87537ec159.js.map",
+    "manifest.8a29a7873c421bd1ccf0.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.4f06104e82ba5b3623da.js",
+    "manifest.8a29a7873c421bd1ccf0.js",
     "common.9bd46ff0e5f7f47d388f.js",
-    "app.a0a315e6e6fbd1cc8d3e.js"
+    "app.ef8c6439aa87537ec159.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",

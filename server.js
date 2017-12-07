@@ -103,7 +103,7 @@ __webpack_require__(5)(app, conf);
 
 if (conf.use_api) {
   __webpack_require__(7)(app, conf);
-  __webpack_require__(13)(app, conf);
+  __webpack_require__(10)(app, conf);
   __webpack_require__(16)(app, conf);
   // for only legacy jinrogiji
   __webpack_require__(27)(app, conf);
@@ -154,15 +154,62 @@ module.exports = require("body-parser");
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var MongoStore, day, interval, session;
+
+session = __webpack_require__(8);
+
+MongoStore = __webpack_require__(9)(session);
+
+interval = 7 * 24 * 3600;
+
+day = 24 * 3600;
+
+module.exports = function(app, {session_key, db}) {
+  app.use(session({
+    secret: session_key,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      url: db.mongo,
+      ttl: interval,
+      autoRemove: 'native',
+      collection: 'sessions',
+      touchAfter: day,
+      stringify: false
+    }),
+    cookie: {
+      maxAge: interval * 1000
+    }
+  }));
+  return console.log(`session use ${db.mongo}`);
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-session");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("connect-mongo");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var Agenda, Agendash, jobs;
 
-Agenda = __webpack_require__(8);
+Agenda = __webpack_require__(11);
 
-Agendash = __webpack_require__(9);
+Agendash = __webpack_require__(12);
 
 jobs = function(cb) {
   var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(10);
+  ctx = __webpack_require__(13);
   ref = ctx.keys();
   results = [];
   for (i = 0, len = ref.length; i < len; i++) {
@@ -201,28 +248,29 @@ module.exports = function(app, {pm_id, db}) {
     return agenda.start();
   });
   app.use('/agendash', Agendash(agenda));
+  return console.log(`agenda use ${db.mongo}`);
 };
 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = require("agendash");
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./aggregate.coffee": 11,
-	"./process.coffee": 12
+	"./aggregate.coffee": 14,
+	"./process.coffee": 15
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -238,10 +286,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 10;
+webpackContext.id = 13;
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -267,7 +315,7 @@ module.exports = {
 
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -290,53 +338,6 @@ module.exports = {
   }
 };
 
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var MongoStore, day, interval, session;
-
-session = __webpack_require__(14);
-
-MongoStore = __webpack_require__(15)(session);
-
-interval = 7 * 24 * 3600;
-
-day = 24 * 3600;
-
-module.exports = function(app, {session_key, db}) {
-  app.use(session({
-    secret: session_key,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      url: db.mongo,
-      ttl: interval,
-      autoRemove: 'native',
-      collection: 'sessions',
-      touchAfter: day,
-      stringify: false
-    }),
-    cookie: {
-      maxAge: interval * 1000
-    }
-  }));
-  console.log("session use");
-};
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = require("express-session");
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("connect-mongo");
 
 /***/ }),
 /* 16 */

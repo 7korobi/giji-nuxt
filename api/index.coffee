@@ -9,8 +9,8 @@ process.on 'unhandledRejection', console.dir
 
 require("./base.coffee")(app, conf)
 if conf.use_api
-  require("./agenda.coffee"  )(app, conf)
   require("./session.coffee" )(app, conf)
+  require("./agenda.coffee"  )(app, conf)
   require("./mongoose.coffee")(app, conf)
 
   # for only legacy jinrogiji
