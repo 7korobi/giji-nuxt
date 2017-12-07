@@ -41,7 +41,7 @@ module.exports = (app, m, { auth, url })->
   app.post "/api/user", (req, res)->
     { body, session: { passport: { user }}} = req
     if user._id
-      Object.assign user, body
+      Object.assign user, body.user
       await Passport.findByIdAndUpdate user._id, user
       .exec()
       res.json { user }

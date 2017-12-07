@@ -952,7 +952,7 @@ module.exports = function(app, m, {auth, url}) {
       }
     } = req);
     if (user._id) {
-      Object.assign(user, body);
+      Object.assign(user, body.user);
       await Passport.findByIdAndUpdate(user._id, user).exec();
       return res.json({user});
     } else {
