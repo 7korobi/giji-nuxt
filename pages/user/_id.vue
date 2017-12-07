@@ -1,25 +1,54 @@
 <template lang="pug">
 .outframe
   .contentframe
-    .inframe
-      br
-      c-talk(v-if="user" handle="VSAY" deco="center", :head="user.nick", :sign="user.provider", :write_at="user.write_at", :img_src="user.icon")
-        nuxt-link(to="/user/edit")
-          | 編集
-          sup(v-if="! user.sign") no sign
-        a(v-if="user.mail", :href="'mailto:' + user.mail") mail
+    no-ssr
+      .inframe
+        br
+        c-talk(v-if="user" handle="VSAY" deco="giji", :head="user.nick", :sign="user.sign", :img_src="user.icon")
+          p(v-if="user.sign")
+            table
+              tbody
+                tr
+                  th ログイン
+                  td {{ user.provider }}から
+                tr
+                  th OpenID
+                  td {{ user.account }}
+                tr
+                  th 
+                  td 
+          p(v-else)
+            | ゲーム内で使うため、署名をしてください。
+            input(type="text" v-model="user.sign")
+            a.btn(@click="commit") 決定
 
-      c-post(v-if="user.sign" handle="SSAY" deco="giji")
-        nuxt-link(to="/book/edit") 新しい村を作成する。
+        c-post(v-if="user" handle="TSAY" deco="giji", head="秘密の情報", :sign="user.sign", :write_at="user.write_at")
+            table
+              tbody
+                tr
+                  th ニックネーム
+                  td {{ user.nick }}
+                tr
+                  th mail
+                  td
+                    a(v-if="user.mail", :href="'mailto:' + user.mail") {{ user.mail }}
 
-      c-post(handle="footer")
-        bread-crumb
+        c-post(v-if="user.sign" handle="SSAY" deco="giji")
+          nuxt-link(to="/book/edit") 新しい村を作成する。
+
+        c-post(handle="footer")
+          bread-crumb
 
 </template>
 <script lang="coffee">
 
 module.exports =
   data: -> {}
+
+  methods:
+    commit: ->
+      { sign } = @user
+      @$store.dispatch "user/update", { sign }
 
   computed:
     user: -> @$store.state.user

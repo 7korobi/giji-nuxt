@@ -50,10 +50,10 @@ gulp.task "dev", ["api"], $.shell.task [
   "node server.js"
 ]
 gulp.task "test", $.shell.task [
-  "yarn test"
+  "ava --verbose --color"
 ]
 gulp.task "api", $.shell.task [
-  "yarn run api"
+  "webpack --config config/webpack/index-node.coffee"
 ]
 
 gulp.task "del", ->

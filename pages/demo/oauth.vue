@@ -3,22 +3,6 @@
   .contentframe
     .inframe
       br
-      table.talk(v-if="passport")
-        tbody
-          tr
-            th
-              img.portrate(width="90", v-if="passport.icon", :src="passport.icon")
-            td
-              .baloon.VSAY
-              .chat.VSAY
-                chat-head(:head="passport.nick", :sign="passport.provider")
-                .text.center
-                  a(v-if="passport.mail", :href="'mailto:' + passport.mail") mail
-                  a(:href="passport.token") token
-                chat-foot(:write_at="passport.write_at")
-
-
-      br
       c-post(:write_at="Date.now()", handle="SSAY")
         a(href="/auth/facebook") facebook
       c-post(:write_at="Date.now()", handle="SSAY")
@@ -35,10 +19,6 @@
 
 module.exports =
   data: -> {}
-
-  computed:
-    passport: -> @$store.state.passport
-    
 </script>
 
 <style lang="stylus" scoped>

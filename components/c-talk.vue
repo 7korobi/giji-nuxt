@@ -7,7 +7,7 @@ table.talk(:id="id", :key="id")
   tbody
     tr
       th
-        portrate(:face_id="face_id")
+        portrate(:img_src="img_src", :face_id="face_id")
       td
         .baloon(:class="classname")
         .chat(@click="click", :key="id", :class="classname")
@@ -16,5 +16,5 @@ table.talk(:id="id", :key="id")
           .text(v-if="$slots.default" :class="deco")
             slot
           .text(v-else v-html="log_html" :class="deco")
-          chat-foot(v-if="anker", :full="full", :chat_id="id", :anker="anker", :write_at="write_at")
+          chat-foot(:full="full", :chat_id="id", :anker="anker", :write_at="write_at")
 </template>

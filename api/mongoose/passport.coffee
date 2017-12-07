@@ -37,6 +37,16 @@ module.exports = (app, m, { auth, url })->
 
   app.use passport.initialize()
   app.use passport.session()
+  app.post "/user", (req, res)->
+    { body, session: { passport: { user }}} = req
+    if user._id
+      Object.assign user, body
+      await Passport.findByIdAndUpdate user._id, user
+      .exec()
+      res.json { user }
+    else
+      res.json { message: "ログインしていません。" }
+
   app.get "/logout", (req, res)->
     req.logout()
     res.redirect('/')

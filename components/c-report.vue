@@ -9,5 +9,5 @@ module.exports = require("~/components/chat.vue").default.component_class()
   .text(v-if="$slots.default" :class="deco")
     slot
   .text(v-else v-html="log_html" :class="deco")
-  chat-foot(v-if="anker", :full="full", :chat_id="id", :anker="anker", :write_at="write_at")
+  chat-foot(:full="full", :chat_id="id", :anker="anker", :write_at="write_at")
 </template>

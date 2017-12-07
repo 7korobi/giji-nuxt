@@ -68,8 +68,9 @@
     "yaml-loader": "latest"
   },
   "scripts": {
-    "test": "ava --verbose --color",
+    "test": "cross-env NODE_ENV=spec ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
+    "dev": "gulp dev",
     "prod": "cross-env NODE_ENV=production nuxt build && gulp prod",
     "build": "cross-env NODE_ENV=production nuxt build",
     "analyze": "cross-env NODE_ENV=production nuxt build --analyze",

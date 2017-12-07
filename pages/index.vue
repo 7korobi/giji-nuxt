@@ -54,8 +54,8 @@ module.exports =
       @$store.state.user
     user_url: ->
       return null unless @user
-      { provider, account } = @user
-      provider && account && "user/#{provider}-#{account}"
+      { _id } = @user
+      _id && "user/#{_id}"
     prologue: ->
       @read_at
       Query.sow_villages.prologue.list

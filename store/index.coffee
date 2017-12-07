@@ -20,7 +20,8 @@ module.exports =
       commit "update", { env }
 
       if isDev
-        req.session.passport.user ?= user = 
+        user =
+          _id: "local-test-user"
           provider: "local-test"
           icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
           mail: "7korobi.sys@gmail.com"
@@ -29,9 +30,12 @@ module.exports =
           token: "DEADBEEF"
           account: "user"
 
-      { user } = req.session.passport
+        req.session ?=
+          passport: { user }
+
+      user = req.session?.passport?.user
       if user
-        user = _.omit user, ["_id", "token", "account"]
+        user = _.omit user, ["token"]
         commit "update", { user }
 
   mutations:
