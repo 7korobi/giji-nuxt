@@ -17,7 +17,7 @@ if window?
 
 module.exports =
   state: ->
-    passport: null
+    user: null
     env: {}
     read_at: {}
     timer: {}
@@ -26,22 +26,25 @@ module.exports =
     nuxtServerInit: ({ commit }, { isDev, req, env })->
       global.env = env
       commit "update", { env }
-      # { cookie, passport } = req.session
 
       if isDev
-        commit "update",
-          passport:
-            id: "local-test-user"
-            nick: "テスト中"
-            mail: "7korobi.sys@gmail.com"
-            icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
-            token: "DEADBEEF"
-            account: "user"
-            provider: "local-test"
-            write_at: new Date - 0
+        user = 
+          provider: "local-test"
+          icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
+          mail: "7korobi.sys@gmail.com"
+          nick: "テスト中"
+          write_at: new Date - 0
+        secret =
+          token: "DEADBEEF"
+          account: "user"
+        req.session.passport.user = { ...secret, ...user }
+        commit "update", { user }
 
-      if passport = req.session?.passport
-        commit "update", { passport }
+      { user } = req.session.passport
+      if user
+        _id = token = account = undefined
+        user = { ...user, ...{ _id, token, account }}
+        commit "update", { user }
 
   mutations:
     update: (state, o)->

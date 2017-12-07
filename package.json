@@ -25,6 +25,7 @@
     "coffeescript": "^2.0.3",
     "config": "^1.28.1",
     "connect-mongo": "^2.0.0",
+    "cross-env": "^5.1.1",
     "del": "^3.0.0",
     "element-ui": "^1.4.7",
     "express-session": "^1.15.6",
@@ -69,10 +70,10 @@
   "scripts": {
     "test": "ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
-    "prod": "nuxt build && gulp prod",
-    "build": "nuxt build",
-    "analyze": "nuxt build --analyze",
-    "generate": "nuxt generate"
+    "prod": "cross-env NODE_ENV=production nuxt build && gulp prod",
+    "build": "cross-env NODE_ENV=production nuxt build",
+    "analyze": "cross-env NODE_ENV=production nuxt build --analyze",
+    "generate": "cross-env NODE_ENV=production nuxt generate"
   },
   "devDependencies": {
     "ava": "^0.24.0",

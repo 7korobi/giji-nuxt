@@ -50,11 +50,11 @@ module.exports =
     require("~/plugins/get-by-mount") "1h", "story/progress"
   ]
   computed:
-    passport: ->
-      @$store.state.passport
+    user: ->
+      @$store.state.user
     user_url: ->
-      return null unless @passport
-      { provider, account } = @passport
+      return null unless @user
+      { provider, account } = @user
       provider && account && "user/#{provider}-#{account}"
     prologue: ->
       @read_at
