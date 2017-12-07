@@ -82,7 +82,7 @@ export function getContext (context, app) {
     payload: context.payload,
     error: context.error,
     base: '/',
-    env: {"url":{"web":"//lvh.me:4000","api":"//giji.f5.si/api","sow":"//s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"//s3-ap-northeast-1.amazonaws.com/giji-assets"}}
+    env: {"url":{"web":"//giji.f5.si","api":"//giji.f5.si/api","sow":"//s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"//s3-ap-northeast-1.amazonaws.com/giji-assets"}}
   }
   const next = context.next
   ctx.params = ctx.route.params || {}
