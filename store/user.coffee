@@ -2,8 +2,7 @@ axios = require "axios"
 
 module.exports =
   namespaced: true
-  state: -> 
-    xxx: "xxx"
+  state: -> {}
 
   mutations:
     hide_potof_ids: (state, ids)->

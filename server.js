@@ -943,7 +943,7 @@ module.exports = function(app, m, {auth, url}) {
   });
   app.use(passport.initialize());
   app.use(passport.session());
-  app.post("/user", async function(req, res) {
+  app.post("/api/user", async function(req, res) {
     var body, user;
     ({
       body,
