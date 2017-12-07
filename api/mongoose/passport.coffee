@@ -29,7 +29,7 @@ module.exports = (app, m, { auth, url })->
       $setOnInsert:
         sign: o.mail ? o.nick
       upsert: true
-    .exec (err)->
+    .exec (err, o)->
       done err, o
 
   passport.deserializeUser (o, done)->

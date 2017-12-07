@@ -934,7 +934,7 @@ module.exports = function(app, m, {auth, url}) {
         sign: (ref = o.mail) != null ? ref : o.nick
       },
       upsert: true
-    }).exec(function(err) {
+    }).exec(function(err, o) {
       return done(err, o);
     });
   });
