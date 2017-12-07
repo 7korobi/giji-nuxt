@@ -42,7 +42,8 @@ module.exports = (app, m, { auth, url })->
     { body, session: { passport: { user }}} = req
     if user._id
       Object.assign user, body.user
-      await Passport.findByIdAndUpdate user._id, user
+      user = await Passport.findByIdAndUpdate user._id, user,
+        returnNewDocument: true
       .exec()
       res.json { user }
     else
