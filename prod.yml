@@ -1,6 +1,6 @@
 apps:
   - exec_mode: fork
-    instances: 4
+    instances: 1
     name: giji
 
     script: server.js
