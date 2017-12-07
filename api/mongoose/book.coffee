@@ -1,6 +1,4 @@
-folder_id = "test"
-
-module.exports = (app, m)->
+module.exports = (app, m, { game: { folder_id }})->
   { Schema } = m
   Card = m.model 'Card', new Schema
     write_at: Number
@@ -244,11 +242,13 @@ module.exports = (app, m)->
         update: false
     ]
 
-  app.get '/api/book', API ()->
-    books = await Book.find books
+  app.get '/api/books', API ({
+    query: { folder_id }
+  })->
+    books = await Book.find { folder_id }
     { books }
 
-  app.get '/api/book/:book_id', API ({
+  app.get '/api/books/:book_id', API ({
     params: { book_id }
     query: { write_at }
     session:
@@ -274,7 +274,7 @@ module.exports = (app, m)->
     
     { book,   potofs, stats, cards,   parts, phases }
 
-  app.get '/api/book/:book_id/chats', API ({
+  app.get '/api/books/:book_id/chats', API ({
     params: { book_id }
     query: { write_at }
     session:
@@ -300,6 +300,7 @@ module.exports = (app, m)->
         _id: _id
         $or: [{ potof_id }, { phase_handle }]
     ]
+    { chats }
 
   app.post '/api/book/create', API ({
     body: { book }

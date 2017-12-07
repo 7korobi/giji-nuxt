@@ -9,14 +9,16 @@
             table
               tbody
                 tr
+                  th
+                    | 署名
+                    btn(v-model="user.sign" as="") 編集
+                  td {{ user.sign }}
+                tr
                   th ログイン
                   td {{ user.provider }}から
                 tr
                   th OpenID
                   td {{ user.account }}
-                tr
-                  th 
-                  td 
           p(v-else)
             | ゲーム内で使うため、署名をしてください。
             input(type="text" v-model="user.sign")

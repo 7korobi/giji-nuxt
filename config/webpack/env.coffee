@@ -1,4 +1,4 @@
 
-{ url } = require 'config'
+{ url, game } = require 'config'
 
-module.exports = { url }
+module.exports = { url, game }
