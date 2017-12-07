@@ -104,7 +104,7 @@ __webpack_require__(5)(app, conf);
 if (conf.use_api) {
   __webpack_require__(7)(app, conf);
   __webpack_require__(13)(app, conf);
-  __webpack_require__(24)(app, conf);
+  __webpack_require__(16)(app, conf);
   // for only legacy jinrogiji
   __webpack_require__(27)(app, conf);
 }
@@ -295,9 +295,56 @@ module.exports = {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var MongoStore, day, interval, session;
+
+session = __webpack_require__(14);
+
+MongoStore = __webpack_require__(15)(session);
+
+interval = 7 * 24 * 3600;
+
+day = 24 * 3600;
+
+module.exports = function(app, {session_key, db}) {
+  app.use(session({
+    secret: session_key,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      url: db.mongo,
+      ttl: interval,
+      autoRemove: 'native',
+      collection: 'sessions',
+      touchAfter: day,
+      stringify: false
+    }),
+    cookie: {
+      maxAge: interval * 1000
+    }
+  }));
+  console.log("session use");
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("express-session");
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = require("connect-mongo");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var mongoose;
 
-mongoose = __webpack_require__(14);
+mongoose = __webpack_require__(17);
 
 module.exports = function(app, conf) {
   var ctx, fname, i, len, ref;
@@ -312,7 +359,7 @@ module.exports = function(app, conf) {
       return console.log("mongoose connected.");
     }
   });
-  ctx = __webpack_require__(15);
+  ctx = __webpack_require__(18);
   ref = ctx.keys();
   for (i = 0, len = ref.length; i < len; i++) {
     fname = ref[i];
@@ -322,18 +369,18 @@ module.exports = function(app, conf) {
 
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./book.coffee": 16,
-	"./passport.coffee": 17
+	"./book.coffee": 19,
+	"./passport.coffee": 20
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -349,10 +396,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 15;
+webpackContext.id = 18;
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports) {
 
 var folder_id;
@@ -847,21 +894,21 @@ module.exports = function(app, m) {
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _, passport, plugins;
 
 _ = __webpack_require__(2);
 
-passport = __webpack_require__(18);
+passport = __webpack_require__(21);
 
 plugins = {
-  facebook: __webpack_require__(19),
-  twitter: __webpack_require__(20),
-  slack: __webpack_require__(21),
-  github: __webpack_require__(22),
-  google: __webpack_require__(23)
+  facebook: __webpack_require__(22),
+  twitter: __webpack_require__(23),
+  slack: __webpack_require__(24),
+  github: __webpack_require__(25),
+  google: __webpack_require__(26)
 };
 
 module.exports = function(app, m, {auth, url}) {
@@ -893,6 +940,12 @@ module.exports = function(app, m, {auth, url}) {
   passport.deserializeUser(function(o, done) {
     return done(null, o);
   });
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.get("/logout", function(req, res) {
+    req.logout();
+    return res.redirect('/');
+  });
   for (provider in auth) {
     ({attr, Strategy} = auth[provider]);
     ({Strategy} = plugins[provider]);
@@ -918,96 +971,44 @@ module.exports = function(app, m, {auth, url}) {
     }));
     console.log(`${provider} authenticate set.`);
   }
-  app.use(passport.initialize());
-  app.use(passport.session());
-  return app.get("/logout", function(req, res) {
-    req.logout();
-    return res.redirect('/');
-  });
 };
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport");
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-facebook");
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = require("passport-twitter");
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-slack");
+module.exports = require("passport");
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-github2");
+module.exports = require("passport-facebook");
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = require("passport-google-oauth2");
+module.exports = require("passport-twitter");
 
 /***/ }),
 /* 24 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var MongoStore, day, interval, session;
-
-session = __webpack_require__(25);
-
-MongoStore = __webpack_require__(26)(session);
-
-interval = 7 * 24 * 3600;
-
-day = 24 * 3600;
-
-module.exports = function(app, {session_key, db}) {
-  app.use(session({
-    secret: session_key,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      url: db.mongo,
-      ttl: interval,
-      autoRemove: 'native',
-      collection: 'sessions',
-      touchAfter: day,
-      stringify: false
-    }),
-    cookie: {
-      maxAge: interval * 1000
-    }
-  }));
-};
-
+module.exports = require("passport-slack");
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = require("express-session");
+module.exports = require("passport-github2");
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = require("connect-mongo");
+module.exports = require("passport-google-oauth2");
 
 /***/ }),
 /* 27 */

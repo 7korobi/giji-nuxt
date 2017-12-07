@@ -35,6 +35,12 @@ module.exports = (app, m, { auth, url })->
   passport.deserializeUser (o, done)->
     done null, o
 
+  app.use passport.initialize()
+  app.use passport.session()
+  app.get "/logout", (req, res)->
+    req.logout()
+    res.redirect('/')
+
   for provider, { attr, Strategy } of auth
     { Strategy } = plugins[provider]
     attr.callbackURL = "#{url.web}/auth/#{provider}/callback"
@@ -57,9 +63,4 @@ module.exports = (app, m, { auth, url })->
       failureRedirect: '/'
       successRedirect: '/'
     console.log "#{provider} authenticate set."
-
-  app.use passport.initialize()
-  app.use passport.session()
-  app.get "/logout", (req, res)->
-    req.logout()
-    res.redirect('/')
+  return

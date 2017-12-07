@@ -18,4 +18,5 @@ module.exports = (app, { session_key, db })->
       stringify: false
     cookie:
       maxAge: interval * 1000
+  console.log "session use"
   return
