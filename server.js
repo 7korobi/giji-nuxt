@@ -403,11 +403,9 @@ webpackContext.id = 18;
 /* 19 */
 /***/ (function(module, exports) {
 
-var folder_id;
-
-folder_id = "test";
-
-module.exports = function(app, m) {
+module.exports = function(app, m, {
+    game: {folder_id}
+  }) {
   var API, Book, Card, Chat, NodeIdx, Part, Phase, Potof, Schema, Stat, add_book, add_chat, add_for_tree, add_part, add_phase, add_potof, chk_book, require_uniq, up_book, up_chat, up_for_tree, up_part, up_phase, up_phases_step_1, up_phases_step_2, up_potof, up_stat;
   ({Schema} = m);
   Card = m.model('Card', new Schema({
@@ -446,7 +444,7 @@ module.exports = function(app, m) {
     },
     passport_id: String,
     face_id: String,
-    idx: Number,
+    idx: String,
     _id: String,
     sign: String,
     job: String
@@ -464,7 +462,7 @@ module.exports = function(app, m) {
     open_at: Number,
     passport_id: String,
     folder_id: String,
-    idx: Number,
+    idx: String,
     _id: String,
     chat: {
       interval: Number,
@@ -489,7 +487,7 @@ module.exports = function(app, m) {
       type: String,
       index: true
     },
-    idx: Number,
+    idx: String,
     _id: String,
     label: String
   }, {
@@ -501,7 +499,7 @@ module.exports = function(app, m) {
       type: String,
       index: true
     },
-    idx: Number,
+    idx: String,
     _id: String,
     label: String,
     handle: String,
@@ -524,7 +522,7 @@ module.exports = function(app, m) {
       type: String,
       index: true
     },
-    idx: Number,
+    idx: String,
     _id: String,
     show: String,
     deco: String,
@@ -553,23 +551,21 @@ module.exports = function(app, m) {
     }
     return old;
   };
-  up_for_tree = function(model, o) {
+  up_for_tree = async function(model, o) {
     var write_at;
     write_at = new Date() - 0;
     if (o.open_at == null) {
       o.open_at = write_at;
     }
     Object.assign(o, {write_at});
-    return model.findByIdAndUpdate(o._id, o, {
+    await model.findByIdAndUpdate(o._id, o, {
       upsert: true
     }).exec();
+    return o;
   };
   add_for_tree = async function(_id, model, o) {
     var idx;
     ({idx} = (await NodeIdx.findByIdAndUpdate(_id, {
-      $setOnInsert: {
-        idx: 1
-      },
       $inc: {
         idx: 1
       }
@@ -681,19 +677,22 @@ module.exports = function(app, m) {
       })
     ];
   };
-  app.get('/api/book', API(async function() {
+  app.get('/api/books', API(async function() {
     var books;
-    books = (await Book.find(books));
+    books = (await Book.find({
+      _id: RegExp(`^${folder_id}-`)
+    }));
     return {books};
   }));
-  app.get('/api/book/:book_id', API(async function({
+  app.get('/api/books/:book_id', API(async function({
       params: {book_id},
       query: {write_at},
-      session: {
-        passport: {user}
-      }
+      session
     }) {
-    var _id, book, cards, i, is_master, is_player, len, parts, phases, potof, potofs, stats;
+    var _id, book, cards, i, is_master, is_player, len, parts, phases, potof, potofs, stats, user;
+    ({
+      passport: {user}
+    } = session);
     _id = {
       $regex: RegExp(`^${book_id}-`)
     };
@@ -710,7 +709,7 @@ module.exports = function(app, m) {
     session.book = {is_master, is_player};
     return {book, potofs, stats, cards, parts, phases};
   }));
-  app.get('/api/book/:book_id/chats', API(async function({
+  app.get('/api/books/:book_id/chats', API(async function({
       params: {book_id},
       query: {write_at},
       session: {
@@ -718,60 +717,63 @@ module.exports = function(app, m) {
         passport: {user}
       }
     }) {
-    var _id, chats;
+    var _id, chats, phase_handle, potof_id;
     _id = {
       $regex: RegExp(`^${book_id}-`)
     };
-    ({
-      potof_id: {
-        $in: [potof._id]
-      },
-      phase_handle: {
-        $in: [...phase_handle, 'SSAY', 'VSAY', 'GSAY', 'VGSAY', 'public', 'MAKER', 'ADMIN']
-      }
-    });
-    return [chats] = (await Promise.all([
+    potof_id = {
+      $in: [potof != null ? potof._id : void 0]
+    };
+    phase_handle = {
+      $in: ['SSAY', 'VSAY', 'GSAY', 'VGSAY', 'public', 'MAKER', 'ADMIN']
+    };
+    [chats] = (await Promise.all([
       Chat.find({
         _id: _id,
         $or: [{potof_id},
       {phase_handle}]
       })
     ]));
+    return {chats};
   }));
-  app.post('/api/book/create', API(async function({
+  app.post('/api/books', API(async function({
       body: {book},
       session: {
         passport: {user}
       }
     }) {
-    var _id, args;
+    var _id, chats, part, parts, phases;
     book = ({_id} = (await add_book(book)));
-    args = (await Promise.all([
+    [part, chats, phases] = (await Promise.all([
       up_part({
         _id: `${_id}-0`,
         idx: "0",
         label: 'プロローグ'
       }),
-      up_chat({
-        _id: `${_id}-0-mT-welcome`,
-        idx: "welcome",
-        sign: user.sign
-      }),
-      up_chat({
-        _id: `${_id}-0-mT-nrule`,
-        idx: "nrule",
-        sign: user.sign
-      }),
-      up_chat({
-        _id: `${_id}-0-mT-vrule`,
-        idx: "vrule",
-        sign: user.sign
-      }),
-      ...up_phases_step_1(`${_id}-0`)
+      Promise.all([
+        up_chat({
+          _id: `${_id}-0-mT-welcome`,
+          idx: "welcome",
+          sign: user.sign
+        }),
+        up_chat({
+          _id: `${_id}-0-mT-nrule`,
+          idx: "nrule",
+          sign: user.sign
+        }),
+        up_chat({
+          _id: `${_id}-0-mT-vrule`,
+          idx: "vrule",
+          sign: user.sign
+        })
+      ]),
+      Promise.all(up_phases_step_1(`${_id}-0`))
     ]));
-    return {book, args};
+    parts = [part];
+    return {book, parts, phases, chats};
   }));
-  app.post('/api/book', API(async function({
+  app.post('/api/books/:book_id', API(async function({
+      params: {book_id},
       body: {book},
       session: {
         passport: {user}
@@ -943,14 +945,12 @@ module.exports = function(app, m, {auth, url}) {
   });
   app.use(passport.initialize());
   app.use(passport.session());
-  app.post("/api/user", async function(req, res) {
-    var body, user;
-    ({
+  app.post("/api/user", async function({
       body,
       session: {
         passport: {user}
       }
-    } = req);
+    }, res) {
     if (user._id) {
       Object.assign(user, body.user);
       user = (await Passport.findByIdAndUpdate(user._id, user, {
@@ -1814,11 +1814,11 @@ module.exports = {
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var url;
+var game, url;
 
-({url} = __webpack_require__(1));
+({url, game} = __webpack_require__(1));
 
-module.exports = {url};
+module.exports = {url, game};
 
 
 /***/ }),

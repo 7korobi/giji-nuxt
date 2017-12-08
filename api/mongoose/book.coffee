@@ -39,7 +39,7 @@ module.exports = (app, m, { game: { folder_id }})->
       index: true
     passport_id: String
     face_id: String
-    idx: Number
+    idx: String
     _id: String
 
     sign: String
@@ -61,7 +61,7 @@ module.exports = (app, m, { game: { folder_id }})->
 
     passport_id: String
     folder_id: String
-    idx: Number
+    idx: String
     _id: String
 
     chat:
@@ -86,7 +86,7 @@ module.exports = (app, m, { game: { folder_id }})->
     book_id:
       type: String
       index: true
-    idx: Number
+    idx: String
     _id: String
 
     label: String
@@ -101,7 +101,7 @@ module.exports = (app, m, { game: { folder_id }})->
     book_id:
       type: String
       index: true
-    idx: Number
+    idx: String
     _id: String
 
     label: String
@@ -124,7 +124,7 @@ module.exports = (app, m, { game: { folder_id }})->
     phase_handle:
       type: String
       index: true 
-    idx: Number
+    idx: String
     _id: String
 
     show: String
@@ -150,14 +150,13 @@ module.exports = (app, m, { game: { folder_id }})->
     write_at = new Date() - 0
     o.open_at ?= write_at
     Object.assign o, { write_at }
-    model.findByIdAndUpdate o._id, o,
+    await model.findByIdAndUpdate o._id, o,
       upsert: true
     .exec()
+    o
 
   add_for_tree = (_id, model, o)->
     { idx } = await NodeIdx.findByIdAndUpdate _id,
-      $setOnInsert:
-        idx: 1
       $inc:
         idx: 1
     ,
@@ -242,21 +241,19 @@ module.exports = (app, m, { game: { folder_id }})->
         update: false
     ]
 
-  app.get '/api/books', API ({
-    query: { folder_id }
-  })->
-    books = await Book.find { folder_id }
+  app.get '/api/books', API ->
+    books = await Book.find { _id: ///^#{folder_id}-/// }
     { books }
 
   app.get '/api/books/:book_id', API ({
     params: { book_id }
     query: { write_at }
-    session:
-      passport: { user }
+    session
   })->
+    { passport: { user }} = session
     _id =
       $regex: ///^#{book_id}-///
-    [ book,   potofs, stats, cards,   parts, phases ] = await Promise.all [
+    [ book, potofs, stats, cards, parts, phases ] = await Promise.all [
       Book.findById book_id
 
       Potof.find { _id }
@@ -272,7 +269,7 @@ module.exports = (app, m, { game: { folder_id }})->
     is_master = book.passport_id == user._id
     session.book = { is_master, is_player }
     
-    { book,   potofs, stats, cards,   parts, phases }
+    { book, potofs, stats, cards, parts, phases }
 
   app.get '/api/books/:book_id/chats', API ({
     params: { book_id }
@@ -283,13 +280,12 @@ module.exports = (app, m, { game: { folder_id }})->
   })->
     _id =
       $regex: ///^#{book_id}-///
-    potof_id:
+    potof_id =
       $in: [
-        potof._id
+        potof?._id
       ]
-    phase_handle:
+    phase_handle =
       $in: [
-        ...phase_handle
         'SSAY', 'VSAY'
         'GSAY', 'VGSAY'
         'public'
@@ -302,34 +298,38 @@ module.exports = (app, m, { game: { folder_id }})->
     ]
     { chats }
 
-  app.post '/api/book/create', API ({
+  app.post '/api/books', API ({
     body: { book }
     session:
       passport: { user }
   })->
     book = { _id } = await add_book book
-    args = await Promise.all [
+    [part, chats, phases] = await Promise.all [
       up_part
         _id: "#{_id}-0"
         idx: "0"
         label: 'プロローグ'
-      up_chat
-        _id: "#{_id}-0-mT-welcome"
-        idx: "welcome"
-        sign: user.sign
-      up_chat
-        _id: "#{_id}-0-mT-nrule"
-        idx: "nrule"
-        sign: user.sign
-      up_chat
-        _id: "#{_id}-0-mT-vrule"
-        idx: "vrule"
-        sign: user.sign
-      ... up_phases_step_1 "#{_id}-0"
+      Promise.all [
+        up_chat
+          _id: "#{_id}-0-mT-welcome"
+          idx: "welcome"
+          sign: user.sign
+        up_chat
+          _id: "#{_id}-0-mT-nrule"
+          idx: "nrule"
+          sign: user.sign
+        up_chat
+          _id: "#{_id}-0-mT-vrule"
+          idx: "vrule"
+          sign: user.sign
+      ]
+      Promise.all up_phases_step_1 "#{_id}-0"
     ]
-    { book, args }
+    parts = [part]
+    { book, parts, phases, chats }
 
-  app.post '/api/book', API ({
+  app.post '/api/books/:book_id', API ({
+    params: { book_id }
     body: { book }
     session:
       passport: { user }
