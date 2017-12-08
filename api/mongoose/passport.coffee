@@ -28,6 +28,7 @@ module.exports = (app, m, { auth, url })->
     Passport.findByIdAndUpdate o._id, o,
       $setOnInsert:
         sign: o.mail ? o.nick
+      new: false
       upsert: true
     .exec (err, o)->
       done err, o
@@ -42,8 +43,8 @@ module.exports = (app, m, { auth, url })->
     if user._id
       Object.assign user, body.user
       user = await Passport.findByIdAndUpdate user._id, user,
-        returnNewDocument: true
-      .exec()
+        new: true
+        upsert: false
       res.json { user }
     else
       res.json { message: "ログインしていません。" }

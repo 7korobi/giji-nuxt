@@ -151,18 +151,16 @@ module.exports = (app, m, { game: { folder_id }})->
     o.open_at ?= write_at
     Object.assign o, { write_at }
     await model.findByIdAndUpdate o._id, o,
+      new: true
       upsert: true
-    .exec()
-    o
 
   add_for_tree = (_id, model, o)->
     { idx } = await NodeIdx.findByIdAndUpdate _id,
       $inc:
         idx: 1
     ,
+      new: true
       upsert: true
-      returnNewDocument: true
-    .exec()
     _id = "#{_id}-#{idx}"
 
     Object.assign o, { idx, _id }
