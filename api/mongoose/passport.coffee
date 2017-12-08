@@ -7,6 +7,8 @@ plugins =
   github:   require "passport-github2"
   google:   require "passport-google-oauth2"
 
+{ API } = require "./api"
+
 module.exports = (app, m, { auth, url })->
   { Schema } = m
 
@@ -39,15 +41,19 @@ module.exports = (app, m, { auth, url })->
   app.use passport.initialize()
   app.use passport.session()
 
-  app.post "/api/user", ({ body, session: { passport: { user }}}, res)->
-    if user._id
-      Object.assign user, body.user
-      user = await Passport.findByIdAndUpdate user._id, user,
-        new: true
-        upsert: false
-      res.json { user }
-    else
-      res.json { message: "ログインしていません。" }
+  app.post "/api/user", API ({
+    body,
+    session:
+      passport: { user }
+  })->
+    unless user?._id
+      return { message: "ログインしていません。" }
+    
+    Object.assign user, body.user
+    user = await Passport.findByIdAndUpdate user._id, user,
+      new: true
+      upsert: false
+    { user }
 
   app.get "/logout", (req, res)->
     req.logout()

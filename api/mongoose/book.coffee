@@ -1,3 +1,5 @@
+{ API } = require "./api"
+
 module.exports = (app, m, { game: { folder_id }})->
   { Schema } = m
   Card = m.model 'Card', new Schema
@@ -132,12 +134,6 @@ module.exports = (app, m, { game: { folder_id }})->
     log: String
   ,
     versionKey: false
-
-  API = (cb)-> (req, res, next)->
-    try
-      res.json await cb req
-    catch { name, message, stack, fileName, lineNumber }
-      res.json { name, message, stack, fileName, lineNumber }
 
   require_uniq = (model, _id, query)->
     old = await model.findOne(query).exec()
