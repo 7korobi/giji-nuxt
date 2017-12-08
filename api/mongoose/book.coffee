@@ -265,7 +265,7 @@ module.exports = (app, m, { game: { folder_id }})->
     
     { book, potofs, stats, cards, parts, phases }
 
-  app.get '/api/books/:book_id/chats', API ({
+  app.get '/api/chats/:book_id', API ({
     params: { book_id }
     query: { write_at }
     session:
