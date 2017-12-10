@@ -68,6 +68,7 @@
     "yaml-loader": "latest"
   },
   "scripts": {
+    "ava": "cross-env NODE_ENV=spec ava --color --watch",
     "test": "cross-env NODE_ENV=spec ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
     "dev": "gulp dev",

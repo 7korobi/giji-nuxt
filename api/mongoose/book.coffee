@@ -50,7 +50,7 @@ module.exports = (app, m, { game: { folder_id }})->
     versionKey: false
 
 
-  NodeIdx = m.model 'NodeIdx', new Schema
+  IdxCount = m.model 'IdxCount', new Schema
     idx: Number
     _id: String
   ,
@@ -146,12 +146,14 @@ module.exports = (app, m, { game: { folder_id }})->
     write_at = new Date() - 0
     o.open_at ?= write_at
     Object.assign o, { write_at }
+    unless o._id
+      console.log o 
     await model.findByIdAndUpdate o._id, o,
       new: true
       upsert: true
 
   add_for_tree = (_id, model, o)->
-    { idx } = await NodeIdx.findByIdAndUpdate _id,
+    { idx } = await IdxCount.findByIdAndUpdate _id,
       $inc:
         idx: 1
     ,
@@ -328,6 +330,7 @@ module.exports = (app, m, { game: { folder_id }})->
     session:
       passport: { user }
   })->
+    book._id = book_id
     book = { _id, passport_id } = await up_book book
     npc_id = "#{_id}-NPC"
     args = await Promise.all [
@@ -356,12 +359,6 @@ module.exports = (app, m, { game: { folder_id }})->
       ... up_phases_step_2 _id
     ]
     { part, args }
-
-    params: { book_id }
-    query: { write_at }
-    body: { book }
-    session:
-      passport: { user }
 
   app.post '/api/potof/:book_id', API ({
     params: { book_id }
