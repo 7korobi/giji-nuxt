@@ -7,7 +7,7 @@ plugins =
   github:   require "passport-github2"
   google:   require "passport-google-oauth2"
 
-{ API } = require "./api"
+{ YAML, API } = require "../helper.coffee"
 
 module.exports = (app, m, { auth, url })->
   { Schema } = m

@@ -77,15 +77,37 @@ module.exports = require("config");
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("fs");
+var YAML, fs;
+
+YAML = __webpack_require__(20);
+
+fs = __webpack_require__(3);
+
+module.exports = {
+  YAML: function(path) {
+    return YAML.load(fs.readFileSync(path, 'utf8'));
+  },
+  API: function(cb) {
+    return async function(req, res, next) {
+      var fileName, lineNumber, message, name, stack;
+      try {
+        return res.json((await cb(req)));
+      } catch (error) {
+        ({name, message, stack, fileName, lineNumber} = error);
+        return res.json({name, message, stack, fileName, lineNumber});
+      }
+    };
+  }
+};
+
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("./api");
+module.exports = require("fs");
 
 /***/ }),
 /* 4 */
@@ -116,12 +138,12 @@ __webpack_require__(7)(app, conf);
 if (conf.use_api) {
   __webpack_require__(9)(app, conf);
   __webpack_require__(12)(app, conf);
-  __webpack_require__(18)(app, conf);
+  __webpack_require__(17)(app, conf);
   // for only legacy jinrogiji
-  __webpack_require__(31)(app, conf);
+  __webpack_require__(28)(app, conf);
 }
 
-__webpack_require__(33)(app, conf);
+__webpack_require__(30)(app, conf);
 
 host = conf.host || '127.0.0.1';
 
@@ -213,27 +235,16 @@ module.exports = require("connect-mongo");
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Agenda, Agendash, jobs;
+var Agenda, Agendash, ctxs;
 
 Agenda = __webpack_require__(13);
 
 Agendash = __webpack_require__(14);
 
-jobs = function(cb) {
-  var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(15);
-  ref = ctx.keys();
-  results = [];
-  for (i = 0, len = ref.length; i < len; i++) {
-    fname = ref[i];
-    name = fname.slice(2, -7);
-    results.push(cb(name, ctx(fname)));
-  }
-  return results;
-};
+ctxs = [__webpack_require__(15), __webpack_require__(16)];
 
 module.exports = function(app, {pm_id, db}) {
-  var agenda, pno;
+  var agenda, define, i, len, pno;
   pno = pm_id - 1 || 0;
   agenda = new Agenda({
     db: {
@@ -246,16 +257,19 @@ module.exports = function(app, {pm_id, db}) {
       }
     }
   });
-  jobs(function(name, ctx) {
-    return agenda.define(name, ctx.define);
-  });
+  for (i = 0, len = ctxs.length; i < len; i++) {
+    ({define} = ctxs[i]);
+    agenda.define(name, define);
+  }
   agenda.on('ready', function() {
+    var every, j, len1, name;
     if (!pno) {
-      jobs(function(name, ctx) {
-        if (ctx.every) {
-          return agenda.every(ctx.every, name);
+      for (j = 0, len1 = ctxs.length; j < len1; j++) {
+        ({every, name} = ctxs[j]);
+        if (every) {
+          agenda.every(every, name);
         }
-      });
+      }
     }
     return agenda.start();
   });
@@ -280,30 +294,6 @@ module.exports = require("agendash");
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var map = {
-	"./aggregate.coffee": 16,
-	"./process.coffee": 17
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 15;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var API_URL, sh;
 
 sh = __webpack_require__(0);
@@ -311,6 +301,7 @@ sh = __webpack_require__(0);
 ({API_URL} = process.env);
 
 module.exports = {
+  name: 'aggregate',
   every: '12 hours',
   define: function(job, done) {
     return sh.exec(`curl http:${API_URL}/aggregate/job`, function(err, stdout, stderr) {
@@ -327,7 +318,7 @@ module.exports = {
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -337,6 +328,7 @@ sh = __webpack_require__(0);
 ({API_URL} = process.env);
 
 module.exports = {
+  name: 'process',
   every: '2 minutes',
   define: function(job, done) {
     return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
@@ -352,15 +344,17 @@ module.exports = {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mongoose;
+var ctxs, mongoose;
 
-mongoose = __webpack_require__(19);
+mongoose = __webpack_require__(18);
+
+ctxs = [__webpack_require__(19), __webpack_require__(21)];
 
 module.exports = function(app, conf) {
-  var ctx, fname, i, len, ref;
+  var ctx, i, len;
   mongoose.connect(conf.db.mongo, {
     config: {
       autoIndex: false
@@ -372,87 +366,26 @@ module.exports = function(app, conf) {
       return console.log("mongoose connected.");
     }
   });
-  ctx = __webpack_require__(20);
-  ref = ctx.keys();
-  for (i = 0, len = ref.length; i < len; i++) {
-    fname = ref[i];
-    ctx(fname)(app, mongoose, conf);
+  for (i = 0, len = ctxs.length; i < len; i++) {
+    ctx = ctxs[i];
+    ctx(app, mongoose, conf);
   }
 };
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./api.coffee": 21,
-	"./book.coffee": 23,
-	"./passport.coffee": 24
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 20;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var YAML, fs;
-
-YAML = __webpack_require__(22);
-
-fs = __webpack_require__(2);
-
-module.exports = {
-  YAML: function(path) {
-    return YAML.load(fs.readFileSync(path, 'utf8'));
-  },
-  API: function(cb) {
-    return async function(req, res, next) {
-      var fileName, lineNumber, message, name, stack;
-      try {
-        return res.json((await cb(req)));
-      } catch (error) {
-        ({name, message, stack, fileName, lineNumber} = error);
-        return res.json({name, message, stack, fileName, lineNumber});
-      }
-    };
-  }
-};
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-module.exports = require("js-yaml");
-
-/***/ }),
-/* 23 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API, YAML, head, idx, nation, nrules, village, vrules;
 
-({YAML, API} = __webpack_require__(3));
+({YAML, API} = __webpack_require__(2));
 
 ({nation, village} = YAML("yaml/rule.yml"));
 
@@ -976,24 +909,30 @@ module.exports = function(app, m, {
 
 
 /***/ }),
-/* 24 */
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = require("js-yaml");
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var API, _, passport, plugins;
+var API, YAML, _, passport, plugins;
 
 _ = __webpack_require__(4);
 
-passport = __webpack_require__(25);
+passport = __webpack_require__(22);
 
 plugins = {
-  facebook: __webpack_require__(26),
-  twitter: __webpack_require__(27),
-  slack: __webpack_require__(28),
-  github: __webpack_require__(29),
-  google: __webpack_require__(30)
+  facebook: __webpack_require__(23),
+  twitter: __webpack_require__(24),
+  slack: __webpack_require__(25),
+  github: __webpack_require__(26),
+  google: __webpack_require__(27)
 };
 
-({API} = __webpack_require__(3));
+({YAML, API} = __webpack_require__(2));
 
 module.exports = function(app, m, {auth, url}) {
   var Passport, Schema, Strategy, attr, provider;
@@ -1078,52 +1017,52 @@ module.exports = function(app, m, {auth, url}) {
 
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport");
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
 
 /***/ }),
-/* 28 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-slack");
 
 /***/ }),
-/* 29 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-github2");
 
 /***/ }),
-/* 30 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth2");
 
 /***/ }),
-/* 31 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(32);
+mongo = __webpack_require__(29);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(2);
+fs = __webpack_require__(3);
 
 _ = __webpack_require__(4);
 
@@ -1601,21 +1540,21 @@ module.exports = function(app, {url, db}) {
 
 
 /***/ }),
-/* 32 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Builder, Nuxt, builder, config, err, nuxt;
 
-config = __webpack_require__(34);
+config = __webpack_require__(31);
 
 // { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
-({Nuxt, Builder} = __webpack_require__(41));
+({Nuxt, Builder} = __webpack_require__(38));
 
 nuxt = new Nuxt(config);
 
@@ -1637,16 +1576,16 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(35),
-  router: __webpack_require__(36),
-  build: __webpack_require__(37),
-  head: __webpack_require__(39),
-  env: __webpack_require__(40),
+  render: __webpack_require__(32),
+  router: __webpack_require__(33),
+  build: __webpack_require__(34),
+  head: __webpack_require__(36),
+  env: __webpack_require__(37),
   plugins: [],
   css: ['element-ui/lib/theme-default/index.css'],
   //####
@@ -1660,7 +1599,7 @@ module.exports = {
 
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1686,7 +1625,7 @@ module.exports = {
 
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ (function(module, exports) {
 
 /*
@@ -1781,12 +1720,12 @@ module.exports = {
 
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ExtractTextPlugin;
 
-ExtractTextPlugin = __webpack_require__(38);
+ExtractTextPlugin = __webpack_require__(35);
 
 module.exports = {
   extend: function(config, {isDev, isClient}) {},
@@ -1828,13 +1767,13 @@ module.exports = {
 
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("extract-text-webpack-plugin");
 
 /***/ }),
-/* 39 */
+/* 36 */
 /***/ (function(module, exports) {
 
 //####
@@ -1887,7 +1826,7 @@ module.exports = {
 
 
 /***/ }),
-/* 40 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var game, url;
@@ -1898,7 +1837,7 @@ module.exports = {url, game};
 
 
 /***/ }),
-/* 41 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = require("nuxt");

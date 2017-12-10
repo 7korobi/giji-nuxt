@@ -1,5 +1,10 @@
 mongoose = require "mongoose"
 
+ctxs = [
+  require "./mongoose/book.coffee"
+  require "./mongoose/passport.coffee"
+]
+
 module.exports = (app, conf)->
   mongoose.connect conf.db.mongo,
     config:
@@ -10,8 +15,7 @@ module.exports = (app, conf)->
     else
       console.log "mongoose connected."
 
-  ctx = require.context "./mongoose", true, ///(.+)\.coffee$///
-  for fname in ctx.keys()
-    ctx(fname)(app, mongoose, conf)
+  for ctx in ctxs
+    ctx app, mongoose, conf
 
   return

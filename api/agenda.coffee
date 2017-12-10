@@ -1,11 +1,10 @@
 Agenda = require "agenda"
 Agendash = require 'agendash'
 
-jobs = (cb)->
-  ctx = require.context "./jobs", true, ///(.+)\.coffee$///
-  for fname in ctx.keys()
-    name = fname[2..-8]
-    cb name, ctx fname
+ctxs = [
+  require "./jobs/aggregate.coffee"
+  require "./jobs/process.coffee"
+]
 
 module.exports = (app, { pm_id, db })->
   pno = (pm_id - 1 || 0)
@@ -17,14 +16,14 @@ module.exports = (app, { pm_id, db })->
         server:
           auto_reconnect: true
 
-  jobs (name, ctx)->
-    agenda.define name, ctx.define
+  for { define } in ctxs
+    agenda.define name, define
 
   agenda.on 'ready', ->
     unless pno
-      jobs (name, ctx)->
-        if ctx.every
-          agenda.every ctx.every, name
+      for { every, name } in ctxs
+        if every
+          agenda.every every, name
     agenda.start()
 
   app.use '/agendash', Agendash agenda

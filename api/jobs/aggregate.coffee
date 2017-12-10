@@ -2,6 +2,7 @@ sh = require 'child_process'
 { API_URL } = process.env
 
 module.exports =
+  name: 'aggregate'
   every: '12 hours'
   define: (job, done)->
     sh.exec "curl http:#{API_URL}/aggregate/job", (err, stdout, stderr)->

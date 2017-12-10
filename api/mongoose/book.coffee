@@ -1,4 +1,4 @@
-{ YAML, API } = require "./api"
+{ YAML, API } = require "../helper.coffee"
 { nation, village } = YAML "yaml/rule.yml"
 
 nrules = for { head }, idx in nation.list
