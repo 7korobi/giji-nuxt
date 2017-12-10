@@ -1,4 +1,11 @@
-{ API } = require "./api"
+{ YAML, API } = require "./api"
+{ nation, village } = YAML "yaml/rule.yml"
+
+nrules = for { head }, idx in nation.list
+  "#{idx + 1}. #{head}"
+
+vrules = for { head }, idx in village.list
+  "#{idx + 1}. #{head}"
 
 module.exports = (app, m, { game: { folder_id }})->
   { Schema } = m
@@ -135,12 +142,13 @@ module.exports = (app, m, { game: { folder_id }})->
   ,
     versionKey: false
 
-  require_uniq = (model, _id, query)->
-    old = await model.findOne(query).exec()
-    if old
-      unless _id && _id == old._id
-        throw new Error "#{old._id} が作成済みです。"
-    old
+  must_signiture = ({ user })->
+    unless user?.sign?
+      throw new Error "ログインしてください。"
+
+  can_admin = ({ user, potof })->
+    unless potof?.idx == "NPC"
+      throw new Error "ログインしてください。"
 
   up_for_tree = (model, o)->
     write_at = new Date() - 0
@@ -180,60 +188,81 @@ module.exports = (app, m, { game: { folder_id }})->
   up_phase = (phase)-> up_for_tree Phase, phase
   up_chat  = (chat)->  up_for_tree Chat,  chat
 
+  up_chats_step_1 = (_id, npc_id)->
+    [
+      up_chat
+        _id: "#{_id}-0-村題-welcome"
+        idx: "welcome"
+        book_id: _id
+        potof_id: npc_id
+        deco: "giji"
+        show: "report"
+        log: "（この村をみんなに紹介しよう）"
+      up_chat
+        _id: "#{_id}-0-村題-nrule"
+        idx: "nrule"
+        book_id: _id
+        potof_id: npc_id
+        deco: "giji"
+        show: "report"
+        log: nrules.join("\n")
+      up_chat
+        _id: "#{_id}-0-村題-vrule"
+        idx: "vrule"
+        book_id: _id
+        potof_id: npc_id
+        deco: "giji"
+        show: "report"
+        log: vrules.join("\n")
+    ]
+
   up_phases_step_1 = (_id)->
     [
       up_phase
-        _id: "#{_id}-mT"
-        idx: "mT"
+        _id: "#{_id}-村題"
+        idx: "村題"
         label: '情報'
         handle: 'MAKER'
-        group: 'T'
         update: true
       up_phase
-        _id: "#{_id}-TS"
-        idx: "TS"
-        label: '独り言'
-        handle: 'TSAY'
-        group: 'S'
-        update: false
-      up_phase
-        _id: "#{_id}-TT"
-        idx: "TT"
+        _id: "#{_id}-独題"
+        idx: "独題"
         label: '情報'
         handle: 'private'
-        group: 'T'
+        update: false
+      up_phase
+        _id: "#{_id}-独言"
+        idx: "独言"
+        label: '独り言'
+        handle: 'TSAY'
         update: false
     ]
 
   up_phases_step_2 = (_id)->
     [
       up_phase
-        _id: "#{_id}-ST"
-        idx: "ST"
+        _id: "#{_id}-発題"
+        idx: "発題"
         label: '情報'
         handle: 'public'
-        group: 'T'
         update: false
       up_phase
-        _id: "#{_id}-SS"
-        idx: "SS"
+        _id: "#{_id}-発言"
+        idx: "発言"
         label: '発言'
         handle: 'SSAY'
-        group: 'S'
         update: false
       up_phase
-        _id: "#{_id}-VS"
-        idx: "VS"
+        _id: "#{_id}-見言"
+        idx: "見言"
         label: '発言'
         handle: 'VSAY'
-        group: 'S'
         update: false
       up_phase
-        _id: "#{_id}-AS"
-        idx: "AS"
+        _id: "#{_id}-内言"
+        idx: "内言"
         label: "内緒話"
         handle: "AIM"
-        group: "S"
         update: false
     ]
 
@@ -244,9 +273,8 @@ module.exports = (app, m, { game: { folder_id }})->
   app.get '/api/books/:book_id', API ({
     params: { book_id }
     query: { write_at }
-    session
+    session: { passport }
   })->
-    { passport: { user }} = session
     _id =
       $regex: ///^#{book_id}-///
     [ book, potofs, stats, cards, parts, phases ] = await Promise.all [
@@ -259,15 +287,12 @@ module.exports = (app, m, { game: { folder_id }})->
       Part.find  { _id }
       Phase.find { _id }
     ]
-    for potof in potofs when potof.passport_id == user._id
-      session.potof = potof
-      is_player = true
-    is_master = book.passport_id == user._id
-    session.book = { is_master, is_player }
-    
+    for potof in potofs when potof.passport_id == passport.user._id
+      passport.potof = potof
+
     { book, potofs, stats, cards, parts, phases }
 
-  app.get '/api/chats/:book_id', API ({
+  app.get '/api/books/:book_id/chats', API ({
     params: { book_id }
     query: { write_at }
     session:
@@ -296,74 +321,88 @@ module.exports = (app, m, { game: { folder_id }})->
 
   app.post '/api/books', API ({
     body: { book }
-    session:
-      passport: { user }
+    session: { passport }
   })->
+    must_signiture passport
+
     book = { _id } = await add_book book
-    [part, chats, phases] = await Promise.all [
+    npc_id = "#{_id}-NPC"
+    [potof, part, chats, phases] = await Promise.all [
+      up_potof
+        _id: npc_id
+        idx: "NPC"
+        passport_id: passport.user._id
+        sign: passport.user.sign
       up_part
         _id: "#{_id}-0"
         idx: "0"
         label: 'プロローグ'
-      Promise.all [
-        up_chat
-          _id: "#{_id}-0-mT-welcome"
-          idx: "welcome"
-          sign: user.sign
-        up_chat
-          _id: "#{_id}-0-mT-nrule"
-          idx: "nrule"
-          sign: user.sign
-        up_chat
-          _id: "#{_id}-0-mT-vrule"
-          idx: "vrule"
-          sign: user.sign
-      ]
+      Promise.all up_chats_step_1 "#{_id}-0", npc_id
       Promise.all up_phases_step_1 "#{_id}-0"
     ]
-    parts = [part]
-    { book, parts, phases, chats }
+    passport.potof = potof
+
+    potofs = [potof]
+    parts  = [part]
+    { book, potofs, parts, phases, chats }
 
   app.post '/api/books/:book_id', API ({
     params: { book_id }
-    body: { book }
-    session:
-      passport: { user }
+    body: { book, potof }
+    session: { passport }
   })->
+    must_signiture passport
+    can_admin passport
+
     book._id = book_id
     book = { _id, passport_id } = await up_book book
     npc_id = "#{_id}-NPC"
-    args = await Promise.all [
-      up_potof
-        _id: npc_id
-        idx: "NPC"
-        passport_id: passport_id
-        sign: user.sign
-        # face_id:
-        # job:
-      up_chat
-        _id: "#{_id}-0-SS-0"
-        idx: "0"
-        potof_id: npc_id
-      ... up_phases_step_2 "#{_id}-0"
-    ]
-    { book, args }
 
-  app.post '/api/part/:book_id', API ({
+    Object.assign potof,
+      _id: "#{_id}-NPC"
+      idx: "NPC"
+      sign: passport.user.sign
+      passport_id: passport.user._id
+    [potof, chat, phases] = await Promise.all [
+      up_potof potof
+      up_chat
+        _id: "#{_id}-0-発言-0"
+        idx: "0"
+        book_id: _id
+        potof_id: npc_id
+        deco: "giji"
+        show: "text"
+        log: "＠＠＠"
+
+      Promise.all up_phases_step_2 "#{_id}-0"
+    ]
+    potofs = [potof]
+    chats  = [chat]
+    { book, potofs, chats, phases }
+
+
+  app.post '/api/books/:book_id/part', API ({
     params: { book_id }
     body: { part }
+    session: { passport }
   })->
-    part = { _id } = await add_part book_id, part
-    args = await Promise.all [
-      ... up_phases_step_1 _id
-      ... up_phases_step_2 _id
-    ]
-    { part, args }
+    must_signiture passport
+    can_admin passport
 
-  app.post '/api/potof/:book_id', API ({
+    [ part, ...phases ] = await Promise.all [
+      up_part part
+      ... up_phases_step_1 part._id
+      ... up_phases_step_2 part._id
+    ]
+    { part, phases }
+
+  app.post '/api/books/:book_id/potof', API ({
     params: { book_id }
     body: { potof, phase_id }
+    session: { passport }
   })->
+    must_signiture passport
+    # can_player passport
     potof = { _id } = await add_potof book_id, potof
     args = await Promise.all [
       up_stat

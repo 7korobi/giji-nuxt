@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -79,15 +79,27 @@ module.exports = require("config");
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("fs");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("./api");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var app, conf, express, host, pm_id, port;
 
-express = __webpack_require__(4);
+express = __webpack_require__(6);
 
 app = express();
 
@@ -99,17 +111,17 @@ Object.assign(conf, {pm_id});
 
 process.on('unhandledRejection', console.dir);
 
-__webpack_require__(5)(app, conf);
+__webpack_require__(7)(app, conf);
 
 if (conf.use_api) {
-  __webpack_require__(7)(app, conf);
-  __webpack_require__(10)(app, conf);
-  __webpack_require__(16)(app, conf);
+  __webpack_require__(9)(app, conf);
+  __webpack_require__(12)(app, conf);
+  __webpack_require__(18)(app, conf);
   // for only legacy jinrogiji
-  __webpack_require__(27)(app, conf);
+  __webpack_require__(31)(app, conf);
 }
 
-__webpack_require__(30)(app, conf);
+__webpack_require__(33)(app, conf);
 
 host = conf.host || '127.0.0.1';
 
@@ -121,20 +133,20 @@ console.log(`Server is listening on http://${host}:${port}`);
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var bodyParser;
 
-bodyParser = __webpack_require__(6);
+bodyParser = __webpack_require__(8);
 
-module.exports = function(app) {
+module.exports = function(app, conf) {
   app.use(bodyParser.json());
   return app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -145,20 +157,20 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("body-parser");
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MongoStore, day, interval, session;
 
-session = __webpack_require__(8);
+session = __webpack_require__(10);
 
-MongoStore = __webpack_require__(9)(session);
+MongoStore = __webpack_require__(11)(session);
 
 interval = 7 * 24 * 3600;
 
@@ -186,30 +198,30 @@ module.exports = function(app, {session_key, db}) {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-session");
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("connect-mongo");
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Agenda, Agendash, jobs;
 
-Agenda = __webpack_require__(11);
+Agenda = __webpack_require__(13);
 
-Agendash = __webpack_require__(12);
+Agendash = __webpack_require__(14);
 
 jobs = function(cb) {
   var ctx, fname, i, len, name, ref, results;
-  ctx = __webpack_require__(13);
+  ctx = __webpack_require__(15);
   ref = ctx.keys();
   results = [];
   for (i = 0, len = ref.length; i < len; i++) {
@@ -253,24 +265,24 @@ module.exports = function(app, {pm_id, db}) {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = require("agenda");
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = require("agendash");
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./aggregate.coffee": 14,
-	"./process.coffee": 15
+	"./aggregate.coffee": 16,
+	"./process.coffee": 17
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -286,10 +298,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 13;
+webpackContext.id = 15;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -315,7 +327,7 @@ module.exports = {
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var API_URL, sh;
@@ -340,12 +352,12 @@ module.exports = {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mongoose;
 
-mongoose = __webpack_require__(17);
+mongoose = __webpack_require__(19);
 
 module.exports = function(app, conf) {
   var ctx, fname, i, len, ref;
@@ -360,7 +372,7 @@ module.exports = function(app, conf) {
       return console.log("mongoose connected.");
     }
   });
-  ctx = __webpack_require__(18);
+  ctx = __webpack_require__(20);
   ref = ctx.keys();
   for (i = 0, len = ref.length; i < len; i++) {
     fname = ref[i];
@@ -370,18 +382,19 @@ module.exports = function(app, conf) {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongoose");
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./book.coffee": 19,
-	"./passport.coffee": 20
+	"./api.coffee": 21,
+	"./book.coffee": 23,
+	"./passport.coffee": 24
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -397,16 +410,78 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 18;
+webpackContext.id = 20;
 
 /***/ }),
-/* 19 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var YAML, fs;
+
+YAML = __webpack_require__(22);
+
+fs = __webpack_require__(2);
+
+module.exports = {
+  YAML: function(path) {
+    return YAML.load(fs.readFileSync(path, 'utf8'));
+  },
+  API: function(cb) {
+    return async function(req, res, next) {
+      var fileName, lineNumber, message, name, stack;
+      try {
+        return res.json((await cb(req)));
+      } catch (error) {
+        ({name, message, stack, fileName, lineNumber} = error);
+        return res.json({name, message, stack, fileName, lineNumber});
+      }
+    };
+  }
+};
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, exports) {
+
+module.exports = require("js-yaml");
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var API, YAML, head, idx, nation, nrules, village, vrules;
+
+({YAML, API} = __webpack_require__(3));
+
+({nation, village} = YAML("yaml/rule.yml"));
+
+nrules = (function() {
+  var i, len, ref, results;
+  ref = nation.list;
+  results = [];
+  for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+    ({head} = ref[idx]);
+    results.push(`${idx + 1}. ${head}`);
+  }
+  return results;
+})();
+
+vrules = (function() {
+  var i, len, ref, results;
+  ref = village.list;
+  results = [];
+  for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+    ({head} = ref[idx]);
+    results.push(`${idx + 1}. ${head}`);
+  }
+  return results;
+})();
 
 module.exports = function(app, m, {
     game: {folder_id}
   }) {
-  var API, Book, Card, Chat, NodeIdx, Part, Phase, Potof, Schema, Stat, add_book, add_chat, add_for_tree, add_part, add_phase, add_potof, chk_book, require_uniq, up_book, up_chat, up_for_tree, up_part, up_phase, up_phases_step_1, up_phases_step_2, up_potof, up_stat;
+  var Book, Card, Chat, IdxCount, Part, Phase, Potof, Schema, Stat, add_book, add_chat, add_for_tree, add_part, add_phase, add_potof, can_admin, chk_book, must_signiture, up_book, up_chat, up_chats_step_1, up_for_tree, up_part, up_phase, up_phases_step_1, up_phases_step_2, up_potof, up_stat;
   ({Schema} = m);
   Card = m.model('Card', new Schema({
     write_at: Number,
@@ -451,7 +526,7 @@ module.exports = function(app, m, {
   }, {
     versionKey: false
   }));
-  NodeIdx = m.model('NodeIdx', new Schema({
+  IdxCount = m.model('IdxCount', new Schema({
     idx: Number,
     _id: String
   }, {
@@ -530,26 +605,15 @@ module.exports = function(app, m, {
   }, {
     versionKey: false
   }));
-  API = function(cb) {
-    return async function(req, res, next) {
-      var fileName, lineNumber, message, name, stack;
-      try {
-        return res.json((await cb(req)));
-      } catch (error) {
-        ({name, message, stack, fileName, lineNumber} = error);
-        return res.json({name, message, stack, fileName, lineNumber});
-      }
-    };
-  };
-  require_uniq = async function(model, _id, query) {
-    var old;
-    old = (await model.findOne(query).exec());
-    if (old) {
-      if (!(_id && _id === old._id)) {
-        throw new Error(`${old._id} が作成済みです。`);
-      }
+  must_signiture = function({user}) {
+    if ((user != null ? user.sign : void 0) == null) {
+      throw new Error("ログインしてください。");
     }
-    return old;
+  };
+  can_admin = function({user, potof}) {
+    if ((potof != null ? potof.idx : void 0) !== "NPC") {
+      throw new Error("ログインしてください。");
+    }
   };
   up_for_tree = async function(model, o) {
     var write_at;
@@ -558,21 +622,23 @@ module.exports = function(app, m, {
       o.open_at = write_at;
     }
     Object.assign(o, {write_at});
-    await model.findByIdAndUpdate(o._id, o, {
+    if (!o._id) {
+      console.log(o);
+    }
+    return (await model.findByIdAndUpdate(o._id, o, {
+      new: true,
       upsert: true
-    }).exec();
-    return o;
+    }));
   };
   add_for_tree = async function(_id, model, o) {
-    var idx;
-    ({idx} = (await NodeIdx.findByIdAndUpdate(_id, {
+    ({idx} = (await IdxCount.findByIdAndUpdate(_id, {
       $inc: {
         idx: 1
       }
     }, {
-      upsert: true,
-      returnNewDocument: true
-    }).exec()));
+      new: true,
+      upsert: true
+    })));
     _id = `${_id}-${idx}`;
     Object.assign(o, {idx, _id});
     return up_for_tree(model, o);
@@ -613,30 +679,58 @@ module.exports = function(app, m, {
   up_chat = function(chat) {
     return up_for_tree(Chat, chat);
   };
+  up_chats_step_1 = function(_id, npc_id) {
+    return [
+      up_chat({
+        _id: `${_id}-0-村題-welcome`,
+        idx: "welcome",
+        book_id: _id,
+        potof_id: npc_id,
+        deco: "giji",
+        show: "report",
+        log: "（この村をみんなに紹介しよう）"
+      }),
+      up_chat({
+        _id: `${_id}-0-村題-nrule`,
+        idx: "nrule",
+        book_id: _id,
+        potof_id: npc_id,
+        deco: "giji",
+        show: "report",
+        log: nrules.join("\n")
+      }),
+      up_chat({
+        _id: `${_id}-0-村題-vrule`,
+        idx: "vrule",
+        book_id: _id,
+        potof_id: npc_id,
+        deco: "giji",
+        show: "report",
+        log: vrules.join("\n")
+      })
+    ];
+  };
   up_phases_step_1 = function(_id) {
     return [
       up_phase({
-        _id: `${_id}-mT`,
-        idx: "mT",
+        _id: `${_id}-村題`,
+        idx: "村題",
         label: '情報',
         handle: 'MAKER',
-        group: 'T',
         update: true
       }),
       up_phase({
-        _id: `${_id}-TS`,
-        idx: "TS",
-        label: '独り言',
-        handle: 'TSAY',
-        group: 'S',
+        _id: `${_id}-独題`,
+        idx: "独題",
+        label: '情報',
+        handle: 'private',
         update: false
       }),
       up_phase({
-        _id: `${_id}-TT`,
-        idx: "TT",
-        label: '情報',
-        handle: 'private',
-        group: 'T',
+        _id: `${_id}-独言`,
+        idx: "独言",
+        label: '独り言',
+        handle: 'TSAY',
         update: false
       })
     ];
@@ -644,35 +738,31 @@ module.exports = function(app, m, {
   up_phases_step_2 = function(_id) {
     return [
       up_phase({
-        _id: `${_id}-ST`,
-        idx: "ST",
+        _id: `${_id}-発題`,
+        idx: "発題",
         label: '情報',
         handle: 'public',
-        group: 'T',
         update: false
       }),
       up_phase({
-        _id: `${_id}-SS`,
-        idx: "SS",
+        _id: `${_id}-発言`,
+        idx: "発言",
         label: '発言',
         handle: 'SSAY',
-        group: 'S',
         update: false
       }),
       up_phase({
-        _id: `${_id}-VS`,
-        idx: "VS",
+        _id: `${_id}-見言`,
+        idx: "見言",
         label: '発言',
         handle: 'VSAY',
-        group: 'S',
         update: false
       }),
       up_phase({
-        _id: `${_id}-AS`,
-        idx: "AS",
+        _id: `${_id}-内言`,
+        idx: "内言",
         label: "内緒話",
         handle: "AIM",
-        group: "S",
         update: false
       })
     ];
@@ -687,26 +777,19 @@ module.exports = function(app, m, {
   app.get('/api/books/:book_id', API(async function({
       params: {book_id},
       query: {write_at},
-      session
+      session: {passport}
     }) {
-    var _id, book, cards, i, is_master, is_player, len, parts, phases, potof, potofs, stats, user;
-    ({
-      passport: {user}
-    } = session);
+    var _id, book, cards, i, len, parts, phases, potof, potofs, stats;
     _id = {
       $regex: RegExp(`^${book_id}-`)
     };
     [book, potofs, stats, cards, parts, phases] = (await Promise.all([Book.findById(book_id), Potof.find({_id}), Stat.find({_id}), Card.find({_id}), Part.find({_id}), Phase.find({_id})]));
     for (i = 0, len = potofs.length; i < len; i++) {
       potof = potofs[i];
-      if (!(potof.passport_id === user._id)) {
-        continue;
+      if (potof.passport_id === passport.user._id) {
+        passport.potof = potof;
       }
-      session.potof = potof;
-      is_player = true;
     }
-    is_master = book.passport_id === user._id;
-    session.book = {is_master, is_player};
     return {book, potofs, stats, cards, parts, phases};
   }));
   app.get('/api/books/:book_id/chats', API(async function({
@@ -738,90 +821,86 @@ module.exports = function(app, m, {
   }));
   app.post('/api/books', API(async function({
       body: {book},
-      session: {
-        passport: {user}
-      }
+      session: {passport}
     }) {
-    var _id, chats, part, parts, phases;
+    var _id, chats, npc_id, part, parts, phases, potof, potofs;
+    must_signiture(passport);
     book = ({_id} = (await add_book(book)));
-    [part, chats, phases] = (await Promise.all([
+    npc_id = `${_id}-NPC`;
+    [potof, part, chats, phases] = (await Promise.all([
+      up_potof({
+        _id: npc_id,
+        idx: "NPC",
+        passport_id: passport.user._id,
+        sign: passport.user.sign
+      }),
       up_part({
         _id: `${_id}-0`,
         idx: "0",
         label: 'プロローグ'
       }),
-      Promise.all([
-        up_chat({
-          _id: `${_id}-0-mT-welcome`,
-          idx: "welcome",
-          sign: user.sign
-        }),
-        up_chat({
-          _id: `${_id}-0-mT-nrule`,
-          idx: "nrule",
-          sign: user.sign
-        }),
-        up_chat({
-          _id: `${_id}-0-mT-vrule`,
-          idx: "vrule",
-          sign: user.sign
-        })
-      ]),
+      Promise.all(up_chats_step_1(`${_id}-0`,
+      npc_id)),
       Promise.all(up_phases_step_1(`${_id}-0`))
     ]));
+    passport.potof = potof;
+    potofs = [potof];
     parts = [part];
-    return {book, parts, phases, chats};
+    return {book, potofs, parts, phases, chats};
   }));
   app.post('/api/books/:book_id', API(async function({
       params: {book_id},
-      body: {book},
-      session: {
-        passport: {user}
-      }
+      body: {book, potof},
+      session: {passport}
     }) {
-    var _id, args, npc_id, passport_id;
+    var _id, chat, chats, npc_id, passport_id, phases, potofs;
+    must_signiture(passport);
+    can_admin(passport);
+    book._id = book_id;
     book = ({_id, passport_id} = (await up_book(book)));
     npc_id = `${_id}-NPC`;
-    args = (await Promise.all([
-      up_potof({
-        _id: npc_id,
-        idx: "NPC",
-        passport_id: passport_id,
-        sign: user.sign
-      }),
-      // face_id:
-      // job:
+    Object.assign(potof, {
+      _id: `${_id}-NPC`,
+      idx: "NPC",
+      sign: passport.user.sign,
+      passport_id: passport.user._id
+    });
+    [potof, chat, phases] = (await Promise.all([
+      up_potof(potof),
       up_chat({
-        _id: `${_id}-0-SS-0`,
+        _id: `${_id}-0-発言-0`,
         idx: "0",
-        potof_id: npc_id
+        book_id: _id,
+        potof_id: npc_id,
+        deco: "giji",
+        show: "text",
+        log: "＠＠＠"
       }),
-      ...up_phases_step_2(`${_id}-0`)
+      Promise.all(up_phases_step_2(`${_id}-0`))
     ]));
-    return {book, args};
+    potofs = [potof];
+    chats = [chat];
+    return {book, potofs, chats, phases};
   }));
-  app.post('/api/part/:book_id', API(async function({
+  app.post('/api/books/:book_id/part', API(async function({
       params: {book_id},
-      body: {part}
+      body: {part},
+      session: {passport}
+    }) {
+    var phases;
+    must_signiture(passport);
+    can_admin(passport);
+    [part, ...phases] = (await Promise.all([up_part(part), ...up_phases_step_1(part._id), ...up_phases_step_2(part._id)]));
+    return {part, phases};
+  }));
+  app.post('/api/books/:book_id/potof', API(async function({
+      params: {book_id},
+      body: {potof, phase_id},
+      session: {passport}
     }) {
     var _id, args;
-    part = ({_id} = (await add_part(book_id, part)));
-    args = (await Promise.all([...up_phases_step_1(_id), ...up_phases_step_2(_id)]));
-    ({part, args});
-    return {
-      params: {book_id},
-      query: {write_at},
-      body: {book},
-      session: {
-        passport: {user}
-      }
-    };
-  }));
-  app.post('/api/potof/:book_id', API(async function({
-      params: {book_id},
-      body: {potof, phase_id}
-    }) {
-    var _id, args;
+    must_signiture(passport);
+    // can_player passport
     potof = ({_id} = (await add_potof(book_id, potof)));
     args = (await Promise.all([
       up_stat({
@@ -897,22 +976,24 @@ module.exports = function(app, m, {
 
 
 /***/ }),
-/* 20 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _, passport, plugins;
+var API, _, passport, plugins;
 
-_ = __webpack_require__(2);
+_ = __webpack_require__(4);
 
-passport = __webpack_require__(21);
+passport = __webpack_require__(25);
 
 plugins = {
-  facebook: __webpack_require__(22),
-  twitter: __webpack_require__(23),
-  slack: __webpack_require__(24),
-  github: __webpack_require__(25),
-  google: __webpack_require__(26)
+  facebook: __webpack_require__(26),
+  twitter: __webpack_require__(27),
+  slack: __webpack_require__(28),
+  github: __webpack_require__(29),
+  google: __webpack_require__(30)
 };
+
+({API} = __webpack_require__(3));
 
 module.exports = function(app, m, {auth, url}) {
   var Passport, Schema, Strategy, attr, provider;
@@ -935,6 +1016,7 @@ module.exports = function(app, m, {auth, url}) {
       $setOnInsert: {
         sign: (ref = o.mail) != null ? ref : o.nick
       },
+      new: false,
       upsert: true
     }).exec(function(err, o) {
       return done(err, o);
@@ -945,24 +1027,24 @@ module.exports = function(app, m, {auth, url}) {
   });
   app.use(passport.initialize());
   app.use(passport.session());
-  app.post("/api/user", async function({
+  app.post("/api/user", API(async function({
       body,
       session: {
         passport: {user}
       }
-    }, res) {
-    if (user._id) {
-      Object.assign(user, body.user);
-      user = (await Passport.findByIdAndUpdate(user._id, user, {
-        returnNewDocument: true
-      }).exec());
-      return res.json({user});
-    } else {
-      return res.json({
+    }) {
+    if (!(user != null ? user._id : void 0)) {
+      return {
         message: "ログインしていません。"
-      });
+      };
     }
-  });
+    Object.assign(user, body.user);
+    user = (await Passport.findByIdAndUpdate(user._id, user, {
+      new: true,
+      upsert: false
+    }));
+    return {user};
+  }));
   app.get("/logout", function(req, res) {
     req.logout();
     return res.redirect('/');
@@ -996,54 +1078,54 @@ module.exports = function(app, m, {auth, url}) {
 
 
 /***/ }),
-/* 21 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport");
 
 /***/ }),
-/* 22 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-facebook");
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-twitter");
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-slack");
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-github2");
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("passport-google-oauth2");
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ObjectId, _, fs, giji, mongo, sh;
 
-mongo = __webpack_require__(28);
+mongo = __webpack_require__(32);
 
 sh = __webpack_require__(0);
 
-fs = __webpack_require__(29);
+fs = __webpack_require__(2);
 
-_ = __webpack_require__(2);
+_ = __webpack_require__(4);
 
 ObjectId = false;
 
@@ -1519,27 +1601,21 @@ module.exports = function(app, {url, db}) {
 
 
 /***/ }),
-/* 28 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Builder, Nuxt, builder, config, err, nuxt;
 
-config = __webpack_require__(31);
+config = __webpack_require__(34);
 
 // { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
-({Nuxt, Builder} = __webpack_require__(38));
+({Nuxt, Builder} = __webpack_require__(41));
 
 nuxt = new Nuxt(config);
 
@@ -1561,16 +1637,16 @@ module.exports = function(app) {
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
   dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(32),
-  router: __webpack_require__(33),
-  build: __webpack_require__(34),
-  head: __webpack_require__(36),
-  env: __webpack_require__(37),
+  render: __webpack_require__(35),
+  router: __webpack_require__(36),
+  build: __webpack_require__(37),
+  head: __webpack_require__(39),
+  env: __webpack_require__(40),
   plugins: [],
   css: ['element-ui/lib/theme-default/index.css'],
   //####
@@ -1584,7 +1660,7 @@ module.exports = {
 
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -1610,7 +1686,7 @@ module.exports = {
 
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports) {
 
 /*
@@ -1705,12 +1781,12 @@ module.exports = {
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ExtractTextPlugin;
 
-ExtractTextPlugin = __webpack_require__(35);
+ExtractTextPlugin = __webpack_require__(38);
 
 module.exports = {
   extend: function(config, {isDev, isClient}) {},
@@ -1752,13 +1828,13 @@ module.exports = {
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = require("extract-text-webpack-plugin");
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports) {
 
 //####
@@ -1811,7 +1887,7 @@ module.exports = {
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var game, url;
@@ -1822,7 +1898,7 @@ module.exports = {url, game};
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = require("nuxt");
