@@ -244,7 +244,7 @@ Agendash = __webpack_require__(14);
 ctxs = [__webpack_require__(15), __webpack_require__(16)];
 
 module.exports = function(app, {pm_id, db}) {
-  var agenda, define, i, len, pno;
+  var agenda, define, i, len, name, pno;
   pno = pm_id - 1 || 0;
   agenda = new Agenda({
     db: {
@@ -258,11 +258,11 @@ module.exports = function(app, {pm_id, db}) {
     }
   });
   for (i = 0, len = ctxs.length; i < len; i++) {
-    ({define} = ctxs[i]);
+    ({define, name} = ctxs[i]);
     agenda.define(name, define);
   }
   agenda.on('ready', function() {
-    var every, j, len1, name;
+    var every, j, len1;
     if (!pno) {
       for (j = 0, len1 = ctxs.length; j < len1; j++) {
         ({every, name} = ctxs[j]);

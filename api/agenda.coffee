@@ -16,7 +16,7 @@ module.exports = (app, { pm_id, db })->
         server:
           auto_reconnect: true
 
-  for { define } in ctxs
+  for { define, name } in ctxs
     agenda.define name, define
 
   agenda.on 'ready', ->
