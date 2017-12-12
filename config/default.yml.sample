@@ -17,6 +17,12 @@ url:
 db:
   mongo: mongodb://localhost/giji
 
+aws:
+  params:
+    Bucket: null
+  accessKeyId: null
+  secretAccessKey: null
+
 auth:
   facebook:
     provider: passport-facebook
