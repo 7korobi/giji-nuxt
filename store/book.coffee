@@ -5,6 +5,7 @@ module.exports =
   namespaced: true
   state: ->
     read_at: 0
+    hide_potof_ids: []
 
   mutations:
     data: (state, o)->
