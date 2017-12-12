@@ -6,6 +6,7 @@ ctxs = [
 ]
 
 module.exports = (app, conf)->
+  return unless conf.db.mongo
   mongoose.connect conf.db.mongo,
     config:
       autoIndex: false

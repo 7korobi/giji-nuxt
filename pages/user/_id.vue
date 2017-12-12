@@ -9,10 +9,10 @@
             table
               tbody
                 tr
-                  th
-                    | 署名
-                    btn(v-model="user.sign" as="") 編集
+                  th 署名
                   td {{ user.sign }}
+                  td
+                    btn(v-model="user.sign" as="") 編集
                 tr
                   th ログイン
                   td {{ user.provider }}から

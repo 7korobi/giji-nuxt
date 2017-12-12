@@ -1,0 +1,47 @@
+use_api: true
+port: 4000
+host: 0.0.0.0
+
+session_key: null
+
+game:
+  folder_id: beta
+
+url:
+  web: //giji.f5.si
+  api: //giji.f5.si/api
+  sow: //s3-ap-northeast-1.amazonaws.com/giji-assets/sow
+
+  store: //s3-ap-northeast-1.amazonaws.com/giji-assets
+
+db:
+  mongo: mongodb://localhost/giji
+
+auth:
+  facebook:
+    provider: passport-facebook
+    attr:
+      clientID: null
+      clientSecret: null
+  twitter:
+    provider: passport-twitter
+    attr:
+      consumerKey: null
+      consumerSecret: null
+  slack:
+    provider: passport-slack
+    attr:
+      clientID: null
+      clientSecret: null
+
+  github:
+    provider: passport-github2
+    attr:
+      clientID: null
+      clientSecret: null
+  google:
+    provider: passport-google-oauth2
+    attr:
+      clientID: null
+      clientSecret: null
+      passReqToCallback: true

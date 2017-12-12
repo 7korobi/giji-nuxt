@@ -8,6 +8,7 @@ ObjectId = false
 giji = {}
 
 module.exports = (app, { url, db })->
+  return unless db.mongo_sow
   mongo.connect db.mongo_sow
   .then (db)->
     end = (err, o)->
