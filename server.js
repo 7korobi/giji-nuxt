@@ -199,7 +199,7 @@ interval = 7 * 24 * 3600;
 day = 24 * 3600;
 
 module.exports = function(app, {session_key, db}) {
-  app.use(session({
+  return app.use(session({
     secret: session_key,
     resave: false,
     saveUninitialized: false,
@@ -215,7 +215,6 @@ module.exports = function(app, {session_key, db}) {
       maxAge: interval * 1000
     }
   }));
-  return console.log(`session use ${db.mongo}`);
 };
 
 
@@ -351,6 +350,8 @@ var ctxs, mongoose;
 
 mongoose = __webpack_require__(18);
 
+mongoose.Promise = global.Promise;
+
 ctxs = [__webpack_require__(19), __webpack_require__(21)];
 
 module.exports = function(app, conf) {
@@ -359,14 +360,13 @@ module.exports = function(app, conf) {
     return;
   }
   mongoose.connect(conf.db.mongo, {
+    useMongoClient: true,
     config: {
       autoIndex: false
     }
   }, function(err) {
     if (err) {
-      return console.error(`no ${conf.db.mongo}. disabled (passport, session)`);
-    } else {
-      return console.log("mongoose connected.");
+      return console.log(`no ${conf.db.mongo}. disabled (passport, session)`);
     }
   });
   for (i = 0, len = ctxs.length; i < len; i++) {
@@ -386,6 +386,15 @@ module.exports = require("mongoose");
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/*
+{ Model, Set, Query, Rule } = Mem = require "../plugins/memory-record"
+require "~/models/book"
+require "~/models/card"
+require "~/models/chr"
+
+console.log Query.chr_npcs.list
+*/
 var API, YAML, head, idx, nation, nrules, village, vrules;
 
 ({YAML, API} = __webpack_require__(2));
@@ -789,7 +798,7 @@ module.exports = function(app, m, {
       body: {book, potof},
       session: {passport}
     }) {
-    var _id, chat, chats, npc_id, passport_id, phases, potofs;
+    var _id, chats, npc_id, passport_id, phases, potofs;
     must_signiture(passport);
     can_admin(passport);
     book._id = book_id;
@@ -801,21 +810,31 @@ module.exports = function(app, m, {
       sign: passport.user.sign,
       passport_id: passport.user._id
     });
-    [potof, chat, phases] = (await Promise.all([
+    [potof, chats, phases] = (await Promise.all([
       up_potof(potof),
-      up_chat({
-        _id: `${_id}-0-発言-0`,
-        idx: "0",
-        book_id: _id,
-        potof_id: npc_id,
-        deco: "giji",
-        show: "text",
-        log: "＠＠＠"
-      }),
+      Promise.all([
+        up_chat({
+          _id: `${_id}-0-発言-0`,
+          idx: "0",
+          book_id: _id,
+          potof_id: npc_id,
+          deco: "giji",
+          show: "text",
+          log: "＠＠＠"
+        }),
+        up_chat({
+          _id: `${_id}-1-発言-0`,
+          idx: "0",
+          book_id: _id,
+          potof_id: npc_id,
+          deco: "giji",
+          show: "text",
+          log: "＠＠＠"
+        })
+      ]),
       Promise.all(up_phases_step_2(`${_id}-0`))
     ]));
     potofs = [potof];
-    chats = [chat];
     return {book, potofs, chats, phases};
   }));
   app.post('/api/books/:book_id/part', API(async function({

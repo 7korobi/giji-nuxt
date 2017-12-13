@@ -1,4 +1,5 @@
 mongoose = require "mongoose"
+mongoose.Promise = global.Promise
 
 ctxs = [
   require "./mongoose/book.coffee"
@@ -8,13 +9,12 @@ ctxs = [
 module.exports = (app, conf)->
   return unless conf.db.mongo
   mongoose.connect conf.db.mongo,
+    useMongoClient: true
     config:
       autoIndex: false
   , (err)->
     if err
-      console.error "no #{conf.db.mongo}. disabled (passport, session)"
-    else
-      console.log "mongoose connected."
+      console.log "no #{conf.db.mongo}. disabled (passport, session)"
 
   for ctx in ctxs
     ctx app, mongoose, conf

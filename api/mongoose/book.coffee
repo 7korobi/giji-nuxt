@@ -1,6 +1,15 @@
 { YAML, API } = require "../helper.coffee"
 { nation, village } = YAML "yaml/rule.yml"
 
+###
+{ Model, Set, Query, Rule } = Mem = require "../plugins/memory-record"
+require "~/models/book"
+require "~/models/card"
+require "~/models/chr"
+
+console.log Query.chr_npcs.list
+###
+
 nrules = for { head }, idx in nation.list
   "#{idx + 1}. #{head}"
 
@@ -363,21 +372,29 @@ module.exports = (app, m, { game: { folder_id }})->
       idx: "NPC"
       sign: passport.user.sign
       passport_id: passport.user._id
-    [potof, chat, phases] = await Promise.all [
+    [potof, chats, phases] = await Promise.all [
       up_potof potof
-      up_chat
-        _id: "#{_id}-0-発言-0"
-        idx: "0"
-        book_id: _id
-        potof_id: npc_id
-        deco: "giji"
-        show: "text"
-        log: "＠＠＠"
-
+      Promise.all [
+        up_chat
+          _id: "#{_id}-0-発言-0"
+          idx: "0"
+          book_id: _id
+          potof_id: npc_id
+          deco: "giji"
+          show: "text"
+          log: "＠＠＠"
+        up_chat
+          _id: "#{_id}-1-発言-0"
+          idx: "0"
+          book_id: _id
+          potof_id: npc_id
+          deco: "giji"
+          show: "text"
+          log: "＠＠＠"
+      ]
       Promise.all up_phases_step_2 "#{_id}-0"
     ]
     potofs = [potof]
-    chats  = [chat]
     { book, potofs, chats, phases }
 
 
