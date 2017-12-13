@@ -534,9 +534,9 @@ aws-sdk@^2.1.16:
     xml2js "0.4.17"
     xmlbuilder "4.2.1"
 
-aws-sdk@^2.120.0:
-  version "2.164.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.164.0.tgz#e3988657b7c7e96e7ca5a9ff52c90b96b4b229d9"
+aws-sdk@^2.169.0:
+  version "2.169.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.169.0.tgz#c2d72737a30afb9a64f7ceb88ff1d5367f8eeb69"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1672,11 +1672,7 @@ coffee-loader@latest:
   dependencies:
     loader-utils "^1.0.2"
 
-coffeescript@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.0.3.tgz#760f02724f5f0911be7cefa34a8e0e10c5d8512a"
-
-coffeescript@latest:
+coffeescript@^2.1.0, coffeescript@latest:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.1.0.tgz#8cb7ce12021ab9f84d8c524f54edbd6141374606"
 
@@ -4648,9 +4644,24 @@ markdown-loader@7korobi/markdown-loader#vdom-201:
     loader-utils latest
     marked "7korobi/marked#vue-extra"
 
+marked-pre-loader@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/marked-pre-loader/-/marked-pre-loader-0.0.2.tgz#c7a8278f46078c5f91896433d8a7d52e1adc62bb"
+  dependencies:
+    loader-utils latest
+    marked-pre latest
+
+marked-pre@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.3.tgz#08eaae4ab6e51bd9c3f794ca2069ccebb6065999"
+
+marked-pre@latest:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.2.tgz#88397b0177e3b0834a2395f4fa30b010198652fa"
+
 marked@7korobi/marked#vue-extra:
-  version "0.3.7"
-  resolved "https://codeload.github.com/7korobi/marked/tar.gz/dd3f91c55ad1c4f9dd6242f9533ed4806b56896e"
+  version "0.0.1"
+  resolved "https://codeload.github.com/7korobi/marked/tar.gz/f9779d34f7a5060a8cc59305e89f08a198d52d4f"
 
 matcher@^1.0.0:
   version "1.0.0"
@@ -4901,9 +4912,9 @@ moment-timezone@^0.5.0, moment-timezone@^0.5.x, moment-timezone@~0.5.0, moment-t
   version "2.19.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
 
-moment@^2.19.1:
-  version "2.19.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+moment@^2.19.4:
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
 
 monaco-editor@^0.10.1:
   version "0.10.1"
@@ -4933,9 +4944,9 @@ mongodb@2.2.33, mongodb@^2.0.36, mongodb@^2.1.7, mongodb@^2.2.10, mongodb@~2.2.3
     mongodb-core "2.1.17"
     readable-stream "2.2.7"
 
-mongoose@^4.11.12:
-  version "4.13.6"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.13.6.tgz#48102f0b0d797a9bd273e581eef16d0505ef3d79"
+mongoose@^4.13.7:
+  version "4.13.7"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.13.7.tgz#f760c770e6c8cdf34a6fe8b7443882b5fced1032"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
@@ -5180,7 +5191,7 @@ nuxt@7korobi/nuxt.js#coffee-100rc11:
     chokidar "^1.7.0"
     clone "^2.1.1"
     coffee-loader "github:7korobi/coffee-loader#master"
-    coffeescript latest
+    coffeescript next
     compression "^1.7.0"
     connect "^3.6.3"
     css-loader "^0.28.7"
@@ -5219,7 +5230,7 @@ nuxt@7korobi/nuxt.js#coffee-100rc11:
     source-map "^0.5.7"
     source-map-support "^0.4.17"
     tappable "^1.1.0"
-    uglifyjs-webpack-plugin latest
+    uglify-es-webpack-plugin latest
     url-loader "^0.5.9"
     vue "~2.4.2"
     vue-loader "^13.0.4"
@@ -7890,9 +7901,9 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
-vee-validate@^2.0.0-rc.17:
-  version "2.0.0-rc.25"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0-rc.25.tgz#bfd80f6c55c560526dcc2be194731adffad63b1d"
+vee-validate@^2.0.0-rc.27:
+  version "2.0.0-rc.27"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.0-rc.27.tgz#4366b684096200c90a408e261df0f6afb77e050e"
 
 vendors@^1.0.0:
   version "1.0.1"

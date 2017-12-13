@@ -36,7 +36,7 @@ module.exports = function (options) {
       switch (rule.loader) {
         case 'coffee-loader':
         case 'json-loader!yaml-loader':
-        case 'markdown-loader':
+        case 'marked-pre-loader':
         case 'pug-html-loader':
           ref.splice(idx, 1);
           break;
@@ -45,7 +45,7 @@ module.exports = function (options) {
           rule.options.loaders.yml = loader('json-loader!yaml-loader')
           rule.options.loaders.pug = loader('pug-html-loader')
           rule.options.loaders.md = {
-            loader: 'markdown-loader',
+            loader: 'marked-pre-loader',
             options: {
               appendTsSuffixTo: ['\\.vue$'],
               tag: 'div',
@@ -78,7 +78,7 @@ module.exports = function (options) {
     })
     config.module.rules.push({
       test: /\.md$/,
-      loader: 'markdown-loader',
+      loader: 'marked-pre-loader',
       options: {
         tag: 'div',
         gfm: true,

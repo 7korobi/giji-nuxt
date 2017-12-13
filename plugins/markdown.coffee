@@ -1,13 +1,9 @@
-marked = require 'marked'
+marked = require 'marked-pre'
 mermaid = require 'mermaid'
 
 mermaidAPI = mermaid.mermaidAPI
 mermaidAPI.initialize
   startOnLoad: false
-
-block = (tag)-> (text)->
-  console.log tag, text
-  "<#{tag}>#{text}</#{tag}>"
 
 link = (href, title, text)->
   if text && href != text

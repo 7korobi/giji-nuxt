@@ -355,6 +355,9 @@ ctxs = [__webpack_require__(19), __webpack_require__(21)];
 
 module.exports = function(app, conf) {
   var ctx, i, len;
+  if (!conf.db.mongo) {
+    return;
+  }
   mongoose.connect(conf.db.mongo, {
     config: {
       autoIndex: false
@@ -1071,6 +1074,9 @@ ObjectId = false;
 giji = {};
 
 module.exports = function(app, {url, db}) {
+  if (!db.mongo_sow) {
+    return;
+  }
   mongo.connect(db.mongo_sow).then(function(db) {
     var end;
     end = function(err, o) {
