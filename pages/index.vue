@@ -4,9 +4,9 @@
     .inframe
       br
       c-post(handle="XSAY", :write_at="1169852700003") 祝！人狼議事10周年！
-      c-report(handle="footer" deco="center" v-if="user_url") ロビー
-      c-post.form(handle="TSAY" v-if="user_url")
-        nuxt-link(:to="user_url") あなたの情報
+      c-report(handle="footer" deco="center" v-if="mypage") ロビー
+      c-post.form(handle="TSAY" v-if="mypage")
+        nuxt-link(:to="mypage") あなたの情報
       c-report(handle="footer" deco="center") みんなの情報
       c-post.form(handle="SSAY")
         a(href="https://github.com/7korobi/giji-nuxt/commits/master") 総合トップ
@@ -52,10 +52,9 @@ module.exports =
   computed:
     user: ->
       @$store.state.user
-    user_url: ->
-      return null unless @user
-      { _id } = @user
-      _id && "user/#{_id}"
+    mypage: ->
+      return null unless @user?._id
+      "mypage"
     prologue: ->
       @read_at
       Query.sow_villages.prologue.list

@@ -24,7 +24,7 @@
       overflow-y: visible
       overflow-x: auto
       text-overflow: show
-      background: url("//s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/grid.gif")
+      background: url("https://s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/grid.gif")
     *
       user-select: auto
 
@@ -34,4 +34,9 @@
     max-width: 99%
     border-width: 1px
     border-style: solid
+    overflow-y: hidden
+    overflow-x: scroll
+    -ms-overflow-style: none
+    &::-webkit-scrollbar
+      display:none;
 

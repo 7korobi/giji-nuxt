@@ -32,6 +32,13 @@ new Rule("stat").schema ->
 new Rule("role").schema ->
   @habtm "ables"
 
+  class @model extends @model
+    @map_reduce: (o, emit)->
+      emit "group", o.group,
+        list: o
+
+
+
 new Rule("trap").schema ->
   @order "write_at"
   @belongs_to "book"

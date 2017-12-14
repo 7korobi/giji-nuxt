@@ -30,13 +30,17 @@ module.exports =
           token: "DEADBEEF"
           account: "user"
 
-        req.session ?=
-          passport: { user }
+        _.set req, "session.passport.user", user
 
       user = req.session?.passport?.user
       if user
         user = _.omit user, ["token"]
         commit "update", { user }
+
+    user: ({ commit }, user)->
+      commit "update", { user }
+      await axios.post "#{env.url.api}/user", { user }
+      return
 
   mutations:
     update: (state, o)->
@@ -44,3 +48,6 @@ module.exports =
         state[key] = { val..., o[key]... }
         console.log key, state[key]
       return
+
+
+

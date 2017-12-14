@@ -5,24 +5,34 @@
       .inframe
         br
         c-talk(v-if="user" handle="VSAY" deco="giji", :head="user.nick", :sign="user.sign", :img_src="user.icon")
-          p(v-if="user.sign")
+          p
             table
               tbody
-                tr
+                tr(v-if="user.sign")
                   th 署名
                   td {{ user.sign }}
                   td
-                    btn(v-model="user.sign" as="") 編集
+                    a.btn(@click="edit") 編集
+
+                tr(v-if="!user.sign")
+                  th 署名
+                  td
+                    input(type="text" v-model="sign")
+                  td
+                    a.btn(@click="commit") 決定
+
+                tr(v-if="!user.sign")
+                  th
+                  th(colspan="2").
+                    あなたのサインを決めてください。
+                     ※ ゲーム内で公開されます。
+
                 tr
                   th ログイン
                   td {{ user.provider }}から
                 tr
                   th OpenID
                   td {{ user.account }}
-          p(v-else)
-            | ゲーム内で使うため、署名をしてください。
-            input(type="text" v-model="user.sign")
-            a.btn(@click="commit") 決定
 
         c-post(v-if="user" handle="TSAY" deco="giji", head="秘密の情報", :sign="user.sign", :write_at="user.write_at")
             table
@@ -45,12 +55,17 @@
 <script lang="coffee">
 
 module.exports =
-  data: -> {}
+  data: ->
+    sign: ""
 
   methods:
+    edit: ->
+      @sign = @user.sign
+      @$store.commit "update",
+        user:
+          sign: ""
     commit: ->
-      { sign } = @user
-      @$store.dispatch "user/update", { sign }
+      @$store.dispatch "user", { @sign }
 
   computed:
     user: -> @$store.state.user

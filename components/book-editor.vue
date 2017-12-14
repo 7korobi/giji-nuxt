@@ -1,18 +1,50 @@
 <template lang="pug">
 .inframe
   br
-  c-talk(v-if="passport" handle="VSAY" deco="center", :head="passport.nick", :sign="passport.provider", :write_at="passport.write_at", :img_src="passport.icon")
-    a(v-if="passport.mail", :href="'mailto:' + passport.mail") mail
-    a(:href="passport.token") token
   c-report.form(handle="MAKER" deco="giji")
-    input(v-model="label" placeholder="わかりやすく名前をつけよう！" size="25")
     hr
     text-editor(v-model="maker[0]", :maxSize="500", :maxRow="30")
 
+  c-post.form(handle="SSAY" deco="giji")
+    h4 設定-会話
+    table
+      tbody
+        tr
+          th.r
+            label 最初の犠牲者
+          td
+            select(v-model="npc.face_id")
+              option(v-for="face in faces.list", :value="face.id") {{ face.name }}
+            select(v-model="npc.chr_job_id")
+              option(v-for="npc_job in npc_jobs.list", :value="npc_job.id") {{ npc_job.job }}
+
+  c-post.form(handle="public" deco="giji")
+    h4 村のルール
+    hr
+    text-editor(v-model="maker[1]", :maxSize="500", :maxRow="30")
+
+  c-post.form(handle="public" deco="giji")
+    h4 国のルール
+    hr
+    ol
+      li(v-for="rule in n_rules") {{ rule.head }}
+
+  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
+    text-editor(placeholder="冒頭の発言" v-model="npc.say[0]")
+
+  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
+    text-editor(placeholder="１日目の発言" v-model="npc.say[1]")
+
+  hr
   c-post.form(handle="public" deco="giji")
     h4 設定-基本
     table
       tbody
+        tr
+          th.r
+            label#label(for="label") 名称
+          td
+            input(v-model="label" placeholder="わかりやすく名前をつけよう！" size="25")
         tr
           th.r
             label(for="players") 参加者
@@ -120,37 +152,6 @@
             span
               check(v-model="tags" as="god") {{ tag("god").label }}
 
-  c-post.form(handle="SSAY" deco="giji")
-    h4 設定-会話
-    table
-      tbody
-        tr
-          th.r
-            label 最初の犠牲者
-          td
-            select(v-model="npc.face_id")
-              option(v-for="face in faces.list", :value="face.id") {{ face.name }}
-            select(v-model="npc.chr_job_id")
-              option(v-for="npc_job in npc_jobs.list", :value="npc_job.id") {{ npc_job.job }}
-
-  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
-    text-editor(placeholder="冒頭の発言" v-model="npc.say[0]")
-
-  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="npc.face_id")
-    text-editor(placeholder="１日目の発言" v-model="npc.say[1]")
-
-
-  c-post.form(handle="public" deco="giji")
-    h4 村のルール
-    hr
-    text-editor(v-model="maker[1]", :maxSize="500", :maxRow="30")
-
-  c-post.form(handle="public" deco="giji")
-    h4 国のルール
-    hr
-    ul
-      li(v-for="rule in n_rules") {{ rule.head }}
-
 
   c-post.form(handle="private" deco="giji")
     h4 設定-ゲーム
@@ -168,8 +169,8 @@
             label 投票権
           td
             check(v-model="game.vote_by" as="live") 生存者
-            check(v-model="game.vote_by" as="mob") 見物陪審員
-            check(v-model="game.vote_by" as="grave") 墓下陪審員
+            check(v-model="game.vote_by" as="mob") 見物人(陪審員)
+            check(v-model="game.vote_by" as="grave") 墓下(陪審員)
         tr
           th.r
             label 役職
@@ -178,6 +179,12 @@
 
   c-report.form(handle="MAKER" deco="giji")
     h4 カード配分
+    .swipe(v-for="side in sides", :class="side")
+      table
+        tbody
+          tr
+            th
+              a.btn(v-for="role in roles_by[side].list") {{ role.label }}
 
   c-report.form(handle="MAKER" deco="giji")
     a.btn(@click="commit")
@@ -224,10 +231,26 @@ module.exports =
       return unless npc_job = Query.chr_jobs.find(@npc.chr_job_id)
       "#{npc_job.job} #{npc_job.face.name}"
        
-    passport: -> @$store.state.passport
+    user: -> @$store.state.user
     n_rules: -> nation.list
     tags_all: -> Query.tags.ids
     tags_giji: -> Query.tags.nodes("giji", 1).ids
+
+    sides: ->
+      [
+        "HUMAN"
+        "EVIL"
+        "WOLF"
+        "PIXI"
+        "OTHER"
+        "EVENT"
+        "BIND"
+        "LIVE"
+        "SPECIAL"
+        "TURN"
+      ]
+    
+    roles_by: -> Mem.Query.roles.reduce.group
 
 </script>
 
