@@ -1,5 +1,5 @@
 {
-  "publicPath": "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/",
+  "publicPath": "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/",
   "all": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js.map",
     "fonts/element-icons.2fad952.woff",
@@ -28,8 +28,8 @@
     "pages\\book\\index.e81d3843158af9ef408d.js",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js",
     "common.f35d9d2295d857f04376.js",
-    "app.48873828762828bcf844.js",
-    "manifest.93ff3c0e691bea057b58.js",
+    "app.99d189e59d4dfbc4e811.js",
+    "manifest.cdbfa7635c5d1c8eb775.js",
     "fonts/element-icons.6f0a763.ttf",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js.map",
     "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js.map",
@@ -55,15 +55,15 @@
     "pages\\book\\index.e81d3843158af9ef408d.js.map",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js.map",
     "common.f35d9d2295d857f04376.js.map",
-    "app.48873828762828bcf844.js.map",
-    "manifest.93ff3c0e691bea057b58.js.map",
+    "app.99d189e59d4dfbc4e811.js.map",
+    "manifest.cdbfa7635c5d1c8eb775.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.93ff3c0e691bea057b58.js",
+    "manifest.cdbfa7635c5d1c8eb775.js",
     "common.f35d9d2295d857f04376.js",
-    "app.48873828762828bcf844.js"
+    "app.99d189e59d4dfbc4e811.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",
