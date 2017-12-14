@@ -3,7 +3,7 @@ ExtractTextPlugin = require 'extract-text-webpack-plugin'
 module.exports =
   extend: (config, { isDev, isClient })->
 
-  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/'
+  publicPath: 'https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/'
 
   babel:
     presets: [

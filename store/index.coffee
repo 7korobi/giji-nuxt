@@ -23,7 +23,7 @@ module.exports =
         user =
           _id: "local-test-user"
           provider: "local-test"
-          icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
+          icon: "https://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg"
           mail: "7korobi.sys@gmail.com"
           nick: "テスト中"
           write_at: new Date - 0

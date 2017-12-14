@@ -4,7 +4,7 @@
   "description": "人狼議事 総合トップページ",
   "icons": [
       {
-          "src": "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/blank.jpg",
+          "src": "https://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/blank.jpg",
           "sizes": "90x60",
           "type": "image/jpg"
       }
