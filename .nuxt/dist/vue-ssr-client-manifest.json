@@ -2,7 +2,7 @@
   "publicPath": "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/",
   "all": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js.map",
-    "fonts/element-icons.d2f69a9.woff",
+    "fonts/element-icons.2fad952.woff",
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js",
     "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js",
@@ -27,10 +27,10 @@
     "pages\\demo\\books.ac90a71de84b4a389216.js",
     "pages\\book\\index.e81d3843158af9ef408d.js",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js",
-    "common.41b45f5b7cf13cd5a052.js",
-    "app.f907a7427046b9679911.js",
-    "manifest.daea9b2ea1d0ad92b944.js",
-    "fonts/element-icons.b02bdc1.ttf",
+    "common.f35d9d2295d857f04376.js",
+    "app.48873828762828bcf844.js",
+    "manifest.93ff3c0e691bea057b58.js",
+    "fonts/element-icons.6f0a763.ttf",
     "pages\\summary\\faces\\_id.9c78dd006856cfa795ad.js.map",
     "pages\\sow\\village\\index.7a9c2ab672b98f7c7e81.js.map",
     "pages\\sow\\village\\_idx\\_mode.e76f0ce0b62083e13db5.js.map",
@@ -54,16 +54,16 @@
     "pages\\demo\\books.ac90a71de84b4a389216.js.map",
     "pages\\book\\index.e81d3843158af9ef408d.js.map",
     "pages\\book\\_idx\\editor.e65a9246da33fb1d5c2f.js.map",
-    "common.41b45f5b7cf13cd5a052.js.map",
-    "app.f907a7427046b9679911.js.map",
-    "manifest.daea9b2ea1d0ad92b944.js.map",
+    "common.f35d9d2295d857f04376.js.map",
+    "app.48873828762828bcf844.js.map",
+    "manifest.93ff3c0e691bea057b58.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.daea9b2ea1d0ad92b944.js",
-    "common.41b45f5b7cf13cd5a052.js",
-    "app.f907a7427046b9679911.js"
+    "manifest.93ff3c0e691bea057b58.js",
+    "common.f35d9d2295d857f04376.js",
+    "app.48873828762828bcf844.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.dfe7f3607a5b4bcb6061.js",
@@ -302,12 +302,6 @@
       26,
       53
     ],
-    "4db691d6": [
-      27,
-      54,
-      1,
-      29
-    ],
     "6b0a2b5a": [
       26,
       53
@@ -329,12 +323,6 @@
     "42754d36": [
       26,
       53
-    ],
-    "3d8794d1": [
-      27,
-      54,
-      1,
-      29
     ],
     "76de9999": [
       27,
@@ -1248,12 +1236,6 @@
       26,
       53
     ],
-    "082b21bf": [
-      27,
-      54,
-      1,
-      29
-    ],
     "9cebf124": [
       27,
       54,
@@ -1511,6 +1493,12 @@
     "472da47c": [
       26,
       53
+    ],
+    "4af344a2": [
+      27,
+      54,
+      1,
+      29
     ],
     "00b93b9b": [
       27,
@@ -2418,6 +2406,12 @@
       26,
       53
     ],
+    "a4ccec7c": [
+      27,
+      54,
+      1,
+      29
+    ],
     "f402f208": [
       26,
       53
@@ -2728,6 +2722,12 @@
       1,
       29
     ],
+    "6f8aa3f4": [
+      27,
+      54,
+      1,
+      29
+    ],
     "1cf61a70": [
       27,
       54,
@@ -2782,6 +2782,12 @@
       26,
       53
     ],
+    "b46ed004": [
+      27,
+      54,
+      1,
+      29
+    ],
     "bf7aa9c0": [
       27,
       54,
@@ -2831,12 +2837,6 @@
       53
     ],
     "dfbcf400": [
-      27,
-      54,
-      1,
-      29
-    ],
-    "4523c512": [
       27,
       54,
       1,
@@ -3076,12 +3076,6 @@
       26,
       53
     ],
-    "52aab84c": [
-      27,
-      54,
-      1,
-      29
-    ],
     "7a7851e6": [
       27,
       54,
@@ -3264,11 +3258,25 @@
       26,
       53
     ],
+    "353940a6": [
+      27,
+      54,
+      1,
+      29
+    ],
     "193ab4d4": [
       26,
       53
     ],
     "472e978a": [
+      26,
+      53
+    ],
+    "d28f20b6": [
+      3,
+      30
+    ],
+    "f69fa21e": [
       26,
       53
     ],
@@ -3540,17 +3548,9 @@
       1,
       29
     ],
-    "f69fa21e": [
-      26,
-      53
-    ],
     "6dca0870": [
       26,
       53
-    ],
-    "d28f20b6": [
-      3,
-      30
     ],
     "74a5aceb": [
       12,
