@@ -1,7 +1,7 @@
 {
   "ava": {
     "files": [
-      "spec/**"
+      "spec.js"
     ],
     "source": [
       "api/**",
@@ -27,7 +27,7 @@
     "connect-mongo": "^2.0.0",
     "cross-env": "^5.1.1",
     "del": "^3.0.0",
-    "element-ui": "^1.4.7",
+    "element-ui": "^2.0.8",
     "express-session": "^1.15.6",
     "global": "latest",
     "gulp": "^3.9.1",
@@ -68,8 +68,8 @@
     "yaml-loader": "latest"
   },
   "scripts": {
-    "ava": "cross-env NODE_ENV=spec ava --color --watch",
-    "test": "cross-env NODE_ENV=spec ava --verbose --color",
+    "ava": "cross-env NODE_ENV=spec yarn api && ava --color --watch",
+    "test": "cross-env NODE_ENV=spec yarn api && ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
     "dev": "gulp dev",
     "prod": "cross-env NODE_ENV=production nuxt build && gulp prod",

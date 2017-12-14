@@ -38,10 +38,10 @@ bless = (t)->
     @deepEqual tgt, chk
 
 app = express()
-require("../api/base.coffee"    )(app, conf)
-require("../api/session.coffee" )(app, conf)
-require("../api/mongodb.coffee" )(app, conf)
-require("../api/mongoose.coffee")(app, conf)
+require("~/api/base"    )(app, conf)
+require("~/api/session" )(app, conf)
+require("~/api/mongodb" )(app, conf)
+require("~/api/mongoose")(app, conf)
 
 app.post '/test/session', (req, res, next)->
   req.session.passport ?= {}
@@ -50,7 +50,7 @@ app.post '/test/session', (req, res, next)->
 
 http = supertest.agent(app)
 
-module.exports = (path)->
-  spec = require path
-  spec app, { test, bless, http }
+
+require("~/spec/user") app, { test, bless, http }
+require("~/spec/book") app, { test, bless, http }
 

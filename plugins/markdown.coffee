@@ -37,6 +37,8 @@ giji_options =
   tag: 'article'
   gfm: true
   tables: true
+  indentCode: false
+  taskLists: true
   breaks: true
   pedantic: false
   sanitize: true

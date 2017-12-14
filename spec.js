@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 55);
+/******/ 	return __webpack_require__(__webpack_require__.s = 70);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -3225,459 +3225,335 @@ module.exports = function(app, {url, db}) {
 module.exports = require("mongodb-bluebird");
 
 /***/ }),
-/* 54 */
-/***/ (function(module, exports) {
-
-module.exports = require("config");
-
-/***/ }),
-/* 55 */
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var app, conf, express, host, pm_id, port;
+var _, app, bless, conf, express, http, mongoose, supertest, test, user;
+
+test = __webpack_require__(71);
 
 express = __webpack_require__(12);
 
+mongoose = __webpack_require__(11);
+
+supertest = __webpack_require__(72);
+
+conf = {
+  session_key: "SECRET_SESSION_SECRET",
+  game: {
+    folder_id: "test"
+  },
+  db: {
+    mongo: "mongodb://localhost/giji",
+    mongo_sow: "mongodb://localhost/giji"
+  },
+  url: {},
+  auth: {}
+};
+
+user = {
+  _id: "local-test-user",
+  provider: "local-test",
+  icon: "http://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/w52.jpg",
+  mail: "7korobi.sys@gmail.com",
+  nick: "テスト中",
+  sign: "SIGN.SPEC",
+  write_at: new Date - 0,
+  token: "DEADBEEF",
+  account: "user"
+};
+
+_ = __webpack_require__(0);
+
+bless = function(t) {
+  return t.deepContain = function(tgt, chk) {
+    chk = _.mergeWith(chk, tgt, function(c, o) {
+      switch (c != null ? c.constructor : void 0) {
+        case null:
+        case void 0:
+          return o;
+        case Array:
+        case Object:
+          return void 0;
+        default:
+          return c;
+      }
+    });
+    return this.deepEqual(tgt, chk);
+  };
+};
+
 app = express();
-
-conf = __webpack_require__(54);
-
-({pm_id} = process.env);
-
-Object.assign(conf, {pm_id});
-
-process.on('unhandledRejection', console.dir);
 
 __webpack_require__(13)(app, conf);
 
-if (conf.use_api) {
-  __webpack_require__(15)(app, conf);
-  __webpack_require__(56)(app, conf);
-  __webpack_require__(18)(app, conf);
-  // for only legacy jinrogiji
-  __webpack_require__(52)(app, conf);
-}
+__webpack_require__(15)(app, conf);
 
-__webpack_require__(61)(app, conf);
+__webpack_require__(52)(app, conf);
 
-host = conf.host || '127.0.0.1';
+__webpack_require__(18)(app, conf);
 
-port = (conf.port || 4000) + (pm_id - 0 || 0);
+app.post('/test/session', function(req, res, next) {
+  var base, base1;
+  if ((base = req.session).passport == null) {
+    base.passport = {};
+  }
+  if ((base1 = req.session.passport).user == null) {
+    base1.user = user;
+  }
+  return res.json(req.session.passport);
+});
 
-app.listen(port, host);
+http = supertest.agent(app);
 
-console.log(`Server is listening on http://${host}:${port}`);
+__webpack_require__(73)(app, {test, bless, http});
+
+__webpack_require__(74)(app, {test, bless, http});
 
 
 /***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 71 */
+/***/ (function(module, exports) {
 
-var Agenda, Agendash, ctxs;
+module.exports = require("ava");
 
-Agenda = __webpack_require__(57);
+/***/ }),
+/* 72 */
+/***/ (function(module, exports) {
 
-Agendash = __webpack_require__(58);
+module.exports = require("supertest");
 
-ctxs = [__webpack_require__(59), __webpack_require__(60)];
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
 
-module.exports = function(app, {pm_id, db}) {
-  var agenda, define, i, len, name, pno;
-  pno = pm_id - 1 || 0;
-  agenda = new Agenda({
-    db: {
-      address: db.mongo,
-      collection: "jobCollectionName",
-      options: {
-        server: {
-          auto_reconnect: true
-        }
-      }
-    }
-  });
-  for (i = 0, len = ctxs.length; i < len; i++) {
-    ({define, name} = ctxs[i]);
-    agenda.define(name, define);
-  }
-  agenda.on('ready', function() {
-    var every, j, len1;
-    if (!pno) {
-      for (j = 0, len1 = ctxs.length; j < len1; j++) {
-        ({every, name} = ctxs[j]);
-        if (every) {
-          agenda.every(every, name);
-        }
-      }
-    }
-    return agenda.start();
-  });
-  app.use('/agendash', Agendash(agenda));
-  return console.log(`agenda use ${db.mongo}`);
+var user;
+
+user = {
+  sign: "公開サイン"
 };
 
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports = require("agenda");
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports) {
-
-module.exports = require("agendash");
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(4);
-
-({API_URL} = process.env);
-
-module.exports = {
-  name: 'aggregate',
-  every: '12 hours',
-  define: function(job, done) {
-    return sh.exec(`curl http:${API_URL}/aggregate/job`, function(err, stdout, stderr) {
-      return sh.exec("./static/sow.sh", function(err, stdout, stderr) {
-        if (err) {
-          return console.error(err);
-        } else {
-          return console.log(stderr);
-        }
-      });
+module.exports = function(app, {test, http, bless}) {
+  test.serial('post api/user fail.', async function(t) {
+    var text;
+    await http.post("/logout");
+    ({text} = (await http.post("/api/user").send({
+      user: {
+        sign: "公開サイン"
+      }
+    })));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      message: "ログインしていません。"
     });
-  }
+  });
+  return test.serial('post api/user', async function(t) {
+    var text;
+    await http.post("/test/session");
+    ({text} = (await http.post("/api/user").send({user})));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {user});
+  });
 };
 
 
 /***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var API_URL, sh;
-
-sh = __webpack_require__(4);
-
-({API_URL} = process.env);
-
-module.exports = {
-  name: 'process',
-  every: '2 minutes',
-  define: function(job, done) {
-    return sh.exec('ps uafxS | grep -v ^root', function(err, stdout, stderr) {
-      if (err) {
-        console.error(err);
-        return console.error(stderr);
-      } else {
-        return console.log(stdout);
-      }
-    });
-  }
-};
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Builder, Nuxt, builder, config, err, nuxt;
-
-config = __webpack_require__(62);
-
-// { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
-({Nuxt, Builder} = __webpack_require__(69));
-
-nuxt = new Nuxt(config);
-
-if (config.dev) {
-  try {
-    builder = new Builder(nuxt);
-    // builder = nuxt
-    builder.build();
-  } catch (error) {
-    err = error;
-    console.error(err);
-    process.exit(1);
-  }
-}
-
-module.exports = function(app) {
-  return app.use(nuxt.render);
-};
-
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = {
-  dev: process.env.NODE_ENV !== 'production',
-  render: __webpack_require__(63),
-  router: __webpack_require__(64),
-  build: __webpack_require__(65),
-  head: __webpack_require__(67),
-  env: __webpack_require__(68),
-  plugins: [],
-  css: ['element-ui/lib/theme-chalk/index.css'],
-  //####
-  // Customize the progress-bar color
-
-  loading: {
-    color: '#3B8070'
-  },
-  modules: ['~/modules/coffeescript.js']
-};
-
-
-/***/ }),
-/* 63 */
+/* 74 */
 /***/ (function(module, exports) {
 
-module.exports = {
-  static: {
-    maxAge: '1y',
-    setHeaders: function(res, path, stat) {
-      var atime, ctime, mtime, size;
-      if (/\.json\.gz$/.test(path)) {
-        ({atime, mtime, ctime, size} = stat);
-        console.log({mtime, size, path});
-        res.setHeader('Content-Type', 'application/javascript');
-        return res.setHeader('Content-Encoding', 'gzip');
+var check;
+
+check = function() {
+  return {
+    book: {
+      label: "testcase",
+      chat: {
+        interval: 1,
+        night: 0,
+        player: 4,
+        mob: 0
+      },
+      game: {
+        vote: "sign",
+        vote_by: ["live"]
+      },
+      tags: ["god", "travel"],
+      option: ["vote_by_live"]
+    },
+    potof: {
+      _id: "test-1-NPC",
+      face_id: "t29",
+      job: "透明女子会",
+      chr_job_id: "ririnra",
+      passport_id: 'local-test-user'
+    },
+    chats: [
+      {
+        idx: "welcome"
+      },
+      {
+        idx: "vrule",
+        log: "1. 多重ログインをしない。\n2. システムの出力内容を、そのまま書き写さない。\n3. エピローグまで秘密を守る。参加中の村の内容は秘密だ。\n4. エピローグまで秘密を守る。希望した能力、画面を見ているきみが何者なのかは秘密だ。"
       }
+    ],
+    part: {
+      _id: "test-1-1",
+      idx: "1",
+      label: "一日目"
     }
-  },
-  gzip: {
-    threshold: 0
-  },
-  etag: {
-    weak: true
-  }
+  };
 };
 
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports) {
-
-/*
-const scrollBehavior = (to, from, savedPosition) => {
-  // savedPosition は popState ナビゲーションでのみ利用できます
-  if (savedPosition) {
-    return savedPosition
-  } else {
-    let position = {}
-    // 子パスが見つからないとき
-    if (to.matched.length < 2) {
-      // ページのトップへスクロールする
-      position = { x: 0, y: 0 }
-    }
-    else if (to.matched.some((r) => r.components.default.options.scrollToTop)) {
-      // 子パスのひとつが scrollToTop オプションが true にセットされているとき
-      position = { x: 0, y: 0 }
-    }
-    // アンカーがあるときは、セレクタを返すことでアンカーまでスクロールする
-    if (to.hash) {
-      position = { selector: to.hash }
-    }
-    return position
-  }
-}
-*/
-module.exports = {
-  scrollBehavior: function(to, from, savedPosition) {
-    var basic, book, has_top;
-    book = function(idx_limit, to, from) {
-      [from, to] = [from, to].map(function(o) {
-        var name, page, part, ref;
-        name = o.params.mode || o.name;
-        part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
-        page = o.query.page;
-        if ('back' === page) {
-          page = void 0;
-        }
-        return `${name} ${part} ${page}`;
-      });
-      if (from !== to) {
-        console.log(`scroll to TOP (${from} != ${to})`);
-        return {
-          x: 0,
-          y: 0
-        };
-      }
-    };
-    basic = function(has_top, to) {
-      [from, to] = [from, to].map(function(o) {
-        return o.path;
-      });
-      switch (false) {
-        case from === to:
-          console.log(`scroll to TOP (${from} != ${to})`);
-          return {
-            x: 0,
-            y: 0
-          };
-        case !has_top:
-          console.log("scroll to TOP (has scrollToTop)");
-          return {
-            x: 0,
-            y: 0
-          };
-      }
-    };
-    switch (false) {
-      case !savedPosition:
-        console.log("scroll restore", savedPosition);
-        return savedPosition;
-      case !to.hash:
-        console.log("scroll to " + to.hash);
-        return {
-          selector: to.hash
-        };
-      default:
-        switch (to.name) {
-          case "sow-village-idx-mode":
-            return book(2, to, from);
-          case "sow-village-idx-anker":
-            return book(1, to, from);
-          default:
-            has_top = to.matched.some(function(r) {
-              return r.components.default.options.scrollToTop;
-            });
-            return basic(has_top, to, from);
-        }
-    }
-  }
-};
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ExtractTextPlugin;
-
-ExtractTextPlugin = __webpack_require__(66);
-
-module.exports = {
-  extend: function(config, {isDev, isClient}) {},
-  publicPath: '//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/',
-  babel: {
-    presets: [
-      "vue-app",
-      [
-        "env",
+module.exports = function(app, {test, http, bless}) {
+  test.serial('post api/books', async function(t) {
+    var book, text;
+    await http.post("/test/session");
+    ({book} = check());
+    ({text} = (await http.post("/api/books").type('json').send({book})));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      book: check().book,
+      parts: [
         {
-          targets: {
-            browsers: ["> 5%"]
-          },
-          forceAllTransforms: true
+          idx: "0",
+          label: "プロローグ"
+        }
+      ],
+      potofs: [
+        {
+          idx: "NPC",
+          passport_id: "local-test-user"
+        }
+      ],
+      phases: [
+        {
+          idx: "村題",
+          handle: "MAKER",
+          update: true
+        },
+        {
+          idx: "独題",
+          handle: "private",
+          update: false
+        },
+        {
+          idx: "独言",
+          handle: "TSAY",
+          update: false
+        }
+      ],
+      chats: [
+        {
+          idx: "welcome"
+        },
+        {
+          idx: "nrule"
+        },
+        {
+          idx: "vrule"
         }
       ]
-    ]
-  },
-  vendor: ['d3', 'axios', 'lodash', 'vee-validate', '~/components/vue.coffee', '~/plugins/memory-record.coffee'],
-  loaders: [
-    {
-      test: /\.(png|jpe?g|gif|svg)$/,
-      loader: 'url-loader',
-      query: {
-        limit: 1000, // 1KO
-        name: 'img/[name].[hash:7].[ext]'
-      }
-    },
-    {
-      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-      loader: 'url-loader',
-      query: {
-        limit: 1000, // 1KO
-        name: 'fonts/[name].[hash:7].[ext]'
-      }
+    });
+  });
+  test('post api/books/:book_id', async function(t) {
+    var book, potof, text;
+    ({book, potof} = check());
+    ({text} = (await http.post("/api/books/test-1").type('json').send({book, potof})));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      book: check().book,
+      potofs: check().potof,
+      phases: [
+        {
+          _id: "test-1-0-発題",
+          idx: "発題"
+        },
+        {
+          _id: "test-1-0-発言",
+          idx: "発言"
+        },
+        {
+          _id: "test-1-0-見言",
+          idx: "見言"
+        },
+        {
+          _id: "test-1-0-内言",
+          idx: "内言"
+        }
+      ],
+      chats: [
+        {
+          _id: "test-1-0-発言-0",
+          idx: "0"
+        },
+        {
+          _id: "test-1-1-発言-0",
+          idx: "0"
+        }
+      ]
+    });
+  });
+  test('post api/books/:book_id/part', async function(t) {
+    var part, text;
+    ({part} = check());
+    ({text} = (await http.post("/api/books/test-1/part").type('json').send({part})));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      part: check().part
+    });
+  });
+  test('get api/books', async function(t) {
+    var book, i, len, ref, results, text;
+    ({text} = (await http.get("/api/books")));
+    bless(t);
+    ref = JSON.parse(text).books;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      book = ref[i];
+      results.push(t.deepContain(book, check().book));
     }
-  ]
+    return results;
+  });
+  test('get api/books/:book_id', async function(t) {
+    var text;
+    ({text} = (await http.get("/api/books/test-1")));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      book: check().book,
+      potofs: [],
+      stats: [],
+      cards: [],
+      parts: [],
+      phases: []
+    });
+  });
+  return test('get api/books/:book_id/chats', async function(t) {
+    var text;
+    ({text} = (await http.get("/api/books/test-1/chats")));
+    bless(t);
+    return t.deepContain(JSON.parse(text), {
+      chats: []
+    });
+  });
 };
 
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports) {
-
-module.exports = require("extract-text-webpack-plugin");
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-//####
-// Headers of the page
-
-var host;
-
-host = "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt";
-
-module.exports = {
-  title: '人狼議事',
-  meta: [
-    {
-      charset: 'utf-8'
-    },
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=0.5, shrink-to-fit=no'
-    },
-    {
-      hid: 'description',
-      content: "Nuxt.js project"
-    },
-    {
-      href: "mailto:7korobi@gmail.com"
-    }
-  ],
-  link: [
-    {
-      rel: 'manifest',
-      href: '/manifest.json'
-    },
-    {
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
-    },
-    {
-      href: "mailto:7korobi@gmail.com"
-    }
-  ],
-  script: [
-    {
-      src: host + '/monaco-editor/vs/loader.js',
-      type: 'text/javascript',
-      charset: 'utf8'
-    }
-  ]
-};
-
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var game, url;
-
-({url, game} = __webpack_require__(54));
-
-module.exports = {url, game};
-
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-module.exports = require("nuxt");
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=server.js.map
+//# sourceMappingURL=spec.js.map

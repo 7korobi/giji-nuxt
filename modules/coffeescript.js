@@ -80,11 +80,12 @@ module.exports = function (options) {
       test: /\.md$/,
       loader: 'marked-pre-loader',
       options: {
-        tag: 'div',
+        tag: 'article',
         gfm: true,
         tables: true,
+        indentCode: false,
+        taskLists: true,
         breaks: true,
-        pedantic: false,
         sanitize: false,
         smartLists: true,
         smartypants: true
@@ -92,3 +93,5 @@ module.exports = function (options) {
     })
   })
 }
+
+

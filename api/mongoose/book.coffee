@@ -1,14 +1,12 @@
 { YAML, API } = require "../helper.coffee"
 { nation, village } = YAML "yaml/rule.yml"
 
-###
-{ Model, Set, Query, Rule } = Mem = require "../plugins/memory-record"
+{ Model, Set, Query, Rule } = Mem = require "~/plugins/memory-record"
 require "~/models/book"
 require "~/models/card"
 require "~/models/chr"
 
 console.log Query.chr_npcs.list
-###
 
 nrules = for { head }, idx in nation.list
   "#{idx + 1}. #{head}"
