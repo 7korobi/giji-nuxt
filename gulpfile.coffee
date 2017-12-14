@@ -17,7 +17,8 @@ cp = ({ src, dst, pipe = [] })->
   ]
 
 amazon = ({ src, headers, pipe = [], options = {} })->
-  giji = $.awspublish.create conf.aws
+  giji = $.awspublish.create conf.aws,
+    cacheFileName: ".awspublish-giji-assets"
 
   pipes src, [
     ...pipe
@@ -41,13 +42,26 @@ gulp.task "default", [], ->
     "node server.js"
   ]
 
+ext =
+  br:  "static/**/*.{ttf,css}"
+  gz:  "static/**/*.{json,js,svg,map}"
+  img: 'static/**/*.{jpg,png,ico,woff,zip}'
+  nop: 'static/**/*.{html}'
 
+prod_base = ["api", "stylus", "cp"]
 
-gulp.task "prod", ["api", "stylus", "cp"], ->
-  src = "static/nuxt/**/*.{js,map,svg}"
-  dst = "static/nuxt/"
+gulp.task "prod", ["prod:br", "prod:gz"], ->
 
-  pipes src, [
+gulp.task "prod:br", prod_base, ->
+  dst = "static/"
+  pipes ext.br, [
+    $.brotli.compress quality: 11
+    gulp.dest dst
+  ]
+
+gulp.task "prod:gz", prod_base, ->
+  dst = "static/"
+  pipes ext.gz, [
     $.gzip gzipOptions: level: 9
     gulp.dest dst
   ]
@@ -62,7 +76,7 @@ gulp.task "api", $.shell.task [
 gulp.task "del", ->
   del [
     "static/nuxt/dist/*"
-    "static/nuxt/css/*.{gz,br}"
+    "static/nuxt/css/*"
     "static/nuxt/monaco-editor/*"
   ]
 
@@ -75,7 +89,6 @@ gulp.task "stylus", ->
       $.stylus
         compress: true
       $.sourcemaps.write "."
-      $.brotli.compress quality: 11
     ]
 
 gulp.task "cp", ["del"], ->
@@ -90,7 +103,7 @@ gulp.task "cp", ["del"], ->
     dst: "static/nuxt/dist/."
 
 
-gulp.task "amazon", ["amazon:br", "amazon:gz", "amazon:face"]
+gulp.task "amazon", ["amazon:br", "amazon:gz", "amazon:img"]
 
 gulp.task "amazon:gz", [], ->
   amazon
@@ -112,9 +125,8 @@ gulp.task "amazon:br", [], ->
       $.rename extname: ""
     ]
 
-gulp.task "amazon:face", [], ->
+gulp.task "amazon:img", [], ->
   amazon
-    src: 'static/**/*.{jpg,png,zip}'
+    src: ext.img
     headers:
       'Cache-Control': 'max-age=315360000, no-transform, public'
-
