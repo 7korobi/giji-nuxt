@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "agenda": "^1.0.3",
-    "agendash": "latest",
+    "agendash": "^0.4.0",
     "avoriaz": "^4.2.0",
     "aws-sdk": "^2.169.0",
     "axios": "^0.17.0",
@@ -32,6 +32,7 @@
     "global": "latest",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.0",
+    "gulp-brotli": "^1.2.1",
     "gulp-gzip": "^1.4.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-newer": "^1.3.0",
@@ -68,8 +69,7 @@
     "yaml-loader": "latest"
   },
   "scripts": {
-    "ava": "cross-env NODE_ENV=spec yarn api && ava --color --watch",
-    "test": "cross-env NODE_ENV=spec yarn api && ava --verbose --color",
+    "test": "cross-env NODE_ENV=spec webpack --config config/webpack/index-node.coffee && ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee",
     "dev": "gulp dev",
     "prod": "cross-env NODE_ENV=production nuxt build && gulp prod",

@@ -36,21 +36,24 @@ amazon = ({ src, headers, pipe = [], options = {} })->
 
 gulp.task "default", [], ->
   gulp.watch ["assets/styl/**"], ["stylus"]
-  gulp.watch ["config/**", "api/**"], ["test", "api"]
+  gulp.watch ["config/**", "api/**"], ["api"]
   gulp.start ["api", "cp", "stylus"], $.shell.task [
     "node server.js"
   ]
 
 
 
-gulp.task "prod", ["api", "cp", "stylus"], $.shell.task [
-  "gzip -9rf static/nuxt"
-]
+gulp.task "prod", ["api", "stylus", "cp"], ->
+  src = "static/nuxt/**/*.{js,map,svg}"
+  dst = "static/nuxt/"
+
+  pipes src, [
+    $.gzip gzipOptions: level: 9
+    gulp.dest dst
+  ]
+
 gulp.task "dev", ["api"], $.shell.task [
   "node server.js"
-]
-gulp.task "test", $.shell.task [
-  "ava --verbose --color"
 ]
 gulp.task "api", $.shell.task [
   "webpack --config config/webpack/index-node.coffee"
@@ -59,7 +62,7 @@ gulp.task "api", $.shell.task [
 gulp.task "del", ->
   del [
     "static/nuxt/dist/*"
-    "static/nuxt/css/*.gz"
+    "static/nuxt/css/*.{gz,br}"
     "static/nuxt/monaco-editor/*"
   ]
 
@@ -72,6 +75,7 @@ gulp.task "stylus", ->
       $.stylus
         compress: true
       $.sourcemaps.write "."
+      $.brotli.compress quality: 11
     ]
 
 gulp.task "cp", ["del"], ->
@@ -86,7 +90,8 @@ gulp.task "cp", ["del"], ->
     dst: "static/nuxt/dist/."
 
 
-gulp.task "amazon", ["amazon:gz", "amazon:face"]
+gulp.task "amazon", ["amazon:br", "amazon:gz", "amazon:face"]
+
 gulp.task "amazon:gz", [], ->
   amazon
     src: 'static/**/*.gz'
@@ -97,9 +102,19 @@ gulp.task "amazon:gz", [], ->
       $.rename extname: ""
     ]
 
+gulp.task "amazon:br", [], ->
+  amazon
+    src: 'static/**/*.br'
+    headers:
+      'Cache-Control': 'max-age=43200, no-transform, public'
+      'Content-Encoding': 'br'
+    pipe: [
+      $.rename extname: ""
+    ]
+
 gulp.task "amazon:face", [], ->
   amazon
-    src: 'static/{images}/**/*'
+    src: 'static/**/*.{jpg,png,zip}'
     headers:
       'Cache-Control': 'max-age=315360000, no-transform, public'
 
