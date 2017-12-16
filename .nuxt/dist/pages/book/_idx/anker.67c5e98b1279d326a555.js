@@ -1,2 +1,178 @@
-webpackJsonp([12],{"96r1":function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var a=r("jXBm"),s=r.n(a),n=r("cFpy"),i=r("VU/8")(s.a,n.a,!1,null,null,null);e.default=i.exports},MdO5:function(t,e){var r;(r=function(t,e,r){var a,s,n,i;return n=t.slice(-1),s=t.slice(0,-1),i=function(){switch(n){case"s":return 1e3*s;case"m":return 6e4*s;case"h":return 36e5*s;case"d":return 864e5*s}}(),a=function(t){var a,s,n;return r?(s=r.call(t),n=JSON.stringify(s)):(s=null,n=""),a=e+n,{payload:s,key:a,name:e}},{mounted:function(){var t,r,s,n,o;return({timer:o,read_at:n}=this.$store.state),({payload:s,key:t,name:e}=a(this)),r={timer:{},read_at:{}},r.timer[t]=i,this.$store.commit("update",r),Date.now()-i<n[t]?new Promise(function(t){return t()}):this.$store.dispatch(e,s).then(()=>(r.read_at[t]=Date.now(),this.$store.commit("update",r)))},computed:{read_at:function(){var t;return({key:t}=a(this)),this.$store.state.read_at[t]}}}}).plugin=function(t){return this.arg=t,function({commit:t,state:e}){var a,s;return({timer:s,read_at:a}=e),r.root={commit:t,timer:s,read_at:a}}},t.exports=r},cFpy:function(t,e,r){"use strict";var a={render:function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",{staticClass:"outframe"},[r("div",{staticClass:"sideframe"},[r("div",{staticClass:"inframe"},[r("div",{staticClass:"icons form"},[r("nuxt-link",{staticClass:"item active",attrs:{replace:"replace",to:t.back_url}},[r("i",{staticClass:"fa fa-map-marker"})])],1)])]),r("div",{key:"summary",staticClass:"summary",attrs:{name:"list",tag:"div"}},[r("mentions",{key:"1",on:{anker:t.anker}})],1),r("div",{staticClass:"contentframe"},[r("div",{staticClass:"inframe"},[r("report",{key:"finder",staticClass:"form",attrs:{handle:"footer"}},[r("page-mode")],1)],1),r("div",{staticClass:"inframe"},t._l(t.anker_chats,function(e){return r("chat",{key:e.id,attrs:{id:e.id},on:{anker:t.anker,focus:t.focus}})})),r("div",{staticClass:"inframe"},[r("report",{key:"finder",staticClass:"form",attrs:{handle:"footer"}},[r("page-mode")],1)],1)])])},staticRenderFns:[]};e.a=a},jXBm:function(t,e,r){var a,s,n,i=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var r=arguments[e];for(var a in r)Object.prototype.hasOwnProperty.call(r,a)&&(t[a]=r[a])}return t};({Query:a}=r("L78F")),({uniq:n,relative_to:s}=r("AFcV")),t.exports={mixins:[r("MdO5")("24h","sow/story",function(){return this.book_id}),r("K8Xp")({loader:!0})],mounted:function(){return this.menus=[...this.menus,"current"]},methods:{focus:function(t){var e,r,a;return({name:e,params:r,query:a}=this.$route),r=i({},r,{idx:t}),this.$router.replace({name:e,params:r,query:a})},anker:function(t,e){return e=n(this.$route.query.a,e),this.$router.replace(s(this.$route,{a:e}))}},computed:{anker_chats:function(){var t;return this.read_at,t=n(this.$route.query.a),a.chats.ankers(this.book_id,t).list}}}}});
+webpackJsonp([12],{
+
+/***/ "96r1":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coffee_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_script_index_0_anker_vue__ = __webpack_require__("jXBm");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coffee_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_script_index_0_anker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__coffee_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_script_index_0_anker_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3c1b9b34_hasScoped_false_preserveWhitespace_false_buble_transforms_pug_html_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_template_index_0_anker_vue__ = __webpack_require__("cFpy");
+var normalizeComponent = __webpack_require__("VU/8")
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__coffee_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_script_index_0_anker_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3c1b9b34_hasScoped_false_preserveWhitespace_false_buble_transforms_pug_html_loader_appendTsSuffixTo_vue_node_modules_vue_loader_lib_selector_type_template_index_0_anker_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ "MdO5":
+/***/ (function(module, exports) {
+
+var base;
+
+base = function(timestr, name, calc) {
+  var capture, time_num, time_tail, timeout;
+  time_tail = timestr.slice(-1);
+  time_num = timestr.slice(0, -1);
+  timeout = (function() {
+    switch (time_tail) {
+      case "s":
+        return 1000 * time_num;
+      case "m":
+        return 1000 * 60 * time_num;
+      case "h":
+        return 1000 * 3600 * time_num;
+      case "d":
+        return 1000 * 3600 * 24 * time_num;
+    }
+  })();
+  capture = function(vue) {
+    var key, payload, suffix;
+    if (calc) {
+      payload = calc.call(vue);
+      suffix = JSON.stringify(payload);
+    } else {
+      payload = null;
+      suffix = "";
+    }
+    key = name + suffix;
+    return {payload, key, name};
+  };
+  return {
+    mounted: function() {
+      var key, o, payload, read_at, timer;
+      ({timer, read_at} = this.$store.state);
+      ({payload, key, name} = capture(this));
+      o = {
+        timer: {},
+        read_at: {}
+      };
+      o.timer[key] = timeout;
+      this.$store.commit("update", o);
+      if (Date.now() - timeout < read_at[key]) {
+        return new Promise(function(ok) {
+          return ok();
+        });
+      } else {
+        return this.$store.dispatch(name, payload).then(() => {
+          o.read_at[key] = Date.now();
+          return this.$store.commit("update", o);
+        });
+      }
+    },
+    computed: {
+      read_at: function() {
+        var key;
+        ({key} = capture(this));
+        return this.$store.state.read_at[key];
+      }
+    }
+  };
+};
+
+base.plugin = function(arg) {
+  this.arg = arg;
+  return function({commit, state}) {
+    var read_at, timer;
+    ({timer, read_at} = state);
+    return base.root = {commit, timer, read_at};
+  };
+};
+
+module.exports = base;
+
+
+/***/ }),
+
+/***/ "cFpy":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"outframe"},[_c('div',{staticClass:"sideframe"},[_c('div',{staticClass:"inframe"},[_c('div',{staticClass:"icons form"},[_c('nuxt-link',{staticClass:"item active",attrs:{"replace":"replace","to":_vm.back_url}},[_c('i',{staticClass:"fa fa-map-marker"})])],1)])]),_c('div',{key:"summary",staticClass:"summary",attrs:{"name":"list","tag":"div"}},[_c('mentions',{key:"1",on:{"anker":_vm.anker}})],1),_c('div',{staticClass:"contentframe"},[_c('div',{staticClass:"inframe"},[_c('report',{key:"finder",staticClass:"form",attrs:{"handle":"footer"}},[_c('page-mode')],1)],1),_c('div',{staticClass:"inframe"},_vm._l((_vm.anker_chats),function(o){return _c('chat',{key:o.id,attrs:{"id":o.id},on:{"anker":_vm.anker,"focus":_vm.focus}})})),_c('div',{staticClass:"inframe"},[_c('report',{key:"finder",staticClass:"form",attrs:{"handle":"footer"}},[_c('page-mode')],1)],1)])])}
+var staticRenderFns = []
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+
+/***/ }),
+
+/***/ "jXBm":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Query, relative_to, uniq,
+  _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+({Query} = __webpack_require__("L78F"));
+
+({uniq, relative_to} = __webpack_require__("AFcV"));
+
+module.exports = {
+  mixins: [
+    __webpack_require__("MdO5")("24h",
+    "sow/story",
+    function() {
+      return this.book_id;
+    }),
+    __webpack_require__("K8Xp")({
+      loader: true
+    })
+  ],
+  mounted: function() {
+    return this.menus = [...this.menus, "current"];
+  },
+  methods: {
+    focus: function(idx) {
+      var name, params, query;
+      ({name, params, query} = this.$route);
+      params = _extends({}, params, {idx});
+      return this.$router.replace({name, params, query});
+    },
+    anker: function(book_id, a) {
+      a = uniq(this.$route.query.a, a);
+      return this.$router.replace(relative_to(this.$route, {a}));
+    }
+  },
+  computed: {
+    anker_chats: function() {
+      var a;
+      this.read_at;
+      a = uniq(this.$route.query.a);
+      return Query.chats.ankers(this.book_id, a).list;
+    }
+  }
+};
+
+
+/***/ })
+
+});
 //# sourceMappingURL=anker.67c5e98b1279d326a555.js.map
