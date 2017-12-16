@@ -7,9 +7,7 @@ module.exports =
   env: require("./env.coffee")
 
   plugins: []
-  css: [
-    'element-ui/lib/theme-chalk/index.css'
-  ]
+  css: []
   #####
   # Customize the progress-bar color
   #

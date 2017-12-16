@@ -1,4 +1,5 @@
 { Set, Model, Query, Rule } = require "~/plugins/memory-record"
+_ = require "lodash"
 
 order = [
   "ririnra"
@@ -15,6 +16,7 @@ order = [
 
 
 new Rule("tag").schema ->
+  @habtm "faces", reverse: true
   @habtm "chr_sets"
   @tree()
   @scope (all)->
@@ -123,6 +125,10 @@ new Rule("face").schema ->
     date_range:
       get: ->
         @date_max - @date_min
+    
+    jobs:
+      get: ->
+        _.uniq @chr_jobs.pluck("job")
 
 new Rule("chr_set").schema ->
   @order "label"
@@ -151,6 +157,10 @@ new Rule("chr_job").schema ->
 
 Set.tag.set  require "../yaml/chr_tag.yml"
 Set.face.set require "../yaml/chr_face.yml"
+for { face_id, say } in require "../yaml/npc.yml"
+  Query.faces.find(face_id).npc = { say }
+
+
 for key in order
   o = require "../yaml/cs_#{key}.yml"
 

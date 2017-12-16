@@ -2,6 +2,8 @@ express = require 'express'
 app = express()
 conf = require 'config'
 
+global.env = require '~/config/webpack/env'
+
 { pm_id } = process.env
 Object.assign conf, { pm_id }
 process.on 'unhandledRejection', console.dir

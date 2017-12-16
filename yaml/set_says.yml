@@ -195,6 +195,7 @@ vulcan: &VULCAN
 
 infinity:
   <<: *INFINITY
+  for: [beta]
   CAPTION: むげん
 
 weak_braid:

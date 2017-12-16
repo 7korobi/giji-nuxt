@@ -166,10 +166,10 @@ module.exports = class Rule
         id = _.get @, ik
         Mem.Query[target].find id, else_id
 
-  relation_to_many: (key, target, ik, qk)->
+  relation_to_many: (key, target, cmd, ik, qk)->
     all = @all
     @use_cache key, (id)->
-      Mem.Query[target].where "#{qk}": id
+      Mem.Query[target][cmd] "#{qk}": id
 
     @model_property[key] =
       enumerable: true
@@ -241,22 +241,33 @@ module.exports = class Rule
 
   habtm: (to, option = {})->
     name = rename to.replace /s$/, ""
-    { key = name.ids, target = name.list } = option
-    @relation_to_many name.list, target, key, "_id"
+    if option.reverse
+      { key = @$name.ids, target = to } = option
+      @relation_to_many name.list, target, "in", "_id", key
+    else
+      { key = name.ids, target = name.list } = option
+      @relation_to_many name.list, target, "where", key, "_id"
 
   has_many: (to, option = {})->
     name = rename to.replace /s$/, ""
     { key = @$name.id, target = name.list } = option
-    @relation_to_many name.list, target, "_id", key
+    @relation_to_many name.list, target, "where", "_id", key
 
   tree: (option = {})->
-    @relation_tree "nodes", @$name.id
+    fk = @$name.id
+    @relation_tree "nodes", fk
     @belongs_to @$name.base, option
+
+    Object.defineProperties @all,
+      leaf:
+        get: ->
+          not_leaf = _.uniq @pluck fk
+          @where (o)-> o._id not in not_leaf
 
   graph: (option = {})->
     { directed, cost } = option
     ik = @$name.ids
-    @relation_to_many @$name.list, @$name.list, ik, "_id"
+    @relation_to_many @$name.list, @$name.list, "where", ik, "_id"
     @relation_graph "path", ik
     unless directed
       true # todo

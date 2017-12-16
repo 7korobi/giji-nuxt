@@ -78,8 +78,9 @@ module.exports =
   
   head: ->
     link: [
-      { rel: 'stylesheet', type: 'text/css', href: host + "/css/index.styl.css" }
-      { rel: 'stylesheet', type: 'text/css', href: "https://use.fontawesome.com/6348868528.css" }
+      { rel: 'stylesheet', type: 'text/css', href: host + '/element-ui/theme-chalk/index.css' }
+      { rel: 'stylesheet', type: 'text/css', href: host + '/css/index.styl.css' }
+      { rel: 'stylesheet', type: 'text/css', href: 'https://use.fontawesome.com/6348868528.css' }
       { rel: @new.rel.log,   type: 'text/css', href: @href.log }
       { rel: @new.rel.font,  type: 'text/css', href: @href.font }
       { rel: @new.rel.theme, type: 'text/css', href: @href.theme }

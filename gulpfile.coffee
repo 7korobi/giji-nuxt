@@ -99,6 +99,9 @@ gulp.task "cp", ["del"], ->
     src: "node_modules/monaco-editor/min/**"
     dst: "static/nuxt/monaco-editor/."
   cp
+    src: "node_modules/element-ui/lib/theme-*/**"
+    dst: "static/nuxt/element-ui/."
+  cp
     src: ".nuxt/dist/**"
     dst: "static/nuxt/dist/."
 

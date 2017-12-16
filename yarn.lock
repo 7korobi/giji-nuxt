@@ -3782,7 +3782,7 @@ ignore-by-default@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
 
-iltorb@^2.0.0:
+iltorb@^2.0.0, iltorb@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/iltorb/-/iltorb-2.0.3.tgz#9ca96c4f02da262416dd2b538d269af8c155780e"
   dependencies:
@@ -5326,7 +5326,7 @@ nuxt@7korobi/nuxt.js#coffee-100rc11:
     chokidar "^1.7.0"
     clone "^2.1.1"
     coffee-loader "github:7korobi/coffee-loader#master"
-    coffeescript latest
+    coffeescript next
     compression "^1.7.0"
     connect "^3.6.3"
     css-loader "^0.28.7"
@@ -5365,7 +5365,7 @@ nuxt@7korobi/nuxt.js#coffee-100rc11:
     source-map "^0.5.7"
     source-map-support "^0.4.17"
     tappable "^1.1.0"
-    uglifyjs-webpack-plugin latest
+    uglify-es-webpack-plugin latest
     url-loader "^0.5.9"
     vue "~2.4.2"
     vue-loader "^13.0.4"
@@ -7899,7 +7899,7 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-uglify-es-webpack-plugin@latest:
+uglify-es-webpack-plugin@^0.10.0, uglify-es-webpack-plugin@latest:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/uglify-es-webpack-plugin/-/uglify-es-webpack-plugin-0.10.0.tgz#46fa577fcd0dfdff201c6f805ec004d187b8c9e2"
   dependencies:

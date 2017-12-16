@@ -3,6 +3,11 @@ express = require 'express'
 mongoose = require "mongoose"
 supertest = require 'supertest'
 
+global.env =
+  game:
+    folder_id: "test"
+  url:  {}
+
 conf =
   session_key: "SECRET_SESSION_SECRET"
   game:

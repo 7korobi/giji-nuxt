@@ -24,6 +24,7 @@ module.exports = class Map
     emit = (keys..., cmd)->
       path = ["_reduce", keys...].join('.')
       all.$sort[path] = cmd
+    emit "list", {}
     model.order item, emit
     o
 

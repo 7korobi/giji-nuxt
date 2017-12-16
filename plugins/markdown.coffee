@@ -27,7 +27,7 @@ link = (href, title, text)->
         if title == text
           """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
         else
-          """<span title="#{title}"><ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby></span>"""
+          """<span class="btn" title="#{title}"><ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby></span>"""
 
 giji_renderer = Object.assign new marked.Renderer(),
   link: link
