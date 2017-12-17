@@ -1,7 +1,7 @@
 #####
 # Headers of the page
 #
-host = "//s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt"
+host = "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt"
 
 module.exports =
   title: '人狼議事'
