@@ -175,6 +175,10 @@ tfoot
   a
     height: 40px
 
+.swipe tbody th:nth-of-type(2)
+  position: sticky
+  left: 0
+
 .list
   background: #000
   display: flex
