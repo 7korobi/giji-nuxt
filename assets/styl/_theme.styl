@@ -474,19 +474,35 @@ palette_single($bgTheme, $backT, key)
         :focus
           border-color: $focus
 
-    h1, h2
+    h1
+    h2
+    h3
+    h4
+    h5
+    h6
+    strong
       body &.{theme}
       .{theme} &
-        Glowing(2px, 1.5px, $shade)
         color: $penHi
+
+    em
+    b
+      body &.{theme}
+      .{theme} &
+        color: $pen
+
+    h1
+    h2
+      body &.{theme}
+      .{theme} &
+        Glowing(2.0px, 1.5px, $shade)
 
     h3
     h4
     strong
       body &.{theme}
       .{theme} &
-        Glowing(1px, 0.5px, $shade)
-        color: $penHi
+        Glowing(1.5px, 1.0px, $shade)
 
     h5
     h6
@@ -494,8 +510,7 @@ palette_single($bgTheme, $backT, key)
     b
       body &.{theme}
       .{theme} &
-        Glowing(1px, 0.5px, $shade)
-        color: $pen
+        Glowing(1.0px, 0.5px, $shade)
 
     .bar
     code

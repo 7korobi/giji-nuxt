@@ -81,6 +81,9 @@ module.exports = (app, m, { game: { folder_id }})->
     _id: String
 
     chat:
+      limit: String
+      next_at: String
+      password: String
       interval: Number
       night: Number
       player: Number
@@ -88,7 +91,7 @@ module.exports = (app, m, { game: { folder_id }})->
     game:
       vote: String
       vote_by: [String]
-    tags: [String]
+    tag_ids: [String]
     option: [String]
     label: String
   ,

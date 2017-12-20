@@ -46,7 +46,7 @@
                     a(v-if="user.mail", :href="'mailto:' + user.mail") {{ user.mail }}
 
         c-post(v-if="user.sign" handle="SSAY" deco="giji")
-          nuxt-link(to="/book/edit") 新しい村を作成する。
+          nuxt-link(to="/book/new") 新しい村を作成する。
 
         c-post(handle="footer")
           bread-crumb

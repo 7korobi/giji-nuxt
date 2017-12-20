@@ -488,7 +488,7 @@ dipsy:
   label: 酔払い
   win:
   group: OTHER
-  able_ids:
+  able_ids: []
   cmd: gift
   help: >-
     あなたは<A href="http://crazy-crazy.sakura.ne.jp/giji/?(Gift)GIFTID_DIPSY" TARGET="_blank">酔払い</A>です。

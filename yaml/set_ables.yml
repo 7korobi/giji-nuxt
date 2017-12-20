@@ -1,5 +1,6 @@
 
 editvilform:
+  group: GM
   at: around
   cmd: editvilform
   btn: 村を編集する
@@ -7,6 +8,7 @@ editvilform:
   help: |-
 
 muster:
+  group: GM
   at: prologue
   cmd: muster
   btn: 点呼！
@@ -14,6 +16,7 @@ muster:
   help: |-
 
 update:
+  group: GM
   at: all
   cmd: update
   btn: 更新！
@@ -21,13 +24,15 @@ update:
   help: |-
 
 scrapvil:
+  group: GM
   at: all
   cmd: scrapvil
   btn: 廃村！
-  change: ただちに村を廃村にします。廃村になった村はエピローグになります。
+  change: ただちに村を廃村にします。廃村になった村はエピローグになります。お覚悟はよろしいですか？
   help: |-
 
 exit:
+  group: POTOF
   at: prologue
   cmd: exit
   btn: 退出…
@@ -37,6 +42,7 @@ exit:
 
 
 commit:
+  group: POTOF
   at: progress
   cmd: commit
   sw: 時間を進める
@@ -225,6 +231,7 @@ hike:
     特殊な能力があるかどうか自覚していません。夜は積極的に外出して、様子をさぐりましょう。
 
 vote:
+  group: POTOF
   for: live
   at: main
   cmd: vote
@@ -243,6 +250,7 @@ vote_role:
   help: |-
 
 entrust:
+  group: POTOF
   for: live
   at: main
   cmd: vote
@@ -277,6 +285,7 @@ snatch:
 
 
 gm_droop:
+  group: GM
   for: gm_live
   at: all
   cmd: gamemaster
@@ -286,6 +295,7 @@ gm_droop:
   help: |-
 
 gm_live:
+  group: GM
   for: gm_dead
   at: all
   cmd: gamemaster
@@ -295,6 +305,7 @@ gm_live:
   help: |-
 
 gm_disable_vote:
+  group: GM
   for: live
   at: all
   cmd: gamemaster
@@ -304,6 +315,7 @@ gm_disable_vote:
   help: |-
 
 gm_enable_vote:
+  group: GM
   for: live
   at: all
   cmd: gamemaster
@@ -313,6 +325,7 @@ gm_enable_vote:
   help: |-
 
 maker:
+  group: GM
   for: all
   at: all
   cmd: maker
@@ -322,6 +335,7 @@ maker:
   help: |-
 
 kick:
+  group: GM
   for: all
   at: prologue
   cmd: kick
@@ -331,6 +345,7 @@ kick:
   help: |-
 
 blind:
+  label: 本人に秘密
   help: |-
     （サーバーは、この役職を保有していることを本人に通知しません。）
 
@@ -442,42 +457,50 @@ tafness:
     あなたは狼の襲撃を受ける、もしくは賞金稼に道連れにされると傷を負うものの、一日だけ生き長らえます。
 
 hurt:
+  group: STATUS
   label: 負傷
   help: |-
 
 sheep:
+  group: STATUS
   help: |-
     踊り狂ったおぼろげな記憶がある。
 
 infected:
+  group: STATUS
   label: 感染
   help: |-
 
 hide_for_vote:
+  group: STATUS
   hide:
     - vote
   label: 投票対象外
   help: |-
 
 hide_for_role:
+  group: STATUS
   hide:
     - role
   label: 能力対象外
   help: |-
 
 hide_for_gift:
+  group: STATUS
   hide:
     - gift
   label: 恩恵対象外
   help: |-
 
 disable_vote:
+  group: STATUS
   disable:
     - vote
   label: <s>投票</s>
   help: |-
 
 disable_special:
+  group: STATUS
   disable:
     - gift
     - role
@@ -486,6 +509,7 @@ disable_special:
     あなたはもう特殊能力を使うことができません。
 
 disable_gift:
+  group: STATUS
   disable:
     - gift
   label: <s>恩恵</s>
@@ -493,6 +517,7 @@ disable_gift:
     あなたはもう恩恵能力を使うことができません。
 
 disable_role:
+  group: STATUS
   disable:
     - role
   label: <s>能力</s>
@@ -500,6 +525,7 @@ disable_role:
     あなたはもう役職能力を使うことができません。
 
 disable_poison:
+  group: STATUS
   disable:
     - poison
   label: <s>毒薬</s>
@@ -507,6 +533,7 @@ disable_poison:
     あなたはもう毒薬を使うことができません。
 
 disable_analeptic:
+  group: STATUS
   disable:
     - analeptic
   label: <s>蘇生薬</s>
@@ -548,6 +575,7 @@ chkGSAY:
 
 
 ENTRY:
+  group: POTOF
   cmd: entry
   text:
     - talk
@@ -556,6 +584,7 @@ ENTRY:
     キャラクターを選択し、エントリーしましょう。
 
 MAKER:
+  group: GM
   cmd: write
   text:
     - talk
@@ -566,6 +595,7 @@ MAKER:
     あなたは村立て人です。
 
 ADMIN:
+  group: GM
   cmd: write
   text:
     - talk
@@ -603,6 +633,7 @@ XSAY:
     あなたは、念波星でしか聞こえない会話が可能です。
 
 GSAY:
+  group: POTOF
   cmd: write
   text:
     - talk
@@ -622,6 +653,7 @@ MSAY:
     あなたは<b>_NPC_</b>の口を借り、好きな言葉を伝えることができます。
 
 AIM:
+  group: POTOF
   for: near
   cmd: write
   text:
@@ -631,6 +663,7 @@ AIM:
   help:
 
 TSAY:
+  group: POTOF
   cmd: write
   text:
     - talk
@@ -639,6 +672,7 @@ TSAY:
   help:
 
 SSAY:
+  group: POTOF
   cmd: write
   text:
     - talk
@@ -648,6 +682,7 @@ SSAY:
   help:
 
 VSAY:
+  group: POTOF
   cmd: write
   text:
     - talk
@@ -657,6 +692,7 @@ VSAY:
   help:
 
 VGSAY:
+  group: POTOF
   cmd: write
   text:
     - talk

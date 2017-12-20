@@ -4,14 +4,21 @@ axios = require "axios"
 module.exports =
   namespaced: true
   state: ->
-    read_at: 0
+    type: "OK"
+    message: null
+    read_at: {}
     hide_potof_ids: []
 
   mutations:
     data: (state, o)->
-      state.read_at[_id] = o.read_at
+      if o.name && o.message
+        state.type = o.name
+        state.message = o.message
 
-      Set.book.merge   [o.book]
+      if o.book?._id
+        state.read_at[o.book._id] = o.read_at
+        Set.book.merge   [o.book]
+
       Set.book.merge    o.books
 
       Set.part.merge    o.parts
@@ -29,7 +36,12 @@ module.exports =
 
   actions:
     create: ({commit}, book)->
-      { status, data } = await axios.post "#{env.url.api}/book", { book }
+      { status, data } = await axios.post "#{env.url.api}/books", { book }
+      commit "data",  data
+
+    update: ({commit}, book)->
+      { status, data } = await axios.post "#{env.url.api}/books/#{book._id}", { book }
+      commit "data",  data
 
     books: ({commit})->
       { folder_id } = env.game

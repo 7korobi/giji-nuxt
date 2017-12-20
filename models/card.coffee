@@ -38,15 +38,18 @@ new Rule("role").schema ->
         list: o
 
 
-
 new Rule("trap").schema ->
   @order "write_at"
   @belongs_to "book"
   @belongs_to "potof"
 
 new Rule("able").schema ->
-  @scope (all)->
+  @habtm "roles", reverse: true
 
+  class @model extends @model
+    @map_reduce: (o, emit)->
+      emit "group", o.group,
+        list: o
 
 Set.role.set require '../yaml/set_roles.yml'
 Set.trap.set require '../yaml/set_traps.yml'
