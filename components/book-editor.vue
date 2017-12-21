@@ -198,17 +198,23 @@ module.exports =
           vote_by: ["live"]
         tag_ids: ["god"]
         option: ["vote_by_live"]
-    
-  data: ->
+
     potof:
-      face_id: null
-      job: null
+      default: ->
+        face_id: null
+        idx: "NPC"
+        _id: @book._id + "-NPC"
+
+        sign: null
+        job:  null
+      
+  data: ->
     ui:
       ables: []
   
   methods:
     commit: ->
-      @_events.input[0] @book
+      @_events.input[0] { @book, @potof }
     tag: (id)->
       Query.tags.find(id)
 

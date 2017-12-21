@@ -1,3 +1,4 @@
+_ = require "lodash"
 { Query } = require "~/plugins/memory-record"
 
 to_x = (type, sp, nil)-> (u)->
@@ -9,7 +10,7 @@ to_x = (type, sp, nil)-> (u)->
     else
       type u
 
-module.exports =
+module.exports = m =
   relative_to: ({ name, params, query, hash }, o)->
     to = { name, params, query, hash }
     for key, val of o
@@ -44,25 +45,25 @@ module.exports =
       to_str: JSON.stringify
       by_str: JSON.parse
 
-  path: (store, keys...)->
-    o = store.computed
-    make = (name, at)->
-      key = "#{name}_id"
-      list = "#{name}s"
-      o[key] =
-        get: ->
-          if at < @idx.length
-            @idx[0..at].join("-")
-          else
-            null
-      o[name] =
-        get: ->
-          @read_at
-          Query[list].find @[key]
-
-    for name, idx in keys
-      make name, idx
-
-    o.idx.get = ->
+  _id: (o, at, name)->
+    key = "#{name}_id"
+    _.set o, "computed.#{key}.get", ->
+      if at < @idx.length
+        @idx[0..at].join("-")
+      else
+        null
+    _.set o, "computed.idx.get", ->
       @$route.params.idx.split("-")
     o
+
+  item: (o, at, name)->
+    key = "#{name}_id"
+    list = "#{name}s"
+    _.set o, "computed.#{name}.get", ->
+      @read_at
+      Query[list].find @[key]
+
+  path: (o, keys...)->
+    for name, idx in keys
+      m._id o, idx, name
+      m.item o, idx, name

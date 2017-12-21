@@ -10,7 +10,7 @@ axios = require "axios"
 
 module.exports =
   methods:
-    create: (data)->
-      @$store.dispatch "book/create", data
-
+    create: ({ book })->
+      {book} = await @$store.dispatch "book/create", { book }
+      @$router.replace "./#{book._id}/edit"
 </script>
