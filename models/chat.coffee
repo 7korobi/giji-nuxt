@@ -75,7 +75,7 @@ new Rule("chat").schema ->
 
     @order: (o, emit)->
       emit "last",
-        get: "max_is"
+        pluck: "max_is"
         sort: ["max_is.write_at", "desc"]
         page_by: 25
       emit "list",

@@ -66,9 +66,9 @@ module.exports = class Map
     if map.sort
       o = _.orderBy o, map.sort...
     
-    if map.get
+    if map.pluck
       o = o.map (val)->
-        _.get val, map.get
+        _.get val, map.pluck
 
     if per = map.page_by
       idx = 0
@@ -105,14 +105,22 @@ module.exports = class Map
   @finish: (o, query, set)->
     if o.hash
       o.set = Object.keys o.hash
-    if o.all? && o.count
-      o.avg = o.all / o.count
+    if o.count && o.pow?
+      o.avg = o.all ** (1 / o.count)
+    if o.count && o.all?
+      o.avg = o.all * (1 / o.count)
+    if o.min? && o.max?
+      o.range = o.max - o.min
+      if o.all
+        o.density = o.all / o.range
 
   @reduce: (item, o, map)->
     if map.count
       o.count += map.count
     if map.all
       o.all += map.all
+    if map.pow
+      o.pow *= map.pow
 
     if map.list
       o.list.push map.list

@@ -66,7 +66,7 @@ new Rule("sow_village").schema ->
       @href = "#{env.url.store}/stories/#{@_id}"
       @mode = "oldlog"
     else
-      if @turns.list.first
+      if @turns.list[0]
         @mode = "progress"
       else
         @mode = "prologue"

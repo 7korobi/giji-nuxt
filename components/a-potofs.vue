@@ -17,14 +17,14 @@
 
           th
             btn(v-model="sort" as="give.give", @toggle="reverse") 促
-          th
+          th(colspan="2")
             btn(v-model="sort" as="say.count", @toggle="reverse") 回数
-          th
+            btn(v-model="sort" as="say.avg", @toggle="reverse" title="字数 ÷ 回") 平均
             btn(v-model="sort" as="say.all", @toggle="reverse") 字数
-          th
-            btn(v-model="sort" as="say.avg", @toggle="reverse") 平均
+            btn(v-model="sort" as="say.density", @toggle="reverse" title="字数 ÷ 範囲") 密度
           th
             btn(v-model="sort" as="say.min", @toggle="reverse") 最初
+            btn(v-model="sort" as="say.range", @toggle="reverse" title="最後 － 最初") 範囲
             btn(v-model="sort" as="say.max", @toggle="reverse") 最後
           th
             btn(v-model="sort" as="sign", @toggle="reverse")
@@ -52,7 +52,6 @@
           th.r(:class="o.say_id(part.id)") {{ o.give && o.give.give | currency("回") }}
           td.r(:class="o.say_id(part.id)") {{ o.say(part.id).count  | currency("回") }}
           td.r(:class="o.say_id(part.id)") {{ o.say(part.id).all    | currency("字") }}
-          th.r(:class="o.say_id(part.id)") {{ o.say(part.id).avg    | currency("字") }}
           th.r(:class="o.say_id(part.id)") {{ o.say(part.id) | timerange }}
           th.c(:class="o.say_id(part.id)")
             abbr(:class="o.say_id(part.id)") {{ o.sign }}

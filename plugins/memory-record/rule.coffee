@@ -8,6 +8,7 @@ Set    = require "./set.coffee"
 Map    = require "./map.coffee"
 
 rename = (base)->
+  base = base.replace /s$/, ""
   name = Mem.Name[base]
   return name if name
 
@@ -16,8 +17,7 @@ rename = (base)->
   list = "#{base}s"
   deploys = []
   depends = []
-  Mem.Name[list] = { id, ids, list, base }
-  Mem.Name[base] = { id, ids, list, base, deploys, depends }
+  Mem.Name[list] = Mem.Name[base] = { id, ids, list, base, deploys, depends }
 
 module.exports = class Rule
   constructor: (base, cb)->
@@ -72,20 +72,21 @@ module.exports = class Rule
       first:
         enumerable: false
         get: -> @[0]
+      head:
+        enumerable: false
+        get: -> @[0]
+      tail:
+        enumerable: false
+        get: -> @[@length - 1]
       last:
         enumerable: false
         get: -> @[@length - 1]
-      
-      copy:
-        enumerable: false
-        get: ->
-          @constructor.bless _.cloneDeep @
 
       uniq:
         enumerable: false
         get: ->
           @constructor.bless _.uniq @
-      
+
       pluck:
         enumerable: false
         value: (keys...)->
@@ -252,7 +253,7 @@ module.exports = class Rule
     @relation_to_one name.base, target, key, miss
 
   habtm: (to, option = {})->
-    name = rename to.replace /s$/, ""
+    name = rename to
     if option.reverse
       { key = @$name.ids, target = to } = option
       @relation_to_many name.list, target, "in", "_id", key
@@ -261,7 +262,7 @@ module.exports = class Rule
       @relation_to_many name.list, target, "where", key, "_id"
 
   has_many: (to, option = {})->
-    name = rename to.replace /s$/, ""
+    name = rename to
     { key = @$name.id, target = name.list } = option
     @relation_to_many name.list, target, "where", "_id", key
 
