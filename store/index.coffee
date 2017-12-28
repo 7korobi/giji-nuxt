@@ -2,7 +2,7 @@ require "../models/index"
 
 _ = require "lodash"
 axios = require "axios"
-{ Model, Set, Query, Rule } = Mem = require "~/plugins/memory-record"
+{ State, Query } = Mem = require "~/plugins/memory-record"
 
 if window?
   window.Mem = Mem
@@ -13,6 +13,7 @@ module.exports =
     env: {}
     read_at: {}
     timer: {}
+    step: {}
 
   actions:
     nuxtServerInit: ({ commit }, { isDev, req, env })->

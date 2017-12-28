@@ -6,7 +6,6 @@ focus = (chat_id)->
   if chat_id? && window?
     @$nextTick =>
       if window[chat_id]
-        # console.log "page_reset()", chat_id
         @$store.commit "menu/focus", chat_id
       else
         console.log chat_id
@@ -19,8 +18,6 @@ store = require("~/plugins/browser-store")
   watch: (val, old, key)->
     if "mode" == key
       @page_reset()
-
-path store, "folder", "book", "part", "phase", "chat"
 
 { mounted } = store
 _.merge store,
@@ -45,11 +42,9 @@ _.merge store,
       page
 
     mentions: ->
-      @read_at
       Query.chats.reduce?.mention_to?[@chat_id]
 
     now: ->
-      @read_at
       Query.chats.now(@hide_potof_ids)
 
     chats: ->
@@ -97,6 +92,9 @@ _.merge store,
     page: (page, old)->
       # not work?
       console.log "watch page", page, old
+
+path store, "folder", "book", "part", "phase", "chat"
+
 
 module.exports = (o)->
   if o?.loader

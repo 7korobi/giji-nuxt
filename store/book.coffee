@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule } = require "~/plugins/memory-record"
+{ Set, Model, Query, Rule, merge } = require "~/plugins/memory-record"
 axios = require "axios"
 
 module.exports =
@@ -17,19 +17,7 @@ module.exports =
 
       if o.book?._id
         state.read_at[o.book._id] = o.read_at
-        Set.book.merge   [o.book]
-
-      Set.book.merge    o.books
-
-      Set.part.merge    o.parts
-      Set.section.merge o.sections
-      Set.phase.merge   o.phases
-
-      Set.stat.merge    o.stats
-      Set.card.merge    o.cards
-      Set.potof.merge   o.potofs
-
-      Set.chat.merge    o.chats
+      merge o
 
     hide_potof_ids: (state, ids)->
       state.hide_potof_ids = ids
@@ -47,15 +35,15 @@ module.exports =
 
     books: ({commit})->
       { folder_id } = env.game
-      { status, data } = await axios.get "/api/books", { folder_id }
+      { status, data } = await axios.get "#{env.url.api}/books", { folder_id }
       commit "data",  data
 
     book: ({commit, state}, _id)->
       write_at = state.read_at[_id]
-      { status, data } = await axios.get "/api/books/#{_id}", { write_at }
+      { status, data } = await axios.get "#{env.url.api}/books/#{_id}", { write_at }
       commit "data", data
 
-    chats: ({commit, state})->
+    chats: ({commit, state}, _id)->
       write_at = state.read_at[_id]
-      { status, data } = await axios.get "/api/books/#{_id}/chars", { write_at }
+      { status, data } = await axios.get "#{env.url.api}/books/#{_id}/chats", { write_at }
       commit "data", data

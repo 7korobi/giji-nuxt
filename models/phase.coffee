@@ -22,12 +22,13 @@ new Rule("phase").schema ->
   @scope (all)->
     {}
 
+  @deploy ->
+    if o = attrs[@handle]
+      Object.assign @, o
+    unless @guide
+      @mark = null
+
   class @model extends @model
-    @deploy: ->
-      if o = attrs[@handle]
-        Object.assign @, o
-      unless @guide
-        @mark = null
     @map_reduce: (o, emit)->
       emit "group", o.group,
         count: 1

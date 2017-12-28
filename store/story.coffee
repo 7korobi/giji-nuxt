@@ -1,14 +1,16 @@
-{ Model, Query, Rule, Set, Finder } = Mem = require "~/plugins/memory-record"
+{ State, Model, Query, Rule, Set, Finder } = Mem = require "~/plugins/memory-record"
 axios = require "axios"
 
 module.exports =
   namespaced: true
-  state: -> {}
+  state: ->
+    step: {}
 
   mutations:
     progress: (state, data)->
       Set.sow_turn.merge    data.events
       Set.sow_village.merge data.stories
+      state.step = State.step
 
     oldlog: (state, data)->
       Set.sow_village.merge data.stories
@@ -16,6 +18,7 @@ module.exports =
         for story_id in story_ids when vil = Query.sow_villages.find story_id
           vil.aggregate.face_ids.push _id.face_id
       Finder.sow_village.clear_cache()
+      state.step = State.step
 
   actions:
     progress: ({state, commit, rootState })->

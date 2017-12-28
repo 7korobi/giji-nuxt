@@ -138,13 +138,16 @@ module.exports = (app, m, { game: { folder_id }})->
       type: String
       index: true
     potof_id:
-      type: [String]
+      type: String
       index: true
     phase_handle:
       type: String
       index: true 
     idx: String
     _id: String
+
+    head: String
+    to: String
 
     show: String
     deco: String
@@ -198,10 +201,12 @@ module.exports = (app, m, { game: { folder_id }})->
   up_phase = (phase)-> up_for_tree Phase, phase
   up_chat  = (chat)->  up_for_tree Chat,  chat
 
-  up_chats_step_1 = (_id, npc_id)->
+  up_chats_step_1 = (_id, idx)->
+    head = "#{_id}-#{idx}"
+    npc_id = "#{_id}-NPC"
     [
       up_chat
-        _id: "#{_id}-0-村題-welcome"
+        _id: "#{head}-村題-welcome"
         idx: "welcome"
         book_id: _id
         potof_id: npc_id
@@ -209,7 +214,7 @@ module.exports = (app, m, { game: { folder_id }})->
         show: "report"
         log: "（この村をみんなに紹介しよう）"
       up_chat
-        _id: "#{_id}-0-村題-nrule"
+        _id: "#{head}-村題-nrule"
         idx: "nrule"
         book_id: _id
         potof_id: npc_id
@@ -217,7 +222,7 @@ module.exports = (app, m, { game: { folder_id }})->
         show: "report"
         log: nrules.join("\n")
       up_chat
-        _id: "#{_id}-0-村題-vrule"
+        _id: "#{head}-村題-vrule"
         idx: "vrule"
         book_id: _id
         potof_id: npc_id
@@ -226,55 +231,62 @@ module.exports = (app, m, { game: { folder_id }})->
         log: vrules.join("\n")
     ]
 
-  up_phases_step_1 = (_id)->
+  up_phases_step_1 = (_id, idx)->
+    head = "#{_id}-#{idx}"
     [
       up_phase
-        _id: "#{_id}-村題"
+        _id: "#{head}-村題"
         idx: "村題"
         label: '情報'
         handle: 'MAKER'
         update: true
       up_phase
-        _id: "#{_id}-独題"
+        _id: "#{head}-独題"
         idx: "独題"
         label: '情報'
         handle: 'private'
         update: false
       up_phase
-        _id: "#{_id}-独言"
+        _id: "#{head}-独言"
         idx: "独言"
         label: '独り言'
         handle: 'TSAY'
         update: false
     ]
 
-  up_phases_step_2 = (_id)->
+  up_phases_step_2 = (_id, idx)->
+    head = "#{_id}-#{idx}"
     [
       up_phase
-        _id: "#{_id}-発題"
+        _id: "#{head}-発題"
         idx: "発題"
         label: '情報'
         handle: 'public'
         update: false
       up_phase
-        _id: "#{_id}-発言"
+        _id: "#{head}-発言"
         idx: "発言"
         label: '発言'
         handle: 'SSAY'
         update: false
       up_phase
-        _id: "#{_id}-見言"
+        _id: "#{head}-見言"
         idx: "見言"
         label: '発言'
         handle: 'VSAY'
         update: false
       up_phase
-        _id: "#{_id}-内言"
+        _id: "#{head}-内言"
         idx: "内言"
         label: "内緒話"
         handle: "AIM"
         update: false
     ]
+
+
+###
+  getter API
+###
 
   app.get '/api/books', API ->
     books = await Book.find { _id: ///^#{folder_id}-/// }
@@ -305,29 +317,29 @@ module.exports = (app, m, { game: { folder_id }})->
   app.get '/api/books/:book_id/chats', API ({
     params: { book_id }
     query: { write_at }
-    session:
-      potof: potof
-      passport: { user }
+    session: { passport }
   })->
     _id =
-      $regex: ///^#{book_id}-///
-    potof_id =
-      $in: [
-        potof?._id
-      ]
-    phase_handle =
-      $in: [
-        'SSAY', 'VSAY'
-        'GSAY', 'VGSAY'
-        'public'
-        'MAKER', 'ADMIN'  
-      ]
-    [ chats ] = await Promise.all [
-      Chat.find
-        _id: _id
-        $or: [{ potof_id }, { phase_handle }]
-    ]
+      $regex: ///^#{book_id}-\d+-[村発見].-///
+    finder =
+      if passport?.potof?
+        potof_id =
+          $in: [
+            passport.potof._id
+          ]
+        Chat.find
+          _id:
+            $regex: ///^#{book_id}-///
+          $or: [{ potof_id }, { _id }]
+      else
+        Chat.find { _id }
+
+    [ chats ] = await Promise.all [finder]
     { chats }
+
+###
+  posting API
+###
 
   app.post '/api/books', API ({
     body: { book }
@@ -347,8 +359,8 @@ module.exports = (app, m, { game: { folder_id }})->
         _id: "#{_id}-0"
         idx: "0"
         label: 'プロローグ'
-      Promise.all up_chats_step_1 "#{_id}-0", npc_id
-      Promise.all up_phases_step_1 "#{_id}-0"
+      Promise.all up_chats_step_1 _id, 0
+      Promise.all up_phases_step_1 _id, 0
     ]
     passport.potof = potof
 
@@ -393,7 +405,7 @@ module.exports = (app, m, { game: { folder_id }})->
           show: "text"
           log: "＠＠＠"
       ]
-      Promise.all up_phases_step_2 "#{_id}-0"
+      Promise.all up_phases_step_2 _id, 0
     ]
     potofs = [potof]
     { book, potofs, chats, phases }
@@ -409,10 +421,18 @@ module.exports = (app, m, { game: { folder_id }})->
 
     [ part, ...phases ] = await Promise.all [
       up_part part
-      ... up_phases_step_1 part._id
-      ... up_phases_step_2 part._id
+      ... up_phases_step_1 book_id, part.idx
+      ... up_phases_step_2 book_id, part.idx
     ]
     { part, phases }
+
+  app.post '/api/books/:book_id/phase', API ({
+    params: { book_id }
+    body: { phase }
+    session: { passport }
+  })->
+    must_signiture passport
+    phase = { _id } = await add_phase book_id, phase
 
   app.post '/api/books/:book_id/potof', API ({
     params: { book_id }
@@ -422,7 +442,7 @@ module.exports = (app, m, { game: { folder_id }})->
     must_signiture passport
     # can_player passport
     potof = { _id } = await add_potof book_id, potof
-    args = await Promise.all [
+    [ stat, card, chat ] = await Promise.all [
       up_stat
         _id: "#{_id}-SSAY"
         idx: "SSAY"
@@ -435,7 +455,7 @@ module.exports = (app, m, { game: { folder_id }})->
       add_chat phase_id,
         sign: potof.sign
     ]
-    { potof, args }
+    { potof, stat, card, chat }
 
   app.delete '/api/book/:book_id', API ({
     params: { book_id }

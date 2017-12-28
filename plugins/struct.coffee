@@ -53,14 +53,12 @@ module.exports = m =
       else
         null
     _.set o, "computed.idx.get", ->
-      @$route.params.idx.split("-")
-    o
+      @$route.params.idx?.split("-")
 
   item: (o, at, name)->
     key = "#{name}_id"
     list = "#{name}s"
     _.set o, "computed.#{name}.get", ->
-      @read_at
       Query[list].find @[key]
 
   path: (o, keys...)->

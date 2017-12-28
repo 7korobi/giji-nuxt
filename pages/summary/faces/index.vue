@@ -59,7 +59,6 @@ module.exports =
 
   computed:
     faces: ->
-      @read_at
       Query.faces.aggregate(@tag_id, @order)
 
 </script>

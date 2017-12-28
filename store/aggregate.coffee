@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Finder } = Mem = require "~/plugins/memory-record"
+{ State, Model, Query, Rule, Finder } = require "~/plugins/memory-record"
 axios = require "axios"
 _ = require "lodash"
 
@@ -23,7 +23,7 @@ titles =
 module.exports =
   namespaced: true
   state: ->
-    {}
+    step: {}
   mutations:
     faces: (state,{ data })->
       for o in data.faces when face = Query.faces.find o._id.face_id
@@ -32,10 +32,12 @@ module.exports =
         face.aggregate.log.date_min = o.date_min
       for o in data.sow_auths when face = Query.faces.find o._id.face_id
         face.aggregate.fav = o
-      Mem.Finder.face.clear_cache()
+      Finder.face.clear_cache()
+      state.step = State.step
 
     face: (state,{ id, data })->
       face = Query.faces.find id
+      console.log face, data
       face.aggregate.log = data.faces[0]
       face.aggregate.log.date_min = data.m_faces[0].date_min
       face.aggregate.sow_auths = _.sortBy data.sow_auths, (o)-> - o.story_ids.length
@@ -80,7 +82,8 @@ module.exports =
         folders[key] = _.sortBy list, (o)-> o[1] - 0
         folders[key].nation = Query.folders.find(key.toUpperCase()).nation
       face.aggregate.folders = _.sortBy folders, (list, key)-> - list.length
-      Mem.Finder.face.clear_cache()
+      Finder.face.clear_cache()
+      state.step = State.step
 
   actions:
     faces: ({ dispatch, state, commit, rootState })->

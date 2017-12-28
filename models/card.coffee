@@ -18,14 +18,12 @@ new Rule("stat").schema ->
   @path "folder", "book", "part", "potof"
   @belongs_to "able"
 
+  @deploy ->
+    @able_id = @idx
   Object.assign @model_property,
     card:
       get: ->
         Query.stats.find("#{@potof_id}-#{@idx}")
-
-  class @model extends @model
-    @deploy: ->
-      @able_id = @idx
 
 
 

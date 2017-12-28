@@ -31,6 +31,49 @@ new Rule("sow_village").schema ->
         sort: [order, asc]
         page_by: 25
 
+  @deploy ->
+    { interval, hour, minute } = @upd
+    hour   = "0#{hour}"   if hour   < 10
+    minute = "0#{minute}" if minute < 10
+    updated_at = new Date @timer.updateddt
+
+    @write_at = updated_at
+    @query = Query.sow_villages.where({@id})
+    @q =
+      sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')
+      folder_id: @folder.toUpperCase()
+      size: "x" + @vpl[0]
+      say:  @type.say
+      mob:  @type.mob
+      game: @type.game
+      upd_at: "#{hour}:#{minute}"
+      upd_range: "#{interval * 24}h"
+      yeary: yeary.format updated_at
+      monthry: monthry.format updated_at
+      rating: @rating
+
+    @q.rating = "default"  if @rating in [null, 0, "0", "null", "view"]
+    @q.rating = "alert"    if @rating in ["R15", "r15", "r18"]
+    @q.rating = "violence" if @rating in ["gro"]
+
+
+    list = Query.sow_roletables.find(@type.roletable).role_ids_list?[@q.size]
+    @card.config = list if list?.length && ! @card.config.length
+    @card.option = @options
+
+    @folder = Query.folders.find @q.folder_id
+    if @is_epilogue && @is_finish
+      @href = "#{env.url.store}/stories/#{@_id}"
+      @mode = "oldlog"
+    else
+      if @turns.list.first
+        @mode = "progress"
+      else
+        @mode = "prologue"
+    
+    @aggregate =
+      face_ids: []
+
   Object.assign @model_property,
     roles:
       get: ->
@@ -39,54 +82,10 @@ new Rule("sow_village").schema ->
       get: ->
         @query.reduce.event?.length ? 0
 
-
   sort = ['count', 'desc']
   cmd =
     count: 1
   class @model extends @model
-    @deploy: ->
-      { interval, hour, minute } = @upd
-      hour   = "0#{hour}"   if hour   < 10
-      minute = "0#{minute}" if minute < 10
-      updated_at = new Date @timer.updateddt
-
-      @write_at = updated_at
-      @query = Query.sow_villages.where({@id})
-      @q =
-        sow_auth_id: @sow_auth_id.replace(/\./g, '&#2e')
-        folder_id: @folder.toUpperCase()
-        size: "x" + @vpl[0]
-        say:  @type.say
-        mob:  @type.mob
-        game: @type.game
-        upd_at: "#{hour}:#{minute}"
-        upd_range: "#{interval * 24}h"
-        yeary: yeary.format updated_at
-        monthry: monthry.format updated_at
-        rating: @rating
-
-      @q.rating = "default"  if @rating in [null, 0, "0", "null", "view"]
-      @q.rating = "alert"    if @rating in ["R15", "r15", "r18"]
-      @q.rating = "violence" if @rating in ["gro"]
-
-
-      list = Query.sow_roletables.find(@type.roletable).role_ids_list?[@q.size]
-      @card.config = list if list?.length && ! @card.config.length
-      @card.option = @options
-
-      @folder = Query.folders.find @q.folder_id
-      if @is_epilogue && @is_finish
-        @href = "#{env.url.store}/stories/#{@_id}"
-        @mode = "oldlog"
-      else
-        if @turns.list.first
-          @mode = "progress"
-        else
-          @mode = "prologue"
-      
-      @aggregate =
-        face_ids: []
-
     @order: (o, emit)->
       emit "yeary",       { sort }
       emit "monthry",     { sort }
@@ -131,24 +130,23 @@ new Rule("folder").schema ->
     host: (hostname)->
       all.where { hostname }
 
-  class @model extends @model
-    @deploy: ->
-      if o = @config?.cfg
-        @rule     = o.RULE
-        @title    = o.NAME_HOME
-        @max_vils = o.MAX_VILLAGES
-        if @max_vils
-          @href = @config.cfg.URL_SW + "/sow.cgi"
-          [protocol, _, hostname, path_dir...] = @href.split("/")
-          @hostname = hostname
-          path = "/" + path_dir.join("/")
+  @deploy ->
+    if o = @config?.cfg
+      @rule     = o.RULE
+      @title    = o.NAME_HOME
+      @max_vils = o.MAX_VILLAGES
+      if @max_vils
+        @href = @config.cfg.URL_SW + "/sow.cgi"
+        [protocol, _, hostname, path_dir...] = @href.split("/")
+        @hostname = hostname
+        path = "/" + path_dir.join("/")
 
-      switch @folder
-        when "LOBBY"
-          @max_vils = 0
+    switch @folder
+      when "LOBBY"
+        @max_vils = 0
 
-      return if @disabled = ! path
-      @route = { path, name: @_id }
+    return if @disabled = ! path
+    @route = { path, name: @_id }
 
 Set.folder.set        require "../yaml/sow_folder.yml"
 Set.sow_roletable.set require "../yaml/sow_roletables.yml"

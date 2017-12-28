@@ -1,4 +1,4 @@
-{ Model, Query, Rule, Set } = Mem = require "~/plugins/memory-record"
+{ State, Model, Query, Rule, Set } = Mem = require "~/plugins/memory-record"
 { nation } = require "../yaml/rule.yml"
 axios = require "axios"
 _ = require "lodash"
@@ -228,6 +228,7 @@ module.exports =
           #{n_rules.join("\n")}
         """
 
+      state.step = State.step
 
   actions:
     story: ({ state, commit, rootState }, story_id)->

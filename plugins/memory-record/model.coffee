@@ -1,5 +1,5 @@
 _ = require "lodash"
-Mem = require "./index.coffee"
+# Mem = require "./index.coffee"
 
 
 
@@ -15,12 +15,8 @@ module.exports = class Model
     Object.assign item, parent
     for deploy in @$name.deploys
       deploy.call item, @
-    @deploy.call item, @
     unless item.id
       throw new Error "detect bad data: #{JSON.stringify item}"
-
-  @deploy: (m)->
-    @_id = @[m.id] unless @_id
 
   @update: (item, old)->
   @create: (item)->

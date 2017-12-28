@@ -7,7 +7,6 @@ Model  = require "./model.coffee"
 Set    = require "./set.coffee"
 Map    = require "./map.coffee"
 
-Mem.Name = {}
 rename = (base)->
   name = Mem.Name[base]
   return name if name

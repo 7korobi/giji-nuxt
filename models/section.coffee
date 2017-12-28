@@ -15,6 +15,9 @@ new Rule("section").schema ->
   @scope (all)->
     {}
 
+  @deploy ->
+    @label ?= @idx
+
   Object.assign @model_property,
     label:
       get: ->
@@ -27,6 +30,3 @@ new Rule("section").schema ->
           write = format.tail.format @write_at
           begin
           .replace "時", "-" + write
-  class @model extends @model
-    @deploy: ->
-      @label ?= @idx

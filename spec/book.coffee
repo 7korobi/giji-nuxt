@@ -9,7 +9,7 @@ check = ->
     game:
       vote: "sign"
       vote_by: ["live"]
-    tags: ["god", "travel"]
+    tag_ids: ["god", "travel"]
     option: ["vote_by_live"]
 
   potof:

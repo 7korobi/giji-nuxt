@@ -1,4 +1,4 @@
-base = (timestr, name, calc)->
+base = (timestr, name, opt = {})->
   time_tail = timestr[-1..]
   time_num = timestr[..-2]
   timeout =
@@ -13,8 +13,8 @@ base = (timestr, name, calc)->
         1000 * 3600 * 24 * time_num
 
   capture = (vue)->
-    if calc
-      payload = calc.call vue
+    if opt.call
+      payload = opt.call vue
       suffix = JSON.stringify payload
     else
       payload = null

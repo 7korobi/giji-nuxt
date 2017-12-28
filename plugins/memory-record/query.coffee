@@ -1,5 +1,5 @@
 _ = require "lodash"
-Mem = require "./index.coffee"
+# { State } = require "./index.coffee"
 
 OBJ = ->
   new Object null
@@ -128,8 +128,7 @@ module.exports = class Query
   Object.defineProperties @prototype,
     reduce:
       get: ->
-        if @_step < @all._finder.step
-          @all._finder.calculate(@, @all._memory)
+        @all._finder.calculate @, @all._memory
         @_reduce
 
     list:

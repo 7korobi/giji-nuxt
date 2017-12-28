@@ -6,28 +6,22 @@ OBJ = ->
   new Object null
 
 f_reset = (list, parent)->
-  depends @$name
   @all._finder.reset @all, list, parent
 
 f_merge = (list, parent)->
-  depends @$name
   @all._finder.merge @all, list, parent
 
 f_remove = (list)->
-  depends @$name
   @all._finder.remove @all, list
 
 f_item = (cb)->
   (item, parent)->
-    cb.call @, [item], parent
+    if item?
+      cb.call @, [item], parent
 
 f_clear = ->
   @all._finder.clear_cach @all
 
-depends = (name)->
-  for f in name.depends
-    f()
-  return
 
 module.exports = class Set extends Array
   @$deploy: (map, model, item, parent)->

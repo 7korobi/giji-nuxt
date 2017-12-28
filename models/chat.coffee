@@ -37,18 +37,18 @@ new Rule("chat").schema ->
   anker =
     belongs_to: 'chats'
     sort: ["count", "desc"]
-  
-  class @model extends @model
-    @deploy: ->
-      @q =
-        mention_ids: []
-      @log = @log.replace ///<mw\ +(..)(\d+),(\d+),(.+?)>///g, (str, phase_idx, $1, part_idx, code)=>
-        if phase_idx == 'MM'
-          phase_idx = @phase_id[-2..][0] + 'M'
-        idx = Number($1)
-        @q.mention_ids.push mention_id = [@book_id, part_idx, phase_idx, idx].join("-")
-        """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
 
+  @deploy ->
+    @q =
+      mention_ids: []
+    @log = @log.replace ///<mw\ +(..)(\d+),(\d+),(.+?)>///g, (str, phase_idx, $1, part_idx, code)=>
+      if phase_idx == 'MM'
+        phase_idx = @phase_id[-2..][0] + 'M'
+      idx = Number($1)
+      @q.mention_ids.push mention_id = [@book_id, part_idx, phase_idx, idx].join("-")
+      """<abbr chat_id="#{mention_id}">&gt;&gt;#{code}</abbr>"""
+
+  class @model extends @model
     @map_reduce: (o, emit)->
       emit "last", [o.potof_id, o.phase_id].join('+'),
         max: o.write_at

@@ -1,10 +1,11 @@
 _ = require "lodash"
-{ Query, Format } = require "./index.coffee"
+{ State, Query, Format } = require "./index.coffee"
 
 OBJ = ->
   new Object null
 
-each = (from, process)->
+each = ({ depends }, from, process)->
+  f() for f in depends
   switch from?.constructor
     when Array
       for item in from
@@ -25,8 +26,11 @@ $step = 0
 
 module.exports = class Finder
   constructor: (@name)->
-    @step = ++$step
+    State.step[@name.list] = ++$step
+
   calculate: (query, memory)->
+    return unless query._step < State.step[@name.list]
+
     cache = _.cloneDeep @format
     @reduce @map, cache, query, memory
     return
@@ -55,17 +59,20 @@ module.exports = class Finder
       _.set query, path, o
 
   clear_cache: (all)->
-    @step = ++$step
+    State.step[@name.list] = ++$step
     return
 
   remove: (all, from)->
     { _memory } = all
-    each from, (item)=>
+    hit = false
+    each @mae, from, (item)=>
       old = _memory[item.id]
       if old?
         @model.delete old.item
         delete _memory[item.id]
-      return
+        hit = true
+    if hit?
+      @clear_cache()
 
   reset: (all, from, parent)->
     { _memory } = all
@@ -81,7 +88,8 @@ module.exports = class Finder
 
   merge: (all, from, parent)->
     { _memory } = all
-    each from, (item)=>
+    hit = false
+    each @name, from, (item)=>
       o = @map.$deploy @model, @format, all, item, parent
       old = _memory[item.id]
       _memory[item.id] = o
@@ -90,4 +98,6 @@ module.exports = class Finder
       else
         @model.create item
         @model.rowid++
-      return
+      hit = true
+    if hit?
+      @clear_cache()

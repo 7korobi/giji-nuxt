@@ -174,11 +174,12 @@
 
 </template>
 <script lang="coffee">
-{ Query } = require "~/plugins/memory-record"
+{ State, Query } = require "~/plugins/memory-record"
+mount = require "~/plugins/get-by-mount"
 
 module.exports =
   mixins: [
-    require("~/plugins/get-by-mount") "1h", "story/oldlog"
+    mount "1h", "story/oldlog"
     require('~/plugins/pager')
     require("~/plugins/browser-store")
       replace:
@@ -239,12 +240,14 @@ module.exports =
       obj
 
     all: ->
-      @read_at
-      Query.sow_villages.mode @mode
+      Query
+      .sow_villages
+      .mode @mode
 
     page_all_contents: ->
-      @read_at
-      Query.sow_villages.search @mode, @query_in, @query_where, @order, @asc
+      Query
+      .sow_villages
+      .search @mode, @query_in, @query_where, @order, @asc
       .reduce.list
 
 </script>

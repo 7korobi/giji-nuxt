@@ -158,7 +158,6 @@ module.exports =
       _.orderBy @face.sow_auths, @order, asc
 
     face: ->
-      @read_at
       Query.faces.find @id
 
 </script>

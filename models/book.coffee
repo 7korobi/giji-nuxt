@@ -28,10 +28,8 @@ new Rule("option").schema ->
 new Rule("say").schema ->
   @scope (all)->
     active: all.in for: env.game.folder_id
-  class @model extends @model
-    @deploy: ->
-      @for ?= []
-    
+  @deploy ->
+    @for ?= []
 
 new Rule("game").schema ->
   @scope (all)->

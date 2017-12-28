@@ -52,7 +52,6 @@ module.exports =
       query: { back }
 
     anker_chats: ->
-      @read_at
       a = uniq @$route.query.a
       Query.chats.ankers(@book_id, a).list
 

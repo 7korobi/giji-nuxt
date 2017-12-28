@@ -55,6 +55,23 @@ new Rule("face").schema ->
     name_head: (tag_id = "all")->
       all.tag(tag_id).reduce.name_head
 
+  @deploy ->
+    @aggregate =
+      sow_auths: []
+      mestypes: []
+      folders: []
+      roles: []
+      lives: []
+      log:
+        date_min:   0xfffffffffffff
+        date_max:  -0xfffffffffffff
+        story_ids: []
+      fav:
+        _id:
+          sow_auth_id: null
+        count: 0
+    @summary_url = "/summary/faces/#{@_id}"
+
   map =
     count: 1
   class @model extends @model
@@ -73,23 +90,6 @@ new Rule("face").schema ->
         set: o.name
       for tag in o.tag_ids
         emit "tag", tag, map
-
-    @deploy: ->
-      @aggregate =
-        sow_auths: []
-        mestypes: []
-        folders: []
-        roles: []
-        lives: []
-        log:
-          date_min:   0xfffffffffffff
-          date_max:  -0xfffffffffffff
-          story_ids: []
-        fav:
-          _id:
-            sow_auth_id: null
-          count: 0
-      @summary_url = "/summary/faces/#{@_id}"
 
   Object.assign @model_property,
     roles:
@@ -139,20 +139,18 @@ new Rule("chr_npc").schema ->
   @order "label"
   @belongs_to "chr_set"
   @belongs_to "face"
-  class @model extends @model
-    @deploy: ->
-      @_id = "#{@chr_set_id}_#{@face_id}"
-      @chr_set_idx = order.indexOf @chr_set_id
+  @deploy ->
+    @_id = "#{@chr_set_id}_#{@face_id}"
+    @chr_set_idx = order.indexOf @chr_set_id
 
 new Rule("chr_job").schema ->
   @order "face.order"
   @belongs_to "chr_set"
   @belongs_to "face"
 
-  class @model extends @model
-    @deploy: ->
-      @_id = "#{@chr_set_id}_#{@face_id}"
-      @chr_set_idx = order.indexOf @chr_set_id
+  @deploy ->
+    @_id = "#{@chr_set_id}_#{@face_id}"
+    @chr_set_idx = order.indexOf @chr_set_id
 
 
 Set.tag.set  require "../yaml/chr_tag.yml"

@@ -43,7 +43,7 @@
         nuxt-link(to="/demo") 開発者用ページ
 </template>
 <script lang="coffee">
-{ Query } = require "~/plugins/memory-record"
+{ Step, Query } = require "~/plugins/memory-record"
 
 module.exports =
   mixins: [
@@ -56,10 +56,8 @@ module.exports =
       return null unless @user?._id
       "mypage"
     prologue: ->
-      @read_at
       Query.sow_villages.prologue.list
     progress: ->
-      @read_at
       Query.sow_villages.progress.list
 
 </script>
