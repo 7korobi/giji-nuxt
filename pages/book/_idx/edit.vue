@@ -11,7 +11,7 @@
 
 </template>
 <script lang="coffee">
-{ Query } = require "~/plugins/memory-record"
+{ State, Query } = require "~/plugins/memory-record"
 { _id } = require "~/plugins/struct"
 
 module.exports = v =
@@ -22,7 +22,7 @@ module.exports = v =
     book: undefined
     potof: undefined
   watch:
-    read_at: ->
+    "step.books": ->
       @book = Query.books.find(@book_id)
       @potof = Query.potofs.find(@book_id + "-NPC")
   methods:

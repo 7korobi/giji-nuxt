@@ -1,4 +1,4 @@
-{ Set, Model, Query, Rule, merge } = require "~/plugins/memory-record"
+{ State, Set, Model, Query, Rule, merge } = require "~/plugins/memory-record"
 axios = require "axios"
 
 module.exports =
@@ -15,7 +15,7 @@ module.exports =
         state.type = o.name
         state.message = o.message
 
-      if o.book?._id
+      if o.book?
         state.read_at[o.book._id] = o.read_at
       merge o
 

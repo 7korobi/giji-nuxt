@@ -6,8 +6,6 @@ require "~/models/book"
 require "~/models/card"
 require "~/models/chr"
 
-console.log Query.chr_npcs.list
-
 nrules = for { head }, idx in nation.list
   "#{idx + 1}. #{head}"
 
@@ -84,8 +82,8 @@ module.exports = (app, m, { game: { folder_id }})->
       limit: String
       next_at: String
       password: String
-      interval: Number
-      night: Number
+      interval: String
+      night: String
       player: Number
       mob: Number
     game:
@@ -363,10 +361,7 @@ module.exports = (app, m, { game: { folder_id }})->
       Promise.all up_phases_step_1 _id, 0
     ]
     passport.potof = potof
-
-    potofs = [potof]
-    parts  = [part]
-    { book, potofs, parts, phases, chats }
+    { book, potof, part, phases, chats }
 
   app.post '/api/books/:book_id', API ({
     params: { book_id }
@@ -407,8 +402,7 @@ module.exports = (app, m, { game: { folder_id }})->
       ]
       Promise.all up_phases_step_2 _id, 0
     ]
-    potofs = [potof]
-    { book, potofs, chats, phases }
+    { book, potof, chats, phases }
 
 
   app.post '/api/books/:book_id/part', API ({

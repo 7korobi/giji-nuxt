@@ -28,6 +28,24 @@ module.exports = m =
       a.push arg...
     Array.from new Set a
 
+  to_msec: (str)->
+    timeout = 0
+    str.replace /(\d+)(.)|0/g, (_, num, unit)->
+      return unless num = Number num
+      timeout +=
+        switch unit
+          when "s"
+            1000 * num
+          when "m"
+            1000 * 60 * num
+          when "h"
+            1000 * 3600 * num
+          when "d"
+            1000 * 3600 * 24 * num
+          else
+            throw new Error "#{timestr} at #{num}#{unit}"
+    timeout
+
   types:
     "#{Number}":
       to_str: to_x String, NaN, ""

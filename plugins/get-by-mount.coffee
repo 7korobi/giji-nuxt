@@ -1,16 +1,8 @@
+{ to_msec } = require "~/plugins/struct"
+{ State } = require "~/plugins/memory-record"
+
 base = (timestr, name, opt = {})->
-  time_tail = timestr[-1..]
-  time_num = timestr[..-2]
-  timeout =
-    switch time_tail
-      when "s"
-        1000 * time_num
-      when "m"
-        1000 * 60 * time_num
-      when "h"
-        1000 * 3600 * time_num
-      when "d"
-        1000 * 3600 * 24 * time_num
+  timeout = to_msec timestr
 
   capture = (vue)->
     if opt.call
@@ -21,6 +13,9 @@ base = (timestr, name, opt = {})->
       suffix = ""
     key = name + suffix
     { payload, key, name }
+
+  data: ->
+    step: State.step
 
   mounted: ->
     { timer, read_at } = @$store.state
@@ -37,11 +32,6 @@ base = (timestr, name, opt = {})->
       .then =>
         o.read_at[key] = Date.now()
         @$store.commit "update", o
-
-  computed:
-    read_at: ->
-      { key } = capture @
-      @$store.state.read_at[key]
 
 base.plugin = (@arg)->
   ({ commit, state })->

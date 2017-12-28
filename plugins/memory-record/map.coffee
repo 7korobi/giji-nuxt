@@ -1,9 +1,17 @@
 _ = require "lodash"
 { Query } = require "./index.coffee"
 
+matrix =
+  map: (cb)->
+    list = []
+    for a in @ when a
+      for item in a
+        list.push cb item
+    list
+
 module.exports = class Map
   @bless: (o)->
-    o.__proto__ = @prototype
+    o.__proto__ = @::
     o
 
   @$deploy: (model, format, all, item, parent)->
@@ -14,7 +22,7 @@ module.exports = class Map
     emit = (keys..., cmd)=>
       path = ["_reduce", keys...].join('.')
       o.$group.push [path, cmd]
-      map = format[path] ?= @bless {}
+      map = format[path] ?= {}
       @init map, cmd
     emit
       list: item
@@ -73,8 +81,10 @@ module.exports = class Map
         for a, page_idx in @ when item in a
           return page_idx
         null
-      for a in groups
-        a.__proto__ = set.prototype
+      Object.assign o, matrix
+      o.__proto__ = set::
+      for a in o when a
+        a.__proto__ = set::
 
     if map.index
       counts = []
@@ -83,11 +93,13 @@ module.exports = class Map
         counts[idx] ?= []
         counts[idx].push oo
       o = counts
+      Object.assign o, matrix
+      o.__proto__ = set::
       for a in o when a
-        a.__proto__ = set.prototype
+        a.__proto__ = set::
 
     o.from = from
-    o.__proto__ = set.prototype
+    o.__proto__ = set::
     o
 
   @finish: (o, query, set)->

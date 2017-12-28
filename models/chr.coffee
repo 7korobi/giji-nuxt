@@ -1,5 +1,4 @@
 { Set, Model, Query, Rule } = require "~/plugins/memory-record"
-_ = require "lodash"
 
 order = [
   "ririnra"
@@ -128,7 +127,7 @@ new Rule("face").schema ->
     
     jobs:
       get: ->
-        _.uniq @chr_jobs.pluck("job")
+        @chr_jobs.pluck("job").uniq
 
 new Rule("chr_set").schema ->
   @order "label"
@@ -162,7 +161,7 @@ for { face_id, say } in require "../yaml/npc.yml"
 for key in order
   o = require "../yaml/cs_#{key}.yml"
 
-  Set.chr_set.merge [o.chr_set]
+  Set.chr_set.append o.chr_set
   { chr_set_id } = o.chr_set
   cs_key = { chr_set_id }
 

@@ -16,6 +16,7 @@ rename = (base)->
   list = "#{base}s"
   deploys = []
   depends = []
+  Mem.Name[list] = { id, ids, list, base }
   Mem.Name[base] = { id, ids, list, base, deploys, depends }
 
 module.exports = class Rule
@@ -74,6 +75,17 @@ module.exports = class Rule
       last:
         enumerable: false
         get: -> @[@length - 1]
+      
+      copy:
+        enumerable: false
+        get: ->
+          @constructor.bless _.cloneDeep @
+
+      uniq:
+        enumerable: false
+        get: ->
+          @constructor.bless _.uniq @
+      
       pluck:
         enumerable: false
         value: (keys...)->
@@ -85,7 +97,7 @@ module.exports = class Rule
                 _.property keys[0]
               else
                 (o)-> _.at(o, keys...)
-          @map cb
+          @constructor.bless @map cb
 
     @schema cb if cb
     return
@@ -94,27 +106,28 @@ module.exports = class Rule
     cb.call @
     if @model == Model
       class @model extends @model
-    Object.defineProperties @model.prototype, @model_property
+    Object.defineProperties @model::, @model_property
 
     class @form extends @model
-    Object.defineProperties @form.prototype, @form_property
+    Object.defineProperties @form::, @form_property
 
     if @set == Set
       class @set extends @set
-    Object.defineProperties @set.prototype, @set_property
+    Object.defineProperties @set::, @set_property
 
     if @map == Map
       class @map extends @map
-    Object.defineProperties @map.prototype, @map_property
+    Object.defineProperties @map::, @map_property
 
     @model.$name = @form.$name = @set.$name = @map.$name = @$name
 
+    Mem.Query[@$name.list] = @all
 
-    Mem.Query[@$name.list] = @set.all = @all
+    Mem.Set[@$name.base] = list = @set.bless []
+    list.all = @all
+    list.$name = @$name
 
-    Mem.Set[@$name.base] = @set.bless []
     Mem.Finder[@$name.base] = finder = @all._finder
-
     finder.set = @set
     finder.map = @map
     finder.form = @form
@@ -194,12 +207,12 @@ module.exports = class Rule
     @use_cache key, (_id, n)->
       q = all.where _id: _id
       if n
-        _id = []
+        _ids = []
         for a in q.pluck(ik) when a?
           for k in a when k?
-            _id.push k
+            _ids.push k
 
-        all[key] _.uniq(_id), n - 1
+        all[key] _.uniq(_ids), n - 1
       else
         q
 

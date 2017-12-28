@@ -27,13 +27,7 @@ module.exports = class Set extends Array
   @$deploy: (map, model, item, parent)->
 
   @bless: (list)->
-    ids = list.map (o)-> o.id
-    list.__proto__ = @prototype
-    list.all = @all
-    list.$name = @$name
-    list.query = new Query @all, ->
-      @_all_ids = ids
-      @_memory = OBJ()
+    list.__proto__ = @::
     list
 
   @find: (id)->
@@ -43,7 +37,7 @@ module.exports = class Set extends Array
     _memory[id].form ?= do ->
       # TODO
       o = _.cloneDeep @find id
-      o.__proto__ = Form.prototype
+      o.__proto__ = Form::
 
   sort: (sort...)->
     o = _.orderBy @, sort...

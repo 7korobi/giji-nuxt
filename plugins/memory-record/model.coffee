@@ -7,7 +7,7 @@ module.exports = class Model
   @rowid = 0
 
   @bless: (o)->
-    o.__proto__ = @prototype
+    o.__proto__ = @::
     o
 
   @$deploy: (item, parent)->

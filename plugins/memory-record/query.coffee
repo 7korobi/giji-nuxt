@@ -125,7 +125,7 @@ module.exports = class Query
 
   pluck: -> @list.pluck arguments...
 
-  Object.defineProperties @prototype,
+  Object.defineProperties @::,
     reduce:
       get: ->
         @all._finder.calculate @, @all._memory

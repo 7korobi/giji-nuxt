@@ -2,8 +2,8 @@ check = ->
   book:
     label: "testcase"
     chat:
-      interval: 1
-      night:    0
+      interval: "1d"
+      night:    "0"
       player: 4
       mob:    0
     game:
@@ -16,7 +16,6 @@ check = ->
     _id: "test-1-NPC"
     face_id: "t29"
     job: "透明女子会"
-    chr_job_id: "ririnra"
     passport_id: 'local-test-user'
   
   chats: [
@@ -49,14 +48,12 @@ module.exports = (app, { test, http, bless })->
     bless t
     t.deepContain JSON.parse(text),
       book: check().book
-      parts: [
-        idx: "0"
-        label: "プロローグ"
-      ]
-      potofs: [
+      potof:
         idx: "NPC"
         passport_id: "local-test-user"
-      ]
+      part:
+        idx: "0"
+        label: "プロローグ"
       phases: [
         idx: "村題"
         handle: "MAKER"
@@ -89,7 +86,7 @@ module.exports = (app, { test, http, bless })->
     bless t
     t.deepContain JSON.parse(text),
       book: check().book
-      potofs: check().potof
+      potof: check().potof
       phases: [
         _id: "test-1-0-発題"
         idx: "発題"

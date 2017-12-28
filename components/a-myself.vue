@@ -61,7 +61,6 @@ module.exports =
       sayable: ->
         @can_phase @handle
       self: ->
-        @$store.state.book.read_at
         Query.potofs.find @self_id
       parts: ->
         @$store.state.book.parts

@@ -81,14 +81,11 @@ module.exports = class Finder
 
     for key, old of _memory
       item = news[key]
-      if item?
-        @model.update item, old.item
-      else
+      unless item?
         @model.delete old
 
   merge: (all, from, parent)->
     { _memory } = all
-    hit = false
     each @name, from, (item)=>
       o = @map.$deploy @model, @format, all, item, parent
       old = _memory[item.id]
@@ -98,6 +95,4 @@ module.exports = class Finder
       else
         @model.create item
         @model.rowid++
-      hit = true
-    if hit?
-      @clear_cache()
+    @clear_cache()

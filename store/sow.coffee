@@ -228,8 +228,6 @@ module.exports =
           #{n_rules.join("\n")}
         """
 
-      state.step = State.step
-
   actions:
     story: ({ state, commit, rootState }, story_id)->
       { status, data } = await axios.get "#{env.url.store}/sow/#{story_id}.json"

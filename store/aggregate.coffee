@@ -22,8 +22,7 @@ titles =
 
 module.exports =
   namespaced: true
-  state: ->
-    step: {}
+  state: -> {}
   mutations:
     faces: (state,{ data })->
       for o in data.faces when face = Query.faces.find o._id.face_id
@@ -33,7 +32,6 @@ module.exports =
       for o in data.sow_auths when face = Query.faces.find o._id.face_id
         face.aggregate.fav = o
       Finder.face.clear_cache()
-      state.step = State.step
 
     face: (state,{ id, data })->
       face = Query.faces.find id
@@ -83,7 +81,6 @@ module.exports =
         folders[key].nation = Query.folders.find(key.toUpperCase()).nation
       face.aggregate.folders = _.sortBy folders, (list, key)-> - list.length
       Finder.face.clear_cache()
-      state.step = State.step
 
   actions:
     faces: ({ dispatch, state, commit, rootState })->

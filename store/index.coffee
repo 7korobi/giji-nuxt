@@ -1,6 +1,10 @@
 require "../models/index"
 
 _ = require "lodash"
+Vue = require "vue"
+if Vue.default
+  Vue = Vue.default
+
 axios = require "axios"
 { State, Query } = Mem = require "~/plugins/memory-record"
 
@@ -13,7 +17,6 @@ module.exports =
     env: {}
     read_at: {}
     timer: {}
-    step: {}
 
   actions:
     nuxtServerInit: ({ commit }, { isDev, req, env })->

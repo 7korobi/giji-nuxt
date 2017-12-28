@@ -20,7 +20,7 @@
           th.r
             label(for="next_at") 更新時刻
           td(title="更新が発生する時刻を指定します。")
-            input#next_at(style="font-size: 1.8rem" type="time" v-model="book.chat.next_at")
+            input#next_at(type="time" v-model="book.chat.next_at" step="300" style="width: 13ex")
         tr
           th.r
             label(for="mobs") 見物人
@@ -30,7 +30,7 @@
           th.r
             label(for="password") 合言葉
           td(title="指定すると、秘密のパスワードを入力した人だけが参加できます。")
-            input#password(style="width: 92%" size="20" v-model="book.chat.password" placeholder="誰でも参加できる")
+            input#password(style="width: 92%" size="12" v-model="book.chat.password" placeholder="誰でも参加できる")
 
   c-post.form(handle="public" deco="giji")
     h4 設定-会話
@@ -47,9 +47,9 @@
             label 更新間隔
           td
             span
-              btn(v-model="book.chat.interval", :as="1") 一日
-              btn(v-model="book.chat.interval", :as="2") 二日
-              btn(v-model="book.chat.interval", :as="3") 三日
+              btn(v-model="book.chat.interval", as="1d") 一日
+              btn(v-model="book.chat.interval", as="2d") 二日
+              btn(v-model="book.chat.interval", as="3d") 三日
         tr
           th.r
             label プレイヤー
@@ -59,10 +59,10 @@
             label 夜
           td
             span
-              btn(v-model="book.chat.night",  :as="0") なし
-              btn(v-model="book.chat.night",  :as="5")  5分
-              btn(v-model="book.chat.night", :as="20") 20分
-              btn(v-model="book.chat.night", :as="60") 60分
+              btn(v-model="book.chat.night",   as="0") なし
+              btn(v-model="book.chat.night",  as="5m")  5分
+              btn(v-model="book.chat.night", as="20m") 20分
+              btn(v-model="book.chat.night", as="60m") 60分
         tr
           th.r
             label 仲間との会話
@@ -189,8 +189,8 @@ module.exports =
           limit: "infinity"
           next_at: "00:00"
           password: ""
-          interval: 1
-          night:    5
+          interval: "1d"
+          night:    "5m"
           player: 4
           mob:    0
         game:
