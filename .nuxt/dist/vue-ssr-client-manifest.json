@@ -1,20 +1,20 @@
 {
   "publicPath": "https://s3-ap-northeast-1.amazonaws.com/giji-assets/nuxt/dist/",
   "all": [
-    "pages\\summary\\faces\\_id.f1969354ebf0d71747b2.js.map",
-    "pages\\summary\\faces\\index.3fb39efe6cabfd772a7c.js",
-    "pages\\sow\\village\\index.f67c507e2044771d1948.js",
-    "pages\\sow\\village\\_idx\\_mode.d69a774dbf990bd2e781.js",
-    "pages\\index.acf67cf79f52bff09be7.js",
-    "pages\\book\\_idx\\_mode.b9159982f90604142107.js",
+    "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js.map",
+    "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js",
+    "pages\\sow\\village\\index.950fa0540e6e7396ffe2.js",
+    "pages\\sow\\village\\_idx\\_mode.4256baa5650dc480b70a.js",
+    "pages\\index.dea0daae216f272a3e16.js",
+    "pages\\book\\_idx\\_mode.045b5aff247efa8b9f8f.js",
     "pages\\mypage\\index.6228cd4ef8103f7bb533.js",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js",
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js",
-    "pages\\sow\\village\\_idx\\editor.fb96fcfbc1fcae37b71d.js",
-    "pages\\sow\\village\\_idx\\anker.9116cc25cb613dd88f42.js",
-    "pages\\book\\_idx\\edit.cc1468be9563fe7fb0ee.js",
-    "pages\\book\\_idx\\anker.1d88077bc25bfd69a9a4.js",
+    "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
+    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
+    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js",
+    "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js",
     "pages\\demo\\names.5ef813d03a11f5c2a917.js",
@@ -26,23 +26,23 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "common.f7ff34226ddd77ec0e78.js",
-    "app.6f41d7cc69b58fcf0086.js",
-    "manifest.fd1f71775c9382f64a28.js",
-    "pages\\summary\\faces\\index.3fb39efe6cabfd772a7c.js.map",
-    "pages\\summary\\faces\\_id.f1969354ebf0d71747b2.js",
-    "pages\\sow\\village\\index.f67c507e2044771d1948.js.map",
-    "pages\\sow\\village\\_idx\\_mode.d69a774dbf990bd2e781.js.map",
-    "pages\\index.acf67cf79f52bff09be7.js.map",
-    "pages\\book\\_idx\\_mode.b9159982f90604142107.js.map",
+    "common.b1160c3532a1e5ee83ef.js",
+    "app.7acd61a7709be741eeae.js",
+    "manifest.a4ab8afd84e38339d182.js",
+    "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js.map",
+    "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js",
+    "pages\\sow\\village\\index.950fa0540e6e7396ffe2.js.map",
+    "pages\\sow\\village\\_idx\\_mode.4256baa5650dc480b70a.js.map",
+    "pages\\index.dea0daae216f272a3e16.js.map",
+    "pages\\book\\_idx\\_mode.045b5aff247efa8b9f8f.js.map",
     "pages\\mypage\\index.6228cd4ef8103f7bb533.js.map",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js.map",
     "pages\\demo\\chats.875697e8a9ba808f4348.js.map",
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js.map",
-    "pages\\sow\\village\\_idx\\editor.fb96fcfbc1fcae37b71d.js.map",
-    "pages\\sow\\village\\_idx\\anker.9116cc25cb613dd88f42.js.map",
-    "pages\\book\\_idx\\edit.cc1468be9563fe7fb0ee.js.map",
-    "pages\\book\\_idx\\anker.1d88077bc25bfd69a9a4.js.map",
+    "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js.map",
+    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js.map",
+    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js.map",
+    "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js.map",
     "pages\\rule-guide.4a100f0b8075f19aea11.js.map",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js.map",
     "pages\\demo\\names.5ef813d03a11f5c2a917.js.map",
@@ -54,31 +54,31 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js.map",
     "pages\\book\\index.0433c012eb2c9506487f.js.map",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js.map",
-    "common.f7ff34226ddd77ec0e78.js.map",
-    "app.6f41d7cc69b58fcf0086.js.map",
-    "manifest.fd1f71775c9382f64a28.js.map",
+    "common.b1160c3532a1e5ee83ef.js.map",
+    "app.7acd61a7709be741eeae.js.map",
+    "manifest.a4ab8afd84e38339d182.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.fd1f71775c9382f64a28.js",
-    "common.f7ff34226ddd77ec0e78.js",
-    "app.6f41d7cc69b58fcf0086.js"
+    "manifest.a4ab8afd84e38339d182.js",
+    "common.b1160c3532a1e5ee83ef.js",
+    "app.7acd61a7709be741eeae.js"
   ],
   "async": [
-    "pages\\summary\\faces\\index.3fb39efe6cabfd772a7c.js",
-    "pages\\sow\\village\\index.f67c507e2044771d1948.js",
-    "pages\\sow\\village\\_idx\\_mode.d69a774dbf990bd2e781.js",
-    "pages\\index.acf67cf79f52bff09be7.js",
-    "pages\\book\\_idx\\_mode.b9159982f90604142107.js",
+    "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js",
+    "pages\\sow\\village\\index.950fa0540e6e7396ffe2.js",
+    "pages\\sow\\village\\_idx\\_mode.4256baa5650dc480b70a.js",
+    "pages\\index.dea0daae216f272a3e16.js",
+    "pages\\book\\_idx\\_mode.045b5aff247efa8b9f8f.js",
     "pages\\mypage\\index.6228cd4ef8103f7bb533.js",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js",
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js",
-    "pages\\sow\\village\\_idx\\editor.fb96fcfbc1fcae37b71d.js",
-    "pages\\sow\\village\\_idx\\anker.9116cc25cb613dd88f42.js",
-    "pages\\book\\_idx\\edit.cc1468be9563fe7fb0ee.js",
-    "pages\\book\\_idx\\anker.1d88077bc25bfd69a9a4.js",
+    "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
+    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
+    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js",
+    "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js",
     "pages\\demo\\names.5ef813d03a11f5c2a917.js",
@@ -90,7 +90,7 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "pages\\summary\\faces\\_id.f1969354ebf0d71747b2.js"
+    "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js"
   ],
   "modules": {
     "13996722": [
@@ -477,6 +477,10 @@
       26,
       54
     ],
+    "2ca8c202": [
+      25,
+      53
+    ],
     "1310d546": [
       9,
       37
@@ -602,10 +606,6 @@
       53
     ],
     "61859c8a": [
-      25,
-      53
-    ],
-    "217d2225": [
       25,
       53
     ],
@@ -777,10 +777,6 @@
       25,
       53
     ],
-    "88c3e51c": [
-      12,
-      40
-    ],
     "4451feda": [
       25,
       53
@@ -792,6 +788,10 @@
     "51e6049f": [
       26,
       54
+    ],
+    "60a704d8": [
+      25,
+      53
     ],
     "6bde3474": [
       25,
@@ -894,6 +894,10 @@
       54
     ],
     "5c1ae382": [
+      25,
+      53
+    ],
+    "f69fa21e": [
       25,
       53
     ],
@@ -1076,10 +1080,6 @@
     "50ff4b71": [
       26,
       54
-    ],
-    "ea00eebe": [
-      25,
-      53
     ],
     "19a42aec": [
       25,
@@ -1437,6 +1437,10 @@
       26,
       54
     ],
+    "d4f408f4": [
+      25,
+      53
+    ],
     "961327e8": [
       25,
       53
@@ -1773,6 +1777,10 @@
       25,
       53
     ],
+    "594b98ec": [
+      25,
+      53
+    ],
     "5150ce8b": [
       25,
       53
@@ -1829,10 +1837,6 @@
       25,
       53
     ],
-    "6fb98c5a": [
-      25,
-      53
-    ],
     "968505c4": [
       17,
       45
@@ -1844,10 +1848,6 @@
     "ba6a473e": [
       26,
       54
-    ],
-    "6a3bd08c": [
-      25,
-      53
     ],
     "458e53dc": [
       25,
@@ -1986,6 +1986,10 @@
       54
     ],
     "7cda3779": [
+      25,
+      53
+    ],
+    "999fcf98": [
       25,
       53
     ],
@@ -2218,6 +2222,10 @@
       53
     ],
     "a893b58e": [
+      25,
+      53
+    ],
+    "79b348f4": [
       25,
       53
     ],
@@ -2525,10 +2533,6 @@
       25,
       53
     ],
-    "2c679888": [
-      25,
-      53
-    ],
     "56d4e669": [
       25,
       53
@@ -2697,6 +2701,10 @@
       25,
       53
     ],
+    "cd13f00a": [
+      12,
+      40
+    ],
     "199a9f21": [
       25,
       53
@@ -2782,10 +2790,6 @@
       53
     ],
     "f953095a": [
-      25,
-      53
-    ],
-    "1a575193": [
       25,
       53
     ],
@@ -2933,14 +2937,6 @@
       25,
       53
     ],
-    "2d83b370": [
-      26,
-      54
-    ],
-    "f69fa21e": [
-      25,
-      53
-    ],
     "38e666d0": [
       25,
       53
@@ -2988,6 +2984,10 @@
     "19656fb6": [
       25,
       53
+    ],
+    "2d83b370": [
+      26,
+      54
     ],
     "828e5b6c": [
       25,
