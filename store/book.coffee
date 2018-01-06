@@ -23,8 +23,8 @@ module.exports =
       state.hide_potof_ids = ids
 
   actions:
-    create: ({commit}, { book })->
-      { status, data } = await axios.post "#{env.url.api}/books", { book }
+    create: ({commit}, { book, potof })->
+      { status, data } = await axios.post "#{env.url.api}/books", { book, potof }
       commit "data",  data
       data
 

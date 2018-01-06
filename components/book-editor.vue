@@ -202,8 +202,6 @@ module.exports =
     potof:
       default: ->
         face_id: null
-        idx: "NPC"
-        _id: @book._id + "-NPC"
 
         sign: null
         job:  null

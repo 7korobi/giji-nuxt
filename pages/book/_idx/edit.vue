@@ -27,7 +27,7 @@ module.exports = v =
       @potof = Query.potofs.find(@book_id + "-NPC")
   methods:
     update: (data)->
-      @$store.dispatch "book/update", data
+      console.log await @$store.dispatch "book/update", data
 
 _id v, 1, "book"
 

@@ -199,12 +199,12 @@ module.exports = (app, m, { game: { folder_id }})->
   up_phase = (phase)-> up_for_tree Phase, phase
   up_chat  = (chat)->  up_for_tree Chat,  chat
 
-  up_chats_step_1 = (_id, idx)->
+  up_chats_step_book = (_id, idx = 0)->
     head = "#{_id}-#{idx}"
     npc_id = "#{_id}-NPC"
     [
       up_chat
-        _id: "#{head}-村題-welcome"
+        _id: "#{head}-BM-welcome"
         idx: "welcome"
         book_id: _id
         potof_id: npc_id
@@ -212,7 +212,7 @@ module.exports = (app, m, { game: { folder_id }})->
         show: "report"
         log: "（この村をみんなに紹介しよう）"
       up_chat
-        _id: "#{head}-村題-nrule"
+        _id: "#{head}-BM-nrule"
         idx: "nrule"
         book_id: _id
         potof_id: npc_id
@@ -220,7 +220,7 @@ module.exports = (app, m, { game: { folder_id }})->
         show: "report"
         log: nrules.join("\n")
       up_chat
-        _id: "#{head}-村題-vrule"
+        _id: "#{head}-BM-vrule"
         idx: "vrule"
         book_id: _id
         potof_id: npc_id
@@ -229,55 +229,76 @@ module.exports = (app, m, { game: { folder_id }})->
         log: vrules.join("\n")
     ]
 
-  up_phases_step_1 = (_id, idx)->
+  up_chats_step_part = (_id, idx, face_id)->
+    face = Query.faces.find face_id
+    log = face?.npc?.say?[idx]
+
+    head = "#{_id}-#{idx}"
+    npc_id = "#{_id}-NPC"
+    chat =
+      _id: "#{head}-SS-0"
+      idx: "0"
+      book_id: _id
+      potof_id: npc_id
+      deco: "giji"
+      show: "talk"
+      log: log ? "＠＠＠"
+    [ up_chat chat ]
+
+  up_phases_step_book = (_id, idx = 0)->
     head = "#{_id}-#{idx}"
     [
       up_phase
-        _id: "#{head}-村題"
-        idx: "村題"
+        _id: "#{head}-BM"
+        idx: "BM"
         label: '情報'
         handle: 'MAKER'
         update: true
       up_phase
-        _id: "#{head}-独題"
-        idx: "独題"
+        _id: "#{head}-MM"
+        idx: "MM"
+        label: '情報'
+        handle: 'SSAY'
+        update: true
+    ]
+  up_phases_step_part = (_id, idx)->
+    head = "#{_id}-#{idx}"
+    [
+      up_phase
+        _id: "#{head}-TM"
+        idx: "TM"
         label: '情報'
         handle: 'private'
         update: false
       up_phase
-        _id: "#{head}-独言"
-        idx: "独言"
-        label: '独り言'
-        handle: 'TSAY'
-        update: false
-    ]
-
-  up_phases_step_2 = (_id, idx)->
-    head = "#{_id}-#{idx}"
-    [
-      up_phase
-        _id: "#{head}-発題"
-        idx: "発題"
+        _id: "#{head}-SM"
+        idx: "SM"
         label: '情報'
         handle: 'public'
         update: false
       up_phase
-        _id: "#{head}-発言"
-        idx: "発言"
-        label: '発言'
+        _id: "#{head}-TS"
+        idx: "TS"
+        label: '独り言'
+        handle: 'TSAY'
+        update: false
+      up_phase
+        _id: "#{head}-Aim"
+        idx: "Aim"
+        label: "内緒話"
+        handle: "AIM"
+        update: false
+      up_phase
+        _id: "#{head}-SS"
+        idx: "SS"
+        label: '会話'
         handle: 'SSAY'
         update: false
       up_phase
-        _id: "#{head}-見言"
-        idx: "見言"
-        label: '発言'
+        _id: "#{head}-VS"
+        idx: "VS"
+        label: '会話'
         handle: 'VSAY'
-        update: false
-      up_phase
-        _id: "#{head}-内言"
-        idx: "内言"
-        label: "内緒話"
-        handle: "AIM"
         update: false
     ]
 
@@ -318,7 +339,7 @@ module.exports = (app, m, { game: { folder_id }})->
     session: { passport }
   })->
     _id =
-      $regex: ///^#{book_id}-\d+-[村発見].-///
+      $regex: ///^#{book_id}-\d+-[BSV].-///
     finder =
       if passport?.potof?
         potof_id =
@@ -340,25 +361,37 @@ module.exports = (app, m, { game: { folder_id }})->
 ###
 
   app.post '/api/books', API ({
-    body: { book }
+    body: { book, potof }
     session: { passport }
   })->
     must_signiture passport
+    console.log { book, potof }
 
     book = { _id } = await add_book book
     npc_id = "#{_id}-NPC"
-    [potof, part, chats, phases] = await Promise.all [
+    [potof, part, phases, chats] = await Promise.all [
       up_potof
         _id: npc_id
         idx: "NPC"
+        face_id: potof.face_id
+        book_id: _id
         passport_id: passport.user._id
+
         sign: passport.user.sign
+        job: potof.job
+
       up_part
         _id: "#{_id}-0"
         idx: "0"
         label: 'プロローグ'
-      Promise.all up_chats_step_1 _id, 0
-      Promise.all up_phases_step_1 _id, 0
+      Promise.all [
+        ... up_phases_step_book _id, 0
+        ... up_phases_step_part _id, 0
+      ]
+      Promise.all [
+        ... up_chats_step_book _id, 0
+        ... up_chats_step_part _id, 0, potof.face_id
+      ]
     ]
     passport.potof = potof
     { book, potof, part, phases, chats }
@@ -382,25 +415,8 @@ module.exports = (app, m, { game: { folder_id }})->
       passport_id: passport.user._id
     [potof, chats, phases] = await Promise.all [
       up_potof potof
-      Promise.all [
-        up_chat
-          _id: "#{_id}-0-発言-0"
-          idx: "0"
-          book_id: _id
-          potof_id: npc_id
-          deco: "giji"
-          show: "text"
-          log: "＠＠＠"
-        up_chat
-          _id: "#{_id}-1-発言-0"
-          idx: "0"
-          book_id: _id
-          potof_id: npc_id
-          deco: "giji"
-          show: "text"
-          log: "＠＠＠"
-      ]
-      Promise.all up_phases_step_2 _id, 0
+      Promise.all up_chats_step_book  _id, 0
+      Promise.all up_phases_step_book _id, 0
     ]
     { book, potof, chats, phases }
 
@@ -412,13 +428,14 @@ module.exports = (app, m, { game: { folder_id }})->
   })->
     must_signiture passport
     can_admin passport
+    { potof } = passport
 
-    [ part, ...phases ] = await Promise.all [
+    [ part, phases, chats ] = await Promise.all [
       up_part part
-      ... up_phases_step_1 book_id, part.idx
-      ... up_phases_step_2 book_id, part.idx
+      Promise.all up_phases_step_part book_id, part.idx
+      Promise.all up_chats_step_part  book_id, part.idx, potof.face_id
     ]
-    { part, phases }
+    { part, phases, chats }
 
   app.post '/api/books/:book_id/phase', API ({
     params: { book_id }

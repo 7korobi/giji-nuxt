@@ -14,8 +14,8 @@ check = ->
 
   potof:
     _id: "test-1-NPC"
-    face_id: "t29"
-    job: "透明女子会"
+    face_id: "sf10"
+    job: "保安技師"
     passport_id: 'local-test-user'
   
   chats: [
@@ -39,11 +39,11 @@ module.exports = (app, { test, http, bless })->
   test.serial 'post api/books', (t)->
     await http.post "/test/session"
 
-    { book } = check()
+    { book, potof } = check()
     { text } = await http
     .post "/api/books"
     .type 'json'
-    .send { book }
+    .send { book, potof }
 
     bless t
     t.deepContain JSON.parse(text),
@@ -55,16 +55,36 @@ module.exports = (app, { test, http, bless })->
         idx: "0"
         label: "プロローグ"
       phases: [
-        idx: "村題"
+        idx: "BM"
         handle: "MAKER"
         update: true
       ,
-        idx: "独題"
+        idx: "MM"
+        handle: "SSAY"
+        update: true
+      ,
+        idx: "TM"
         handle: "private"
         update: false
       ,
-        idx: "独言"
+        idx: "SM"
+        handle: "public"
+        update: false
+      ,
+        idx: "TS"
         handle: "TSAY"
+        update: false
+      ,
+        idx: "Aim"
+        handle: "AIM"
+        update: false
+      ,
+        idx: "SS"
+        handle: "SSAY"
+        update: false
+      ,
+        idx: "VS"
+        handle: "VSAY"
         update: false
       ]
       chats: [
@@ -73,7 +93,10 @@ module.exports = (app, { test, http, bless })->
         idx: "nrule"
       ,
         idx: "vrule"
+      ,
+        idx: "0"
       ]
+
 
   test 'post api/books/:book_id', (t)->
     { book, potof } = check()
@@ -88,24 +111,21 @@ module.exports = (app, { test, http, bless })->
       book: check().book
       potof: check().potof
       phases: [
-        _id: "test-1-0-発題"
-        idx: "発題"
+        _id: "test-1-0-BM"
+        idx: "BM"
       ,
-        _id: "test-1-0-発言"
-        idx: "発言"
-      ,
-        _id: "test-1-0-見言"
-        idx: "見言"
-      ,
-        _id: "test-1-0-内言"
-        idx: "内言"
+        _id: "test-1-0-MM"
+        idx: "MM"
       ]
       chats: [
-        _id: "test-1-0-発言-0"
-        idx: "0"
+        _id: "test-1-0-BM-welcome"
+        idx: "welcome"
       ,
-        _id: "test-1-1-発言-0"
-        idx: "0"
+        _id: "test-1-0-BM-nrule"
+        idx: "nrule"
+      ,
+        _id: "test-1-0-BM-vrule"
+        idx: "vrule"
       ]
 
   test 'post api/books/:book_id/part', (t)->
@@ -119,6 +139,35 @@ module.exports = (app, { test, http, bless })->
     bless t
     t.deepContain JSON.parse(text),
       part: check().part
+      phases: [
+        idx: "TM"
+        handle: "private"
+        update: false
+      ,
+        idx: "SM"
+        handle: "public"
+        update: false
+      ,
+        idx: "TS"
+        handle: "TSAY"
+        update: false
+      ,
+        idx: "Aim"
+        handle: "AIM"
+        update: false
+      ,
+        idx: "SS"
+        handle: "SSAY"
+        update: false
+      ,
+        idx: "VS"
+        handle: "VSAY"
+        update: false
+      ]
+      chats: [
+        idx: "0"
+      ]
+
 
   test 'get api/books', (t)->
     { text } = await http
