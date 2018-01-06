@@ -13,7 +13,7 @@
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
     "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
-    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js",
+    "pages\\book\\_idx\\edit.d94acbedfd7cc00c7b5d.js",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js",
@@ -21,14 +21,14 @@
     "pages\\demo\\marked.1916335383ae332795ea.js",
     "pages\\demo\\markdown.4ee5e898e116951a4f94.js",
     "pages\\demo\\index.bdd1a4043bfcec8d9275.js",
-    "pages\\book\\new.20016cc98fb6d9e201f0.js",
+    "pages\\book\\new.0944110a9028fa50002d.js",
     "layouts\\default.338e10794411ece91f29.js",
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "common.aa6eeff3ac353f59e64b.js",
-    "app.f644101ba8570424d707.js",
-    "manifest.93bc2be138b505a4ef20.js",
+    "common.67e8de8c1694c0c43f08.js",
+    "app.7938ab96260369b55961.js",
+    "manifest.ff130f72e71967ab75d4.js",
     "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js.map",
     "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js",
     "pages\\sow\\village\\index.950fa0540e6e7396ffe2.js.map",
@@ -41,7 +41,7 @@
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js.map",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js.map",
     "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js.map",
-    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js.map",
+    "pages\\book\\_idx\\edit.d94acbedfd7cc00c7b5d.js.map",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js.map",
     "pages\\rule-guide.4a100f0b8075f19aea11.js.map",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js.map",
@@ -49,21 +49,21 @@
     "pages\\demo\\marked.1916335383ae332795ea.js.map",
     "pages\\demo\\markdown.4ee5e898e116951a4f94.js.map",
     "pages\\demo\\index.bdd1a4043bfcec8d9275.js.map",
-    "pages\\book\\new.20016cc98fb6d9e201f0.js.map",
+    "pages\\book\\new.0944110a9028fa50002d.js.map",
     "layouts\\default.338e10794411ece91f29.js.map",
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js.map",
     "pages\\book\\index.0433c012eb2c9506487f.js.map",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js.map",
-    "common.aa6eeff3ac353f59e64b.js.map",
-    "app.f644101ba8570424d707.js.map",
-    "manifest.93bc2be138b505a4ef20.js.map",
+    "common.67e8de8c1694c0c43f08.js.map",
+    "app.7938ab96260369b55961.js.map",
+    "manifest.ff130f72e71967ab75d4.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.93bc2be138b505a4ef20.js",
-    "common.aa6eeff3ac353f59e64b.js",
-    "app.f644101ba8570424d707.js"
+    "manifest.ff130f72e71967ab75d4.js",
+    "common.67e8de8c1694c0c43f08.js",
+    "app.7938ab96260369b55961.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js",
@@ -77,7 +77,7 @@
     "pages\\character-tag.0b1fe4a7b390d9faf37e.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
     "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
-    "pages\\book\\_idx\\edit.d08e6d772f859f68f37a.js",
+    "pages\\book\\_idx\\edit.d94acbedfd7cc00c7b5d.js",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
     "pages\\demo\\timeago.6da95ce0f28d285f1486.js",
@@ -85,7 +85,7 @@
     "pages\\demo\\marked.1916335383ae332795ea.js",
     "pages\\demo\\markdown.4ee5e898e116951a4f94.js",
     "pages\\demo\\index.bdd1a4043bfcec8d9275.js",
-    "pages\\book\\new.20016cc98fb6d9e201f0.js",
+    "pages\\book\\new.0944110a9028fa50002d.js",
     "layouts\\default.338e10794411ece91f29.js",
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
@@ -785,10 +785,6 @@
       26,
       54
     ],
-    "60a704d8": [
-      25,
-      53
-    ],
     "6bde3474": [
       25,
       53
@@ -928,6 +924,10 @@
     "aa05cb12": [
       26,
       54
+    ],
+    "50e1c135": [
+      12,
+      40
     ],
     "4ebabf86": [
       26,
@@ -1074,6 +1074,10 @@
       54
     ],
     "19a42aec": [
+      25,
+      53
+    ],
+    "4784aba5": [
       25,
       53
     ],
@@ -1293,6 +1297,10 @@
       25,
       53
     ],
+    "0dc333d2": [
+      25,
+      53
+    ],
     "50ea8b34": [
       26,
       54
@@ -1437,10 +1445,6 @@
       26,
       54
     ],
-    "d4f408f4": [
-      25,
-      53
-    ],
     "961327e8": [
       25,
       53
@@ -1552,6 +1556,10 @@
     "17fceb17": [
       25,
       53
+    ],
+    "f5a3bdb2": [
+      20,
+      48
     ],
     "53c63c92": [
       26,
@@ -1701,6 +1709,10 @@
       25,
       53
     ],
+    "896ba3da": [
+      25,
+      53
+    ],
     "0f1309f0": [
       25,
       53
@@ -1774,10 +1786,6 @@
       53
     ],
     "16c53130": [
-      25,
-      53
-    ],
-    "594b98ec": [
       25,
       53
     ],
@@ -2557,14 +2565,6 @@
       25,
       53
     ],
-    "73402aed": [
-      25,
-      53
-    ],
-    "f69fa21e": [
-      25,
-      53
-    ],
     "399cdb70": [
       26,
       54
@@ -2580,6 +2580,10 @@
     "4fd336cc": [
       26,
       54
+    ],
+    "73402aed": [
+      25,
+      53
     ],
     "0f3c430d": [
       26,
@@ -2705,10 +2709,6 @@
       25,
       53
     ],
-    "cd13f00a": [
-      12,
-      40
-    ],
     "199a9f21": [
       25,
       53
@@ -2752,10 +2752,6 @@
     "ff12ffe6": [
       25,
       53
-    ],
-    "6d0700b9": [
-      20,
-      48
     ],
     "138d865f": [
       25,
@@ -3142,6 +3138,10 @@
       34
     ],
     "5a00b126": [
+      25,
+      53
+    ],
+    "f69fa21e": [
       25,
       53
     ],
