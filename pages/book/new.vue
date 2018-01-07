@@ -1,7 +1,7 @@
 <template lang="pug">
-.outframe
-  .contentframe
-    no-ssr
+no-ssr
+  .outframe
+    .contentframe
       book-editor(@input="create") 新しい村を作成
 
 </template>

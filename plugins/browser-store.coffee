@@ -84,7 +84,6 @@ module.exports = (args1)->
   watchs = []
   routes = []
   beforeRouteUpdate = (newRoute, oldRoute, next)->
-    console.log "beforeRouteUpdate", arguments
     next()
     for key, { by_url, value } of routes
       newVal = get_value_by_route newRoute, by_url, key, value
@@ -93,7 +92,6 @@ module.exports = (args1)->
         cb?.call @, newVal, oldVal, key
 
   beforeMount = ->
-    console.log "beforeMount"
     for key, { by_url, value } of watchs
       @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
     for key, val of @$data.$browser

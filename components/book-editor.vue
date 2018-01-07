@@ -103,7 +103,7 @@
     label 最初の犠牲者
     select(v-model="npcid")
       optgroup(v-for="tag in tags" :label="tag.label")
-        option(v-for="face in tag.faces.list", :value="tag.chr_job(face.id).id" :disabled="! face.npc") {{ tag.chr_job(face.id).job }} {{ face.name }}
+        option(v-for="face in tag.faces.list", :value="tag.chr_job(face.id).id", :disabled="! face.npc") {{ tag.chr_job(face.id).job }} {{ face.name }}
 
   c-talk.form(v-if="npc_say" handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id", :log="npc_say[0]")
   c-talk.form(v-if="npc_say" handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id", :log="npc_say[1]")
@@ -215,7 +215,7 @@ module.exports =
     npcid:
       get: ->
         { face_id, job } = @potof
-        Query.chr_jobs.where({ face_id, job }).list.head.id
+        Query.chr_jobs.where({ face_id, job }).list.head?.id
       set: (new_id)->
         npc = Query.chr_jobs.find new_id
         @potof.face_id = npc.face_id

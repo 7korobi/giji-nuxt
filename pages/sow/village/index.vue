@@ -1,10 +1,10 @@
 <template lang="pug">
-.outframe
-  .sideframe
-    .inframe
-      .icons.form
-  .contentframe
-    no-ssr
+no-ssr
+  .outframe
+    .sideframe
+      .inframe
+        .icons.form
+    .contentframe
       transition-group.inframe(name="list" tag="div")
         c-post(handle="footer" key="breadcrumb")
           bread-crumb
@@ -123,7 +123,6 @@
               | {{ o.label }}
               sup(v-if="1 < o.count") {{ o.count }}
 
-    no-ssr
       .inframe(v-for="(villages, idx) in page_contents", :key="idx")
         c-report(handle="MAKER", v-for="o in villages", :write_at="o.write_at", :id="o._id", :key="o._id")
           .name
@@ -166,12 +165,11 @@
                     | {{ role.label }}
                     sup(v-if="1 < role.count") {{ role.count }}
 
-
-    .inframe
-      c-report(handle="footer" key="limitup")
-        scroll-mine(v-if="page_next_idx" @input="page_add", :as="page_next_idx") 次頁
-      c-post(handle="footer")
-        bread-crumb
+      .inframe
+        c-report(handle="footer" key="limitup")
+          scroll-mine(v-if="page_next_idx" @input="page_add", :as="page_next_idx") 次頁
+        c-post(handle="footer")
+          bread-crumb
 
 </template>
 <script lang="coffee">

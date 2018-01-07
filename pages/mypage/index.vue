@@ -1,7 +1,7 @@
 <template lang="pug">
-.outframe
-  .contentframe
-    no-ssr
+no-ssr
+  .outframe
+    .contentframe
       .inframe
         br
         c-talk(v-if="user" handle="VSAY" deco="giji", :head="user.nick", :sign="user.sign", :img_src="user.icon")

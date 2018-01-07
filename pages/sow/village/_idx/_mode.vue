@@ -1,62 +1,63 @@
 
 <template lang="pug">
-.outframe
-  .sideframe
-    .inframe
-      .icons.form
-        nuxt-link.item.active(replace, :to="editor_url")
-          i.fa.fa-file-text
-        nuxt-link.item.active(replace, :to="back_url")
-          i.fa.fa-map-marker
-        check.item(v-model="shows" as="mentions")
-          i.fa.fa-map-pin
-        check.item(v-model="shows" as="toc")
-          i.fa.fa-film
-        check.item(v-model="shows" as="potof")
-          i.fa.fa-users
-  .summary(name="list" tag="div" key="summary")
-    a-mentions(key="1" @anker="anker")
-    a-toc(key="2")
-    a-potofs(key="3")
-  .contentframe
-    .inframe
-      c-post(handle="footer" key="breadcrumb")
-        bread-crumb
-          li
-            nuxt-link(:to="folder_url") 終了した村一覧
+no-ssr
+  .outframe
+    .sideframe
+      .inframe
+        .icons.form
+          nuxt-link.item.active(replace, :to="editor_url")
+            i.fa.fa-file-text
+          nuxt-link.item.active(replace, :to="back_url")
+            i.fa.fa-map-marker
+          check.item(v-model="shows" as="mentions")
+            i.fa.fa-map-pin
+          check.item(v-model="shows" as="toc")
+            i.fa.fa-film
+          check.item(v-model="shows" as="potof")
+            i.fa.fa-users
+    .summary(name="list" tag="div" key="summary")
+      a-mentions(key="1" @anker="anker")
+      a-toc(key="2")
+      a-potofs(key="3")
+    .contentframe
+      .inframe
+        c-post(handle="footer" key="breadcrumb")
+          bread-crumb
+            li
+              nuxt-link(:to="folder_url") 終了した村一覧
 
-      c-report.form(handle="footer" key="finder")
-        page-mode
-        page-part
+        c-report.form(handle="footer" key="finder")
+          page-mode
+          page-part
 
-    .inframe(v-if="mode == 'memo'")
-      c-report.form(handle="footer")
-        span
-          btn(v-model="mode", as="memos")
-            i.fa.fa-expand
-        span 最新のメモを表示しています。
-    .inframe(v-if="mode == 'memos'")
-      c-report.form(handle="footer")
-        span
-          btn(v-model="mode", as="memo")
-            i.fa.fa-compress
-        span メモ掲載の一覧を表示しています。
+      .inframe(v-if="mode == 'memo'")
+        c-report.form(handle="footer")
+          span
+            btn(v-model="mode", as="memos")
+              i.fa.fa-expand
+          span 最新のメモを表示しています。
+      .inframe(v-if="mode == 'memos'")
+        c-report.form(handle="footer")
+          span
+            btn(v-model="mode", as="memo")
+              i.fa.fa-compress
+          span メモ掲載の一覧を表示しています。
 
-    .inframe(v-for="(chats, idx) in page_contents", :key="idx")
-      chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+      .inframe(v-for="(chats, idx) in page_contents", :key="idx")
+        chat(v-for="o in chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
 
-    .inframe
-      c-report.form(v-if="page_next_idx" handle="footer" key="limitup")
-        .center
-          scroll-mine(@input="page_add", :as="page_next_idx") 次頁
-      c-report.form(v-else handle="footer" key="limitup")
-        page-part
-        page-mode
+      .inframe
+        c-report.form(v-if="page_next_idx" handle="footer" key="limitup")
+          .center
+            scroll-mine(@input="page_add", :as="page_next_idx") 次頁
+        c-report.form(v-else handle="footer" key="limitup")
+          page-part
+          page-mode
 
-      c-post(handle="footer" key="breadcrumb")
-        bread-crumb
-          li
-            nuxt-link(:to="folder_url") 終了した村一覧
+        c-post(handle="footer" key="breadcrumb")
+          bread-crumb
+            li
+              nuxt-link(:to="folder_url") 終了した村一覧
 
 </template>
 

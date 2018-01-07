@@ -1,13 +1,13 @@
 <template lang="pug">
-.outframe
-  .sideframe
-    .inframe
-      .icons.form
-        nuxt-link.item.active(to="full")
-          i.fa.fa-map-pin
-  .contentframe
-    no-ssr
-      book-editor(:book="book" :potof="potof" @input="update") 村の設定を更新
+no-ssr
+  .outframe
+    .sideframe
+      .inframe
+        .icons.form
+          nuxt-link.item.active(to="full")
+            i.fa.fa-map-pin
+    .contentframe
+        book-editor(:book="book" :potof="potof" @input="update") 村の設定を更新
 
 </template>
 <script lang="coffee">

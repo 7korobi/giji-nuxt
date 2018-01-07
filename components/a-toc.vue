@@ -15,13 +15,15 @@ module.exports =
       [ ...,  max] = max
       min = min.write_at
       max = max.write_at
-      timerange { min, max }
+      range = max - min
+      timerange { min, max, range }
 
     page_label: (part_id, page_idx)->
       [ min,..., max ] = @chats(part_id)[page_idx]
       min = min.write_at
       max = max.write_at
-      timerange { min, max }
+      range = max - min
+      timerange { min, max, range }
 
     page_btn_class: (part_id, page_idx)->
       if @part_id == part_id && @pager.head_idx <= page_idx <= @pager.tail_idx

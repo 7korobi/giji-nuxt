@@ -10,7 +10,7 @@ to_time = (msec)->
   i = i / 24
   return "#{Math.ceil i}d"
 
-module.exports = ({ min, range, max })->
+module.exports = ({ min, max, range })->
   return "" unless range?
   min_str = moment(min).format('ddd HH時')
   max_str = moment(max).format('ddd HH時')
