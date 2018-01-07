@@ -71,7 +71,7 @@ module.exports = m =
       else
         null
     _.set o, "computed.idx.get", ->
-      @$route.params.idx?.split("-")
+      @$data.$browser.idx.split("-")
 
   item: (o, at, name)->
     key = "#{name}_id"

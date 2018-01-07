@@ -14,7 +14,7 @@ store = require("~/plugins/browser-store")
   push:
     mode: "full"
   replace:
-    idx: []
+    idx: ""
   watch: (val, old, key)->
     if "mode" == key
       @page_reset()

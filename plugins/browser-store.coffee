@@ -16,7 +16,7 @@ browser_store = bs = (method)->
           db.removeItem key
         o = {}
         o[key] = newVal
-        @$data.$browser = { @$data.$browser..., o... }
+        @$data.$browser = { ...@$data.$browser, ...o }
 
 get_value_by_route = (src, by_url, key, val)->
   value = src.params[key] || src.query[key]
@@ -33,6 +33,18 @@ router = (method)->
         @$router[method] relative_to @$route,
           "#{key}": newVal
 
+watcher = (method)->
+  pack: (computed, {by_url}, key, val)->
+    computed[key] =
+      get: ->
+        @$data.$browser[key]
+      set: (newVal)->
+        o = {}
+        o[key] = newVal
+        { location, href } = @$router.resolve relative_to @$route, o
+        @$data.$browser = { ...@$data.$browser, ...o }
+        history["#{method}State"] null, null, href
+        @$route = { ...@$route, ...location }
 
 try
   test = '__vue-localstorage-test__'
@@ -69,8 +81,10 @@ module.exports = (args1)->
 
   cb = args1.watch
 
+  watchs = []
   routes = []
   beforeRouteUpdate = (newRoute, oldRoute, next)->
+    console.log "beforeRouteUpdate", arguments
     next()
     for key, { by_url, value } of routes
       newVal = get_value_by_route newRoute, by_url, key, value
@@ -79,6 +93,8 @@ module.exports = (args1)->
         cb?.call @, newVal, oldVal, key
 
   mounted = ->
+    for key, { by_url, value } of watchs
+      @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
     for key, val of @$data.$browser
       cb?.call @, @[key], val, key
 
@@ -89,9 +105,16 @@ module.exports = (args1)->
     type = types[value.constructor]
 
     switch method
-      when "replace", "push"
+      when "push"
         setter = router(method)
         routes[key] =
+          by_url: type.by_url
+          value:  value
+
+      when "replace"
+        setter = watcher(method)
+        $browser[key] = value
+        watchs[key] =
           by_url: type.by_url
           value:  value
 
