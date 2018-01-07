@@ -99,19 +99,11 @@
           td
             check(v-model="book.option" as="role_select" title="役職希望を募ります。") 希望を募る
 
-  c-talk.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id")
-    table
-      tbody
-        tr
-          th.r
-            label 最初の犠牲者
-          td
-            select(v-model="potof.face_id")
-              optgroup(v-for="tag in tags" :label="tag.label")
-                option(v-for="face in tag.faces.list", :value="face.id") {{ face.name }}{{ face.npc ? " ★" : "" }}
-            select(v-model="potof.job")
-              option(v-for="job in npc_job_list", :value="job") {{ job }}
-    p ★のついた人物は、固有の台詞をもっています。
+  c-post.form(handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id")
+    label 最初の犠牲者
+    select(v-model="npcid")
+      optgroup(v-for="tag in tags" :label="tag.label")
+        option(v-for="face in tag.faces.list", :value="tag.chr_job(face.id).id" :disabled="! face.npc") {{ tag.chr_job(face.id).job }} {{ face.name }}
 
   c-talk.form(v-if="npc_say" handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id", :log="npc_say[0]")
   c-talk.form(v-if="npc_say" handle="SSAY" deco="giji", :head="npc_name", :face_id="potof.face_id", :log="npc_say[1]")
@@ -220,6 +212,15 @@ module.exports =
 
   computed:
     faces: -> Query.faces.tag @book.tag_ids
+    npcid:
+      get: ->
+        { face_id, job } = @potof
+        Query.chr_jobs.where({ face_id, job }).list.head.id
+      set: (new_id)->
+        npc = Query.chr_jobs.find new_id
+        @potof.face_id = npc.face_id
+        @potof.job     = npc.job
+
     npc_face: -> Query.faces.find @potof.face_id
     npc_say: ->
       @npc_face?.npc?.say

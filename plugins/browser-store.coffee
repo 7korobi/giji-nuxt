@@ -92,7 +92,8 @@ module.exports = (args1)->
       unless newVal == oldVal
         cb?.call @, newVal, oldVal, key
 
-  mounted = ->
+  beforeMount = ->
+    console.log "beforeMount"
     for key, { by_url, value } of watchs
       @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
     for key, val of @$data.$browser
@@ -133,4 +134,4 @@ module.exports = (args1)->
     for key, val of args2
       pack method, key, val
 
-  { data, watch, computed, methods, mounted, beforeRouteUpdate }
+  { data, watch, computed, methods, beforeMount, beforeRouteUpdate }

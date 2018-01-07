@@ -17,6 +17,9 @@
 module.exports = v =
   mixins: [
     require("~/plugins/get-by-mount") "5s", "book/book", -> @book_id
+    require("~/plugins/browser-store")
+      replace:
+        idx: ""
   ]
   data: ->
     book: undefined

@@ -19,10 +19,10 @@ store = require("~/plugins/browser-store")
     if "mode" == key
       @page_reset()
 
-{ mounted } = store
+{ beforeMount } = store
 _.merge store,
-  mounted: ->
-    mounted.call @
+  beforeMount: ->
+    beforeMount.call @
     { page } = @$route.query
     if page
       if Number(page)
@@ -101,7 +101,7 @@ module.exports = (o)->
     store
   else
     _.merge {}, store,
-      mounted: mounted
+      beforeMount: beforeMount
       watch: {}
       computed:
         page: ->
