@@ -9,12 +9,15 @@ focus = (chat_id)->
         @$store.commit "menu/focus", chat_id
       else
         console.log chat_id
+  else
+    @$nextTick =>
+      console.log "scrollto TOP"
+      window.scrollTo 0, 0
 
 store = require("~/plugins/browser-store")
-  push:
-    mode: "full"
   replace:
     idx: ""
+    mode: "full"
   watch: (val, old, key)->
     if "mode" == key
       @page_reset()
@@ -29,8 +32,10 @@ _.merge store,
         @page_idxs = [page - 1]
       else
         @page_reset()
-      query = { @$route.query..., page: undefined }
-      @$router.replace { query }
+      { location, href } = @$router.resolve relative_to @$route,
+        page: undefined
+      history.replaceState null, null, href
+      @$route.query.page = undefined
 
   computed:
     page_all_contents: ->
@@ -87,11 +92,10 @@ _.merge store,
       @page_reset()
     
     chat_id: (newVal, oldVal)->
-      console.log "chat_id", newVal, oldVal
+#      console.log "chat_id", newVal, oldVal
 
-    page: (page, old)->
-      # not work?
-      console.log "watch page", page, old
+    page_idx: (page, old)->
+#      console.log "watch page", page, old
 
 path store, "folder", "book", "part", "phase", "chat"
 

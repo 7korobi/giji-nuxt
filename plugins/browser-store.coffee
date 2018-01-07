@@ -14,9 +14,7 @@ browser_store = bs = (method)->
           db.setItem key, to_str newVal
         else
           db.removeItem key
-        o = {}
-        o[key] = newVal
-        @$data.$browser = { ...@$data.$browser, ...o }
+        @$data.$browser[key] = newVal
 
 get_value_by_route = (src, by_url, key, val)->
   value = src.params[key] || src.query[key]
@@ -42,7 +40,7 @@ watcher = (method)->
         o = {}
         o[key] = newVal
         { location, href } = @$router.resolve relative_to @$route, o
-        @$data.$browser = { ...@$data.$browser, ...o }
+        @$data.$browser[key] = newVal
         history["#{method}State"] null, null, href
         @$route = { ...@$route, ...location }
 
@@ -94,8 +92,6 @@ module.exports = (args1)->
   beforeMount = ->
     for key, { by_url, value } of watchs
       @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
-    for key, val of @$data.$browser
-      cb?.call @, @[key], val, key
 
   data = ->
     { $browser }

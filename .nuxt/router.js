@@ -31,26 +31,7 @@ const _57865a76 = () => import('..\\pages\\book\\_idx\\_mode.vue' /* webpackChun
 
 
 const scrollBehavior = function (to, from, savedPosition) {
-      var basic, book, has_top;
-      book = function(idx_limit, to, from) {
-        [from, to] = [from, to].map(function(o) {
-          var name, page, part, ref;
-          name = o.params.mode || o.name;
-          part = (ref = o.params.idx) != null ? ref.split("-").slice(0, +idx_limit + 1 || 9e9).join("-") : void 0;
-          page = o.query.page;
-          if ('back' === page) {
-            page = void 0;
-          }
-          return `${name} ${part} ${page}`;
-        });
-        if (from !== to) {
-          console.log(`scroll to TOP (${from} != ${to})`);
-          return {
-            x: 0,
-            y: 0
-          };
-        }
-      };
+      var basic, has_top;
       basic = function(has_top, to) {
         [from, to] = [from, to].map(function(o) {
           return o.path;
@@ -82,9 +63,11 @@ const scrollBehavior = function (to, from, savedPosition) {
         default:
           switch (to.name) {
             case "sow-village-idx-mode":
-              return book(2, to, from);
             case "sow-village-idx-anker":
-              return book(1, to, from);
+            case "book-idx-mode":
+            case "book-idx-anker":
+            case "book-idx-edit":
+              return {};
             default:
               has_top = to.matched.some(function(r) {
                 return r.components.default.options.scrollToTop;

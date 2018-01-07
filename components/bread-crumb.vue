@@ -3,7 +3,7 @@ _ = require "lodash"
 
 module.exports =
   mounted: ->
-    console.log @$slots.default
+#    console.log @$slots.default
 
 </script>
 

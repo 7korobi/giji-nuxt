@@ -26,9 +26,9 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "common.4eb065dc8b5c9ee31b1a.js",
-    "app.6aca671d012593bffaec.js",
-    "manifest.a8cb897c3d79ce3d0e65.js",
+    "common.8182b666ea24124f6fa1.js",
+    "app.1007a86d2cd31ef4bfe9.js",
+    "manifest.79e176ad0d0fec1f18d1.js",
     "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js.map",
     "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js",
     "pages\\sow\\village\\index.ded5568c51c6c11a6df1.js.map",
@@ -54,16 +54,16 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js.map",
     "pages\\book\\index.0433c012eb2c9506487f.js.map",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js.map",
-    "common.4eb065dc8b5c9ee31b1a.js.map",
-    "app.6aca671d012593bffaec.js.map",
-    "manifest.a8cb897c3d79ce3d0e65.js.map",
+    "common.8182b666ea24124f6fa1.js.map",
+    "app.1007a86d2cd31ef4bfe9.js.map",
+    "manifest.79e176ad0d0fec1f18d1.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.a8cb897c3d79ce3d0e65.js",
-    "common.4eb065dc8b5c9ee31b1a.js",
-    "app.6aca671d012593bffaec.js"
+    "manifest.79e176ad0d0fec1f18d1.js",
+    "common.8182b666ea24124f6fa1.js",
+    "app.1007a86d2cd31ef4bfe9.js"
   ],
   "async": [
     "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js",
@@ -2233,6 +2233,10 @@
       25,
       53
     ],
+    "0ccbb4e6": [
+      25,
+      53
+    ],
     "6497ffc5": [
       25,
       53
@@ -2497,6 +2501,10 @@
       11,
       39
     ],
+    "dfce272c": [
+      25,
+      53
+    ],
     "d0e4d218": [
       25,
       53
@@ -2617,10 +2625,6 @@
       26,
       54
     ],
-    "33b1c7f3": [
-      25,
-      53
-    ],
     "198de4bd": [
       25,
       53
@@ -2681,15 +2685,15 @@
       8,
       36
     ],
-    "04dffa43": [
-      25,
-      53
-    ],
     "199e4219": [
       25,
       53
     ],
     "2512263f": [
+      25,
+      53
+    ],
+    "f69fa21e": [
       25,
       53
     ],
@@ -2756,6 +2760,10 @@
     "7a7851e6": [
       26,
       54
+    ],
+    "57ff6b54": [
+      25,
+      53
     ],
     "45bb45f0": [
       9,
@@ -2858,10 +2866,6 @@
       53
     ],
     "1910e2b0": [
-      25,
-      53
-    ],
-    "efa59c72": [
       25,
       53
     ],
@@ -3178,10 +3182,6 @@
       54
     ],
     "6dca0870": [
-      25,
-      53
-    ],
-    "f69fa21e": [
       25,
       53
     ],
