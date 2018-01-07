@@ -2,25 +2,17 @@ _ = require "lodash"
 { Query } = require "~/plugins/memory-record"
 { path, relative_to } = require "~/plugins/struct"
 
-focus = (chat_id)->
-  if chat_id? && window?
-    @$nextTick =>
-      if window[chat_id]
-        @$store.commit "menu/focus", chat_id
-      else
-        console.log chat_id
-  else
-    @$nextTick =>
-      console.log "scrollto TOP"
-      window.scrollTo 0, 0
-
 store = require("~/plugins/browser-store")
   replace:
     idx: ""
     mode: "full"
   watch: (val, old, key)->
-    if "mode" == key
-      @page_reset()
+    switch key
+      when "idx"
+        unless @chat_id
+          @go_top()
+      when "mode"
+        @page_reset()
 
 { beforeMount } = store
 _.merge store,
@@ -79,7 +71,20 @@ _.merge store,
   methods:
     page_reset: ->
       @page_idxs = [ @page_idx ]
-      focus.call @, @chat_id
+      { chat_id } = @
+      if chat_id? && window?
+        @$nextTick =>
+          if window[chat_id]
+            @$store.commit "menu/focus", chat_id
+          else
+            console.log chat_id
+      else
+        @go_top()
+
+    go_top: ->
+      @$nextTick =>
+        console.log "scrollto TOP"
+        window.scrollTo 0, 0
 
     page_url: (part_id, page_idx)->
       return unless part_id && data = @chats(part_id)

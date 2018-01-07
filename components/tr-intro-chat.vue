@@ -12,8 +12,8 @@ module.exports = require("~/components/chat.vue").default.component_class()
 
 <template lang="pug">
 tr.chat(@click="click", :key="id", :class="classname")
-  th
+  td
     abbr(v-if="id", :chat_id="id") {{ anker }}
-  th.mention(ref="text")
+  td.mention(v-html="log_html" :class="deco")
     slot
 </template>
