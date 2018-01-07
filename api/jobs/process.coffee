@@ -1,5 +1,4 @@
 sh = require 'child_process'
-{ API_URL } = process.env
 
 module.exports =
   name: 'process'
