@@ -16,7 +16,7 @@ check = ->
     _id: "test-1-NPC"
     face_id: "sf10"
     job: "保安技師"
-    passport_id: 'local-test-user'
+    sign: '公開サイン'
   
   chats: [
     idx: "welcome"
@@ -50,7 +50,10 @@ module.exports = (app, { test, http, bless })->
       book: check().book
       potof:
         idx: "NPC"
-        passport_id: "local-test-user"
+        face_id: "sf10"
+
+        job: "保安技師"
+        sign: "公開サイン"
       part:
         idx: "0"
         label: "プロローグ"

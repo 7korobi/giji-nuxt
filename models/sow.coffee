@@ -87,11 +87,11 @@ new Rule("sow_village").schema ->
     count: 1
   class @model extends @model
     @order: (o, emit)->
-      emit "yeary",       { sort }
-      emit "monthry",     { sort }
+      emit "yeary",       { sort: ['id','asc'] }
+      emit "monthry",     { sort: ['id','asc'] }
       emit "folder_id",   { sort }
       emit "upd_range",   { sort }
-      emit "upd_at",      { sort }
+      emit "upd_at",      { sort: ['id','asc'] }
       emit "sow_auth_id", { sort }
       emit "rating",      { sort }
       emit "size",        { sort }

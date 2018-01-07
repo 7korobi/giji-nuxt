@@ -35,9 +35,9 @@ module.exports =
 
   methods:
     job: (face_id)->
-      job =  Query.chr_jobs.find("#{@set.chr_set_ids.last}_#{face_id}")
-      job ?= Query.chr_jobs.find("all_#{face_id}")
-      job.job
+      @set
+      .chr_job face_id
+      .job
 </script>
 
 <style lang="stylus">

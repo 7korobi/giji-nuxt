@@ -4,6 +4,8 @@
     name: "ボリス"
     order: 1
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -11,6 +13,8 @@
     order: 2
     name: "コリーン"
     tag_ids:
+      - animal
+      - school
       - giji
       - market
       - young
@@ -18,6 +22,8 @@
     order: 3
     name: "キャロライナ"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - road
@@ -27,6 +33,8 @@
     order: 4
     name: "ダン"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - middle
@@ -34,6 +42,8 @@
     order: 5
     name: "ゼルダ"
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - farm
@@ -43,6 +53,8 @@
     order: 6
     name: "フランシスカ"
     tag_ids:
+      - animal
+      - school
       - giji
       - market
       - young
@@ -50,6 +62,8 @@
     order: 8
     name: "ディーン"
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - guild
@@ -58,6 +72,8 @@
     order: 8
     name: "ミッシェル"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - servant
@@ -66,6 +82,8 @@
     order: 8
     name: "モニカ"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -73,6 +91,8 @@
     order: 9
     name: "ヒロシ"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - travel
@@ -82,6 +102,8 @@
     order: 10
     name: "パピヨン"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - elegant
@@ -90,6 +112,8 @@
     order: 11
     name: "イアン"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -97,6 +121,7 @@
     order: 12
     name: "バーナバス"
     tag_ids:
+      - school
       - giji
       - servant
       - road
@@ -105,6 +130,8 @@
     order: 127
     name: "マリアンヌ"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - market
@@ -114,6 +141,9 @@
     order: 14
     name: "トニー"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - road
       - servant
@@ -122,6 +152,9 @@
     order: 15
     name: "ドナルド"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - immoral
       - young
@@ -129,6 +162,9 @@
     order: 16
     name: "カルヴィン"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - elegant
       - apartment
@@ -137,7 +173,10 @@
     order: 17
     name: "ゾーイ"
     tag_ids:
+      - animal
       - travel
+      - animal
+      - school
       - giji
       - apartment
       - kid
@@ -145,6 +184,8 @@
     order: 18
     name: "パティ"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - apartment
@@ -153,6 +194,8 @@
     order: 19
     name: "ゴドウィン"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - market
@@ -161,6 +204,8 @@
     order: 20
     name: "ティモシー"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - elder
@@ -168,6 +213,8 @@
     order: 21
     name: "ヤニク"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - river
@@ -176,6 +223,8 @@
     order: 22
     name: "ブルーノ"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - middle
@@ -184,6 +233,8 @@
     order: 23
     name: "ユリシーズ"
     tag_ids:
+      - animal
+      - school
       - giji
       - market
       - middle
@@ -192,6 +243,8 @@
     order: 24
     name: "シビル"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - guild
@@ -200,6 +253,8 @@
     order: 25
     name: "ハワード"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - elder
@@ -208,6 +263,8 @@
     order: 26
     name: "ズリエル"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - middle
@@ -215,6 +272,8 @@
     order: 27
     name: "ムパムピス"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - young
@@ -222,6 +281,8 @@
     order: 28
     name: "ツェツィーリヤ"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - young
@@ -230,6 +291,9 @@
     order: 29
     name: "ノーリーン"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - servant
       - middle
@@ -238,6 +302,8 @@
     order: 30
     name: "ゲイル"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - medical
@@ -247,6 +313,8 @@
     order: 31
     name: "レティーシャ"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - kid
@@ -254,6 +322,8 @@
     order: 33
     name: "ラルフ"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - young
@@ -261,6 +331,8 @@
     order: 34
     name: "セシル"
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - market
@@ -269,6 +341,8 @@
     order: 35
     name: "ビリー"
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - market
@@ -277,6 +351,8 @@
     order: 36
     name: "オスカー"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - kid
@@ -284,6 +360,8 @@
     order: 37
     name: "ホリー"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - kid
@@ -291,6 +369,9 @@
     order: 38
     name: "アルフレッド"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - government
       - middle
@@ -299,6 +380,8 @@
     order: 39
     name: "クリストファー"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - guild
@@ -308,6 +391,8 @@
     order: 41
     name: "ナタリア"
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - apartment
@@ -316,6 +401,8 @@
     order: 42
     name: "マーゴ"
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - government
@@ -325,6 +412,8 @@
     order: 43
     name: "ヌマタロウ"
     tag_ids:
+      - animal
+      - school
       - giji
       - river
       - farm
@@ -333,6 +422,8 @@
     order: 44
     name: "チャールズ"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - middle
@@ -341,6 +432,8 @@
     name: "ケイト"
     order: 47
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - young
@@ -348,6 +441,8 @@
     order: 48
     name: "ヨアヒム"
     tag_ids:
+      - animal
+      - school
       - giji
       - market
       - immoral
@@ -358,6 +453,8 @@
     order: 49
     name: "フィリップ"
     tag_ids:
+      - animal
+      - school
       - giji
       - road
       - river
@@ -367,6 +464,8 @@
     order: 50
     name: "ニール"
     tag_ids:
+      - animal
+      - school
       - giji
       - farm
       - guild
@@ -376,6 +475,8 @@
     order: 52
     name: "ギリアン"
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - ecclesia
@@ -384,6 +485,8 @@
     order: 53
     name: "ヨーランダ"
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - ecclesia
@@ -393,6 +496,9 @@
     name: "メアリー"
     order: 55
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - market
       - road
@@ -401,6 +507,8 @@
     order: 56
     name: "ギネス"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - market
@@ -409,6 +517,8 @@
     order: 57
     name: "ピッパ"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -416,6 +526,9 @@
     order: 59
     name: "キャサリン"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - medical
       - young
@@ -423,6 +536,8 @@
     order: 60
     name: "ワット"
     tag_ids:
+      - animal
+      - school
       - giji
       - farm
       - middle
@@ -430,6 +545,8 @@
     order: 61
     name: "ヴェラ"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - river
@@ -438,6 +555,8 @@
     order: 62
     name: "ロミオ"
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - elder
@@ -445,6 +564,8 @@
     order: 63
     name: "エマ"
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - elder
@@ -452,6 +573,8 @@
     order: 65
     name: "リンダ"
     tag_ids:
+      - animal
+      - school
       - giji
       - farm
       - young
@@ -459,6 +582,8 @@
     order: 66
     name: "ベネット"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -466,6 +591,8 @@
     order: 67
     name: "タバサ"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - market
@@ -474,6 +601,8 @@
     order: 70
     name: "ノックス"
     tag_ids:
+      - animal
+      - school
       - giji
       - road
       - farm
@@ -482,6 +611,9 @@
     order: 71
     name: "スティーブン"
     tag_ids:
+      - animal
+      - animal
+      - school
       - giji
       - medical
       - middle
@@ -489,6 +621,8 @@
     order: 72
     name: "ガストン"
     tag_ids:
+      - animal
+      - school
       - giji
       - farm
       - middle
@@ -496,6 +630,8 @@
     order: 73
     name: "ウェーズリー"
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - road
@@ -504,6 +640,8 @@
     order: 75
     name: "ザック"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - medical
@@ -512,6 +650,8 @@
     order: 77
     name: "ルーカス"
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - young
@@ -519,6 +659,8 @@
     order: 79
     name: "グロリア"
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - young
@@ -526,6 +668,8 @@
     order: 81
     name: "ヴェスパタイン"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -533,6 +677,8 @@
     order: 83
     name: "ローズマリー"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - market
@@ -541,6 +687,8 @@
     order: 85
     name: "ペラジー"
     tag_ids:
+      - animal
+      - school
       - giji
       - ecclesia
       - river
@@ -549,6 +697,8 @@
     order: 87
     name: "テッド"
     tag_ids:
+      - animal
+      - school
       - giji
       - road
       - apartment
@@ -558,6 +708,8 @@
     comment: 2011/12/11
     order: 89
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - ecclesia
@@ -567,6 +719,8 @@
     comment: 2011/12/11
     order: 91
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - road
@@ -576,6 +730,8 @@
     comment: 2011/12/14 超常現象はあるんだ…
     order: 93
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - river
@@ -586,6 +742,8 @@
     comment: 2011/12/29 この髭はぜったいワックス使ってる。
     order: 95
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - immoral
@@ -596,6 +754,8 @@
     comment: 2012/12/30 スポーツ系中学生くらいに見える
     order: 97
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -604,6 +764,8 @@
     comment: 2011/12/30 美人さん♪
     order: 99
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - apartment
@@ -613,6 +775,8 @@
     comment: 2011/12/06
     order: 125
     tag_ids:
+      - animal
+      - school
       - giji
       - government
       - river
@@ -623,6 +787,8 @@
     order: 126
     comment: 2011/12/05
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - servant
@@ -633,6 +799,8 @@
     comment: 2011/12/06
     order: 128
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - young
@@ -641,6 +809,8 @@
     order: 129
     comment: 2011/12/05
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - middle
@@ -649,6 +819,8 @@
     order: 130
     comment: 2011/12/05
     tag_ids:
+      - animal
+      - school
       - giji
       - road
       - servant
@@ -658,6 +830,8 @@
     name: "ドロシー"
     order: 143
     tag_ids:
+      - animal
+      - school
       - giji
       - river
       - servant
@@ -667,6 +841,8 @@
     name: "セレスト"
     order: 144
     tag_ids:
+      - animal
+      - school
       - giji
       - river
       - servant
@@ -676,6 +852,8 @@
     name: "ベッキー"
     order: 145
     tag_ids:
+      - animal
+      - school
       - giji
       - river
       - servant
@@ -684,6 +862,8 @@
     order: 150
     name: "ネイサン"
     tag_ids:
+      - animal
+      - school
       - giji
       - market
       - middle
@@ -691,6 +871,8 @@
     order: 148
     name: "ロビン"
     tag_ids:
+      - animal
+      - school
       - giji
       - servant
       - kid
@@ -700,6 +882,8 @@
     comment: 2011/12/11
     order: 165
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - immoral
@@ -709,6 +893,8 @@
     order: 180
     name: "ヘクター"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - middle
@@ -716,6 +902,8 @@
     order: 190
     name: "サイラス"
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - guild
@@ -725,6 +913,8 @@
     order: 200
     name: "ソフィア"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - young
@@ -732,6 +922,8 @@
     order: 210
     name: "ジョージ"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - kid
@@ -739,6 +931,8 @@
     order: 213
     name: "ポーチュラカ"
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - kid
@@ -747,6 +941,8 @@
     order: 217
     comment: 2011/12/05
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - medical
@@ -755,6 +951,8 @@
     order: 220
     name: "プリシラ"
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - young
@@ -762,6 +960,8 @@
     order: 225
     name: "ビアンカ"
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - middle
@@ -771,6 +971,8 @@
     order: 230
     comment: 2011/12/05
     tag_ids:
+      - animal
+      - school
       - giji
       - immoral
       - apartment
@@ -780,6 +982,8 @@
     name: "アイリス"
     tag_ids:
       - marchen
+      - animal
+      - school
       - giji
       - road
       - medical
@@ -789,6 +993,8 @@
     order: 250
     name: "ネル"
     tag_ids:
+      - animal
+      - school
       - giji
       - guild
       - apartment
@@ -797,6 +1003,8 @@
     order: 999
     name: "サイモン"
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - young
@@ -958,10 +1166,9 @@
     tag_ids:
       - myth
 -   _id: r12
-    order: 70012
+    order: 12
     name: "バーナバス"
-    tag_ids:
-      - myth
+    tag_ids: []
 -   _id: b49
     comment: ''
     name: "ボリス"
@@ -1461,6 +1668,8 @@
     name: "シメオン"
     order: 82
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - ecclesia
@@ -1470,6 +1679,8 @@
     name: "ヒュー"
     order: 89
     tag_ids:
+      - animal
+      - school
       - giji
       - medical
       - young
@@ -1478,6 +1689,8 @@
     name: "ワンダ"
     order: 90
     tag_ids:
+      - animal
+      - school
       - giji
       - river
       - guild
@@ -1487,6 +1700,8 @@
     comment: "年末カウントダウン♪"
     order: 91
     tag_ids:
+      - animal
+      - school
       - giji
       - farm
       - young
@@ -1496,6 +1711,8 @@
     comment: "年末カウントダウン♪"
     order: 185
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - young
@@ -1504,6 +1721,8 @@
     name: "ウォーレン"
     order: 155
     tag_ids:
+      - animal
+      - school
       - giji
 #      - elegant
       - market
@@ -1513,6 +1732,8 @@
     comment: "年末カウントダウン♪"
     order: 205
     tag_ids:
+      - animal
+      - school
       - giji
       - elegant
       - middle
@@ -1522,6 +1743,8 @@
     name: "ナンシー"
     order: 234
     tag_ids:
+      - animal
+      - school
       - giji
       - apartment
       - young

@@ -133,6 +133,8 @@
       check(v-model="book.tag_ids" as="myth") {{ tag("myth").label }}
       check(v-model="book.tag_ids" as="asia") {{ tag("asia").label }}
       check(v-model="book.tag_ids" as="marchen") {{ tag("marchen").label }}
+      check(v-model="book.tag_ids" as="animal") {{ tag("animal").label }}
+      check(v-model="book.tag_ids" as="school") {{ tag("school").label }}
     span
       check(v-model="book.tag_ids" as="kid") {{ tag("kid").label }}
       check(v-model="book.tag_ids" as="young") {{ tag("young").label }}

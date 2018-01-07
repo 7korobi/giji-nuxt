@@ -167,9 +167,11 @@ module.exports = (app, m, { game: { folder_id }})->
     Object.assign o, { write_at }
     unless o._id
       console.log o 
-    await model.findByIdAndUpdate o._id, o,
+    o = await model.findByIdAndUpdate o._id, o,
       new: true
       upsert: true
+    o.passport_id = undefined
+    o
 
   add_for_tree = (_id, model, o)->
     { idx } = await IdxCount.findByIdAndUpdate _id,
@@ -365,7 +367,6 @@ module.exports = (app, m, { game: { folder_id }})->
     session: { passport }
   })->
     must_signiture passport
-    console.log { book, potof }
 
     book = { _id } = await add_book book
     npc_id = "#{_id}-NPC"
@@ -413,12 +414,15 @@ module.exports = (app, m, { game: { folder_id }})->
       idx: "NPC"
       sign: passport.user.sign
       passport_id: passport.user._id
-    [potof, chats, phases] = await Promise.all [
+    [potof, phases, chats] = await Promise.all [
       up_potof potof
-      Promise.all up_chats_step_book  _id, 0
       Promise.all up_phases_step_book _id, 0
+      Promise.all [
+        ... up_chats_step_book _id, 0
+        ... up_chats_step_part _id, 0, potof.face_id
+      ]
     ]
-    { book, potof, chats, phases }
+    { book, potof, phases, chats }
 
 
   app.post '/api/books/:book_id/part', API ({

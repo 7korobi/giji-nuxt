@@ -15,9 +15,12 @@ order = [
 
 
 new Rule("tag").schema ->
+  @belongs_to "chr_set"
   @habtm "faces", reverse: true
-  @habtm "chr_sets"
   @tree()
+  @model_property.chr_job =
+    value: (face_id)->
+      Query.chr_jobs.find "#{@chr_set_id}_#{face_id}"
   @scope (all)->
     enable: ->
       all.where (o)->

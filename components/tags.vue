@@ -11,6 +11,10 @@ p.form
     tag#marchen
 
   span.tag
+    tag#animal
+    tag#school
+
+  span.tag
     tag#kid
     tag#young
     tag#middle
@@ -41,9 +45,6 @@ p.form
 </template>
 
 <script lang="coffee">
-{ Query } = require "~/plugins/memory-record"
-_ = require "lodash"
-
 module.exports =
   default: require("./tag.vue").default.parent
 
