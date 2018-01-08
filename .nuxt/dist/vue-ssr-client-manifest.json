@@ -10,7 +10,7 @@
     "pages\\mypage\\index.fd386d750746546d0f4c.js",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js",
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
-    "pages\\character-tag.844c9924e9d8a42b88e4.js",
+    "pages\\character-tag.d22b4d457019e8167129.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
     "pages\\sow\\village\\_idx\\anker.9f01a0e87eafa653eab0.js",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js",
@@ -26,9 +26,9 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "common.dfc30155c2e3e327be52.js",
+    "common.276aa5ff0eb4789752cf.js",
     "app.d75f5303a6ede13ca39e.js",
-    "manifest.ebcf23083d051cc4bd02.js",
+    "manifest.bad8fe251aaf870e6606.js",
     "pages\\summary\\faces\\index.3bcf7207409f35e0c823.js.map",
     "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js",
     "pages\\sow\\village\\index.ded5568c51c6c11a6df1.js.map",
@@ -38,7 +38,7 @@
     "pages\\mypage\\index.fd386d750746546d0f4c.js.map",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js.map",
     "pages\\demo\\chats.875697e8a9ba808f4348.js.map",
-    "pages\\character-tag.844c9924e9d8a42b88e4.js.map",
+    "pages\\character-tag.d22b4d457019e8167129.js.map",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js.map",
     "pages\\sow\\village\\_idx\\anker.9f01a0e87eafa653eab0.js.map",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js.map",
@@ -54,15 +54,15 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js.map",
     "pages\\book\\index.0433c012eb2c9506487f.js.map",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js.map",
-    "common.dfc30155c2e3e327be52.js.map",
+    "common.276aa5ff0eb4789752cf.js.map",
     "app.d75f5303a6ede13ca39e.js.map",
-    "manifest.ebcf23083d051cc4bd02.js.map",
+    "manifest.bad8fe251aaf870e6606.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.ebcf23083d051cc4bd02.js",
-    "common.dfc30155c2e3e327be52.js",
+    "manifest.bad8fe251aaf870e6606.js",
+    "common.276aa5ff0eb4789752cf.js",
     "app.d75f5303a6ede13ca39e.js"
   ],
   "async": [
@@ -74,7 +74,7 @@
     "pages\\mypage\\index.fd386d750746546d0f4c.js",
     "pages\\demo\\oauth.cb7c46ace1ccaf733ddb.js",
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
-    "pages\\character-tag.844c9924e9d8a42b88e4.js",
+    "pages\\character-tag.d22b4d457019e8167129.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
     "pages\\sow\\village\\_idx\\anker.9f01a0e87eafa653eab0.js",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js",
@@ -1517,6 +1517,10 @@
       26,
       54
     ],
+    "c3c49a06": [
+      9,
+      37
+    ],
     "b970a92a": [
       25,
       53
@@ -1576,10 +1580,6 @@
     "c4451b0e": [
       26,
       54
-    ],
-    "2796b078": [
-      9,
-      37
     ],
     "dbfdc906": [
       25,
@@ -2021,10 +2021,6 @@
       25,
       53
     ],
-    "60cc4774": [
-      9,
-      37
-    ],
     "6b8afb76": [
       25,
       53
@@ -2341,6 +2337,10 @@
       25,
       53
     ],
+    "2ab9ffa6": [
+      9,
+      37
+    ],
     "ccbc3b78": [
       25,
       53
@@ -2452,6 +2452,10 @@
     "85abb7c0": [
       26,
       54
+    ],
+    "23d89729": [
+      9,
+      37
     ],
     "730ad4b4": [
       29,
@@ -2756,10 +2760,6 @@
     "57ff6b54": [
       25,
       53
-    ],
-    "45bb45f0": [
-      9,
-      37
     ],
     "abd3430e": [
       25,
@@ -3193,11 +3193,11 @@
       25,
       53
     ],
-    "f69fa21e": [
+    "3af91df0": [
       25,
       53
     ],
-    "3af91df0": [
+    "f69fa21e": [
       25,
       53
     ],
