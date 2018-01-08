@@ -18,7 +18,6 @@ module.exports = m =
         to.params[key] = val
       else
         to.query[key] = val
-    console.log to
     to
 
   uniq: (args...)->

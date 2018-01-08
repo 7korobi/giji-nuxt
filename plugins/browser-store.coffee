@@ -94,13 +94,11 @@ module.exports = (args1)->
         console.log "beforeRouteUpdate(#{key}) #{newVal} != #{oldVal}"
         cb?.call @, newVal, oldVal, key
 
-  beforeMount = ->
-    for key, { by_url, value } of watchs
-      @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
-
   data = ->
     for key, { db, by_str, value } of stores
       $browser[key] = value = get_value_by_store db, by_str, key, value
+    for key, { by_url, value } of watchs
+      $browser[key] = get_value_by_route @$route, by_url, key, value
     { $browser }
 
   pack = (method, key, value)->
@@ -138,7 +136,7 @@ module.exports = (args1)->
     for key, val of args2
       pack method, key, val
 
-  { data, watch, computed, methods, beforeMount, beforeRouteUpdate }
+  { data, watch, computed, methods, beforeRouteUpdate }
 
 module.exports.capture = (req)->
   { cookie } = req.headers

@@ -1,22 +1,23 @@
 <template lang="pug">
-.outframe
-  .contentframe
-    .inframe
-      c-post(handle="footer")
-        bread-crumb
-      c-report(handle="header" deco="center")
-        tags(v-model="tag_id")
-        sub(style="width: 100%")
-          | {{ chrs.length }}人の{{ set.long }}を表示しています。
-  .fullframe
-    transition-group.portrates(name="list" tag="div")
-      portrate(v-for="chr in chrs", :face_id="chr._id", :key="chr._id")
-        p {{ job(chr._id) }}
-        p {{ chr.name }}
-  .contentframe
-    .inframe
-      c-post(handle="footer")
-        bread-crumb
+no-ssr
+  .outframe
+    .contentframe
+      .inframe
+        c-post(handle="footer")
+          bread-crumb
+        c-report(handle="header" deco="center")
+          tags(v-model="tag_id")
+          sub(style="width: 100%")
+            | {{ chrs.length }}人の{{ set.long }}を表示しています。
+    .fullframe
+      transition-group.portrates(name="list" tag="div")
+        portrate(v-for="chr in chrs", :face_id="chr._id", :key="chr._id")
+          p {{ job(chr._id) }}
+          p {{ chr.name }}
+    .contentframe
+      .inframe
+        c-post(handle="footer")
+          bread-crumb
 </template>
 <script lang="coffee">
 { Query } = require "~/plugins/memory-record"
