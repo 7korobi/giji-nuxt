@@ -93,7 +93,7 @@ _.merge store,
       query: { page: page_idx + 1 }
 
   watch:
-    read_at: ->
+    "step.chats": ->
       @page_reset()
     
     chat_id: (newVal, oldVal)->

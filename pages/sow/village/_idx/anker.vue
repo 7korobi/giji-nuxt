@@ -36,10 +36,6 @@ module.exports =
 
   methods:
     focus: (idx)->
-      { name, params, query } = @$route
-      params = { params..., idx }
-      @$router.replace { name, params, query }
-    
     anker: (book_id, a)->
       a = uniq @$route.query.a, a
       @$router.replace relative_to @$route, { a }
