@@ -2,8 +2,7 @@ _ = require "lodash"
 { types, relative_to } = require "~/plugins/struct"
 
 browser_store = bs = (method)->
-  db = bs[method]
-  init: ({by_str}, key)-> by_str db.getItem key
+  db: db = bs[method]
   pack: (computed, {to_str}, key, val)->
     computed[key] =
       get: ->
@@ -15,6 +14,10 @@ browser_store = bs = (method)->
         else
           db.removeItem key
         @$data.$browser[key] = newVal
+
+get_value_by_store = (db, by_str, key, val)->
+  o = by_str db.getItem key
+  o ? val
 
 get_value_by_route = (src, by_url, key, val)->
   value = src.params[key] || src.query[key]
@@ -79,14 +82,16 @@ module.exports = (args1)->
 
   cb = args1.watch
 
-  watchs = []
-  routes = []
+  stores = {}
+  watchs = {}
+  routes = {}
   beforeRouteUpdate = (newRoute, oldRoute, next)->
     next()
     for key, { by_url, value } of routes
       newVal = get_value_by_route newRoute, by_url, key, value
       oldVal = get_value_by_route oldRoute, by_url, key, value
       unless newVal == oldVal
+        console.log "beforeRouteUpdate(#{key}) #{newVal} != #{oldVal}"
         cb?.call @, newVal, oldVal, key
 
   beforeMount = ->
@@ -94,19 +99,21 @@ module.exports = (args1)->
       @$data.$browser[key] = get_value_by_route @$route, by_url, key, value
 
   data = ->
+    for key, { db, by_str, value } of stores
+      $browser[key] = value = get_value_by_store db, by_str, key, value
     { $browser }
 
   pack = (method, key, value)->
     type = types[value.constructor]
 
     switch method
-      when "push"
+      when ""
         setter = router(method)
         routes[key] =
           by_url: type.by_url
           value:  value
 
-      when "replace"
+      when "replace", "push"
         setter = watcher(method)
         $browser[key] = value
         watchs[key] =
@@ -115,8 +122,11 @@ module.exports = (args1)->
 
       when "cookie", "local", "session"
         setter = browser_store(method)
-        value = setter.init(type, key) ? value
         $browser[key] = value
+        stores[key] =
+          db: setter.db
+          by_str: type.by_str
+          value: value
 
     setter.pack computed, type, key, value
     if cb?
@@ -129,3 +139,10 @@ module.exports = (args1)->
       pack method, key, val
 
   { data, watch, computed, methods, beforeMount, beforeRouteUpdate }
+
+module.exports.capture = (req)->
+  { cookie } = req.headers
+  if cookie
+    for s in cookie.split /; */
+      bs.cookie.setItem ...s.split /=/
+

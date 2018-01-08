@@ -19,6 +19,7 @@ module.exports = class Map
 
     model.$deploy item, parent
 
+    emit # for uglifyjs dummy.
     emit = (keys..., cmd)=>
       path = ["_reduce", keys...].join('.')
       o.$group.push [path, cmd]

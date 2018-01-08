@@ -1,24 +1,25 @@
 <template lang="pug">
-.outframe
-  .sideframe
-    .inframe
-      .icons.form
-        nuxt-link.item.active(replace, :to="editor_url")
-          i.fa.fa-file-text
-        nuxt-link.item.active(replace, :to="back_url")
-          i.fa.fa-map-marker
+no-ssr
+  .outframe
+    .sideframe
+      .inframe
+        .icons.form
+          nuxt-link.item.active(replace, :to="editor_url")
+            i.fa.fa-file-text
+          nuxt-link.item.active(replace, :to="back_url")
+            i.fa.fa-map-marker
 
-  .summary(name="list" tag="div" key="summary")
-    a-mentions(key="1" @anker="anker")
-  .contentframe
-    .inframe
-      c-report.form(handle="footer" key="finder")
-        page-mode
-    .inframe
-      chat(v-for="o in anker_chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
-    .inframe
-      c-report.form(handle="footer" key="finder")
-        page-mode
+    .summary(name="list" tag="div" key="summary")
+      a-mentions(key="1" @anker="anker")
+    .contentframe
+      .inframe
+        c-report.form(handle="footer" key="finder")
+          page-mode
+      .inframe
+        chat(v-for="o in anker_chats" @anker="anker" @focus="focus", :id="o.id", :key="o.id")
+      .inframe
+        c-report.form(handle="footer" key="finder")
+          page-mode
 
 </template>
 <script lang="coffee">
@@ -35,7 +36,7 @@ module.exports =
     @shows = [@shows..., "current"]
 
   methods:
-    focus: (idx)->
+    focus: (@idx)->
     anker: (book_id, a)->
       a = uniq @$route.query.a, a
       @$router.replace relative_to @$route, { a }

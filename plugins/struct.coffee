@@ -14,12 +14,11 @@ module.exports = m =
   relative_to: ({ name, params, query, hash }, o)->
     to = { name, params, query, hash }
     for key, val of o
-      ext = {}
-      ext[key] = val
       if params[key]
-        to.params = { to.params..., ext... }
+        to.params[key] = val
       else
-        to.query = { to.query..., ext... }
+        to.query[key] = val
+    console.log to
     to
 
   uniq: (args...)->

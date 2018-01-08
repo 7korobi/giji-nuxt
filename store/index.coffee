@@ -6,6 +6,7 @@ if Vue.default
   Vue = Vue.default
 
 axios = require "axios"
+store = require "~/plugins/browser-store"
 { State, Query } = Mem = require "~/plugins/memory-record"
 
 if window?
@@ -20,6 +21,8 @@ module.exports =
 
   actions:
     nuxtServerInit: ({ commit }, { isDev, req, env })->
+      store.capture req
+
       global.env = env
       commit "update", { env }
 
