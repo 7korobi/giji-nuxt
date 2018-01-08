@@ -12,7 +12,7 @@
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
     "pages\\character-tag.844c9924e9d8a42b88e4.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
-    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
+    "pages\\sow\\village\\_idx\\anker.e59344183926414dee7a.js",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
@@ -26,9 +26,9 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js",
     "pages\\book\\index.0433c012eb2c9506487f.js",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js",
-    "common.70087f506ef25de39ce6.js",
+    "common.c53de4e2db130a2e5365.js",
     "app.1007a86d2cd31ef4bfe9.js",
-    "manifest.84828075366034659d54.js",
+    "manifest.9419acd2738165f13502.js",
     "pages\\summary\\faces\\index.ee66fc12895bf3c30159.js.map",
     "pages\\summary\\faces\\_id.f6fc43e7975e6fcc52b2.js",
     "pages\\sow\\village\\index.ded5568c51c6c11a6df1.js.map",
@@ -40,7 +40,7 @@
     "pages\\demo\\chats.875697e8a9ba808f4348.js.map",
     "pages\\character-tag.844c9924e9d8a42b88e4.js.map",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js.map",
-    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js.map",
+    "pages\\sow\\village\\_idx\\anker.e59344183926414dee7a.js.map",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js.map",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js.map",
     "pages\\rule-guide.4a100f0b8075f19aea11.js.map",
@@ -54,15 +54,15 @@
     "pages\\demo\\books.a0ce2af9f684625b3ef5.js.map",
     "pages\\book\\index.0433c012eb2c9506487f.js.map",
     "pages\\book\\_idx\\editor.482f8c05d792fd0aa0c5.js.map",
-    "common.70087f506ef25de39ce6.js.map",
+    "common.c53de4e2db130a2e5365.js.map",
     "app.1007a86d2cd31ef4bfe9.js.map",
-    "manifest.84828075366034659d54.js.map",
+    "manifest.9419acd2738165f13502.js.map",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.84828075366034659d54.js",
-    "common.70087f506ef25de39ce6.js",
+    "manifest.9419acd2738165f13502.js",
+    "common.c53de4e2db130a2e5365.js",
     "app.1007a86d2cd31ef4bfe9.js"
   ],
   "async": [
@@ -76,7 +76,7 @@
     "pages\\demo\\chats.875697e8a9ba808f4348.js",
     "pages\\character-tag.844c9924e9d8a42b88e4.js",
     "pages\\sow\\village\\_idx\\editor.15d53d459e7b50f5a8f4.js",
-    "pages\\sow\\village\\_idx\\anker.bc31ec35a55281b8e7d3.js",
+    "pages\\sow\\village\\_idx\\anker.e59344183926414dee7a.js",
     "pages\\book\\_idx\\edit.247c092f2b70c87c09ac.js",
     "pages\\book\\_idx\\anker.b4acbd87bd76fafce6e2.js",
     "pages\\rule-guide.4a100f0b8075f19aea11.js",
@@ -396,6 +396,10 @@
     "2ff8a3fb": [
       26,
       54
+    ],
+    "61c15466": [
+      11,
+      39
     ],
     "79c14b16": [
       25,
@@ -890,6 +894,14 @@
       54
     ],
     "5c1ae382": [
+      25,
+      53
+    ],
+    "0c33ad9c": [
+      19,
+      47
+    ],
+    "f69fa21e": [
       25,
       53
     ],
@@ -2225,10 +2237,6 @@
       25,
       53
     ],
-    "2491ed7d": [
-      11,
-      39
-    ],
     "77278e27": [
       25,
       53
@@ -2693,10 +2701,6 @@
       25,
       53
     ],
-    "f69fa21e": [
-      25,
-      53
-    ],
     "26cc8ed2": [
       25,
       53
@@ -2868,10 +2872,6 @@
     "1910e2b0": [
       25,
       53
-    ],
-    "0c33ad9c": [
-      19,
-      47
     ],
     "768c5668": [
       25,
