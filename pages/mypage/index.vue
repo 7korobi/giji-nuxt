@@ -45,6 +45,9 @@ no-ssr
                   td
                     a(v-if="user.mail", :href="'mailto:' + user.mail") {{ user.mail }}
 
+        c-report(handle="header") 作成した物語 
+        a-book(v-for="book in books", :key="book._id", :book="book")
+
         c-post(v-if="user.sign" handle="SSAY" deco="giji")
           nuxt-link(to="/book/new") 新しい村を作成する。
 
@@ -53,8 +56,13 @@ no-ssr
 
 </template>
 <script lang="coffee">
+{ Query } = require "~/plugins/memory-record"
+mount = require "~/plugins/get-by-mount"
 
 module.exports =
+  mixins: [
+    mount "1h", "book/my_books"
+  ]
   data: ->
     sign: ""
 
@@ -68,6 +76,7 @@ module.exports =
       @$store.dispatch "user", { @sign }
 
   computed:
+    books: -> Query.books.list
     user: -> @$store.state.user
     
 </script>

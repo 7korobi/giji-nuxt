@@ -33,9 +33,12 @@ module.exports =
       commit "data",  data
       data
 
+    my_books: ({commit})->
+      { status, data } = await axios.get "#{env.url.api}/books", {}
+      commit "data",  data
+
     books: ({commit})->
-      { folder_id } = env.game
-      { status, data } = await axios.get "#{env.url.api}/books", { folder_id }
+      { status, data } = await axios.get "#{env.url.api}/books", {}
       commit "data",  data
 
     book: ({commit, state}, _id)->

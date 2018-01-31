@@ -309,8 +309,15 @@ module.exports = (app, m, { game: { folder_id }})->
   getter API
 ###
 
-  app.get '/api/books', API ->
-    books = await Book.find { _id: ///^#{folder_id}-/// }
+  app.get '/api/books', API ({
+    query: { self }
+    session: { passport }
+  })->
+    books =
+      if self
+        await Book.find { passport_id: passport.user._id }
+      else
+        await Book.find { _id: ///^#{folder_id}-/// }
     { books }
 
   app.get '/api/books/:book_id', API ({
@@ -368,7 +375,9 @@ module.exports = (app, m, { game: { folder_id }})->
   })->
     must_signiture passport
 
+    book.passport_id = passport.user._id
     book = { _id } = await add_book book
+
     npc_id = "#{_id}-NPC"
     [potof, part, phases, chats] = await Promise.all [
       up_potof
