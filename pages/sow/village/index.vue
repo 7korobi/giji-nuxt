@@ -11,7 +11,7 @@ no-ssr
         c-post.form(handle="btns" key="form")
           span
             btn(as="" @input="reset()" value="order")
-              i.fa.fa-eraser
+              i.mdi.mdi-eraser
           span
             btn(as="vid"             v-model="order" @toggle="submenu")
               | 州

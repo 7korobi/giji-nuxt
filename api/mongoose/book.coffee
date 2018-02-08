@@ -140,7 +140,7 @@ module.exports = (app, m, { game: { folder_id }})->
       index: true
     phase_handle:
       type: String
-      index: true 
+      index: true
     idx: String
     _id: String
 
@@ -166,7 +166,7 @@ module.exports = (app, m, { game: { folder_id }})->
     o.open_at ?= write_at
     Object.assign o, { write_at }
     unless o._id
-      console.log o 
+      console.log o
     o = await model.findByIdAndUpdate o._id, o,
       new: true
       upsert: true

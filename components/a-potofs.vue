@@ -28,7 +28,7 @@
             btn(v-model="sort" as="say.max", @toggle="reverse") 最後
           th
             btn(v-model="sort" as="sign", @toggle="reverse")
-              i.fa.fa-user
+              i.mdi.mdi-account
 
           th
             btn(v-model="sort" as="request.role_id", @toggle="reverse") 希望

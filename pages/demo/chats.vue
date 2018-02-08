@@ -5,11 +5,11 @@
     .inframe
       h6
         | 参照されている
-        i.fa.fa-pin
+        i.mdi.mdi-pin
 
       h6
         | よく見ていた
-        i.fa.fa-pin
+        i.mdi.mdi-eye
       h6 一日目の参加者
     .inframe.hover
       a-potofs

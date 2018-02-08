@@ -2,7 +2,7 @@
 <template lang="pug">
 .text-editor
   textarea(ref="input", @input="input", :value="value", :rows="areaRow", :placeholder="placeholder")
-  i.fa(:class="mark")
+  i.mdi(:class="mark")
     | {{size}}/
     span.per {{maxSize}}字
     | {{row}}/

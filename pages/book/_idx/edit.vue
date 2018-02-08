@@ -5,7 +5,7 @@ no-ssr
       .inframe
         .icons.form
           nuxt-link.item.active(to="full")
-            i.fa.fa-map-pin
+            i.mdi.mdi-map-pin
     .contentframe
         book-editor(:book="book" :potof="potof" @input="update") 村の設定を更新
 
