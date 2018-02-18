@@ -72,7 +72,8 @@ sow = head = mono = (text, cb)->
 
   .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
     """<del>#{human}</del>"""
-  cb text
+
+  cb """<article>#{text}</article>"""
   return
 
 module.exports = { sow, head, mono, giji, center, mermaid }
