@@ -26,16 +26,16 @@
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.eaa9779a3074c357c16f.js",
+    "vendor.31c6ffc6e5b6920e1ba6.js",
     "app.a45756cb795c38f2565e.js",
-    "manifest.5d9653fdea60e9c09bf0.js",
+    "manifest.6b39cceae83beb5019fa.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.5d9653fdea60e9c09bf0.js",
-    "vendor.eaa9779a3074c357c16f.js",
+    "manifest.6b39cceae83beb5019fa.js",
+    "vendor.31c6ffc6e5b6920e1ba6.js",
     "app.a45756cb795c38f2565e.js"
   ],
   "async": [
