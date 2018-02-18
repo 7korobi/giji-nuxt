@@ -155,7 +155,7 @@
     h4 能力から検索
     hr
     p
-      check(v-for="able in ables_for_role" v-model="ui.ables" :as="able._id") {{ able.btn || able.sw || able.target || able.label || able._id }}
+      check(v-for="able in ables_for_role" :key="able._id" v-model="ui.ables" :as="able._id") {{ able.btn || able.sw || able.target || able.label || able._id }}
 
   c-report.form(handle="MAKER" deco="giji")
     h4 カード配分
