@@ -57,10 +57,16 @@ sow = head = mono = (text, cb)->
   text = text
   .replace ///<br>///g, "\n"
 
+  .replace ///^\s*([~=＝…ー－―‐-])\1{4,}\s*$///gm, "<hr>"
+
   .replace ///<strong>([^<]*?)<\/strong><sup>([^<]*?)</sup>///g, (tag, item, title, idx, src)->
     """<abbr title="#{title}">#{item}</abbr>"""
+
   .replace ///<a\ title="([^"]*?)"><strong>([^<]*?)</strong></a>///g, (tag, title, item, idx, src)->
     """<abbr title="#{title}">#{item}</abbr>"""
+
+  .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
+    """<del>#{human}</del>"""
 
   .replace ///[a-z]+://[^\s<]+[^<.,:;"')\]\s]///g, (url, idx, src)->
     return url if '<a href="' == src[idx - 9 ... idx].toLowerCase()
@@ -69,9 +75,6 @@ sow = head = mono = (text, cb)->
       suffix = last
       ""
     link(url) + suffix
-
-  .replace /// ((\/\*) ([\s\S]*?) (\*\/|$)) ///g, (human)->
-    """<del>#{human}</del>"""
 
   cb """<article>#{text}</article>"""
   return

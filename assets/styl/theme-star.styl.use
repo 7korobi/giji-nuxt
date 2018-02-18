@@ -5,10 +5,10 @@ palette_single(icons, foot, N09)
 
 .talk
   .chat
-    border-style: solid
-    border-radius: 0.5rem 0 0 0.5rem
-    border-width: 2px 7px 2px 2px
-    margin:  0 0 0 -2px
+    border-radius: 0.5rem
+    border-style: none
+    border-width: 0
+    margin:  0 7px 0 0
 
 .center-left
 .center-right
@@ -28,3 +28,6 @@ palette_single(icons, foot, N09)
   background-position: right top
   background-image: url("//s3-ap-northeast-1.amazonaws.com/giji-assets/images/bg/jupiter.png")
   background-color: hsla(210,96%,10%,1)
+
+.contentframe
+  background-color: hsla(170,90%,75%,0.20)
