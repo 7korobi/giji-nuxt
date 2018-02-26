@@ -58,7 +58,7 @@ Colons can be used to align columns.
 | zebra stripes | are neat      |    $1 |
 
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![IMAGE ALT TEXT HERE](https://s3-ap-northeast-1.amazonaws.com/giji-assets/images/portrate/c59.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 There must be at least 3 dashes separating each header cell.
 The outer pipes (|) are optional, and you don't need to make the 

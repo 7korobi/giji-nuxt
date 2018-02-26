@@ -1,11 +1,11 @@
 _ = require "lodash"
 passport = require "passport"
 plugins =
-  facebook: require "passport-facebook"
-  twitter:  require "passport-twitter"
-  slack:    require "passport-slack"
-  github:   require "passport-github2"
-  google:   require "passport-google-oauth2"
+  facebook: require("passport-facebook").Strategy
+  twitter:  require("passport-twitter").Strategy
+  slack:    require("passport-slack").Strategy
+  github:   require("passport-github").Strategy
+  google:   require("passport-google-oauth").OAuth2Strategy
 
 { YAML, API } = require "../helper.coffee"
 
@@ -59,8 +59,8 @@ module.exports = (app, m, { auth, url })->
     req.logout()
     res.redirect('/')
 
-  for provider, { attr, Strategy } of auth
-    { Strategy } = plugins[provider]
+  for provider, { attr, authenticate } of auth
+    Strategy = plugins[provider]
     attr.callbackURL = "#{url.web}/auth/#{provider}/callback"
 
     passport.use new Strategy attr, (accessToken, refreshToken, { provider, id, displayName, emails, photos }, done)->
@@ -76,9 +76,12 @@ module.exports = (app, m, { auth, url })->
       done null, profile
       console.log "passport-profile", profile
 
-    app.get "/auth/#{provider}", passport.authenticate provider
+    app.get "/auth/#{provider}", passport.authenticate provider, authenticate
     app.get "/auth/#{provider}/callback", passport.authenticate provider,
       failureRedirect: '/'
       successRedirect: '/'
     console.log "#{provider} authenticate set."
+    if authenticate
+      console.log "#{authenticate}"
+
   return

@@ -65,8 +65,12 @@ try
   bs.session = window.sessionStorage
   bs.session.setItem test, test
   bs.session.removeItem test
+  history || throw "can't use history API."
 catch e
   console.error 'Local storage not supported by this browser'
+  history =
+    replaceState: ->
+    pushState: ->
   bs.cookie = bs.local = bs.session =
     _data: {}
     getItem:    (key)->    @_data[key] ? null

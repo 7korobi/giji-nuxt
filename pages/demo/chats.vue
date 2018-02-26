@@ -45,6 +45,9 @@
           | 蕎麥花
           sup 如
           sub 雪
+        code
+          | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+          | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
         h1 h1
         h2 h2
         h3 h3
@@ -58,10 +61,31 @@
           | abcdefghijklmnopqrstuvwxyz
           blockquote
             | ABCDEFGHIJKL MNOPQRSTUVWXYZ
-        pre
-          code
-            | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-            | ABCDEFGHIJKL MNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+        ul.task-list
+          li.task-list-item one
+          li.task-list-item two
+          ol
+            li three
+            li four
+
+        table
+          thead
+            tr
+              th Tables
+              th(style="text-align: center;") Are
+              th(style="text-align: right:") Cool
+          tbody
+            tr
+              td col 3 is
+              td(style="text-align: center;")
+                em right-aligned
+              td(style="text-align: right:") $1600
+            tr
+              td col 2 is
+              td(style="text-align: center;")
+                strong centered
+              td(style="text-align: right:") $12
         .date
           abbr anker
 

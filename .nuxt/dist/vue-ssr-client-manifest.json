@@ -9,7 +9,7 @@
     "pages_index.f8ac3742a8e3c7144c23.js",
     "pages_book__idx__mode.026aefadc69688bae745.js",
     "pages_demo_oauth.e74e8a6aa6adc490f4e2.js",
-    "pages_demo_chats.12b8492fb63bc01383b8.js",
+    "pages_demo_chats.d7dca17fcb3236f3ca50.js",
     "pages_character-tag.3219c5654d89fcc865bc.js",
     "pages_sow_village__idx_editor.d161eef4646dd5d37659.js",
     "pages_sow_village__idx_anker.96ed624b9214d4f21d0a.js",
@@ -18,25 +18,25 @@
     "pages_rule-guide.e502c5c44b00a391b4d7.js",
     "pages_summary_faces__id.9766f763e90466a61c71.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.d26fda44641f604e596d.js",
-    "pages_demo_markdown.8ccb3736fd334d7049f6.js",
+    "pages_demo_marked.131b563dd3ad46714abe.js",
+    "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
     "layouts_default.1f7a545e091678573b0e.js",
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.31c6ffc6e5b6920e1ba6.js",
-    "app.a45756cb795c38f2565e.js",
-    "manifest.6b39cceae83beb5019fa.js",
+    "vendor.56c8c43ae5f2da17b1c5.js",
+    "app.72c6aa23e7e3b4a924ba.js",
+    "manifest.97d2d0f085d0a35a0c2a.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.6b39cceae83beb5019fa.js",
-    "vendor.31c6ffc6e5b6920e1ba6.js",
-    "app.a45756cb795c38f2565e.js"
+    "manifest.97d2d0f085d0a35a0c2a.js",
+    "vendor.56c8c43ae5f2da17b1c5.js",
+    "app.72c6aa23e7e3b4a924ba.js"
   ],
   "async": [
     "pages_demo_timeago.d1ae14319c0311acc8f4.js",
@@ -47,7 +47,7 @@
     "pages_index.f8ac3742a8e3c7144c23.js",
     "pages_book__idx__mode.026aefadc69688bae745.js",
     "pages_demo_oauth.e74e8a6aa6adc490f4e2.js",
-    "pages_demo_chats.12b8492fb63bc01383b8.js",
+    "pages_demo_chats.d7dca17fcb3236f3ca50.js",
     "pages_character-tag.3219c5654d89fcc865bc.js",
     "pages_sow_village__idx_editor.d161eef4646dd5d37659.js",
     "pages_sow_village__idx_anker.96ed624b9214d4f21d0a.js",
@@ -56,8 +56,8 @@
     "pages_rule-guide.e502c5c44b00a391b4d7.js",
     "pages_summary_faces__id.9766f763e90466a61c71.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.d26fda44641f604e596d.js",
-    "pages_demo_markdown.8ccb3736fd334d7049f6.js",
+    "pages_demo_marked.131b563dd3ad46714abe.js",
+    "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
     "layouts_default.1f7a545e091678573b0e.js",
@@ -194,9 +194,6 @@
     ],
     "021e0e18": [
       25
-    ],
-    "351f1a00": [
-      8
     ],
     "c62ee832": [
       13
@@ -414,6 +411,9 @@
     "4d541aff": [
       25
     ],
+    "5e240776": [
+      8
+    ],
     "207545fb": [
       25
     ],
@@ -518,9 +518,6 @@
     ],
     "aca98d98": [
       0
-    ],
-    "2ce8a278": [
-      18
     ],
     "38e359be": [
       25
@@ -692,6 +689,9 @@
     ],
     "6b816120": [
       25
+    ],
+    "00ac2761": [
+      17
     ],
     "2ad084b0": [
       25
@@ -1293,9 +1293,6 @@
     "a89d8e40": [
       25
     ],
-    "2248361a": [
-      8
-    ],
     "e5212bd6": [
       26
     ],
@@ -1328,6 +1325,9 @@
     ],
     "44b41af2": [
       18
+    ],
+    "dba211ba": [
+      8
     ],
     "0acb444c": [
       25
@@ -1509,6 +1509,9 @@
     "6c6e8fa6": [
       25
     ],
+    "7665819b": [
+      18
+    ],
     "0fcc32e7": [
       25
     ],
@@ -1652,9 +1655,6 @@
     ],
     "7c56ca7b": [
       25
-    ],
-    "42af8ea2": [
-      17
     ],
     "34d40cb8": [
       25
@@ -1817,6 +1817,9 @@
     ],
     "24a1d6b4": [
       25
+    ],
+    "32df6c1f": [
+      8
     ],
     "4c109e9c": [
       20
@@ -2291,9 +2294,6 @@
     ],
     "1900f9b3": [
       25
-    ],
-    "fcd07dc4": [
-      8
     ],
     "1908b402": [
       25
