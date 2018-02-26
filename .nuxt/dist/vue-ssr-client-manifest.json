@@ -9,7 +9,7 @@
     "pages_index.f8ac3742a8e3c7144c23.js",
     "pages_book__idx__mode.026aefadc69688bae745.js",
     "pages_demo_oauth.e74e8a6aa6adc490f4e2.js",
-    "pages_demo_chats.d7dca17fcb3236f3ca50.js",
+    "pages_demo_chats.14ae4a91572a9f5b13b8.js",
     "pages_character-tag.3219c5654d89fcc865bc.js",
     "pages_sow_village__idx_editor.d161eef4646dd5d37659.js",
     "pages_sow_village__idx_anker.96ed624b9214d4f21d0a.js",
@@ -28,13 +28,13 @@
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
     "vendor.56c8c43ae5f2da17b1c5.js",
     "app.72c6aa23e7e3b4a924ba.js",
-    "manifest.97d2d0f085d0a35a0c2a.js",
+    "manifest.7a1eaf7fd7dd6cca19e5.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.97d2d0f085d0a35a0c2a.js",
+    "manifest.7a1eaf7fd7dd6cca19e5.js",
     "vendor.56c8c43ae5f2da17b1c5.js",
     "app.72c6aa23e7e3b4a924ba.js"
   ],
@@ -47,7 +47,7 @@
     "pages_index.f8ac3742a8e3c7144c23.js",
     "pages_book__idx__mode.026aefadc69688bae745.js",
     "pages_demo_oauth.e74e8a6aa6adc490f4e2.js",
-    "pages_demo_chats.d7dca17fcb3236f3ca50.js",
+    "pages_demo_chats.14ae4a91572a9f5b13b8.js",
     "pages_character-tag.3219c5654d89fcc865bc.js",
     "pages_sow_village__idx_editor.d161eef4646dd5d37659.js",
     "pages_sow_village__idx_anker.96ed624b9214d4f21d0a.js",
@@ -285,6 +285,9 @@
     "2ff8a3fb": [
       26
     ],
+    "468f3418": [
+      8
+    ],
     "08991245": [
       21
     ],
@@ -410,9 +413,6 @@
     ],
     "4d541aff": [
       25
-    ],
-    "5e240776": [
-      8
     ],
     "207545fb": [
       25
@@ -876,6 +876,9 @@
     "d55f1cc8": [
       25
     ],
+    "b44281c8": [
+      8
+    ],
     "34304f8a": [
       25
     ],
@@ -1326,9 +1329,6 @@
     "44b41af2": [
       18
     ],
-    "dba211ba": [
-      8
-    ],
     "0acb444c": [
       25
     ],
@@ -1373,6 +1373,9 @@
     ],
     "5b5a1236": [
       25
+    ],
+    "3f0a8d04": [
+      8
     ],
     "ba6a473e": [
       25
@@ -1817,9 +1820,6 @@
     ],
     "24a1d6b4": [
       25
-    ],
-    "32df6c1f": [
-      8
     ],
     "4c109e9c": [
       20
