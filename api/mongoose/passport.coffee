@@ -1,11 +1,11 @@
 _ = require "lodash"
 passport = require "passport"
 plugins =
-  facebook: require("passport-facebook").Strategy
-  twitter:  require("passport-twitter").Strategy
-  slack:    require("passport-slack").Strategy
-  github:   require("passport-github").Strategy
-  google:   require("passport-google-oauth").OAuth2Strategy
+  facebook: require "passport-facebook"
+  twitter:  require "passport-twitter"
+  slack:    require "passport-slack"
+  github:   require "passport-github"
+  google:   require "passport-google-oauth20"
 
 { YAML, API } = require "../helper.coffee"
 
@@ -60,7 +60,7 @@ module.exports = (app, m, { auth, url })->
     res.redirect('/')
 
   for provider, { attr, authenticate } of auth
-    Strategy = plugins[provider]
+    { Strategy } = plugins[provider]
     attr.callbackURL = "#{url.web}/auth/#{provider}/callback"
 
     passport.use new Strategy attr, (accessToken, refreshToken, { provider, id, displayName, emails, photos }, done)->
