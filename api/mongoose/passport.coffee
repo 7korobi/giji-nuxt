@@ -81,7 +81,5 @@ module.exports = (app, m, { auth, url })->
       failureRedirect: '/'
       successRedirect: '/'
     console.log "#{provider} authenticate set."
-    if authenticate
-      console.log "#{authenticate}"
 
   return

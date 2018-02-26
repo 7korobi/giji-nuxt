@@ -74,18 +74,18 @@
             tr
               th Tables
               th(style="text-align: center;") Are
-              th(style="text-align: right:") Cool
+              th(style="text-align: right;") Cool
           tbody
             tr
               td col 3 is
               td(style="text-align: center;")
                 em right-aligned
-              td(style="text-align: right:") $1600
+              td(style="text-align: right;") $1600
             tr
               td col 2 is
               td(style="text-align: center;")
                 strong centered
-              td(style="text-align: right:") $12
+              td(style="text-align: right;") $12
         .date
           abbr anker
 
