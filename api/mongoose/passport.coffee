@@ -80,6 +80,8 @@ module.exports = (app, m, { auth, url })->
     app.get "/auth/#{provider}/callback", passport.authenticate provider,
       failureRedirect: '/'
       successRedirect: '/'
-    console.log "#{provider} authenticate set."
+    , (req, res)->
+      res.redirect('/')
+    console.log "#{provider} authenticate set.", authenticate
 
   return
