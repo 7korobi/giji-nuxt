@@ -24,9 +24,10 @@ no-ssr
 
         c-report(handle="MAKER") ルール
         c-report(handle="footer" id="nation") {{ nation.head }}
-        c-report(v-for="o, idx in nation.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
+        c-report(v-for="o, idx in nation.list" deco="giji" handle="P01", :head="o.head", :log="o.log", :key="'nation-' + idx")
+
         c-report(handle="footer" id="village") {{ village.head }}
-        c-report(v-for="o, idx in village.list" handle="VSAY", :head="o.head", :log="o.log", :key="idx")
+        c-report(v-for="o, idx in village.list" deco="giji" handle="VSAY", :head="o.head", :log="o.log", :key="'village-' + idx")
 
         c-report(handle="MAKER") ルール違反があったら？
         c-report(handle="footer") はじめに
@@ -97,7 +98,7 @@ no-ssr
         c-post(handle="VSAY") 心構えを守って、楽しく、強く遊ぼう。
 
         c-report(handle="footer" id="player") 遊びにきたかたへ
-        c-report(v-for="o, idx in player.list" handle="SSAY", :head="o.head", :log="o.log", :key="idx")
+        c-report(v-for="o, idx in player.list" deco="giji" handle="SSAY", :head="o.head", :log="o.log", :key="'player-' + idx")
 
         c-report(handle="footer" id="maker") {{ maker.head }}
         c-talk(handle="WSAY" deco="sow" face_id="t10" head="営利政府 トレイル", :write_at="1437461000000")
@@ -107,7 +108,7 @@ no-ssr
 
             村を建てるとき気をつけると良いことを心構えに纏めました。
             ぜひご覧ください。
-        c-report(v-for="o, idx in maker.list" handle="P01", :head="o.head", :log="o.log", :key="idx")
+        c-report(v-for="o, idx in maker.list" deco="giji" handle="P01", :head="o.head", :log="o.log", :key="'maker-' + idx")
         c-post(handle="footer")
           bread-crumb
 

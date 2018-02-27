@@ -1,6 +1,6 @@
 
 <template lang="pug">
-no-ssr
+
   .outframe
     .contentframe
       .inframe
@@ -25,11 +25,18 @@ module.exports =
         
         大きなテーブルも作れます。
 
+        --SS-1
+
         | Tables        | Are           | Cool  |
         | ------------- |:-------------:| -----:|
         | col 3 is      | right-aligned | $1600 |
-        | col 2 is      | centered      |   $12 |
-        | zebra stripes | are neat      |    $1 |
+        | col 2 is      | [other][other] [short][short]|   $12 |
+        | zebra stripes | [ガイド][guide] |    $1 |
+
+        [guide]: <http://crazy-crazy.sakura.ne.jp/giji/?%28Knowledge%29Guidance#l1> "手引き"
+        [other]: http://wolfbbs.jp/%BF%CD%CF%B5%A5%AF%A5%ED%A1%BC%A5%F3.html#content_1_18 "短期サーバー紹介"
+        [short]: # "１０分とか、５分とか。……ひどいときは１分だぜ。クール！"
+
       """
     ,
       head: "発言レンダーてすと"
@@ -83,7 +90,7 @@ module.exports =
       log: """
         あとさ、
         1. [x] HTMLかくのは**禁止** <hr>
-        2.[ ] ~~検閲により削除~~したら`strikeout`するほうがいいかしら。
+        2. [ ] ~~検閲により削除~~したら`strikeout`するほうがいいかしら。
       """
     ,
       head: "発言レンダーてすと"

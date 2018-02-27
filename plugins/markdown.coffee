@@ -51,7 +51,10 @@ mermaid = (text, cb)->
   mermaidAPI.render "mermaid-#{idx++}", text, cb
 
 center = giji = (text, cb)->
-  cb marked text, giji_options
+  if text
+    cb marked text, giji_options
+  else
+    cb text
 
 sow = head = mono = (text, cb)->
   text = text

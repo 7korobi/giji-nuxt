@@ -110,7 +110,7 @@ div(:class="body_class")
         btn(v-model="theme" as="moon")   月夜
         btn(v-model="theme" as="wa")   和の国
 
-  writeframe(:top="top")
+  a-writeframe(:top="top")
   .outframe.filmend-frame
     .contentframe
       .filmend

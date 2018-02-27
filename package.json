@@ -41,7 +41,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-stylus": "^2.6.0",
     "iltorb": "^2.0.3",
-    "marked-pre": "^0.0.3",
+    "marked-pre": "^0.0.15",
     "marked-pre-loader": "^0.0.2",
     "mermaid": "^7.1.0",
     "mocha-webpack": "^1.0.1",
