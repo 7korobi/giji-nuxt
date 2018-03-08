@@ -1,5 +1,5 @@
 
-let files = require.context('@/middleware', false, /^\.\/(?!-).*\.(js|coffee|yml)$/)
+let files = require.context('@/middleware', false, /^\.\/(?!-)[^.]+\.(js|coffee|yml)$/)
 let filenames = files.keys()
 
 function getModule (filename) {

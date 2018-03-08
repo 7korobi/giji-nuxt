@@ -113,14 +113,14 @@ export async function setContext(app, context) {
         return process.client
       },
       isStatic: process.static,
-      isDev: true,
+      isDev: false,
       isHMR: false,
       app,
       store: app.store,
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"url":{"web":"//localhost:4000","api":"//localhost:4000/api","sow":"https://s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"https://s3-ap-northeast-1.amazonaws.com/giji-assets"},"game":{"folder_id":"beta"}}
+      env: {"url":{"web":"https://giji.f5.si","api":"//giji.f5.si/api","sow":"https://s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"https://s3-ap-northeast-1.amazonaws.com/giji-assets"},"game":{"folder_id":"beta"}}
     }
     // Only set once
     if (context.req) app.context.req = context.req

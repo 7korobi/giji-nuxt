@@ -30,7 +30,52 @@ const _26460e66 = () => import('..\\pages\\index.vue' /* webpackChunkName: "page
 
 
 
-const scrollBehavior = function (e,a,i){var r;switch(r=function(e,i){switch([a,i]=[a,i].map(function(e){return e.path}),!1){case a===i:return console.log(`scroll to TOP (${a} != ${i})`),{x:0,y:0};case!e:return console.log("scroll to TOP (has scrollToTop)"),{x:0,y:0}}},!1){case!i:return console.log("scroll restore",i),i;case!e.hash:return console.log("scroll to "+e.hash),{selector:e.hash};default:switch(e.name){case"sow-village-idx-mode":case"sow-village-idx-anker":case"book-idx-mode":case"book-idx-anker":case"book-idx-edit":return{};default:return r(e.matched.some(function(e){return e.components.default.options.scrollToTop}),e)}}}
+const scrollBehavior = function (to, from, savedPosition) {
+      var basic, has_top;
+      basic = function(has_top, to) {
+        [from, to] = [from, to].map(function(o) {
+          return o.path;
+        });
+        switch (false) {
+          case from === to:
+            console.log(`scroll to TOP (${from} != ${to})`);
+            return {
+              x: 0,
+              y: 0
+            };
+          case !has_top:
+            console.log("scroll to TOP (has scrollToTop)");
+            return {
+              x: 0,
+              y: 0
+            };
+        }
+      };
+      switch (false) {
+        case !savedPosition:
+          console.log("scroll restore", savedPosition);
+          return savedPosition;
+        case !to.hash:
+          console.log("scroll to " + to.hash);
+          return {
+            selector: to.hash
+          };
+        default:
+          switch (to.name) {
+            case "sow-village-idx-mode":
+            case "sow-village-idx-anker":
+            case "book-idx-mode":
+            case "book-idx-anker":
+            case "book-idx-edit":
+              return {};
+            default:
+              has_top = to.matched.some(function(r) {
+                return r.components.default.options.scrollToTop;
+              });
+              return basic(has_top, to, from);
+          }
+      }
+    }
 
 
 export function createRouter () {
