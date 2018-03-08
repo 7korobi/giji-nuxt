@@ -32,7 +32,7 @@ amazon = ({ src, headers, pipe = [], options = {} })->
 #        'cache'
 #        'skip'
       ]
-  ]  
+  ]
 
 
 gulp.task "default", [], ->

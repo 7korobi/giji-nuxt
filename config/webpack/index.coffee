@@ -12,4 +12,3 @@ module.exports =
 
   render: require("./render.coffee")
   router: require("./router.coffee")
-
