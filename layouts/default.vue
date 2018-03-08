@@ -7,16 +7,15 @@ module.exports =
 
 </script>
 <template lang="pug">
-no-ssr
-  div
-    a-header
-    .outframe
-      .center-left
-      .center-right
-    nuxt.page-active
-    .outframe
-      .contentframe
-        .inframe
-          c-report(handle="footer", :write_at="854319600000")
-            a-footer
+div
+  a-header
+  .outframe
+    .center-left
+    .center-right
+  nuxt.page-active
+  .outframe
+    .contentframe
+      .inframe
+        c-report(handle="footer", :write_at="854319600000")
+          a-footer
 </template>

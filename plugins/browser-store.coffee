@@ -44,7 +44,7 @@ watcher = (method)->
         o[key] = newVal
         { location, href } = @$router.resolve relative_to @$route, o
         @$data.$browser[key] = newVal
-        history["#{method}State"] null, null, href
+        history?["#{method}State"] null, null, href
         @$route = { ...@$route, ...location }
 
 try
@@ -52,9 +52,9 @@ try
   Cookie = require 'tiny-cookie'
 
   bs.cookie =
-    getItem:    (key)->    Cookie.get(key) ? null
-    setItem:    (key, s)-> Cookie.set key, s, expires: '1M'
-    removeItem: (key)->    Cookie.remove key
+    getItem:    (key)->     Cookie.get(key) ? null
+    setItem:    (key, s)->  Cookie.set key, s, expires: '1M'
+    removeItem: (key)->     Cookie.remove key
   bs.cookie.setItem test, test
   bs.cookie.removeItem test
 
@@ -65,12 +65,9 @@ try
   bs.session = window.sessionStorage
   bs.session.setItem test, test
   bs.session.removeItem test
-  history || throw "can't use history API."
+  history || throw new Error "can't use history API."
 catch e
   console.error 'Local storage not supported by this browser'
-  history =
-    replaceState: ->
-    pushState: ->
   bs.cookie = bs.local = bs.session =
     _data: {}
     getItem:    (key)->    @_data[key] ? null
@@ -147,4 +144,3 @@ module.exports.capture = (req)->
   if cookie
     for s in cookie.split /; */
       bs.cookie.setItem ...s.split /=/
-

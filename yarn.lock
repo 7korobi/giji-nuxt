@@ -8496,7 +8496,7 @@ timers-ext@^0.1.2:
     es5-ext "~0.10.14"
     next-tick "1"
 
-tiny-cookie@^2.1.0:
+tiny-cookie@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/tiny-cookie/-/tiny-cookie-2.1.1.tgz#6f1ea2fdbef15c8978de54372b4314c5984ff020"
 

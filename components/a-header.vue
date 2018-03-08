@@ -79,15 +79,15 @@ module.exports =
   head: ->
     # https://materialdesignicons.com/
     link: [
-      { rel: 'stylesheet', type: 'text/css', href: host + '/element-ui/theme-chalk/index.css' }
-      { rel: 'stylesheet', type: 'text/css', href: host + '/css/index.styl.css' }
-      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css' }
-      { rel: @new.rel.log,   type: 'text/css', href: @href.log }
-      { rel: @new.rel.font,  type: 'text/css', href: @href.font }
-      { rel: @new.rel.theme, type: 'text/css', href: @href.theme }
-      { rel: @old.rel.log,   type: 'text/css', href: @old.href.log }
-      { rel: @old.rel.font,  type: 'text/css', href: @old.href.font }
-      { rel: @old.rel.theme, type: 'text/css', href: @old.href.theme }
+      { hid: 'hid1', rel: 'stylesheet', type: 'text/css', href: host + '/element-ui/theme-chalk/index.css' }
+      { hid: 'hid2', rel: 'stylesheet', type: 'text/css', href: host + '/css/index.styl.css' }
+      { hid: 'hid3', rel: 'stylesheet', type: 'text/css', href: 'https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css' }
+      { hid: 'hid4', rel: @new.rel.log,   type: 'text/css', href: @href.log }
+      { hid: 'hid5', rel: @new.rel.font,  type: 'text/css', href: @href.font }
+      { hid: 'hid6', rel: @new.rel.theme, type: 'text/css', href: @href.theme }
+      { hid: 'hid7', rel: @old.rel.log,   type: 'text/css', href: @old.href.log }
+      { hid: 'hid8', rel: @old.rel.font,  type: 'text/css', href: @old.href.font }
+      { hid: 'hid9', rel: @old.rel.theme, type: 'text/css', href: @old.href.theme }
     ]
 
 </script>
