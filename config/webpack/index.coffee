@@ -1,17 +1,15 @@
 module.exports =
-  dev: (process.env.NODE_ENV != 'production')
-  render: require("./render.coffee")
-  router: require("./router.coffee")
-  build:  require("./build.coffee")
   head: require("./head.coffee")
-  env: require("./env.coffee")
 
-  plugins: []
-  css: []
-  #####
-  # Customize the progress-bar color
-  #
   loading:
     color: '#3B8070'
-
+  css: []
+  plugins: []
   modules: ['~/modules/extention.js']
+
+  build:  require("./build.coffee")
+  env: require("./env.coffee")
+
+  render: require("./render.coffee")
+  router: require("./router.coffee")
+

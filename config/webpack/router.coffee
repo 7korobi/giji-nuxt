@@ -25,6 +25,11 @@ const scrollBehavior = (to, from, savedPosition) => {
 ###
 
 module.exports =
+  extendRoutes: (routes, resolve)->
+    # routes.push
+    #   name: 'custom'
+    #   path: '*'
+    #   component: resolve(__dirname, 'pages/404.vue')
   scrollBehavior: (to, from, savedPosition)->
     basic = (has_top, to)->
       [from, to] = [from, to].map (o)->

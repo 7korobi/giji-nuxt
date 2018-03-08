@@ -70,7 +70,7 @@ gulp.task "dev", ["api"], $.shell.task [
   "node server.js"
 ]
 gulp.task "api", $.shell.task [
-  "webpack --config config/webpack/index-node.coffee"
+  "webpack --config config/webpack/index-node.coffee --json | webpack-bundle-size-analyzer"
 ]
 
 gulp.task "del", ->

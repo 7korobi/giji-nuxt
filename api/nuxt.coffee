@@ -1,5 +1,6 @@
 config = require '../config/webpack/index.coffee'
-# { Nuxt, Module, Renderer, Utils, Builder, Generator, Options } = require 'nuxt'
+config.dev = ! ( process.env.NODE_ENV == 'production' )
+
 { Nuxt, Builder } = require 'nuxt'
 
 nuxt = new Nuxt config
