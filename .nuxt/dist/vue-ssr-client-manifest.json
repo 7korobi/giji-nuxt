@@ -22,20 +22,20 @@
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
-    "layouts_default.abbf9372966d4d7b8ab5.js",
+    "layouts_default.7f28aad6a1553ad393d0.js",
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.05f7d5b0463efcbf27c7.js",
+    "vendor.1b38cfb1cf71f0c18135.js",
     "app.4188ef75624edb420fab.js",
-    "manifest.0b965d21f577dab69244.js",
+    "manifest.7c43ccb0188ecfcde3e9.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.0b965d21f577dab69244.js",
-    "vendor.05f7d5b0463efcbf27c7.js",
+    "manifest.7c43ccb0188ecfcde3e9.js",
+    "vendor.1b38cfb1cf71f0c18135.js",
     "app.4188ef75624edb420fab.js"
   ],
   "async": [
@@ -60,7 +60,7 @@
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
-    "layouts_default.abbf9372966d4d7b8ab5.js",
+    "layouts_default.7f28aad6a1553ad393d0.js",
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js"
@@ -315,6 +315,9 @@
     "e0415f08": [
       0
     ],
+    "126b982a": [
+      25
+    ],
     "7949006d": [
       25
     ],
@@ -439,9 +442,6 @@
       25
     ],
     "d6f7b052": [
-      25
-    ],
-    "4169d83c": [
       25
     ],
     "207545fb": [
@@ -607,6 +607,9 @@
       25
     ],
     "dfcec03a": [
+      25
+    ],
+    "356c61de": [
       25
     ],
     "7b44e53e": [
@@ -1296,14 +1299,14 @@
     "3db15924": [
       26
     ],
-    "8e9840e8": [
-      21
-    ],
     "cf720640": [
       25
     ],
     "2cc21514": [
       25
+    ],
+    "2aee7d1f": [
+      21
     ],
     "563ab0ac": [
       25
@@ -1400,6 +1403,9 @@
     ],
     "0fb15b2f": [
       7
+    ],
+    "4ecc358d": [
+      25
     ],
     "5a65bd7c": [
       25
@@ -1907,9 +1913,6 @@
     ],
     "2ded39fa": [
       26
-    ],
-    "aa278290": [
-      25
     ],
     "34d40cb8": [
       25
@@ -2544,6 +2547,12 @@
     "472e978a": [
       25
     ],
+    "3e220319": [
+      2
+    ],
+    "f69fa21e": [
+      25
+    ],
     "38e666d0": [
       25
     ],
@@ -2721,9 +2730,6 @@
     "ca302d34": [
       26
     ],
-    "27082cd6": [
-      25
-    ],
     "26017e6d": [
       25
     ],
@@ -2766,16 +2772,10 @@
     "dd07671c": [
       25
     ],
-    "3e220319": [
-      2
-    ],
     "6c98ce18": [
       25
     ],
     "3af91df0": [
-      25
-    ],
-    "f69fa21e": [
       25
     ],
     "dee34800": [
