@@ -669,9 +669,9 @@ aws-sdk@^2.1.16:
     xml2js "0.4.17"
     xmlbuilder "4.2.1"
 
-aws-sdk@^2.206.0:
-  version "2.206.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.206.0.tgz#235ca109576c888f2467d1c10c33af7e342d3be1"
+aws-sdk@^2.207.0:
+  version "2.207.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.207.0.tgz#c0a30977d8d2788301850b265ff05eb7c9fdf7f2"
   dependencies:
     buffer "4.9.1"
     events "^1.1.1"
@@ -3659,15 +3659,15 @@ graphlib@^2.1.1:
   dependencies:
     lodash "^4.11.1"
 
-gulp-awspublish@^3.3.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/gulp-awspublish/-/gulp-awspublish-3.3.1.tgz#6fb30e5e620725fa30fab9294300e6890d08242f"
+gulp-awspublish@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/gulp-awspublish/-/gulp-awspublish-3.3.3.tgz#5a3cf0fd2c52b29aed1ed806a182664321509217"
   dependencies:
     ansi-colors "^1.0.1"
     aws-sdk "^2.1.16"
     clone "^1.0.2"
     fancy-log "^1.3.2"
-    mime "^1.3.4"
+    mime-types "^2.1.18"
     pad-component "^0.0.1"
     pascal-case "^2.0.0"
     plugin-error "^0.1.2"
@@ -5279,11 +5279,21 @@ mime-db@~1.30.0:
   version "1.30.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.30.0.tgz#74c643da2dd9d6a45399963465b26d5ca7d71f01"
 
+mime-db@~1.33.0:
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
+
 mime-types@^2.1.10, mime-types@^2.1.12, mime-types@~2.1.15, mime-types@~2.1.16, mime-types@~2.1.17, mime-types@~2.1.7:
   version "2.1.17"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.17.tgz#09d7a393f03e995a79f8af857b70a9e0ab16557a"
   dependencies:
     mime-db "~1.30.0"
+
+mime-types@^2.1.18:
+  version "2.1.18"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
+  dependencies:
+    mime-db "~1.33.0"
 
 mime@1.4.1, mime@^1.3.4:
   version "1.4.1"
@@ -5627,9 +5637,9 @@ node-pre-gyp@^0.6.39:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
-node-watch@^0.5.5:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.5.7.tgz#a0f9f791b99d5463b2e91e628bc20fcab8520066"
+node-watch@^0.5.8:
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/node-watch/-/node-watch-0.5.8.tgz#208d10f93afe2f24b3701c254f54c7552f90c905"
 
 noop-logger@^0.1.1:
   version "0.1.1"
@@ -7033,15 +7043,15 @@ pug-filters@^2.1.5:
     resolve "^1.1.6"
     uglify-js "^2.6.1"
 
-pug-filters@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/pug-filters/-/pug-filters-3.0.0.tgz#4924f0203c1dea20c7e148aec201898866b7c9d2"
+pug-filters@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/pug-filters/-/pug-filters-3.0.1.tgz#163ef73bfbb1f1544d032b2b40f45130eb52dccb"
   dependencies:
     clean-css "^3.3.0"
     constantinople "^3.0.1"
     jstransformer "1.0.0"
     pug-error "^1.3.2"
-    pug-walk "^1.1.6"
+    pug-walk "^1.1.7"
     resolve "^1.1.6"
     uglify-js "^2.6.1"
 
@@ -7075,19 +7085,19 @@ pug-linker@^3.0.3:
     pug-error "^1.3.2"
     pug-walk "^1.1.5"
 
-pug-linker@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/pug-linker/-/pug-linker-3.0.4.tgz#dd257328eef25001452a0b9bf30349e71497e8d2"
+pug-linker@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/pug-linker/-/pug-linker-3.0.5.tgz#9e9a7ae4005682d027deeb96b000f88eeb83a02f"
   dependencies:
     pug-error "^1.3.2"
-    pug-walk "^1.1.6"
+    pug-walk "^1.1.7"
 
-pug-load@^2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/pug-load/-/pug-load-2.0.10.tgz#cb990d642fa4f7ed7ca3543368a86152c6509208"
+pug-load@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/pug-load/-/pug-load-2.0.11.tgz#e648e57ed113fe2c1f45d57858ea2bad6bc01527"
   dependencies:
     object-assign "^4.1.0"
-    pug-walk "^1.1.6"
+    pug-walk "^1.1.7"
 
 pug-load@^2.0.9:
   version "2.0.9"
@@ -7103,9 +7113,9 @@ pug-parser@^4.0.0:
     pug-error "^1.3.2"
     token-stream "0.0.1"
 
-pug-parser@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/pug-parser/-/pug-parser-4.0.1.tgz#bd2abdf5c95871eb79127e4659695dba770f5b87"
+pug-parser@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pug-parser/-/pug-parser-5.0.0.tgz#e394ad9b3fca93123940aff885c06e44ab7e68e4"
   dependencies:
     pug-error "^1.3.2"
     token-stream "0.0.1"
@@ -7134,22 +7144,9 @@ pug-walk@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/pug-walk/-/pug-walk-1.1.5.tgz#90e943acbcf7021e6454cf1b32245891cba6f851"
 
-pug-walk@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/pug-walk/-/pug-walk-1.1.6.tgz#7cabcd737cdbfaecfb0f32af7127ebacf423947a"
-
-pug@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pug/-/pug-2.0.0.tgz#852d13203d6b404ef574bc7f2528a35f2586cab6"
-  dependencies:
-    pug-code-gen "^2.0.1"
-    pug-filters "^3.0.0"
-    pug-lexer "^4.0.0"
-    pug-linker "^3.0.4"
-    pug-load "^2.0.10"
-    pug-parser "^4.0.1"
-    pug-runtime "^2.0.4"
-    pug-strip-comments "^1.0.3"
+pug-walk@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/pug-walk/-/pug-walk-1.1.7.tgz#c00d5c5128bac5806bec15d2b7e7cdabe42531f3"
 
 pug@^2.0.0-rc.2:
   version "2.0.0-rc.4"
@@ -7163,6 +7160,19 @@ pug@^2.0.0-rc.2:
     pug-parser "^4.0.0"
     pug-runtime "^2.0.3"
     pug-strip-comments "^1.0.2"
+
+pug@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/pug/-/pug-2.0.1.tgz#27c151612b53d729abe8e8285aac6bc89345b5d0"
+  dependencies:
+    pug-code-gen "^2.0.1"
+    pug-filters "^3.0.1"
+    pug-lexer "^4.0.0"
+    pug-linker "^3.0.5"
+    pug-load "^2.0.11"
+    pug-parser "^5.0.0"
+    pug-runtime "^2.0.4"
+    pug-strip-comments "^1.0.3"
 
 pump@^1.0.0:
   version "1.0.2"

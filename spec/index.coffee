@@ -16,7 +16,37 @@ conf =
     mongo: "mongodb://localhost/giji"
     mongo_sow: "mongodb://localhost/giji"
   url:  {}
-  auth: {}
+  auth:
+    facebook:
+      provider: 'passport-facebook'
+      attr:
+        clientID: 'TEST-CLIENT-ID'
+        clientSecret: 'TEST-SECRET'
+    twitter:
+      provider: 'passport-twitter'
+      attr:
+        consumerKey: 'TEST-CONSUMER-KEY'
+        consumerSecret: 'TEST-SECRET'
+    slack:
+      provider: 'passport-slack'
+      attr:
+        clientID: 'TEST-CLIENT-ID'
+        clientSecret: 'TEST-CLIENT-SECRET'
+
+    github:
+      provider: 'passport-github'
+      attr:
+        clientID: 'TEST-CLIENT-ID'
+        clientSecret: 'TEST-CLIENT-SECRET'
+    google:
+      provider: 'passport-google-oauth20'
+      attr:
+        clientID: 'TEST-CLIENT-ID'
+        clientSecret: 'TEST-CLIENT-SECRET'
+        passReqToCallback: true
+      authenticate:
+        scope: ['profile','email','openid']
+
 
 user =
   _id: "local-test-user"
@@ -31,6 +61,12 @@ user =
 
 _ = require "lodash"
 bless = (t)->
+  t.match = (tgt, chk)->
+    result = [ tgt ]
+    result.index = 0
+    result.input = tgt
+    @deepEqual result, tgt.match chk
+
   t.deepContain = (tgt, chk)->
     chk = _.mergeWith chk, tgt, (c, o)->
       switch c?.constructor
@@ -58,4 +94,4 @@ http = supertest.agent(app)
 
 require("~/spec/user") app, { test, bless, http }
 require("~/spec/book") app, { test, bless, http }
-
+require("~/spec/chat") app, { test, bless, http }

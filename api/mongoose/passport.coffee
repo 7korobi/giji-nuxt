@@ -9,22 +9,23 @@ plugins =
 
 { YAML, API } = require "../helper.coffee"
 
-module.exports = (app, m, { auth, url })->
-  { Schema } = m
+m = require "mongoose"
+{ Schema } = m
 
-  Passport = m.model 'Passport', new Schema
-    _id: String
-    nick: String
-    icon: String
-    mail: String
-    sign: String
+Passport = m.model 'Passport', new Schema
+  _id: String
+  nick: String
+  icon: String
+  mail: String
+  sign: String
 
-    write_at: Number
+  write_at: Number
 
-    provider: String
-    account: String
-    token: String
+  provider: String
+  account: String
+  token: String
 
+module.exports = (app, { auth, url })->
   passport.serializeUser (o, done)->
     o._id = [o.provider, o.account].join("-")
     Passport.findByIdAndUpdate o._id, o,
