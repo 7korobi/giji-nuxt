@@ -25,9 +25,10 @@ Sangria
 </template>
 
 <style lang="stylus" scoped>
-div
+article
   text-align: right
 .lang-copyright
+  background-image: none
   background-color: ivory
   color: #A00
   text-align: left
