@@ -449,14 +449,6 @@ palette_single($bgTheme, $backT, key)
         border-color: $emboss
         background-color: $bg
 
-      blockquote
-        border-color: $edge
-      
-      del
-      .name
-      .date
-        color: $hide
-
       .mdi-check
         color: $good
       .mdi-warning
@@ -480,17 +472,17 @@ palette_single($bgTheme, $backT, key)
     h4
     h5
     h6
+    b
+    em
     strong
       body &.{theme}
       .{theme} &
         color: $penHi
 
-    code
-    em
-    b
+    blockquote
       body &.{theme}
       .{theme} &
-        color: $pen
+        border-color: $edge
 
     h1
     h2
@@ -507,11 +499,14 @@ palette_single($bgTheme, $backT, key)
 
     h5
     h6
-    em
-    b
       body &.{theme}
       .{theme} &
         Glowing(1.0px, 0.5px, $shade)
+
+    code
+      body &.{theme}
+      .{theme} &
+        color: $pen
 
     .bar
     th
@@ -532,6 +527,13 @@ palette_single($bgTheme, $backT, key)
       .{theme} &
         background-color: $emboss
         color: $penEmb
+
+    del
+    .name
+    .date
+      body &.{theme}
+      .{theme} &
+        color: $hide
 
     input[type=checkbox]
     input[type=radio]

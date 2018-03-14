@@ -3,50 +3,16 @@ express = require 'express'
 mongoose = require "mongoose"
 supertest = require 'supertest'
 
+fs = require 'fs'
+yaml = require 'js-yaml'
+
+
 global.env =
   game:
     folder_id: "test"
   url:  {}
 
-conf =
-  session_key: "SECRET_SESSION_SECRET"
-  game:
-    folder_id: "test"
-  db:
-    mongo: "mongodb://localhost/giji"
-    mongo_sow: "mongodb://localhost/giji"
-  url:  {}
-  auth:
-    facebook:
-      provider: 'passport-facebook'
-      attr:
-        clientID: 'TEST-CLIENT-ID'
-        clientSecret: 'TEST-SECRET'
-    twitter:
-      provider: 'passport-twitter'
-      attr:
-        consumerKey: 'TEST-CONSUMER-KEY'
-        consumerSecret: 'TEST-SECRET'
-    slack:
-      provider: 'passport-slack'
-      attr:
-        clientID: 'TEST-CLIENT-ID'
-        clientSecret: 'TEST-CLIENT-SECRET'
-
-    github:
-      provider: 'passport-github'
-      attr:
-        clientID: 'TEST-CLIENT-ID'
-        clientSecret: 'TEST-CLIENT-SECRET'
-    google:
-      provider: 'passport-google-oauth20'
-      attr:
-        clientID: 'TEST-CLIENT-ID'
-        clientSecret: 'TEST-CLIENT-SECRET'
-        passReqToCallback: true
-      authenticate:
-        scope: ['profile','email','openid']
-
+conf = yaml.load fs.readFileSync "./config/spec.yml", 'UTF-8'
 
 user =
   _id: "local-test-user"

@@ -6,28 +6,20 @@ mermaidAPI.initialize
   startOnLoad: false
 
 link = (href, title, text)->
-  if text && href != text
-    title ?= text
-  else
-    [text, hostname] = href.split(///\://|/|\?|\#///g)
-    title = [text, hostname].join("\n")
+  [protocol, hostname] = href.split /// \:// | / | \? | \# ///g
+  text  ||= protocol
+  title ||= [protocol, hostname].join("\n")
   switch href
     when null, undefined, "", "#"
-      if title == text
-        """<b>#{text}</b>"""
-      else
+      if title
         """<b title="#{title}">#{text}</b>"""
-    else
-      if href.match  ///(#{text}|:\/\/|^\/)///g
-        if title == text
-          """<b chk="confirm" href="#{href}">#{text}</b>"""
-        else
-          """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
       else
-        if title == text
-          """<ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby>"""
-        else
-          """<span class="btn" title="#{title}"><ruby>#{text}<rp>《</rp><rt>#{href}</rt><rp>》</rp></ruby></span>"""
+        """<b>#{text}</b>"""
+    else
+      if title
+        """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
+      else
+        """<b chk="confirm" href="#{href}">#{text}</b>"""
 
 giji_renderer = Object.assign new marked.Renderer(),
   link: link

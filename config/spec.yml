@@ -1,0 +1,52 @@
+use_api: true
+
+session_key: "SECRET_SESSION_SECRET"
+
+game:
+  folder_id: "test"
+
+url:
+  web: //localhost:4000
+  api: //localhost:4000/api
+#  api: //giji.f5.si/api
+  sow: https://s3-ap-northeast-1.amazonaws.com/giji-assets/sow
+
+  store: https://s3-ap-northeast-1.amazonaws.com/giji-assets
+
+db:
+  mongo: mongodb://localhost/giji
+  mongo_sow: mongodb://localhost/giji
+
+auth:
+  facebook:
+    provider: passport-facebook
+    attr:
+      clientID: TEST-CLIENT-ID
+      clientSecret: TEST-SECRET
+  twitter:
+    provider: passport-twitter
+    attr:
+      consumerKey: TEST-CONSUMER-KEY
+      consumerSecret: TEST-SECRET
+  slack:
+    provider: passport-slack
+    attr:
+      clientID: TEST-CLIENT-ID
+      clientSecret: TEST-CLIENT-SECRET
+
+  github:
+    provider: passport-github
+    attr:
+      clientID: TEST-CLIENT-ID
+      clientSecret: TEST-CLIENT-SECRET
+  google:
+    provider: passport-google-oauth20
+    attr:
+      clientID: TEST-CLIENT-ID
+      clientSecret: TEST-CLIENT-SECRET
+      accessType: offline
+    authenticate:
+      scope:
+        - profile
+        - email
+        - openid
