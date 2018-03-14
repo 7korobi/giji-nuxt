@@ -18,7 +18,7 @@
     "pages_rule-guide.13cb94d3257eb81ce911.js",
     "pages_summary_faces__id.34e33ea8d5d0c0f3a710.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.c9d95f5930a92786df94.js",
+    "pages_demo_marked.bedab360e26fcb5e09a9.js",
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
@@ -26,16 +26,16 @@
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.1b38cfb1cf71f0c18135.js",
+    "vendor.ac7ac361ab7315d94a71.js",
     "app.4188ef75624edb420fab.js",
-    "manifest.7c43ccb0188ecfcde3e9.js",
+    "manifest.bc499490e7c5304b4a31.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.7c43ccb0188ecfcde3e9.js",
-    "vendor.1b38cfb1cf71f0c18135.js",
+    "manifest.bc499490e7c5304b4a31.js",
+    "vendor.ac7ac361ab7315d94a71.js",
     "app.4188ef75624edb420fab.js"
   ],
   "async": [
@@ -56,7 +56,7 @@
     "pages_rule-guide.13cb94d3257eb81ce911.js",
     "pages_summary_faces__id.34e33ea8d5d0c0f3a710.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.c9d95f5930a92786df94.js",
+    "pages_demo_marked.bedab360e26fcb5e09a9.js",
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
@@ -1677,6 +1677,9 @@
     "2fdc3b8e": [
       25
     ],
+    "6c6b0a55": [
+      17
+    ],
     "9d902cd6": [
       25
     ],
@@ -2547,8 +2550,8 @@
     "472e978a": [
       25
     ],
-    "3e220319": [
-      2
+    "06bc0cf1": [
+      25
     ],
     "f69fa21e": [
       25
@@ -2649,9 +2652,6 @@
     "33ee5203": [
       25
     ],
-    "5a2c5b55": [
-      17
-    ],
     "19e271c3": [
       25
     ],
@@ -2689,9 +2689,6 @@
       25
     ],
     "77403b62": [
-      25
-    ],
-    "06bc0cf1": [
       25
     ],
     "195840f3": [
@@ -2771,6 +2768,9 @@
     ],
     "dd07671c": [
       25
+    ],
+    "3e220319": [
+      2
     ],
     "6c98ce18": [
       25
