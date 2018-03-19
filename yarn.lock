@@ -5132,9 +5132,9 @@ marked-pre-loader@^0.0.2:
     loader-utils latest
     marked-pre latest
 
-marked-pre@0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.16.tgz#438b43a9e4686529b068a40fa475624c3207ed0d"
+marked-pre@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.18.tgz#170e88e64c7082b91494d457d90af2844e834247"
 
 marked-pre@latest:
   version "0.0.2"

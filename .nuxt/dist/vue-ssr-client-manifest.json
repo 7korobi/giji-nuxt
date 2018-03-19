@@ -26,16 +26,16 @@
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.ac7ac361ab7315d94a71.js",
+    "vendor.e225136807ca147160fa.js",
     "app.4188ef75624edb420fab.js",
-    "manifest.bc499490e7c5304b4a31.js",
+    "manifest.0fed8e5eac3aa61c2cdd.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.bc499490e7c5304b4a31.js",
-    "vendor.ac7ac361ab7315d94a71.js",
+    "manifest.0fed8e5eac3aa61c2cdd.js",
+    "vendor.e225136807ca147160fa.js",
     "app.4188ef75624edb420fab.js"
   ],
   "async": [
@@ -867,6 +867,9 @@
     "0b994477": [
       25
     ],
+    "44b87cae": [
+      25
+    ],
     "1965e415": [
       25
     ],
@@ -1332,9 +1335,6 @@
     "b970a92a": [
       25
     ],
-    "fdea56fc": [
-      25
-    ],
     "8a106fb4": [
       25
     ],
@@ -1390,9 +1390,6 @@
       25
     ],
     "21cbb8d1": [
-      25
-    ],
-    "36540d37": [
       25
     ],
     "1979700a": [
@@ -1557,10 +1554,16 @@
     "1c02ee94": [
       25
     ],
+    "31245e2a": [
+      25
+    ],
     "04442c2a": [
       25
     ],
     "01395284": [
+      25
+    ],
+    "7deb6a6f": [
       25
     ],
     "0b52bbfc": [
@@ -1730,9 +1733,6 @@
     ],
     "33febd28": [
       26
-    ],
-    "17886e06": [
-      25
     ],
     "1648eeec": [
       25
@@ -2550,12 +2550,6 @@
     "472e978a": [
       25
     ],
-    "06bc0cf1": [
-      25
-    ],
-    "f69fa21e": [
-      25
-    ],
     "38e666d0": [
       25
     ],
@@ -2691,6 +2685,9 @@
     "77403b62": [
       25
     ],
+    "06bc0cf1": [
+      25
+    ],
     "195840f3": [
       25
     ],
@@ -2779,6 +2776,9 @@
       25
     ],
     "dee34800": [
+      25
+    ],
+    "f69fa21e": [
       25
     ]
   }

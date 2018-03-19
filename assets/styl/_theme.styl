@@ -503,17 +503,18 @@ palette_single($bgTheme, $backT, key)
       .{theme} &
         Glowing(1.0px, 0.5px, $shade)
 
-    code
-      body &.{theme}
-      .{theme} &
-        color: $pen
-
     .bar
     th
       body &.{theme}
       .{theme} &
         color: $pen
         background-color: $bgHi
+
+    code
+      body &.{theme}
+      .{theme} &
+        color: $pen
+        border-color: $emboss
 
     label
     rt
@@ -557,6 +558,7 @@ palette_single($bgTheme, $backT, key)
     button
     textarea
     .btn
+    [cite]
     [href]
       body &.{theme}
       .{theme} &
