@@ -40,7 +40,6 @@
     "gulp-shell": "^0.6.3",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-stylus": "^2.6.0",
-    "iltorb": "^2.0.6",
     "marked-pre": "^0.0.22",
     "marked-pre-loader": "^0.0.2",
     "mermaid": "^7.1.0",
@@ -67,6 +66,7 @@
     "yaml-loader": "^0.5.0"
   },
   "scripts": {
+    "gulp": "gulp",
     "test": "cross-env NODE_ENV=spec webpack --config config/webpack/index-node.coffee && ava --verbose --color",
     "api": "webpack --config config/webpack/index-node.coffee --json | webpack-bundle-size-analyzer",
     "dev": "gulp dev",
@@ -76,6 +76,7 @@
     "generate": "cross-env NODE_ENV=production nuxt generate"
   },
   "devDependencies": {
+    "iltorb": "^2.0.6",
     "ava": "^0.25.0",
     "supertest": "^3.0.0",
     "supertest-session": "^3.1.2"
