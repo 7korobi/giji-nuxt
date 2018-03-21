@@ -18,7 +18,7 @@
     "pages_rule-guide.13cb94d3257eb81ce911.js",
     "pages_summary_faces__id.34e33ea8d5d0c0f3a710.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.bedab360e26fcb5e09a9.js",
+    "pages_demo_marked.f380646ce56b8c370042.js",
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
@@ -26,17 +26,17 @@
     "pages_demo_books.c11bf881a0f3e841ca6a.js",
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
-    "vendor.e225136807ca147160fa.js",
-    "app.4188ef75624edb420fab.js",
-    "manifest.0fed8e5eac3aa61c2cdd.js",
+    "vendor.5c9bdc20ba038a55e4dd.js",
+    "app.a67d6b07e6c238248619.js",
+    "manifest.a49c674895a9c55ed30e.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.0fed8e5eac3aa61c2cdd.js",
-    "vendor.e225136807ca147160fa.js",
-    "app.4188ef75624edb420fab.js"
+    "manifest.a49c674895a9c55ed30e.js",
+    "vendor.5c9bdc20ba038a55e4dd.js",
+    "app.a67d6b07e6c238248619.js"
   ],
   "async": [
     "pages_demo_timeago.d1ae14319c0311acc8f4.js",
@@ -56,7 +56,7 @@
     "pages_rule-guide.13cb94d3257eb81ce911.js",
     "pages_summary_faces__id.34e33ea8d5d0c0f3a710.js",
     "pages_demo_names.62e9984380c74f42376c.js",
-    "pages_demo_marked.bedab360e26fcb5e09a9.js",
+    "pages_demo_marked.f380646ce56b8c370042.js",
     "pages_demo_markdown.9becd7bc6fda72a0a7f3.js",
     "pages_demo_index.1244e0337175295817cc.js",
     "pages_book_new.e87c0b9f2dc6e8da08da.js",
@@ -173,6 +173,9 @@
     ],
     "84167782": [
       18
+    ],
+    "86402964": [
+      25
     ],
     "88346468": [
       25
@@ -513,9 +516,6 @@
     "e0ed2204": [
       25
     ],
-    "48f3b0f9": [
-      25
-    ],
     "7d218ac6": [
       2
     ],
@@ -780,9 +780,6 @@
     "15a66e39": [
       25
     ],
-    "b9788c42": [
-      25
-    ],
     "8666ae52": [
       25
     ],
@@ -842,6 +839,9 @@
     ],
     "df8e3388": [
       25
+    ],
+    "3f697c46": [
+      17
     ],
     "cd82b550": [
       25
@@ -1198,6 +1198,9 @@
       25
     ],
     "19123fcd": [
+      25
+    ],
+    "7f0bb34a": [
       25
     ],
     "ea53d468": [
@@ -1575,6 +1578,9 @@
     "21d828ba": [
       25
     ],
+    "30b92120": [
+      25
+    ],
     "1d61074c": [
       25
     ],
@@ -1680,9 +1686,6 @@
     "2fdc3b8e": [
       25
     ],
-    "6c6b0a55": [
-      17
-    ],
     "9d902cd6": [
       25
     ],
@@ -1726,9 +1729,6 @@
       25
     ],
     "ded68d9c": [
-      25
-    ],
-    "1c17d1c2": [
       25
     ],
     "33febd28": [
@@ -2355,9 +2355,6 @@
     "ff12ffe6": [
       25
     ],
-    "f2702e06": [
-      25
-    ],
     "138d865f": [
       25
     ],
@@ -2431,9 +2428,6 @@
       25
     ],
     "ea265f4c": [
-      25
-    ],
-    "ab306506": [
       25
     ],
     "0ea9d79c": [
@@ -2556,6 +2550,9 @@
     "1a0e1563": [
       25
     ],
+    "0f641eb8": [
+      25
+    ],
     "aa527996": [
       25
     ],
@@ -2601,6 +2598,9 @@
     "7109e91a": [
       26
     ],
+    "362b6ac2": [
+      25
+    ],
     "14cce8b0": [
       25
     ],
@@ -2632,9 +2632,6 @@
       25
     ],
     "1900f9b3": [
-      25
-    ],
-    "de7cf30e": [
       25
     ],
     "1908b402": [
@@ -2683,6 +2680,9 @@
       25
     ],
     "77403b62": [
+      25
+    ],
+    "1c8523be": [
       25
     ],
     "06bc0cf1": [
@@ -2766,6 +2766,9 @@
     "dd07671c": [
       25
     ],
+    "f69fa21e": [
+      25
+    ],
     "3e220319": [
       2
     ],
@@ -2776,9 +2779,6 @@
       25
     ],
     "dee34800": [
-      25
-    ],
-    "f69fa21e": [
       25
     ]
   }
