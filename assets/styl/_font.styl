@@ -71,17 +71,24 @@ font($small, $base, $family)
   textarea
   strong
   time
-  code
   kbd
   em
   a
   b
-  p
     inline($base,  $block,  $family)
+
+  [title]
+  [data-tooltip]
+    &:after
+      inline($base,  $block,  $family)
+
+  code
+    inline($base,  $block, "monospace")
 
   input
   button
   [href]
+  [cite]
   [chat_id]
   .btn
     clicker($base,  $block,  $family)
@@ -90,6 +97,7 @@ font($small, $base, $family)
     input
     button
     [href]
+    [cite]
     [chat_id]
     .btn
       margin: 2px
@@ -117,6 +125,7 @@ font($small, $base, $family)
     input
     button
     [href]
+    [cite]
     [chat_id]
     .btn
       clicker($small, $block, $family)
@@ -124,6 +133,7 @@ font($small, $base, $family)
 
   .chrblank
     inline(12px, 15px, $family)
+
     dfn
     abbr
     input
@@ -139,9 +149,11 @@ font($small, $base, $family)
     b
     p
       inline(12px, 15px, $family)
+
     input
     button
     [href]
+    [cite]
     [chat_id]
     .btn
       clicker(12px, 15px, $family)

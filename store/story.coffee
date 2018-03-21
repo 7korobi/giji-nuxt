@@ -12,6 +12,7 @@ module.exports =
 
     oldlog: (state, data)->
       Set.sow_village.merge data.stories
+      console.log { data } unless data.faces
       for { _id, story_ids } in data.faces
         for story_id in story_ids when vil = Query.sow_villages.find story_id
           vil.aggregate.face_ids.push _id.face_id

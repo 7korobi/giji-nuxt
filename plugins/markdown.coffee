@@ -3,6 +3,7 @@ mermaid = require 'mermaid'
 
 mermaidAPI = mermaid.mermaidAPI
 mermaidAPI.initialize
+  theme: 'forest'
   startOnLoad: false
 
 link = (href, title, text)->
@@ -12,9 +13,9 @@ link = (href, title, text)->
   switch href
     when null, undefined, "", "#"
       if title
-        """<b title="#{title}">#{text}</b>"""
+        """<q title="#{title}">#{text}</q>"""
       else
-        """<b>#{text}</b>"""
+        """<q>#{text}</q>"""
     else
       if title
         """<b chk="confirm" href="#{href}" title="#{title}">#{text}</b>"""
@@ -39,17 +40,17 @@ giji_options =
 
 
 idx = 0
-mermaid = (text, cb)->
-  mermaidAPI.render "mermaid-#{idx++}", text, cb
+mermaid = ({ log, id }, cb)->
+  mermaidAPI.render "mermaid-#{idx++}", log, cb
 
-center = giji = (text, cb)->
-  if text
-    cb marked text, giji_options
+center = giji = ({ log, id }, cb)->
+  if log
+    cb marked log, giji_options
   else
-    cb text
+    cb ''
 
-sow = head = mono = (text, cb)->
-  text = text
+sow = head = mono = ({ log, id }, cb)->
+  log = log
   .replace ///<br>///g, "\n"
 
   .replace ///^\s*([~=＝…ー－―‐-])\1{4,}\s*$///gm, "<hr>"

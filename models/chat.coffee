@@ -46,7 +46,7 @@ new Rule("chat").schema ->
         phase_idx = @phase_id[-2..][0] + 'M'
       idx = Number($1)
       @q.mention_ids.push mention_id = [@book_id, part_idx, phase_idx, idx].join("-")
-      """<code chat_id="#{mention_id}">&gt;&gt;#{code}</code>"""
+      """<q cite="#{mention_id}">»#{code}</code>"""
 
   class @model extends @model
     @map_reduce: (o, emit)->

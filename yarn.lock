@@ -78,12 +78,6 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
-"@vue/test-utils@^1.0.0-beta.12":
-  version "1.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.12.tgz#c020d5e7566d176a654e44c88d303743ad19b3cf"
-  dependencies:
-    lodash "^4.17.4"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -669,12 +663,13 @@ aws-sdk@^2.1.16:
     xml2js "0.4.17"
     xmlbuilder "4.2.1"
 
-aws-sdk@^2.207.0:
-  version "2.209.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.209.0.tgz#cfe6ca23736f665932b2d14cc8e4e49d7e9d20cc"
+aws-sdk@^2.211.1:
+  version "2.211.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.211.1.tgz#07f0a778741639c505e7c29b977894637ddca4ac"
   dependencies:
     buffer "4.9.1"
-    events "^1.1.1"
+    events "1.1.1"
+    ieee754 "1.1.8"
     jmespath "0.15.0"
     querystring "0.2.0"
     sax "1.2.1"
@@ -2719,9 +2714,9 @@ electron-to-chromium@^1.3.30:
   version "1.3.33"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.33.tgz#bf00703d62a7c65238136578c352d6c5c042a545"
 
-element-ui@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.2.1.tgz#9efb17a37d161b5cbca9998f3f217ccb4fa7da55"
+element-ui@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.2.2.tgz#40935d55e2eb007e6a5d2e766fc4bcc2266eb571"
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -2950,7 +2945,7 @@ event-emitter@^0.3.5, event-emitter@~0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-events@^1.0.0, events@^1.1.1:
+events@1.1.1, events@^1.0.0, events@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
@@ -4111,7 +4106,7 @@ icss-utils@^2.1.0:
   dependencies:
     postcss "^6.0.1"
 
-ieee754@^1.1.4:
+ieee754@1.1.8, ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
@@ -4132,13 +4127,14 @@ iltorb@^2.0.0:
     node-gyp "^3.6.2"
     prebuild-install "^2.3.0"
 
-iltorb@^2.0.3:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/iltorb/-/iltorb-2.0.5.tgz#889f5e874bc0415d6c7a2f789f32c7252beebab9"
+iltorb@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/iltorb/-/iltorb-2.0.6.tgz#7c5bc6ed1b4ad92f2f30c58d5611270eabd51cc7"
   dependencies:
     detect-libc "^1.0.3"
     nan "^2.8.0"
     node-gyp "^3.6.2"
+    npmlog "^4.1.2"
     prebuild-install "^2.3.0"
 
 import-lazy@^2.1.0:
@@ -5132,9 +5128,9 @@ marked-pre-loader@^0.0.2:
     loader-utils latest
     marked-pre latest
 
-marked-pre@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.18.tgz#170e88e64c7082b91494d457d90af2844e834247"
+marked-pre@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/marked-pre/-/marked-pre-0.0.22.tgz#8151e820431d1f491366ca6f5f7811e630af6242"
 
 marked-pre@latest:
   version "0.0.2"
@@ -5452,9 +5448,9 @@ mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
-mongoose@^5.0.9:
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.10.tgz#5945b4acc137b1c6acf546d64da1070bc4c4965a"
+mongoose@^5.0.11:
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.0.11.tgz#bb31a98591cd2377312ded28155281110a9e1da0"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
@@ -5705,7 +5701,7 @@ npm-run-path@^2.0.0:
   dependencies:
     path-key "^2.0.0"
 
-"npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.1, npmlog@^4.0.2:
+"npmlog@0 || 1 || 2 || 3 || 4", npmlog@^4.0.1, npmlog@^4.0.2, npmlog@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
   dependencies:
@@ -8893,12 +8889,9 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
-vee-validate@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.5.tgz#8fb4a4423345d5d23878bbcfe23ce79b98e30249"
-  dependencies:
-    "@vue/test-utils" "^1.0.0-beta.12"
-    babel-plugin-transform-object-rest-spread "^6.26.0"
+vee-validate@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.0.6.tgz#0a28046e3c80fb5b9b944da5f7771c7404f90a6a"
 
 vendors@^1.0.0:
   version "1.0.1"

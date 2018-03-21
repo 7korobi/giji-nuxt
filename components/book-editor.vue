@@ -15,7 +15,7 @@
           th.r
             label(for="players") 参加者
           td(title="参加する人数を指定します。")
-            input#players(type="number" min="4" max="50" v-model="book.chat.player")
+            input#players(style="width: 3em" type="number" min="4" max="50" v-model="book.chat.player")
             | 名
           th.r
             label(for="next_at") 更新時刻
@@ -25,7 +25,7 @@
           th.r
             label(for="mobs") 見物人
           td(title="見物する人数を指定します。")
-            input#mobs(type="number" min="0" max="20" v-model="book.chat.mob")
+            input#mobs(style="width: 3em" type="number" min="0" max="20" v-model="book.chat.mob")
             | 名
           th.r
             label(for="password") 合言葉

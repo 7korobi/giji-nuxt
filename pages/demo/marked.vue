@@ -14,7 +14,9 @@
 module.exports =
   data: ->
     now = Date.now()
+    idx = 0
     talks: [
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "giji"
       handle: "SSAY"
@@ -24,8 +26,6 @@ module.exports =
         ## ヘッドライン
         
         大きなテーブルも作れます。^[まああんまり大きいと困りますけど。]
-
-        --SS-1
 
         | Tables        | Are             | Cool  |
         | ------------- |:---------------:| -----:|
@@ -39,6 +39,7 @@ module.exports =
 
       """
     ,
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "giji"
       handle: "GSAY"
@@ -61,10 +62,14 @@ module.exports =
         #### ―[電脳都市](ｴﾚｸﾄﾛ・ｼﾃｨ)―
         ##### ―電脳都市―
         ###### ―電脳都市―
+
+        アンカー--SS-1だぜ。
+        --SS-1だぜ。
         [振り仮名]はあったほうが[嬉]しいと[思]う。
         [沢山](たくさん)[使]うと[幅]をとってしまうし、
       """
     ,
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "giji"
       handle: "WSAY"
@@ -88,6 +93,7 @@ module.exports =
         > 唄の寵愛を受けし罪人は　[拡声器](ﾏｲｸ)を握る……
       """
     ,
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "giji"
       handle: "PSAY"
@@ -99,6 +105,7 @@ module.exports =
         2. [ ] ~~検閲により削除~~したら`strikeout`するほうがいいかしら。
       """
     ,
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "mermaid"
       handle: "TSAY"
@@ -112,6 +119,7 @@ module.exports =
           C --> D
       """
     ,
+      id: 'demo-1-SS-' + (++idx)
       head: "発言レンダーてすと"
       deco: "mermaid"
       handle: "TSAY"

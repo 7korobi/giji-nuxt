@@ -7,6 +7,7 @@
 [title]
 [data-tooltip]
   position: relative
+
   &:after
   &:before
     // Position
@@ -19,12 +20,17 @@
     border-width: 0
     height: 0
     overflow: visible
+
   &:after
     // Content
+    height: auto
     text-align: left
     white-space: pre
+    font-style: normal
+    font-weight: normal
     border-radius: 8px
     padding: 5px
+
   &:before
     content: ''
     width: 0
@@ -39,16 +45,21 @@
 .tooltip-right
 .tooltip-left
 .tooltip-top
-  &.tap:after
-  &:hover:after
-  &:focus:after
-  &.tap:before
-  &:hover:before
-  &:focus:before
-    display: block
-    opacity: 1
-    border-width: 6px
-    height: auto
+  &.tap
+  &:hover
+  &:focus
+    &:after
+    &:before
+      display: block
+      opacity: 1
+      border-width: 6px
+
+  &:has(:focus)
+    &:after
+    &:before
+      display: block
+      opacity: 1
+      border-width: 6px
 
 // Bottom
 .tooltip-bottom

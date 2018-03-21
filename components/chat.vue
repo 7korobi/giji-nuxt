@@ -63,8 +63,8 @@ module.exports =
 
     methods:
       click: ({ target })->
-        { chat_id, href, chk } = target.attributes
-        if chat_id && chat = Query.chats.find chat_id.value
+        { cite, href, chk } = target.attributes
+        if cite && chat = Query.chats.find cite.value
           { book_id } = chat
           ids = Array.from new Set [@id, chat.id]
           @$emit "anker", book_id, ids.map (id)-> id[book_id.length ..]
@@ -109,7 +109,8 @@ module.exports =
 
       log_html: ->
         text = @log
-        markdown[@deco] @log, (html)-> text = html
+        markdown[@deco] @, (html)-> text = html
         text
+
     }
 </script>

@@ -222,10 +222,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  33%,33%,1)
     $penHi =  HSLA(key,  33%,20%,1)
 
-    $good =   HSLA(ALIEN,33%,40%,1)
-    $warn =   HSLA(LONE, 33%,40%,1)
-    $ban =    HSLA(WOLF, 33%,40%,1)
-
   if snow == $backT
     $edge =   HSLA(key,15%,75%,1)
     $focus =  HSLA(key,25%,65%,1)
@@ -242,10 +238,6 @@ palette_single($bgTheme, $backT, key)
     $hide =   HSLA(key,  33%,55%,1)
     $pen =    HSLA(key,  80%,33%,1)
     $penHi =  HSLA(key,  80%,20%,1)
-
-    $good =   HSLA(ALIEN,80%,40%,1)
-    $warn =   HSLA(LONE, 80%,40%,1)
-    $ban =    HSLA(WOLF, 80%,40%,1)
 
   if light == $backT
     $edge =   HSLA(key,50%,50%,1)
@@ -264,10 +256,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  66%,15%,1)
     $penHi =  HSLA(key,  66%, 0%,1)
 
-    $good =   HSLA(ALIEN,66%,25%,1)
-    $warn =   HSLA(LONE, 66%,25%,1)
-    $ban =    HSLA(WOLF, 66%,25%,1)
-
   if white == $backT
     $edge =   HSLA(key,15%,50%,1)
     $focus =  HSLA(key,25%,40%,1)
@@ -284,10 +272,6 @@ palette_single($bgTheme, $backT, key)
     $hide =   HSLA(key,  33%,40%,1)
     $pen =    HSLA(key,  80%,15%,1)
     $penHi =  HSLA(key,  80%, 0%,1)
-
-    $good =   HSLA(ALIEN,80%,25%,1)
-    $warn =   HSLA(LONE, 80%,25%,1)
-    $ban =    HSLA(WOLF, 80%,25%,1)
 
   if foot == $backT
     $edge =   HSLA(key,50%,50%,1)
@@ -306,10 +290,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  20%,66%,1)
     $penHi =  HSLA(key,  15%,90%,1)
 
-    $good =   HSLA(ALIEN,20%,66%,1)
-    $warn =   HSLA(LONE, 20%,66%,1)
-    $ban  =   HSLA(WOLF, 20%,66%,1)
-
   if ash == $backT
     $edge =   HSLA(key,15%,50%,1)
     $focus =  HSLA(key,25%,40%,1)
@@ -326,10 +306,6 @@ palette_single($bgTheme, $backT, key)
     $hide =   HSLA(key,  20%,40%,1)
     $pen =    HSLA(key,  25%,75%,1)
     $penHi =  HSLA(key,  15%,90%,1)
-
-    $good =   HSLA(ALIEN,25%,75%,1)
-    $warn =   HSLA(LONE, 25%,75%,1)
-    $ban  =   HSLA(WOLF, 25%,75%,1)
 
   if black == $backT
     $edge =   HSLA(key,66%,40%,1)
@@ -348,10 +324,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  20%,66%,1)
     $penHi =  HSLA(key,  15%,90%,1)
 
-    $good =   HSLA(ALIEN,40%,66%,1)
-    $warn =   HSLA(LONE, 40%,66%,1)
-    $ban  =   HSLA(WOLF, 40%,66%,1)
-
   if metal == $backT
     $edge =   HSLA(key,15%,40%,1)
     $focus =  HSLA(key,25%,30%,1)
@@ -368,10 +340,6 @@ palette_single($bgTheme, $backT, key)
     $hide =   HSLA(key,  20%,40%,1)
     $pen =    HSLA(key,  25%,75%,1)
     $penHi =  HSLA(key,  15%,90%,1)
-
-    $good =   HSLA(ALIEN,35%,75%,1)
-    $warn =   HSLA(LONE, 35%,75%,1)
-    $ban  =   HSLA(WOLF, 35%,75%,1)
 
   if night == $backT
     $edge =   HSLA(key,66%,40%,1)
@@ -390,11 +358,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  75%,66%,1)
     $penHi =  HSLA(key,  85%,90%,1)
 
-    $good =   HSLA(ALIEN,75%,66%,1)
-    $warn =   HSLA(LONE, 75%,66%,1)
-    $ban  =   HSLA(WOLF, 75%,66%,1)
-
-
   if grass == $backT
     $edge =   HSLA(key,50%,50%,1)
     $focus =  HSLA(key,99%,50%,0.3)
@@ -412,11 +375,6 @@ palette_single($bgTheme, $backT, key)
     $pen =    HSLA(key,  25%,75%,1)
     $penHi =  HSLA(key,  15%,90%,1)
 
-    $good =   HSLA(ALIEN,25%,75%,1)
-    $warn =   HSLA(LONE, 25%,75%,1)
-    $ban  =   HSLA(WOLF, 25%,75%,1)
-
-
   $baloon = $bg
   @keyframes {theme}-pulse
     0%   { text-shadow: 2px 0 1px $bgHi, -2px 0 1px $bgHi }
@@ -429,8 +387,6 @@ palette_single($bgTheme, $backT, key)
   for theme in $bgTheme
     .{theme}.focus
       border-color:   $focus
-      blockquote
-        border-color: $focus
 
     .{theme}
       color:            $pen
@@ -449,12 +405,8 @@ palette_single($bgTheme, $backT, key)
         border-color: $emboss
         background-color: $bg
 
-      .mdi-check
-        color: $good
-      .mdi-warning
-        color: $warn
-      .mdi-ban
-        color: $ban
+      blockquote
+        border-color: $edge
 
     textarea
       body &.{theme}
@@ -478,11 +430,6 @@ palette_single($bgTheme, $backT, key)
       body &.{theme}
       .{theme} &
         color: $penHi
-
-    blockquote
-      body &.{theme}
-      .{theme} &
-        border-color: $edge
 
     h1
     h2
@@ -510,18 +457,12 @@ palette_single($bgTheme, $backT, key)
         color: $pen
         background-color: $bgHi
 
-    code
-      body &.{theme}
-      .{theme} &
-        color: $pen
-        border-color: $emboss
-
     label
     rt
       body &.{theme}
       .{theme} &
         color: $pen
-        background-color: $bgLow
+        background-color: $bgHi
 
     abbr
       body &.{theme}
@@ -558,7 +499,6 @@ palette_single($bgTheme, $backT, key)
     button
     textarea
     .btn
-    [cite]
     [href]
       body &.{theme}
       .{theme} &
@@ -566,7 +506,6 @@ palette_single($bgTheme, $backT, key)
         border-color:     $off
         background-color: $off
 
-        .focus &
         &:hover
         &:focus
           border-color:  $focus
@@ -578,16 +517,37 @@ palette_single($bgTheme, $backT, key)
         &:visited
         &:link
           color: $penHi
-        sup, sub, abbr
-          background-color: $emboss
-          color: $penEmb
-          text-shadow: none
 
+    code
+    [title]
+    [cite]
+      body &.{theme}
+      .{theme} &
+        color: $penHi
+        border-color: $on
+
+
+    input
+    select
+    button
+    textarea
+    .btn
+    [href]
+    [title]
+    [cite]
+      body .focus &.{theme}
+      .{theme}.focus &
+        border-color: $focus
+
+    input
+    select
+    button
+    textarea
+    .btn
     .name
+    [href]
       body &.{theme}
       .{theme} &
         sup, sub, abbr
           background-color: $emboss
           color: $penEmb
-          text-shadow: none
-
