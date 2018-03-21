@@ -193,10 +193,15 @@ textarea
 [href]
 [cite]
   border: 2px solid
+
+  .date &
+    border: 0
+
   .focus &
     border-radius: 0
     transition-property: border-radius, border-color
     transition-duration: 1s
+
   &:hover
   &:focus
     border: 2px dashed
@@ -225,12 +230,20 @@ span
 
 label
 abbr
-.btn sup
-.btn sub
   border-radius: 3em
   padding: 1px 6px
   text-align: center
   text-shadow: none
+
+.name
+.btn
+[href]
+  sup
+  sub
+    border-radius: 3em
+    padding: 1px 6px
+    text-align: center
+    text-shadow: none
 
 sup
 sub

@@ -72,7 +72,7 @@ sow = head = mono = ({ log, id }, cb)->
       ""
     link(url) + suffix
 
-  cb """<article>#{text}</article>"""
+  cb """<article>#{log}</article>"""
   return
 
 module.exports = { sow, head, mono, giji, center, mermaid }
