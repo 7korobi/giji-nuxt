@@ -152,7 +152,7 @@ module.exports = (app, { url, db })->
         src = "http:#{url.api}/aggregate/faces"
         data.push """ curl "#{src}" | gzip --stdout --best > "#{dst}"  """
 
-        data.push """ gulp amazon:gz """
+        data.push """ npm run gulp amazon:gz """
 
         fs.writeFile './static/sow.sh', data.join("\n") , (err)->
           console.log err
