@@ -2340,6 +2340,51 @@
       - travel
 
 #########################
+# 2018-03-24 update
+
+-   _id: c122
+    name: フローラ
+    comment: ""
+    order: 122
+    tag_ids:
+      - giji
+
+-   _id: c123
+    name: フェルゼ
+    comment: かかとって意味らしい　フェチっぽいね！
+    order: 123
+    tag_ids:
+      - giji
+
+-   _id: c124
+    name: セイルズ
+    comment: ""
+    order: 124
+    tag_ids:
+      - giji
+
+-   _id: c125
+    name: ピスティオ
+    comment: ""
+    order: 125
+    tag_ids:
+      - giji
+
+-   _id: t40
+    name: マスタ
+    comment: 土地と自由かららしい。ロシアのやつだってさ
+    order: 30039
+    tag_ids:
+      - travel
+
+-   _id: w54
+    name: 舷之丈
+    comment: ""
+    order: 90054
+    tag_ids:
+      - shoji
+
+#########################
 # xxxx-xx-xx update
 
 # 肩書案
