@@ -27,16 +27,16 @@
     "pages_book_index.53f34dce07af262256c4.js",
     "pages_book__idx_editor.d06471e4a846db1f6402.js",
     "vendor.914aeb47679f654ed0a2.js",
-    "app.727d1562999d8dbd1ca6.js",
-    "manifest.2c59805ff1052558aa57.js",
+    "app.9e4a2ac6107a2b3505fb.js",
+    "manifest.97eb11e500fd5f8e20dc.js",
     "LICENSES",
     "index.spa.html",
     "index.ssr.html"
   ],
   "initial": [
-    "manifest.2c59805ff1052558aa57.js",
+    "manifest.97eb11e500fd5f8e20dc.js",
     "vendor.914aeb47679f654ed0a2.js",
-    "app.727d1562999d8dbd1ca6.js"
+    "app.9e4a2ac6107a2b3505fb.js"
   ],
   "async": [
     "pages_rule-guide.0019fd20ed1adc011302.js",
