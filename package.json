@@ -29,6 +29,7 @@
     "del": "^3.0.0",
     "element-ui": "^2.2.2",
     "express-session": "^1.15.6",
+    "firebase": "^4.12.0",
     "global": "^4.3.2",
     "gulp": "^3.9.1",
     "gulp-awspublish": "^3.3.3",
@@ -49,11 +50,6 @@
     "mongoose": "^5.0.11",
     "node-watch": "^0.5.8",
     "nuxt": "^1.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-github": "^1.1.0",
-    "passport-google-oauth": "^1.0.0",
-    "passport-slack": "^0.0.7",
-    "passport-twitter": "^1.0.4",
     "pidusage": "^1.2.0",
     "pug": "^2.0.1",
     "pug-html-loader": "^1.1.5",
@@ -76,8 +72,8 @@
     "generate": "cross-env NODE_ENV=production nuxt generate"
   },
   "devDependencies": {
-    "iltorb": "^2.0.6",
     "ava": "^0.25.0",
+    "iltorb": "^2.0.6",
     "supertest": "^3.0.0",
     "supertest-session": "^3.1.2"
   }

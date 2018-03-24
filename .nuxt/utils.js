@@ -120,7 +120,7 @@ export async function setContext(app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"url":{"web":"https://giji.f5.si","api":"//giji.f5.si/api","sow":"https://s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"https://s3-ap-northeast-1.amazonaws.com/giji-assets"},"game":{"folder_id":"beta"}}
+      env: {"url":{"web":"https://giji.f5.si","api":"//giji.f5.si/api","sow":"https://s3-ap-northeast-1.amazonaws.com/giji-assets/sow","store":"https://s3-ap-northeast-1.amazonaws.com/giji-assets"},"game":{"folder_id":"beta"},"firebase":{"projectId":"api-project-54633717694","storageBucket":"api-project-54633717694.appspot.com","authDomain":"api-project-54633717694.firebaseapp.com","databaseURL":"https://api-project-54633717694.firebaseio.com","messagingSenderId":54633717694,"apiKey":"AIzaSyAC3N874UpvVZTYmh88mDHkuWKfUDhj25o"}}
     }
     // Only set once
     if (context.req) app.context.req = context.req
