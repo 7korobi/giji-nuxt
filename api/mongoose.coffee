@@ -17,6 +17,4 @@ module.exports = (app, conf)->
 
   require("./mongoose/potof.coffee") app, conf
 
-  require("./mongoose/passport.coffee") app, conf
-
   return

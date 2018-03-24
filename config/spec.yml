@@ -16,37 +16,3 @@ url:
 db:
   mongo: mongodb://localhost/giji
   mongo_sow: mongodb://localhost/giji
-
-auth:
-  facebook:
-    provider: passport-facebook
-    attr:
-      clientID: TEST-CLIENT-ID
-      clientSecret: TEST-SECRET
-  twitter:
-    provider: passport-twitter
-    attr:
-      consumerKey: TEST-CONSUMER-KEY
-      consumerSecret: TEST-SECRET
-  slack:
-    provider: passport-slack
-    attr:
-      clientID: TEST-CLIENT-ID
-      clientSecret: TEST-CLIENT-SECRET
-
-  github:
-    provider: passport-github
-    attr:
-      clientID: TEST-CLIENT-ID
-      clientSecret: TEST-CLIENT-SECRET
-  google:
-    provider: passport-google-oauth20
-    attr:
-      clientID: TEST-CLIENT-ID
-      clientSecret: TEST-CLIENT-SECRET
-      accessType: offline
-    authenticate:
-      scope:
-        - profile
-        - email
-        - openid

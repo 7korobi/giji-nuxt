@@ -23,31 +23,3 @@ aws:
   accessKeyId: null
   secretAccessKey: null
 
-auth:
-  facebook:
-    provider: passport-facebook
-    attr:
-      clientID: null
-      clientSecret: null
-  twitter:
-    provider: passport-twitter
-    attr:
-      consumerKey: null
-      consumerSecret: null
-  slack:
-    provider: passport-slack
-    attr:
-      clientID: null
-      clientSecret: null
-
-  github:
-    provider: passport-github2
-    attr:
-      clientID: null
-      clientSecret: null
-  google:
-    provider: passport-google-oauth2
-    attr:
-      clientID: null
-      clientSecret: null
-      passReqToCallback: true
