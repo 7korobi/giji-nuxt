@@ -43,7 +43,7 @@
     "gulp-stylus": "^2.6.0",
     "marked-pre": "^0.0.22",
     "marked-pre-loader": "^0.0.2",
-    "mermaid": "^7.1.0",
+    "mermaid": "^8.11.0",
     "moment": "^2.21.0",
     "monaco-editor": "^0.10.1",
     "mongodb-bluebird": "^0.1.2",
