@@ -44,7 +44,7 @@
     "marked-pre": "^0.0.22",
     "marked-pre-loader": "^0.0.2",
     "mermaid": "^7.1.0",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "monaco-editor": "^0.10.1",
     "mongodb-bluebird": "^0.1.2",
     "mongoose": "^5.0.11",
